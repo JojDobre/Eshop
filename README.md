@@ -1,58 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# E-shop
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
+Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-## About Laravel
+> **Stav:** krok 1 – technický prototyp (verzia 0.1.0). Obchod zatiaľ nepredáva, obsahuje inštalátor,
+> administráciu, nastavenia, používateľov, systém modulov a prvú šablónu vzhľadu. Plán: [`PLAN.md`](PLAN.md).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Čo je hotové
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Webový inštalátor** v slovenčine, češtine a angličtine: kontrola webhostingu, pripojenie k databáze,
+  nastavenie obchodu a administrátora. Netreba SSH, Composer ani npm.
+- **Administrácia** (Filament 5): nastavenia obchodu, značky (logo, favicon, hlavná farba) a firemných údajov,
+  používatelia s rolami, prehľad modulov so zapínaním a vypínaním, profil s výberom jazyka administrácie.
+- **Systém modulov:** každá funkcia je modul s `module.json`, závislosťami a vlastnými migráciami.
+- **Šablóny vzhľadu:** obchod sa zobrazuje cez vymeniteľnú šablónu (`themes/default`) s podporou odvodených šablón.
+- **Inštalačný balík** pre webhosting a automatické testy (GitHub Actions).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Požiadavky na webhosting
 
-## Learning Laravel
+| | Minimum |
+|---|---|
+| PHP | 8.3 alebo novšie (rozšírenia: pdo_mysql, mbstring, openssl, intl, curl, zip, fileinfo, sodium, bcmath, xml, dom, gd alebo imagick) |
+| Databáza | MySQL 8.0+ alebo MariaDB 10.6+ (MySQL 5.7 s obmedzenou podporou) |
+| Webserver | Apache s mod_rewrite alebo LiteSpeed |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Inštalácia na webhosting
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Postup krok za krokom: [`docs/INSTALL.md`](docs/INSTALL.md). Stručne:
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. Stiahnite inštalačný balík `eshop-<verzia>.zip` (GitHub Actions → beh CI → *Artifacts*, alebo `scripts/build-release.sh`).
+2. Rozbaľte ho a nahrajte cez FTP na webhosting.
+3. Otvorte adresu webu a prejdite sprievodcom inštalácie.
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Vývoj
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
+npm install && npm run build
+cp .env.example .env && php artisan key:generate
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Potom otvorte `http://localhost:8000` a prejdite inštalátorom (potrebná je databáza MySQL/MariaDB).
 
-## Contributing
+```bash
+php artisan test        # testy (SQLite v pamäti)
+vendor/bin/pint         # štýl kódu
+scripts/build-release.sh  # inštalačný balík → dist/
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Architektúra, moduly a šablóny: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-## Code of Conduct
+## Licencie tretích strán
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Postavené na [Laravel](https://laravel.com) a [Filament](https://filamentphp.com) (MIT). Preklady systémových
+hlášok do slovenčiny a češtiny pochádzajú z projektu [Laravel Lang](https://laravel-lang.com) (MIT).
+Písmo [Inter](https://rsms.me/inter/) (SIL Open Font License).

@@ -50,7 +50,7 @@ class BrandingSettings extends Settings
         $luminance = 0.2126 * $channel($r) + 0.7152 * $channel($g) + 0.0722 * $channel($b);
 
         // Kontrast s bielou: 1.05 / (L + 0.05), s čiernou: (L + 0.05) / 0.05.
-        return (1.05 / ($luminance + 0.05)) >= (($luminance + 0.05) / 0.05) ? '#ffffff' : '#4f46e5';
+        return (1.05 / ($luminance + 0.05)) >= (($luminance + 0.05) / 0.05) ? '#ffffff' : '#18181b';
     }
 
     public function logoUrl(): ?string

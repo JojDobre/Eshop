@@ -28,6 +28,16 @@ class User extends Authenticatable implements FilamentUser
     public const ROLE_SUPER_ADMIN = 'super-admin';
 
     /**
+     * Predvolené hodnoty (rovnaké ako v databáze), aby boli dostupné aj hneď po vytvorení modelu.
+     *
+     * @var array<string, mixed>
+     */
+    protected $attributes = [
+        'locale' => 'sk',
+        'is_active' => true,
+    ];
+
+    /**
      * @return array<string, string>
      */
     protected function casts(): array

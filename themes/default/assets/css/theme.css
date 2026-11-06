@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+@source '../../**/*.blade.php';
+
+/*
+ * Hlavná farba obchodu sa nastavuje v administrácii (Nastavenia → Značka)
+ * a do stránky sa vkladá ako premenná --brand-primary.
+ */
+:root {
+    --brand-primary: #4f46e5;
+    --brand-primary-foreground: #ffffff;
+}
+
+@theme inline {
+    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+    --color-primary: var(--brand-primary);
+    --color-primary-foreground: var(--brand-primary-foreground);
+}

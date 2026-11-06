@@ -1,0 +1,20 @@
+{
+    "name": "storefront",
+    "version": "0.1.0",
+    "title": {
+        "sk": "Obchod",
+        "cs": "Obchod",
+        "en": "Storefront"
+    },
+    "description": {
+        "sk": "Zákaznícka časť obchodu zobrazená cez aktívnu šablónu vzhľadu.",
+        "cs": "Zákaznická část obchodu zobrazená přes aktivní šablonu vzhledu.",
+        "en": "Customer-facing shop rendered through the active theme."
+    },
+    "provider": "Modules\\Storefront\\StorefrontServiceProvider",
+    "core": true,
+    "requires": {
+        "eshop": "^0.1"
+    },
+    "permissions": []
+}

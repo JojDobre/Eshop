@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# E-shop: nasmerovanie požiadaviek do adresára public/
+#
+# Použije sa vtedy, keď webhosting nedovolí nastaviť koreňový adresár webu
+# (DocumentRoot) priamo na public/. Ak to váš webhosting dovoľuje, nastavte
+# DocumentRoot na public/ – je to bezpečnejšie a tento súbor sa nepoužije.
+# ---------------------------------------------------------------------------
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Neverejné adresáre a súbory: vrátiť 404.
+    RewriteRule ^(app|bootstrap|config|database|lang|modules|routes|storage|tests|themes|vendor|node_modules)(/|$) - [R=404,L]
+    RewriteRule ^(\.env.*|\.git.*|composer\.(json|lock)|package(-lock)?\.json|artisan|phpunit\.xml|vite\.config\.js)$ - [R=404,L]
+
+    # Všetko ostatné do public/.
+    RewriteRule ^$ public/ [L]
+    RewriteRule ^((?!public/).*)$ public/$1 [L]
+</IfModule>
+
+# Záloha pre servery bez mod_rewrite: zakázať prístup k citlivým súborom.
+<FilesMatch "^(\.env.*|composer\.(json|lock)|artisan)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>

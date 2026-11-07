@@ -13,6 +13,14 @@
         <meta name="robots" content="noindex, nofollow">
     @endif
     <link rel="canonical" href="{{ trim($__env->yieldContent('canonical')) ?: url()->current() }}">
+    @if (! empty($alternateUrls))
+        @foreach ($alternateUrls as $alternateLocale => $alternateUrl)
+            <link rel="alternate" hreflang="{{ $alternateLocale }}" href="{{ $alternateUrl }}">
+        @endforeach
+        @isset($alternateUrls[$shopLocales->default()])
+            <link rel="alternate" hreflang="x-default" href="{{ $alternateUrls[$shopLocales->default()] }}">
+        @endisset
+    @endif
     <meta property="og:site_name" content="{{ $shop->shop_name }}">
     <meta property="og:title" content="{{ $pageTitle ?: $shop->shop_name }}">
     @if ($metaDescription)

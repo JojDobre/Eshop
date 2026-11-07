@@ -24,6 +24,9 @@ return [
             'tagline_help' => 'Krátký popis obchodu. Zobrazí se na úvodní stránce a ve výsledcích vyhledávání.',
             'contact_email' => 'Kontaktní e-mail',
             'contact_phone' => 'Telefon',
+            'locales' => 'Další jazyky obchodu',
+            'locales_help' => 'Obchod bude dostupný i v těchto jazycích (adresy /cz/…, /en/…). Texty produktů a stránek přeložíte při jejich úpravě přepínačem jazyka. Dokud překlad chybí, zobrazí se text ve výchozím jazyce.',
+            'default_locale_help' => 'Pozor: změna výchozího jazyka u existujícího obsahu změní adresy obchodu.',
             'default_locale' => 'Jazyk obchodu',
             'default_currency' => 'Měna',
             'country' => 'Země',
@@ -272,5 +275,12 @@ return [
         'files' => 'Soubory',
         'files_help' => 'Obrázky (JPG, PNG, WebP, GIF, SVG) a PDF, nejvýše 10 MB na soubor.',
         'uploaded' => 'Nahrané soubory: :count',
+    ],
+
+    'translations' => [
+        'column' => 'Chybí překlad',
+        'column_help' => 'Jazyky, ve kterých chybí název',
+        'missing' => 'chybí překlad',
+        'language' => 'Jazyk: :language',
     ],
 ];

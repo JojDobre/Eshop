@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Filament\Resources\Categories;
 
 use App\Filament\AdminGroup;
+use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -111,6 +112,7 @@ class CategoryResource extends Resource
                 TextColumn::make('name')->label($t('name'))
                     ->formatStateUsing(fn (Category $record) => $record->pathName())
                     ->searchable(query: fn ($query, string $search) => $query->where('name', 'like', '%'.$search.'%')),
+                MissingTranslationsColumn::make(),
                 TextColumn::make('products_count')->label($t('products'))->badge()->color('gray'),
                 IconColumn::make('is_visible')->label($t('is_visible'))->boolean(),
                 TextColumn::make('position')->label($t('position'))->sortable(),

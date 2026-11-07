@@ -18,4 +18,14 @@ trait HasContentTranslations
     {
         return $this->translationLocale ?: app(ContentLocale::class)->current();
     }
+
+    /**
+     * Jazyk, do ktorého sa zapisujú a z ktorého sa čítajú preložiteľné stĺpce (null = jazyk obsahu).
+     */
+    public function useContentLocale(?string $locale): static
+    {
+        $this->translationLocale = $locale;
+
+        return $this;
+    }
 }

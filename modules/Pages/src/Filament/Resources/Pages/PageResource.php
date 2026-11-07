@@ -3,6 +3,7 @@
 namespace Modules\Pages\Filament\Resources\Pages;
 
 use App\Filament\AdminGroup;
+use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -110,6 +111,7 @@ class PageResource extends Resource
             ->columns([
                 TextColumn::make('name')->label($t('name'))
                     ->description(fn (Page $record) => $record->role ? __('pages::admin.roles.'.$record->role) : null),
+                MissingTranslationsColumn::make(),
                 IconColumn::make('show_in_footer')->label($t('show_in_footer'))->boolean(),
                 ToggleColumn::make('is_visible')->label($t('is_visible')),
                 TextColumn::make('updated_at')->label($t('updated_at'))->dateTime()->sortable(),

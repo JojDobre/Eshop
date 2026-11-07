@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 /**
- * Jedinečná adresa (slug) v jazyku obsahu, vytvorená z názvu, ak ju administrátor nezadá.
+ * Jedinečná adresa (slug) v každom jazyku, v ktorom má záznam názov. Ak ju administrátor
+ * nezadá, vytvorí sa z názvu. Chýbajúci preklad adresy nahradí adresa v predvolenom jazyku.
  *
  * Model musí mať preložiteľné stĺpce „name" a „slug" (HasContentTranslations).
  */
@@ -15,20 +16,44 @@ trait HasLocalizedSlug
     public static function bootHasLocalizedSlug(): void
     {
         static::saving(function (self $model): void {
-            $locale = $model->getLocale();
-            $slug = Str::slug((string) ($model->getTranslation('slug', $locale, false) ?: $model->getTranslation('name', $locale, false)));
+            $locales = array_unique([$model->getLocale(), ...array_keys(array_filter($model->getTranslations('name')))]);
 
-            $model->setTranslation('slug', $locale, $model->uniqueSlug($slug !== '' ? $slug : 'item', $locale));
+            foreach ($locales as $locale) {
+                $slug = Str::slug((string) ($model->getTranslation('slug', $locale, false) ?: $model->getTranslation('name', $locale, false)));
+
+                if ($slug === '' && $locale !== $model->getLocale()) {
+                    continue;
+                }
+
+                $model->setTranslation('slug', $locale, $model->uniqueSlug($slug !== '' ? $slug : 'item', $locale));
+            }
         });
     }
 
     /**
+     * Záznam podľa adresy v jazyku; ak v ňom adresa nie je, podľa adresy v predvolenom jazyku.
+     *
      * @param  Builder<static>  $query
      * @return Builder<static>
      */
     public function scopeWhereSlug(Builder $query, string $slug, ?string $locale = null): Builder
     {
-        return $query->where('slug->'.($locale ?? $this->getLocale()), $slug);
+        $locale ??= $this->getLocale();
+        $default = app(ShopLocales::class)->default();
+
+        if ($locale === $default) {
+            return $query->where('slug->'.$locale, $slug);
+        }
+
+        return $query->where(fn (Builder $query) => $query
+            ->where('slug->'.$locale, $slug)
+            ->orWhere(fn (Builder $query) => $query->whereNull('slug->'.$locale)->where('slug->'.$default, $slug)));
+    }
+
+    /** Adresa (slug) v danom jazyku, inak v predvolenom jazyku. */
+    public function slugIn(string $locale): ?string
+    {
+        return $this->getTranslation('slug', $locale, false) ?: ($this->getTranslation('slug', app(ShopLocales::class)->default(), false) ?: null);
     }
 
     private function uniqueSlug(string $slug, string $locale): string

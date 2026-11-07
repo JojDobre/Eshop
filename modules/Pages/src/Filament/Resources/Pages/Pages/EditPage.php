@@ -22,6 +22,7 @@ class EditPage extends EditRecord
         $page = $this->getRecord();
 
         return [
+            ...$this->localeSwitcherActions(),
             Action::make('view')->label(__('pages::admin.view'))
                 ->icon(Heroicon::OutlinedArrowTopRightOnSquare)->color('gray')
                 ->url(fn () => $page->url(), shouldOpenInNewTab: true)

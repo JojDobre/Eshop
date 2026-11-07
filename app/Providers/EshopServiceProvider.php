@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Core\Content\AlternateUrls;
 use App\Core\Content\ContentLocale;
+use App\Core\Content\LocalizedUrls;
+use App\Core\Content\ShopLocales;
 use App\Core\Eshop;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
@@ -16,6 +19,7 @@ use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Translatable\Translatable;
@@ -46,6 +50,9 @@ class EshopServiceProvider extends ServiceProvider
         ));
 
         $this->app->singleton(ContentLocale::class);
+        $this->app->scoped(ShopLocales::class);
+        $this->app->singleton(LocalizedUrls::class);
+        $this->app->scoped(AlternateUrls::class);
 
         $this->app->singleton(CurrencyContext::class);
 
@@ -67,6 +74,11 @@ class EshopServiceProvider extends ServiceProvider
         // Ak obsah nemá preklad v jazyku obchodu (napr. po zmene jazyka), použije sa ktorýkoľvek
         // dostupný preklad namiesto prázdnej hodnoty.
         $this->app->make(Translatable::class)->fallback(fallbackAny: true);
+
+        // Predpona jazyka v odkazoch obchodu (/en/…), pozri LocalizedUrls.
+        URL::formatPathUsing(
+            fn (string $path, $route = null) => $this->app->make(LocalizedUrls::class)->formatPath($path, $route),
+        );
 
         $themes = $this->app->make(ThemeManager::class);
 

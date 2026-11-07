@@ -15,6 +15,6 @@ class EditShippingMethod extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        return [DeleteAction::make()];
+        return [...$this->localeSwitcherActions(), DeleteAction::make()];
     }
 }

@@ -59,6 +59,7 @@ class EditProduct extends EditRecord
         $product = $this->getRecord();
 
         return [
+            ...$this->localeSwitcherActions(),
             Action::make('adjustStock')->label(__('catalog::admin.stock.adjust'))
                 ->icon(Heroicon::OutlinedArrowsUpDown)->color('gray')
                 ->visible(fn () => $product->track_stock)

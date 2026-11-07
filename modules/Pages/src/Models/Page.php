@@ -4,6 +4,7 @@ namespace Modules\Pages\Models;
 
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
+use App\Core\Content\LocalizedUrls;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -111,6 +112,6 @@ class Page extends Model
 
     public function url(): string
     {
-        return route('pages.show', $this->slug);
+        return route('pages.show', $this->slugIn(app(LocalizedUrls::class)->current()) ?? $this->slug);
     }
 }

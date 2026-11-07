@@ -20,6 +20,13 @@ class GeneralSettings extends Settings
     /** Predvolený jazyk obchodu (ISO 639-1, napr. „sk"). */
     public string $default_locale;
 
+    /**
+     * Ďalšie jazyky obchodu okrem predvoleného (prázdne = jednojazyčný obchod).
+     *
+     * @var list<string>
+     */
+    public array $locales;
+
     /** Predvolená mena (ISO 4217, napr. „EUR"). */
     public string $default_currency;
 

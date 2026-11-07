@@ -148,6 +148,7 @@ return [
     'returns_question' => 'Need to return or complain about an item?',
     'returns_withdraw_link' => 'Withdraw from the contract',
     'returns_complaint_link' => 'File a complaint',
+    'language' => 'Language',
     'pay_online' => 'Pay by card',
     'payment_success' => 'Payment received. Thank you!',
     'payment_cancelled' => 'The payment was not completed. You can try again.',

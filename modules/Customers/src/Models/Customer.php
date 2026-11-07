@@ -2,6 +2,8 @@
 
 namespace Modules\Customers\Models;
 
+use App\Core\Content\LocalizedUrls;
+use App\Core\Content\ShopLocales;
 use App\Core\Mail\TemplateMail;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -63,7 +65,8 @@ class Customer extends Authenticatable implements CanResetPasswordContract
     {
         Mail::to($this->email, $this->name)->send(new TemplateMail('customers.password_reset', [
             'customer_name' => $this->name,
-            'reset_url' => route('customer.password.reset', ['token' => $token, 'email' => $this->email]),
+            'reset_url' => app(LocalizedUrls::class)->in($this->locale ?? app(ShopLocales::class)->default(),
+                fn () => route('customer.password.reset', ['token' => $token, 'email' => $this->email])),
         ], $this->locale, ['reset_url']));
     }
 }

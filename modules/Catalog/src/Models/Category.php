@@ -4,6 +4,7 @@ namespace Modules\Catalog\Models;
 
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
+use App\Core\Content\LocalizedUrls;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -136,7 +137,7 @@ class Category extends Model
 
     public function url(): string
     {
-        return route('catalog.category', $this->slug);
+        return route('catalog.category', $this->slugIn(app(LocalizedUrls::class)->current()) ?? $this->slug);
     }
 
     public function imageUrl(): ?string

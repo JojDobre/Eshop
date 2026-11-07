@@ -24,6 +24,9 @@ return [
             'tagline_help' => 'A short description of the shop. Shown on the home page and in search results.',
             'contact_email' => 'Contact e-mail',
             'contact_phone' => 'Phone',
+            'locales' => 'Additional shop languages',
+            'locales_help' => 'The shop will also be available in these languages (URLs /cz/…, /en/…). Translate product and page texts when editing them using the language switcher. Until a translation exists, the default language text is shown.',
+            'default_locale_help' => 'Note: changing the default language with existing content changes the shop URLs.',
             'default_locale' => 'Shop language',
             'default_currency' => 'Currency',
             'country' => 'Country',
@@ -272,5 +275,12 @@ return [
         'files' => 'Files',
         'files_help' => 'Images (JPG, PNG, WebP, GIF, SVG) and PDF, up to 10 MB per file.',
         'uploaded' => 'Uploaded files: :count',
+    ],
+
+    'translations' => [
+        'column' => 'Missing translation',
+        'column_help' => 'Languages where the name is missing',
+        'missing' => 'translation missing',
+        'language' => 'Language: :language',
     ],
 ];

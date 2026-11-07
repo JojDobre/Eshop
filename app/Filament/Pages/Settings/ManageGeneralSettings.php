@@ -2,13 +2,16 @@
 
 namespace App\Filament\Pages\Settings;
 
+use App\Core\Content\ShopLocales;
 use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeManager;
 use App\Settings\GeneralSettings;
 use BackedEnum;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 
@@ -61,8 +64,10 @@ class ManageGeneralSettings extends BaseSettingsPage
                 ->schema([
                     Select::make('default_locale')
                         ->label(__('admin.settings.general.default_locale'))
-                        ->options(config('eshop.locales'))
+                        ->helperText(__('admin.settings.general.default_locale_help'))
+                        ->options(config('eshop.content_locales'))
                         ->required()
+                        ->live()
                         ->native(false),
                     Select::make('default_currency')
                         ->label(__('admin.settings.general.default_currency'))
@@ -74,6 +79,13 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)]))
                         ->required()
                         ->native(false),
+                    CheckboxList::make('locales')
+                        ->label(__('admin.settings.general.locales'))
+                        ->helperText(__('admin.settings.general.locales_help'))
+                        ->options(fn (Get $get) => collect(config('eshop.content_locales'))->except($get('default_locale'))->all())
+                        ->columns(4)
+                        ->columnSpanFull()
+                        ->dehydrateStateUsing(fn (?array $state, Get $get) => array_values(array_diff($state ?? [], [$get('default_locale')]))),
                 ]),
             Section::make(__('admin.settings.general.section_theme'))
                 ->schema([
@@ -89,5 +101,6 @@ class ManageGeneralSettings extends BaseSettingsPage
     protected function afterSave(): void
     {
         app(ThemeManager::class)->flush();
+        app(ShopLocales::class)->refresh();
     }
 }

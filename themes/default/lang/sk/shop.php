@@ -148,6 +148,7 @@ return [
     'returns_question' => 'Potrebujete tovar vrátiť alebo reklamovať?',
     'returns_withdraw_link' => 'Odstúpiť od zmluvy',
     'returns_complaint_link' => 'Reklamovať tovar',
+    'language' => 'Jazyk',
     'pay_online' => 'Zaplatiť kartou',
     'payment_success' => 'Platba bola prijatá. Ďakujeme!',
     'payment_cancelled' => 'Platba nebola dokončená. Môžete to skúsiť znova.',

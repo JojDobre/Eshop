@@ -6,6 +6,7 @@ use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
+use App\Filament\Tables\MissingTranslationsColumn;
 use App\Settings\TaxSettings;
 use BackedEnum;
 use Filament\Actions\BulkAction;
@@ -173,6 +174,7 @@ class ProductResource extends Resource
                     ->searchable(query: fn (Builder $query, string $search) => $query->search($search))
                     ->sortable(query: fn (Builder $query, string $direction) => $query->orderBy('name->'.app(Product::class)->getLocale(), $direction))
                     ->wrap(),
+                MissingTranslationsColumn::make(),
                 TextColumn::make('price')->label($t('price'))
                     ->state(fn (Product $record) => $record->priceIn())
                     ->formatStateUsing(fn (?int $state) => $state === null ? '—' : Price::format($state, app(CurrencyContext::class)->current())),

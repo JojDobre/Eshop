@@ -2,6 +2,9 @@
 
 namespace Modules\Storefront\Http\Controllers;
 
+use App\Core\Content\ContentLocale;
+use App\Core\Content\LocalizedUrls;
+use App\Core\Content\ShopLocales;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Storefront\Sitemap\SitemapRegistry;
@@ -9,15 +12,28 @@ use Modules\Storefront\Sitemap\SitemapUrl;
 
 class SeoController extends Controller
 {
-    public function sitemap(SitemapRegistry $registry): Response
+    public function sitemap(SitemapRegistry $registry, ShopLocales $locales, LocalizedUrls $urls, ContentLocale $content): Response
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
-        $xml .= $this->url(new SitemapUrl(route('storefront.home')));
+        $original = $content->current();
 
-        foreach ($registry->urls() as $url) {
-            $xml .= $this->url($url);
+        // Adresy v každom jazyku obchodu (preložené adresy a predpona jazyka).
+        foreach ($locales->enabled() as $locale) {
+            $content->set($locale);
+
+            $xml .= $urls->in($locale, function () use ($registry): string {
+                $part = $this->url(new SitemapUrl(route('storefront.home')));
+
+                foreach ($registry->urls() as $url) {
+                    $part .= $this->url($url);
+                }
+
+                return $part;
+            });
         }
+
+        $content->set($original);
 
         $xml .= '</urlset>'."\n";
 

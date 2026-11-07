@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Http\Controllers;
 
+use App\Core\Content\AlternateUrls;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
 use Modules\Catalog\Models\Product;
@@ -15,6 +16,7 @@ class ProductController extends Controller
             ->with(['prices', 'categories', 'taxRate', 'manufacturer', 'options.values', 'variants' => fn ($query) => $query->where('is_active', true)->with(['values', 'prices'])])
             ->firstOrFail();
         $category = $product->categories->firstWhere('is_visible', true);
+        app(AlternateUrls::class)->using(fn () => $product->url());
 
         $related = $category === null ? collect() : Product::query()->visible()
             ->whereKeyNot($product->id)

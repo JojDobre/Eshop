@@ -2,6 +2,7 @@
 
 namespace Modules\Orders\Models;
 
+use App\Core\Content\LocalizedUrls;
 use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Builder;
@@ -191,7 +192,8 @@ class Order extends Model
 
     public function publicUrl(): string
     {
-        return route('orders.show', $this->token);
+        // Odkaz v jazyku objednávky (aj keď ho vytvára administrácia alebo e-mail).
+        return app(LocalizedUrls::class)->in($this->locale, fn () => route('orders.show', $this->token));
     }
 
     public function billingCompanyLine(): ?string

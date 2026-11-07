@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EmailTemplates\Pages;
 
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
+use App\Filament\Concerns\FillsContentTranslations;
 use App\Filament\Resources\EmailTemplates\EmailTemplateResource;
 use App\Models\EmailTemplate;
 use App\Settings\GeneralSettings;
@@ -23,6 +24,9 @@ use Throwable;
  */
 class EditEmailTemplate extends EditRecord
 {
+    // Prepínač jazyka a ukladanie do zvoleného jazyka (vlastné načítanie formulára je nižšie).
+    use FillsContentTranslations;
+
     protected static string $resource = EmailTemplateResource::class;
 
     /**
@@ -33,9 +37,9 @@ class EditEmailTemplate extends EditRecord
      */
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $locale = $this->record->getLocale();
+        $locale = $this->currentEditingLocale();
         $data['subject'] = $this->record->getTranslation('subject', $locale, false) ?: null;
-        $data['body'] = $this->record->getTranslation('body', $locale, false) ?: $this->definition()->defaultBody();
+        $data['body'] = $this->record->getTranslation('body', $locale, false) ?: $this->definition()->defaultBody($locale);
 
         return $data;
     }
@@ -50,11 +54,13 @@ class EditEmailTemplate extends EditRecord
     {
         $normalize = fn (?string $text) => trim(str_replace("\r\n", "\n", (string) $text));
 
-        if ($normalize($data['body'] ?? null) === $normalize($this->definition()->defaultBody())) {
+        $locale = $this->currentEditingLocale();
+
+        if ($normalize($data['body'] ?? null) === $normalize($this->definition()->defaultBody($locale))) {
             $data['body'] = null;
         }
 
-        if ($normalize($data['subject'] ?? null) === '' || $normalize($data['subject']) === $normalize($this->definition()->defaultSubject())) {
+        if ($normalize($data['subject'] ?? null) === '' || $normalize($data['subject']) === $normalize($this->definition()->defaultSubject($locale))) {
             $data['subject'] = null;
         }
 
@@ -66,6 +72,7 @@ class EditEmailTemplate extends EditRecord
         $t = fn (string $key) => __('admin.email_templates.'.$key);
 
         return [
+            ...$this->localeSwitcherActions(),
             Action::make('preview')
                 ->label($t('preview'))
                 ->icon(Heroicon::OutlinedEye)
@@ -104,7 +111,7 @@ class EditEmailTemplate extends EditRecord
                 ->requiresConfirmation()
                 ->modalDescription($t('reset_confirm'))
                 ->action(function () use ($t): void {
-                    $locale = $this->record->getLocale();
+                    $locale = $this->currentEditingLocale();
                     $this->record->forgetTranslation('subject', $locale)->forgetTranslation('body', $locale)->save();
                     $this->fillForm();
                     Notification::make()->success()->title($t('reset_done'))->send();
@@ -129,8 +136,8 @@ class EditEmailTemplate extends EditRecord
         $definition = $this->definition();
 
         return app(EmailTemplates::class)->fill(
-            (string) (($state['subject'] ?? null) ?: $definition->defaultSubject()),
-            (string) (($state['body'] ?? null) ?: $definition->defaultBody()),
+            (string) (($state['subject'] ?? null) ?: $definition->defaultSubject($this->currentEditingLocale())),
+            (string) (($state['body'] ?? null) ?: $definition->defaultBody($this->currentEditingLocale())),
             $definition->sample,
             array_keys($definition->sample), // ukážkové hodnoty sú dôveryhodné (z kódu modulu)
         );

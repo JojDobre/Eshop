@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Http\Controllers;
 
+use App\Core\Content\AlternateUrls;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -16,6 +17,8 @@ class CategoryController extends Controller
     public function __invoke(Request $request, string $slug, CustomFieldFilters $filters): View
     {
         $category = Category::query()->visible()->whereSlug($slug)->firstOrFail();
+        // Filtre a stránkovanie ostanú zachované aj v adrese pre iný jazyk.
+        app(AlternateUrls::class)->using(fn () => $category->url().(request()->getQueryString() ? '?'.request()->getQueryString() : ''));
         $sort = $this->sortOption($request);
         $selected = $filters->input($request->query('f'));
 

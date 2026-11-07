@@ -55,6 +55,33 @@ return [
         'en' => 'English',
     ],
 
+    /*
+    | Jazyky, ktoré sa dajú pridať ako ďalšie jazyky obsahu obchodu. Texty rozhrania
+    | (tlačidlá, e-maily) sú v slovenčine, češtine a angličtine; ostatné jazyky použijú
+    | anglické texty rozhrania, kým sa nedoplnia preklady.
+    */
+    'content_locales' => [
+        'sk' => 'Slovenčina',
+        'cs' => 'Čeština',
+        'en' => 'English',
+        'de' => 'Deutsch',
+        'pl' => 'Polski',
+        'hu' => 'Magyar',
+        'uk' => 'Українська',
+        'it' => 'Italiano',
+        'fr' => 'Français',
+        'es' => 'Español',
+        'ro' => 'Română',
+        'hr' => 'Hrvatski',
+        'sl' => 'Slovenščina',
+    ],
+
+    // Predpona v adrese, ak sa líši od kódu jazyka (napr. čeština „/cz/…").
+    'locale_url_codes' => [
+        'cs' => 'cz',
+        'uk' => 'ua',
+    ],
+
     'currencies' => [
         'EUR' => '€',
         'CZK' => 'Kč',

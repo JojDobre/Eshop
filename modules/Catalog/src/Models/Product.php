@@ -4,6 +4,7 @@ namespace Modules\Catalog\Models;
 
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
+use App\Core\Content\LocalizedUrls;
 use App\Core\Support\CurrencyContext;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -388,7 +389,7 @@ class Product extends Model
 
     public function url(): string
     {
-        return route('catalog.product', $this->slug);
+        return route('catalog.product', $this->slugIn(app(LocalizedUrls::class)->current()) ?? $this->slug);
     }
 
     /**

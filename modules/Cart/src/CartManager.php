@@ -143,6 +143,20 @@ class CartManager
         return new CartSummary($lines, $currency);
     }
 
+    /**
+     * Zľavový kód uložený pri košíku (overuje ho modul Objednávky).
+     */
+    public function couponCode(): ?string
+    {
+        return $this->current()?->coupon_code;
+    }
+
+    public function setCouponCode(?string $code): void
+    {
+        $cart = $code === null ? $this->current() : $this->currentOrCreate();
+        $cart?->update(['coupon_code' => $code]);
+    }
+
     public function itemCount(): int
     {
         $cart = $this->current();

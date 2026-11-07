@@ -17,6 +17,10 @@ return [
     'price' => 'Cena',
     'free_from' => 'Zdarma od částky objednávky',
     'free_from_help' => 'Nepovinné. Pokud objednávka dosáhne této částky, doprava je zdarma.',
+    'weight_rates' => 'Ceny podle hmotnosti',
+    'weight_rates_help' => 'Nepovinné. Cena podle hmotnosti objednávky; těžší objednávky než poslední pásmo tuto dopravu neuvidí. Bez pásem platí základní cena.',
+    'up_to' => 'Do hmotnosti',
+    'add_weight_rate' => 'Přidat pásmo',
     'position' => 'Pořadí',
     'is_active' => 'Aktivní',
 ];

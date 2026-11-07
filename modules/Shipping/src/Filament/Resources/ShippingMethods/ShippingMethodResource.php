@@ -8,6 +8,7 @@ use App\Filament\Forms\MoneyInput;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -77,6 +78,14 @@ class ShippingMethodResource extends Resource
                     ->visible(fn (Get $get) => $get('type') === ShippingType::Pickup || $get('type') === ShippingType::Pickup->value),
                 MoneyInput::make('price')->label($t('price'))->required()->default(0),
                 MoneyInput::make('free_from')->label($t('free_from'))->helperText($t('free_from_help')),
+                Repeater::make('weight_rates')->label($t('weight_rates'))->helperText($t('weight_rates_help'))
+                    ->schema([
+                        TextInput::make('up_to')->label($t('up_to'))->required()->rule('regex:/^\d+([.,]\d{1,3})?$/')->suffix('kg')
+                            ->formatStateUsing(fn ($state) => is_numeric($state) ? rtrim(rtrim(number_format($state / 1000, 3, '.', ''), '0'), '.') : $state)
+                            ->dehydrateStateUsing(fn ($state) => (int) round((float) str_replace(',', '.', (string) $state) * 1000)),
+                        MoneyInput::make('price')->label($t('price'))->required(),
+                    ])
+                    ->columns(2)->defaultItems(0)->addActionLabel($t('add_weight_rate'))->columnSpanFull(),
                 TextInput::make('position')->label($t('position'))->integer()->default(0)->minValue(0),
                 Toggle::make('is_active')->label($t('is_active'))->default(true)->inline(false),
             ]),

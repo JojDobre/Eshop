@@ -54,9 +54,17 @@
                 </ul>
 
                 <aside class="h-fit rounded-2xl bg-zinc-50 p-6">
-                    <dl class="flex justify-between text-base font-semibold">
-                        <dt>{{ __('theme::shop.subtotal') }}</dt>
-                        <dd>{{ format_price($summary->subtotal()) }}</dd>
+                    <dl class="space-y-2">
+                        <div class="flex justify-between text-base font-semibold">
+                            <dt>{{ __('theme::shop.subtotal') }}</dt>
+                            <dd>{{ format_price($summary->subtotal()) }}</dd>
+                        </div>
+                        @if (! empty($coupon))
+                            <div class="flex justify-between text-sm text-emerald-700">
+                                <dt>{{ __('theme::shop.discount_code', ['code' => $coupon->code]) }}</dt>
+                                <dd>{{ $couponDiscount > 0 ? '−'.format_price($couponDiscount) : __('theme::shop.free_shipping') }}</dd>
+                            </div>
+                        @endif
                     </dl>
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.shipping_calculated_at_checkout') }}</p>
 
@@ -69,6 +77,25 @@
                             <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-200">
                                 <div class="h-full rounded-full bg-primary" style="width: {{ min(100, (int) round($summary->subtotal() / max(1, $freeShippingFrom) * 100)) }}%"></div>
                             </div>
+                        </div>
+                    @endif
+
+                    @if (! empty($couponsEnabled))
+                        <div class="mt-5 border-t border-zinc-200 pt-5">
+                            @if (! empty($coupon))
+                                <form method="POST" action="{{ route('coupon.remove') }}" class="flex items-center justify-between text-sm">
+                                    @csrf @method('DELETE')
+                                    <span>{{ __('theme::shop.coupon_applied', ['code' => $coupon->code]) }}</span>
+                                    <button type="submit" class="text-zinc-600 underline underline-offset-2 hover:text-zinc-900">{{ __('theme::shop.remove_coupon') }}</button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('coupon.apply') }}" class="flex gap-2">
+                                    @csrf
+                                    <label for="coupon-code" class="sr-only">{{ __('theme::shop.coupon') }}</label>
+                                    <input id="coupon-code" name="code" placeholder="{{ __('theme::shop.coupon') }}" class="input py-1.5" autocomplete="off">
+                                    <button type="submit" class="btn btn-secondary py-1.5">{{ __('theme::shop.apply') }}</button>
+                                </form>
+                            @endif
                         </div>
                     @endif
 

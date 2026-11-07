@@ -125,8 +125,10 @@ class OrderResource extends Resource
                             TextEntry::make('unit_price')->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
                             TextEntry::make('total')->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
                         ]),
-                    Grid::make(4)->schema([
+                    Grid::make(5)->schema([
                         TextEntry::make('subtotal')->label($t('subtotal'))->formatStateUsing(fn (Order $record) => $money($record, $record->subtotal)),
+                        TextEntry::make('discount')->label($t('discount'))
+                            ->formatStateUsing(fn (Order $record) => $record->discount > 0 ? '−'.$money($record, $record->discount).' ('.$record->coupon_code.')' : '—'),
                         TextEntry::make('shipping_price')->label($t('shipping'))->formatStateUsing(fn (Order $record) => $money($record, $record->shipping_price)),
                         TextEntry::make('payment_fee')->label($t('payment_fee'))->formatStateUsing(fn (Order $record) => $money($record, $record->payment_fee)),
                         TextEntry::make('total')->label($t('total'))->weight('bold')->formatStateUsing(fn (Order $record) => $money($record, $record->total)),

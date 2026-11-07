@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $token
  * @property string $currency
+ * @property string|null $coupon_code
  * @property-read Collection<int, CartItem> $items
  */
 class Cart extends Model

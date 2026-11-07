@@ -5,4 +5,10 @@ return [
     'out_of_stock' => '":product" has sold out or there is not enough in stock.',
     'payment_not_available' => 'The selected payment method is not available for the chosen shipping.',
     'not_enough_stock_to_restore' => 'The order cannot be restored: not enough ":product" in stock.',
+    'coupon_invalid' => 'This discount code is not valid.',
+    'coupon_expired' => 'This discount code has expired.',
+    'coupon_used_up' => 'This discount code has been used up.',
+    'coupon_min_order' => 'This discount code applies to orders from :amount.',
+    'coupon_applied' => 'Discount code :code has been applied.',
+    'coupon_removed' => 'The discount code has been removed.',
 ];

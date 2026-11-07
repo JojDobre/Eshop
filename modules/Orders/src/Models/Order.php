@@ -47,6 +47,8 @@ use Modules\Tax\TaxCalculator;
  * @property PaymentType $payment_type
  * @property string|null $payment_instructions
  * @property int $payment_fee
+ * @property string|null $coupon_code
+ * @property int $discount
  * @property int $subtotal
  * @property int $total
  * @property string|null $customer_note
@@ -72,6 +74,7 @@ class Order extends Model
             'shipping_tax_rate' => 'float',
             'payment_tax_rate' => 'float',
             'payment_fee' => 'integer',
+            'discount' => 'integer',
             'subtotal' => 'integer',
             'total' => 'integer',
             'terms_accepted_at' => 'datetime',
@@ -113,6 +116,18 @@ class Order extends Model
     public function vatBreakdown(): array
     {
         $lines = $this->items->map(fn (OrderItem $item) => ['gross' => $item->total, 'rate' => (float) $item->tax_rate])->all();
+
+        // Zľava sa rozdelí na sadzby DPH pomerne podľa hodnoty tovaru (doprava a platba sa nezľavujú).
+        if ($this->discount > 0) {
+            $itemsTotal = max(1, array_sum(array_column($lines, 'gross')));
+            $remaining = $this->discount;
+
+            foreach ($lines as $index => $line) {
+                $share = $index === array_key_last($lines) ? $remaining : (int) round($this->discount * $line['gross'] / $itemsTotal);
+                $lines[$index]['gross'] -= $share;
+                $remaining -= $share;
+            }
+        }
 
         if ($this->shipping_price > 0) {
             $lines[] = ['gross' => $this->shipping_price, 'rate' => (float) $this->shipping_tax_rate];

@@ -25,7 +25,15 @@ class OrdersServiceProvider extends ModuleServiceProvider
         // Košík: koľko chýba do dopravy zadarmo (najnižšia hranica zo spôsobov doručenia).
         View::composer('theme::templates.cart', function (\Illuminate\View\View $view): void {
             $threshold = ShippingMethod::query()->active()->whereNotNull('free_from')->where('price', '>', 0)->min('free_from');
-            $view->with('freeShippingFrom', $threshold === null ? null : (int) $threshold);
+            $summary = $view->getData()['summary'] ?? null;
+            $coupon = $summary ? app(Coupons::class)->forCart($summary) : null;
+
+            $view->with([
+                'freeShippingFrom' => $threshold === null ? null : (int) $threshold,
+                'coupon' => $coupon,
+                'couponDiscount' => $coupon && $summary ? $coupon->discountFor($summary->subtotal()) : 0,
+                'couponsEnabled' => true,
+            ]);
         });
     }
 }

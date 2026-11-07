@@ -4,6 +4,7 @@ return [
     'product' => 'Product',
     'quantity' => 'Qty',
     'price' => 'Price',
+    'discount' => 'Discount (:code)',
     'total' => 'Total',
     'confirmation' => [
         'subject' => 'Order confirmation no. :number',

@@ -12,6 +12,7 @@ use Modules\Catalog\StockService;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Events\OrderPlaced;
+use Modules\Orders\Models\Coupon;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderHistoryEntry;
 use Modules\Orders\NumberSequence;
@@ -42,6 +43,7 @@ class PlaceOrder
         array $customer,
         string $locale,
         ?string $ipAddress = null,
+        ?Coupon $coupon = null,
     ): Order {
         if (! $cart->canCheckout()) {
             throw new CheckoutException(__('orders::messages.cart_changed'));
@@ -51,11 +53,12 @@ class PlaceOrder
             throw new CheckoutException(__('orders::messages.payment_not_available'));
         }
 
-        $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress): Order {
+        $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress, $coupon): Order {
             $number = $this->numbers->nextOrderNumber();
             $this->reserveStock($cart, $number);
+            $coupon = $this->claimCoupon($coupon, $cart);
 
-            $totals = CheckoutTotals::calculate($cart, $shipping, $payment);
+            $totals = CheckoutTotals::calculate($cart, $shipping, $payment, $coupon);
             $needsAddress = $shipping->type->requiresShippingAddress();
             // Doprava a platba sa zdaňujú predvolenou (základnou) sadzbou.
             $serviceRate = $this->tax->effectiveRate(Product::defaultVatRate());
@@ -85,6 +88,8 @@ class PlaceOrder
                 'payment_type' => $payment->type,
                 'payment_instructions' => $payment->instructions,
                 'payment_fee' => $totals->paymentFee,
+                'coupon_code' => $coupon?->code,
+                'discount' => $totals->discount,
                 'subtotal' => $totals->subtotal,
                 'total' => $totals->total(),
                 'terms_accepted_at' => now(),
@@ -114,6 +119,26 @@ class PlaceOrder
         OrderPlaced::dispatch($order);
 
         return $order;
+    }
+
+    /**
+     * Overí kupón ešte raz (zamknutý riadok, aby sa neprekročil limit použití) a započíta použitie.
+     */
+    private function claimCoupon(?Coupon $coupon, CartSummary $cart): ?Coupon
+    {
+        if ($coupon === null) {
+            return null;
+        }
+
+        $locked = Coupon::query()->whereKey($coupon->id)->lockForUpdate()->first();
+
+        if ($locked === null || ($reason = $locked->rejectionReason($cart->subtotal(), $cart->currency)) !== null) {
+            throw new CheckoutException($reason ?? __('orders::messages.coupon_invalid'));
+        }
+
+        $locked->increment('used_count');
+
+        return $locked;
     }
 
     /**

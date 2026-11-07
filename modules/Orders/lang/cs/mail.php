@@ -4,6 +4,7 @@ return [
     'product' => 'Produkt',
     'quantity' => 'Ks',
     'price' => 'Cena',
+    'discount' => 'Sleva (:code)',
     'total' => 'Celkem',
     'confirmation' => [
         'subject' => 'Potvrzení objednávky č. :number',

@@ -57,6 +57,9 @@
             </ul>
             <dl class="mt-4 space-y-2 text-sm">
                 <div class="flex justify-between"><dt>{{ __('theme::shop.subtotal') }}</dt><dd>{{ $money($order->subtotal) }}</dd></div>
+                @if ($order->discount > 0)
+                    <div class="flex justify-between text-emerald-700"><dt>{{ __('theme::shop.discount_code', ['code' => $order->coupon_code]) }}</dt><dd>−{{ $money($order->discount) }}</dd></div>
+                @endif
                 <div class="flex justify-between"><dt>{{ $order->shipping_method_name }}</dt><dd>{{ $money($order->shipping_price) }}</dd></div>
                 @if ($order->payment_fee > 0)
                     <div class="flex justify-between"><dt>{{ $order->payment_method_name }}</dt><dd>{{ $money($order->payment_fee) }}</dd></div>

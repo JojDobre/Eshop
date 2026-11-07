@@ -14,6 +14,9 @@
 @if ($order->payment_fee > 0)
 | {{ $order->payment_method_name }} | | {{ $money($order->payment_fee) }} |
 @endif
+@if ($order->discount > 0)
+| {{ __('orders::mail.discount', ['code' => $order->coupon_code]) }} | | −{{ $money($order->discount) }} |
+@endif
 | **{{ __('orders::mail.total') }}** | | **{{ $money($order->total) }}** |
 </x-mail::table>
 

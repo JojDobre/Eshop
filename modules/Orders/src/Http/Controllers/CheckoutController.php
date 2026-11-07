@@ -10,7 +10,9 @@ use Modules\Cart\CartManager;
 use Modules\Orders\Actions\PlaceOrder;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutTotals;
+use Modules\Orders\Coupons;
 use Modules\Orders\Http\Requests\CheckoutRequest;
+use Modules\Orders\Models\Coupon;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
 use Modules\Storefront\Pages\LegalPages;
@@ -27,8 +29,11 @@ class CheckoutController extends Controller
             return redirect()->route('cart.show');
         }
 
-        $shippingMethods = ShippingMethod::query()->active()->get();
+        $coupon = app(Coupons::class)->forCart($summary);
+        $weight = $summary->weight();
+        $shippingMethods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight))->values();
         $paymentMethods = PaymentMethod::query()->active()->with('shippingMethods')->get();
+        $afterDiscount = $summary->subtotal() - ($coupon?->discountFor($summary->subtotal()) ?? 0);
 
         return view('theme::templates.checkout', [
             'summary' => $summary,
@@ -38,8 +43,11 @@ class CheckoutController extends Controller
             'paymentAvailability' => $shippingMethods->mapWithKeys(fn (ShippingMethod $shipping) => [
                 $shipping->id => $paymentMethods->filter(fn (PaymentMethod $payment) => $payment->isAvailableFor($shipping))->pluck('id')->values(),
             ]),
-            'shippingPrices' => $shippingMethods->mapWithKeys(fn (ShippingMethod $shipping) => [$shipping->id => $shipping->priceFor($summary->subtotal())]),
-            'totals' => CheckoutTotals::calculate($summary, null, null),
+            'shippingPrices' => $shippingMethods->mapWithKeys(fn (ShippingMethod $shipping) => [
+                $shipping->id => $coupon?->givesFreeShipping() ? 0 : $shipping->priceFor($afterDiscount, $weight),
+            ]),
+            'totals' => CheckoutTotals::calculate($summary, null, null, $coupon),
+            'coupon' => $coupon,
             'countries' => config('eshop.countries'),
             'legalPages' => app(LegalPages::class),
         ]);
@@ -51,7 +59,7 @@ class CheckoutController extends Controller
         $shipping = $request->shippingMethod();
         $payment = $request->paymentMethod();
 
-        if ($shipping === null || $payment === null || ! $payment->isAvailableFor($shipping)) {
+        if ($shipping === null || $payment === null || ! $payment->isAvailableFor($shipping) || ! $shipping->isAvailableForWeight($summary->weight())) {
             return back()->withInput()->withErrors(['payment_method_id' => __('orders::messages.payment_not_available')]);
         }
 
@@ -63,6 +71,7 @@ class CheckoutController extends Controller
                 customer: $request->customerData(),
                 locale: app(ContentLocale::class)->current(),
                 ipAddress: $request->ip(),
+                coupon: Coupon::findByCode($this->cart->couponCode()),
             );
         } catch (CheckoutException $e) {
             return redirect()->route('cart.show')->with('error', $e->getMessage());

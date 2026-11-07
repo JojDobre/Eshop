@@ -11,6 +11,9 @@
 @foreach ($order->items as $item)
 | {{ $item->fullName() }} | {{ $item->quantity }} | {{ $money($item->total) }} |
 @endforeach
+@if ($order->discount > 0)
+| {{ __('orders::mail.discount', ['code' => $order->coupon_code]) }} | | −{{ $money($order->discount) }} |
+@endif
 | **{{ __('orders::mail.total') }}** | | **{{ $money($order->total) }}** |
 </x-mail::table>
 

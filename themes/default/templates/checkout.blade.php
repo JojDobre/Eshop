@@ -12,6 +12,7 @@
         'isCompany' => (bool) old('is_company'),
         'different' => (bool) old('ship_to_different_address'),
         'subtotal' => $summary->subtotal(),
+        'discount' => $totals->discount,
         'availability' => $paymentAvailability,
         'shippingPrices' => $shippingPrices,
         'needsAddress' => $shippingMethods->mapWithKeys(fn ($method) => [$method->id => $method->type->requiresShippingAddress()]),
@@ -138,6 +139,12 @@
                 </ul>
                 <dl class="space-y-2 border-t border-zinc-200 pt-4 text-sm">
                     <div class="flex justify-between"><dt>{{ __('theme::shop.subtotal') }}</dt><dd>{{ format_price($summary->subtotal()) }}</dd></div>
+                    @if ($coupon)
+                        <div class="flex justify-between text-emerald-700">
+                            <dt>{{ __('theme::shop.discount_code', ['code' => $coupon->code]) }}</dt>
+                            <dd>{{ $totals->discount > 0 ? '−'.format_price($totals->discount) : __('theme::shop.free_shipping') }}</dd>
+                        </div>
+                    @endif
                     <div class="flex justify-between"><dt>{{ __('theme::shop.shipping') }}</dt><dd x-text="money(shippingPrices[shipping] ?? 0)">—</dd></div>
                     <div class="flex justify-between" x-show="(fees[payment] ?? 0) > 0" x-cloak><dt>{{ __('theme::shop.payment_fee') }}</dt><dd x-text="money(fees[payment] ?? 0)"></dd></div>
                     <div class="flex justify-between border-t border-zinc-200 pt-3 text-base font-semibold">
@@ -188,7 +195,7 @@
                     }
                 },
                 total() {
-                    return this.subtotal + (this.shippingPrices[this.shipping] || 0) + (this.fees[this.payment] || 0);
+                    return this.subtotal - this.discount + (this.shippingPrices[this.shipping] || 0) + (this.fees[this.payment] || 0);
                 },
                 money(minor) {
                     return new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency }).format(minor / 100);

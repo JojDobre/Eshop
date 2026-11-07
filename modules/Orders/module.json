@@ -1,7 +1,11 @@
 {
     "name": "orders",
-    "version": "0.2.0",
-    "title": { "sk": "Objednávky", "cs": "Objednávky", "en": "Orders" },
+    "version": "0.3.0",
+    "title": {
+        "sk": "Objednávky",
+        "cs": "Objednávky",
+        "en": "Orders"
+    },
     "description": {
         "sk": "Pokladňa, objednávky, e-maily o objednávke a ich správa v administrácii.",
         "cs": "Pokladna, objednávky, e-maily o objednávce a jejich správa v administraci.",
@@ -11,7 +15,15 @@
     "core": true,
     "requires": {
         "eshop": "^0.2",
-        "modules": { "catalog": "^0.2", "cart": "^0.2", "shipping": "^0.2", "payments": "^0.2" }
+        "modules": {
+            "catalog": "^0.3",
+            "cart": "^0.2",
+            "shipping": "^0.2",
+            "payments": "^0.2",
+            "tax": "^0.3"
+        }
     },
-    "permissions": ["orders.manage"]
+    "permissions": [
+        "orders.manage"
+    ]
 }

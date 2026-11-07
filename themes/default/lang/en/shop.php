@@ -39,6 +39,12 @@ return [
 
     'sku' => 'SKU',
     'price_includes_vat' => 'Price includes VAT',
+    'lowest_price_30_days' => 'Lowest price in the last 30 days: :price',
+    'not_vat_payer' => 'We are not registered for VAT.',
+    'product_safety' => 'Product safety',
+    'manufacturer' => 'Manufacturer',
+    'eu_responsible_person' => 'Responsible person in the EU',
+    'safety_information' => 'Safety information',
     'price_unavailable' => 'Price on request',
     'in_stock' => 'In stock',
     'in_stock_few' => 'Only :count left in stock',

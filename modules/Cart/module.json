@@ -1,7 +1,11 @@
 {
     "name": "cart",
     "version": "0.2.0",
-    "title": { "sk": "Košík", "cs": "Košík", "en": "Cart" },
+    "title": {
+        "sk": "Košík",
+        "cs": "Košík",
+        "en": "Cart"
+    },
     "description": {
         "sk": "Nákupný košík zákazníka.",
         "cs": "Nákupní košík zákazníka.",
@@ -11,6 +15,8 @@
     "core": true,
     "requires": {
         "eshop": "^0.2",
-        "modules": { "catalog": "^0.2" }
+        "modules": {
+            "catalog": "^0.3"
+        }
     }
 }

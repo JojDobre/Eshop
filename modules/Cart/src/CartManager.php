@@ -103,7 +103,7 @@ class CartManager
             return new CartSummary([], $currency);
         }
 
-        $cart->load('items.product.prices');
+        $cart->load('items.product.prices', 'items.product.taxRate');
         $lines = [];
 
         foreach ($cart->items as $item) {

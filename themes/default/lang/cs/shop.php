@@ -39,6 +39,12 @@ return [
 
     'sku' => 'Kód',
     'price_includes_vat' => 'Cena včetně DPH',
+    'lowest_price_30_days' => 'Nejnižší cena za posledních 30 dní: :price',
+    'not_vat_payer' => 'Nejsme plátci DPH.',
+    'product_safety' => 'Bezpečnost produktu',
+    'manufacturer' => 'Výrobce',
+    'eu_responsible_person' => 'Odpovědná osoba v EU',
+    'safety_information' => 'Bezpečnostní informace',
     'price_unavailable' => 'Cena na vyžádání',
     'in_stock' => 'Skladem',
     'in_stock_few' => 'Skladem poslední kusy (:count ks)',

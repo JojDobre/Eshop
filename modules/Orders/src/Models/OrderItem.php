@@ -30,6 +30,7 @@ class OrderItem extends Model
             'quantity' => 'integer',
             'unit_price' => 'integer',
             'total' => 'integer',
+            'tax_rate' => 'float',
         ];
     }
 

@@ -11,6 +11,7 @@ use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 use Modules\Payments\PaymentType;
 use Modules\Shipping\ShippingType;
+use Modules\Tax\TaxCalculator;
 
 /**
  * @property int $id
@@ -66,7 +67,10 @@ class Order extends Model
             'payment_status' => PaymentStatus::class,
             'shipping_type' => ShippingType::class,
             'payment_type' => PaymentType::class,
+            'vat_payer' => 'boolean',
             'shipping_price' => 'integer',
+            'shipping_tax_rate' => 'float',
+            'payment_tax_rate' => 'float',
             'payment_fee' => 'integer',
             'subtotal' => 'integer',
             'total' => 'integer',
@@ -99,6 +103,26 @@ class Order extends Model
     public function scopeCounted(Builder $query): void
     {
         $query->where('status', '!=', OrderStatus::Cancelled);
+    }
+
+    /**
+     * Rozpis DPH podľa sadzieb (tovar, doprava, platba).
+     *
+     * @return array<string, array{rate: float, net: int, vat: int, gross: int}>
+     */
+    public function vatBreakdown(): array
+    {
+        $lines = $this->items->map(fn (OrderItem $item) => ['gross' => $item->total, 'rate' => (float) $item->tax_rate])->all();
+
+        if ($this->shipping_price > 0) {
+            $lines[] = ['gross' => $this->shipping_price, 'rate' => (float) $this->shipping_tax_rate];
+        }
+
+        if ($this->payment_fee > 0) {
+            $lines[] = ['gross' => $this->payment_fee, 'rate' => (float) $this->payment_tax_rate];
+        }
+
+        return TaxCalculator::breakdown($lines);
     }
 
     public function isPaid(): bool

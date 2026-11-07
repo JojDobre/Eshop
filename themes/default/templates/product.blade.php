@@ -5,6 +5,10 @@
     $images = $product->imageUrls();
     $available = $price !== null && $product->isAvailable();
     $maxQuantity = $product->maxPurchasableQuantity();
+    $compareAt = $product->compareAtPriceIn();
+    $lowest30 = $compareAt ? $product->lowestPriceIn30Days() : null;
+    $manufacturer = $product->manufacturer;
+    $safetyInfo = $product->safety_info ?: $manufacturer?->safety_info;
 @endphp
 
 @section('title', $product->meta_title ?: $product->name)
@@ -70,8 +74,19 @@
                     <p class="mt-2 text-sm text-zinc-500">{{ __('theme::shop.sku') }}: {{ $product->sku }}</p>
                 @endif
 
-                <p class="mt-6 text-3xl font-semibold">{{ $price !== null ? format_price($price) : __('theme::shop.price_unavailable') }}</p>
-                <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
+                <div class="mt-6 flex flex-wrap items-baseline gap-3">
+                    <p class="text-3xl font-semibold">{{ $price !== null ? format_price($price) : __('theme::shop.price_unavailable') }}</p>
+                    @if ($compareAt)
+                        <del class="text-lg text-zinc-500">{{ format_price($compareAt) }}</del>
+                        <span class="rounded-full bg-primary px-2.5 py-0.5 text-sm font-semibold text-primary-foreground">−{{ (int) round((1 - $price / $compareAt) * 100) }} %</span>
+                    @endif
+                </div>
+                @if ($lowest30)
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.lowest_price_30_days', ['price' => format_price($lowest30)]) }}</p>
+                @endif
+                @if ($vatPayer)
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
+                @endif
 
                 <p @class(['mt-4 inline-flex items-center gap-2 text-sm font-medium', 'text-emerald-700' => $available, 'text-zinc-500' => ! $available])>
                     <span @class(['size-2 rounded-full', 'bg-emerald-500' => $available, 'bg-zinc-400' => ! $available]) aria-hidden="true"></span>
@@ -94,6 +109,39 @@
 
                 @if ($product->description)
                     <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{!! $product->description !!}</div>
+                @endif
+
+                @if ($manufacturer || $safetyInfo)
+                    <details class="group mt-8 border-t border-zinc-100 pt-6 text-sm">
+                        <summary class="cursor-pointer list-none font-medium marker:hidden">
+                            <span class="inline-flex items-center gap-2">{{ __('theme::shop.product_safety') }}
+                                <svg class="size-4 transition group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                            </span>
+                        </summary>
+                        <div class="mt-4 space-y-4 text-zinc-600">
+                            @if ($manufacturer)
+                                <div>
+                                    <p class="font-medium text-zinc-900">{{ __('theme::shop.manufacturer') }}</p>
+                                    <p>{{ $manufacturer->name }}</p>
+                                    @if ($manufacturer->address)<p>{!! nl2br(e($manufacturer->address)) !!}</p>@endif
+                                    @if ($manufacturer->email)<p><a href="mailto:{{ $manufacturer->email }}" class="underline">{{ $manufacturer->email }}</a></p>@endif
+                                    @if ($manufacturer->website)<p><a href="{{ $manufacturer->website }}" class="underline" rel="nofollow noopener" target="_blank">{{ $manufacturer->website }}</a></p>@endif
+                                </div>
+                                @if ($manufacturer->eu_responsible_person)
+                                    <div>
+                                        <p class="font-medium text-zinc-900">{{ __('theme::shop.eu_responsible_person') }}</p>
+                                        <p>{!! nl2br(e($manufacturer->eu_responsible_person)) !!}</p>
+                                    </div>
+                                @endif
+                            @endif
+                            @if ($safetyInfo)
+                                <div>
+                                    <p class="font-medium text-zinc-900">{{ __('theme::shop.safety_information') }}</p>
+                                    <p>{!! nl2br(e($safetyInfo)) !!}</p>
+                                </div>
+                            @endif
+                        </div>
+                    </details>
                 @endif
             </div>
         </div>

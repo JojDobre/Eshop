@@ -11,15 +11,18 @@
     "license": "proprietary",
     "require": {
         "php": "^8.3",
+        "barryvdh/laravel-dompdf": "^3.1",
         "brick/money": "^0.15.2",
         "composer/semver": "^3.6",
         "filament/filament": "^5.11",
         "filament/spatie-laravel-settings-plugin": "^5.11",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
+        "spatie/laravel-backup": "^10.3",
         "spatie/laravel-permission": "^8.5",
         "spatie/laravel-settings": "^3.10",
-        "spatie/laravel-translatable": "^6.14"
+        "spatie/laravel-translatable": "^6.14",
+        "stripe/stripe-php": "^22.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

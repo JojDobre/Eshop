@@ -145,7 +145,7 @@
                         <dd x-text="money(total())">{{ format_price($totals->total()) }}</dd>
                     </div>
                 </dl>
-                <p class="text-xs text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
+                <p class="text-xs text-zinc-500">{{ $vatPayer ? __('theme::shop.price_includes_vat') : __('theme::shop.not_vat_payer') }}</p>
 
                 <div>
                     <label class="flex items-start gap-3 text-sm">

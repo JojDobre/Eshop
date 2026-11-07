@@ -6,6 +6,7 @@ use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
+use App\Settings\TaxSettings;
 use BackedEnum;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -33,11 +34,14 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Catalog\Filament\Resources\Manufacturers\ManufacturerResource;
 use Modules\Catalog\Filament\Resources\Products\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\ListProducts;
+use Modules\Catalog\Filament\Resources\Products\RelationManagers\StockMovementsRelationManager;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
+use Modules\Tax\Models\TaxRate;
 use UnitEnum;
 
 class ProductResource extends Resource
@@ -97,6 +101,13 @@ class ProductResource extends Resource
                         ->imageResizeTargetWidth('2000')->imageResizeTargetHeight('2000')->imageResizeMode('contain')
                         ->imageResizeUpscale(false),
                 ]),
+                Section::make($t('section_safety'))->description($t('section_safety_help'))->collapsed()->schema([
+                    Select::make('manufacturer_id')->label($t('manufacturer'))
+                        ->relationship('manufacturer', 'name')
+                        ->searchable()->preload()
+                        ->createOptionForm(ManufacturerResource::formFields()),
+                    Textarea::make('safety_info')->label($t('safety_info'))->helperText($t('safety_info_help'))->rows(3)->maxLength(5000),
+                ]),
                 Section::make(__('catalog::admin.seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label(__('catalog::admin.meta_title'))->maxLength(70),
                     Textarea::make('meta_description')->label(__('catalog::admin.meta_description'))->rows(2)->maxLength(170),
@@ -111,14 +122,24 @@ class ProductResource extends Resource
                         ->multiple()->preload()->searchable(),
                 ]),
                 Section::make($t('section_price'))->schema([
-                    TextInput::make('price')->label($t('price'))->helperText($t('price_help'))
+                    TextInput::make('price')->label($t('price'))
+                        ->helperText(fn () => app(TaxSettings::class)->vat_payer && ! app(TaxSettings::class)->prices_include_vat ? $t('price_help_net') : $t('price_help'))
                         ->required()->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($currency),
+                    TextInput::make('compare_at_price')->label($t('compare_at_price'))->helperText($t('compare_at_price_help'))
+                        ->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($currency),
+                    Select::make('tax_rate_id')->label($t('tax_rate'))
+                        ->relationship('taxRate', 'id')
+                        ->getOptionLabelFromRecordUsing(fn (TaxRate $record) => $record->label())
+                        ->placeholder(fn () => ($default = TaxRate::default()) ? $t('tax_rate_default').': '.$default->label() : null)
+                        ->visible(fn () => app(TaxSettings::class)->vat_payer),
                     TextInput::make('sku')->label($t('sku'))->maxLength(64)->unique(ignoreRecord: true),
                 ]),
                 Section::make($t('section_stock'))->schema([
                     Toggle::make('track_stock')->label($t('track_stock'))->helperText($t('track_stock_help'))->default(true)->live(),
                     TextInput::make('stock_quantity')->label($t('stock_quantity'))->integer()->default(0)
                         ->visible(fn (Get $get) => (bool) $get('track_stock')),
+                    TextInput::make('low_stock_threshold')->label($t('low_stock_threshold'))->helperText($t('low_stock_threshold_help'))
+                        ->integer()->minValue(0)->visible(fn (Get $get) => (bool) $get('track_stock')),
                     TextInput::make('weight')->label($t('weight'))->integer()->minValue(0)->suffix('g'),
                 ]),
             ]),
@@ -174,6 +195,11 @@ class ProductResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [StockMovementsRelationManager::class];
     }
 
     public static function getGloballySearchableAttributes(): array

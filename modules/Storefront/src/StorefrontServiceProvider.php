@@ -6,6 +6,7 @@ use App\Core\Modules\ModuleServiceProvider;
 use App\Settings\BrandingSettings;
 use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
+use App\Settings\TaxSettings;
 use Illuminate\Support\Facades\View;
 use Modules\Storefront\Pages\LegalPages;
 use Modules\Storefront\Sitemap\SitemapRegistry;
@@ -34,7 +35,17 @@ class StorefrontServiceProvider extends ModuleServiceProvider
                 'branding' => app(BrandingSettings::class),
                 'company' => app(CompanySettings::class),
                 'legalPages' => app(LegalPages::class),
+                'vatPayer' => $this->vatPayer(),
             ]);
         });
+    }
+
+    private function vatPayer(): bool
+    {
+        try {
+            return app(TaxSettings::class)->vat_payer;
+        } catch (\Throwable) {
+            return true;
+        }
     }
 }

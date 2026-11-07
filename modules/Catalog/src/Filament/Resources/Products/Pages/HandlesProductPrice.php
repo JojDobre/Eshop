@@ -14,6 +14,8 @@ trait HandlesProductPrice
 {
     private ?int $pendingPrice = null;
 
+    private ?int $pendingCompareAt = null;
+
     /**
      * @param  array<string, mixed>  $data
      * @return array<string, mixed>
@@ -22,7 +24,8 @@ trait HandlesProductPrice
     {
         $currency = app(CurrencyContext::class)->current();
         $this->pendingPrice = isset($data['price']) && $data['price'] !== '' ? Price::toMinor((string) $data['price'], $currency) : null;
-        unset($data['price']);
+        $this->pendingCompareAt = isset($data['compare_at_price']) && $data['compare_at_price'] !== '' ? Price::toMinor((string) $data['compare_at_price'], $currency) : null;
+        unset($data['price'], $data['compare_at_price']);
 
         return $data;
     }
@@ -30,7 +33,7 @@ trait HandlesProductPrice
     private function savePrice(Product $product): void
     {
         if ($this->pendingPrice !== null) {
-            $product->setPrice(app(CurrencyContext::class)->current(), $this->pendingPrice);
+            $product->setPrice(app(CurrencyContext::class)->current(), $this->pendingPrice, $this->pendingCompareAt);
         }
     }
 }

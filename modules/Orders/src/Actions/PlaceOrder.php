@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Cart\CartSummary;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\StockMovement;
+use Modules\Catalog\StockService;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Events\OrderPlaced;
@@ -16,13 +18,18 @@ use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
+use Modules\Tax\TaxCalculator;
 
 /**
  * Vytvorí objednávku z košíka: overí dostupnosť, odpíše sklad a uloží kópiu všetkých údajov.
  */
 class PlaceOrder
 {
-    public function __construct(private readonly NumberSequence $numbers) {}
+    public function __construct(
+        private readonly NumberSequence $numbers,
+        private readonly StockService $stock,
+        private readonly TaxCalculator $tax,
+    ) {}
 
     /**
      * @param  array<string, mixed>  $customer  Overené údaje z pokladne (CheckoutRequest::customerData()).
@@ -44,10 +51,13 @@ class PlaceOrder
         }
 
         $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress): Order {
-            $this->reserveStock($cart);
+            $number = $this->numbers->nextOrderNumber();
+            $this->reserveStock($cart, $number);
 
             $totals = CheckoutTotals::calculate($cart, $shipping, $payment);
             $needsAddress = $shipping->type->requiresShippingAddress();
+            // Doprava a platba sa zdaňujú predvolenou (základnou) sadzbou.
+            $serviceRate = $this->tax->effectiveRate(Product::defaultVatRate());
 
             $order = Order::query()->create([
                 ...$customer,
@@ -55,7 +65,10 @@ class PlaceOrder
                     'shipping_name' => null, 'shipping_street' => null, 'shipping_city' => null,
                     'shipping_zip' => null, 'shipping_country' => null,
                 ]),
-                'number' => $this->numbers->nextOrderNumber(),
+                'number' => $number,
+                'vat_payer' => $this->tax->isVatPayer(),
+                'shipping_tax_rate' => $serviceRate,
+                'payment_tax_rate' => $serviceRate,
                 'token' => Str::random(48),
                 'status' => OrderStatus::New,
                 'payment_status' => PaymentStatus::Unpaid,
@@ -85,6 +98,7 @@ class PlaceOrder
                     'quantity' => $line->quantity,
                     'unit_price' => (int) $line->unitPrice,
                     'total' => $line->total(),
+                    'tax_rate' => $this->tax->effectiveRate($line->product->vatRate()),
                 ]);
             }
 
@@ -102,7 +116,7 @@ class PlaceOrder
     /**
      * Odpíše sklad. Riadky produktov sa zamknú, aby dvaja zákazníci nekúpili posledný kus naraz.
      */
-    private function reserveStock(CartSummary $cart): void
+    private function reserveStock(CartSummary $cart, string $orderNumber): void
     {
         foreach ($cart->lines as $line) {
             /** @var Product|null $product */
@@ -112,9 +126,7 @@ class PlaceOrder
                 throw new CheckoutException(__('orders::messages.out_of_stock', ['product' => $line->product->name]));
             }
 
-            if ($product->track_stock) {
-                $product->decrement('stock_quantity', $line->quantity);
-            }
+            $this->stock->adjust($product, -$line->quantity, StockMovement::ORDER, $orderNumber);
         }
     }
 }

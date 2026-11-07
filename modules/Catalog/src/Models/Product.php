@@ -5,13 +5,19 @@ namespace Modules\Catalog\Models;
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
 use App\Core\Support\CurrencyContext;
+use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\Catalog\StockService;
+use Modules\Tax\Models\TaxRate;
+use Modules\Tax\TaxCalculator;
 
 /**
  * @property int $id
@@ -38,7 +44,10 @@ class Product extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'slug', 'short_description', 'description', 'meta_title', 'meta_description'];
+    public array $translatable = ['name', 'slug', 'short_description', 'description', 'safety_info', 'meta_title', 'meta_description'];
+
+    /** Zmeny skladu cez StockService sa zapisujú samy, priame úpravy (formulár) sa zapíšu ako „edit". */
+    private static bool $loggingStock = true;
 
     protected $attributes = [
         'track_stock' => true,
@@ -54,6 +63,7 @@ class Product extends Model
             'stock_quantity' => 'integer',
             'weight' => 'integer',
             'is_visible' => 'boolean',
+            'low_stock_threshold' => 'integer',
         ];
     }
 
@@ -66,6 +76,73 @@ class Product extends Model
                 ...array_values($product->getTranslations('short_description')),
             ])));
         });
+
+        // Priama zmena množstva (napr. vo formulári administrácie) sa tiež zapíše do histórie skladu.
+        static::updated(function (Product $product): void {
+            if (self::$loggingStock && $product->track_stock && $product->wasChanged('stock_quantity')) {
+                $delta = $product->stock_quantity - (int) $product->getOriginal('stock_quantity');
+                app(StockService::class)->record($product, $delta, StockMovement::EDIT);
+            }
+        });
+    }
+
+    /**
+     * Vykoná zmenu skladu bez automatického zápisu (zapisuje ju volajúci, napr. StockService).
+     */
+    public static function withoutStockLogging(Closure $callback): mixed
+    {
+        $previous = self::$loggingStock;
+        self::$loggingStock = false;
+
+        try {
+            return $callback();
+        } finally {
+            self::$loggingStock = $previous;
+        }
+    }
+
+    /**
+     * @return BelongsTo<TaxRate, $this>
+     */
+    public function taxRate(): BelongsTo
+    {
+        return $this->belongsTo(TaxRate::class);
+    }
+
+    /**
+     * @return BelongsTo<Manufacturer, $this>
+     */
+    public function manufacturer(): BelongsTo
+    {
+        return $this->belongsTo(Manufacturer::class);
+    }
+
+    /**
+     * @return HasMany<StockMovement, $this>
+     */
+    public function stockMovements(): HasMany
+    {
+        return $this->hasMany(StockMovement::class)->latest('id');
+    }
+
+    /**
+     * Sadzba DPH produktu v percentách (sadzba produktu, inak predvolená sadzba obchodu).
+     */
+    public function vatRate(): float
+    {
+        if ($this->tax_rate_id !== null) {
+            return (float) ($this->taxRate?->rate ?? 0);
+        }
+
+        return self::defaultVatRate();
+    }
+
+    /**
+     * Predvolená sadzba DPH (načíta sa raz za požiadavku).
+     */
+    public static function defaultVatRate(): float
+    {
+        return once(fn () => (float) (TaxRate::default()?->rate ?? 0));
     }
 
     /**
@@ -107,19 +184,94 @@ class Product extends Model
     }
 
     /**
-     * Cena v danej mene (najmenšie jednotky, s DPH), alebo null, ak cena nie je zadaná.
+     * Cena pre zákazníka v danej mene (najmenšie jednotky, s DPH), alebo null, ak cena nie je zadaná.
      */
     public function priceIn(?string $currency = null): ?int
+    {
+        $entered = $this->enteredPriceIn($currency);
+
+        return $entered === null ? null : app(TaxCalculator::class)->grossFromEntered($entered, $this->vatRate());
+    }
+
+    /**
+     * Pôvodná (prečiarknutá) cena s DPH, ak je produkt v zľave.
+     */
+    public function compareAtPriceIn(?string $currency = null): ?int
+    {
+        $currency ??= app(CurrencyContext::class)->current();
+        $compareAt = $this->prices->firstWhere('currency', $currency)?->compare_at_amount;
+        $price = $this->priceIn($currency);
+
+        if ($compareAt === null || $price === null) {
+            return null;
+        }
+
+        $gross = app(TaxCalculator::class)->grossFromEntered($compareAt, $this->vatRate());
+
+        return $gross > $price ? $gross : null;
+    }
+
+    /**
+     * Cena tak, ako ju obchodník zadal (s DPH alebo bez DPH podľa nastavení).
+     */
+    public function enteredPriceIn(?string $currency = null): ?int
     {
         $currency ??= app(CurrencyContext::class)->current();
 
         return $this->prices->firstWhere('currency', $currency)?->amount;
     }
 
-    public function setPrice(string $currency, int $amount): void
+    public function enteredCompareAtPriceIn(?string $currency = null): ?int
     {
-        $this->prices()->updateOrCreate(['currency' => $currency], ['amount' => $amount]);
+        $currency ??= app(CurrencyContext::class)->current();
+
+        return $this->prices->firstWhere('currency', $currency)?->compare_at_amount;
+    }
+
+    /**
+     * Uloží cenu (a voliteľne pôvodnú cenu pri zľave). Zmena ceny sa zapíše do histórie cien.
+     */
+    public function setPrice(string $currency, int $amount, ?int $compareAt = null): void
+    {
+        $previous = $this->prices()->where('currency', $currency)->value('amount');
+
+        $this->prices()->updateOrCreate(['currency' => $currency], ['amount' => $amount, 'compare_at_amount' => $compareAt]);
         $this->unsetRelation('prices');
+
+        if ($previous === null || (int) $previous !== $amount) {
+            DB::table('product_price_history')->insert([
+                'product_id' => $this->id,
+                'currency' => $currency,
+                'amount' => $amount,
+                'recorded_at' => now(),
+            ]);
+        }
+    }
+
+    /**
+     * Najnižšia cena za posledných 30 dní (s DPH) – zobrazuje sa pri zľave podľa smernice Omnibus.
+     */
+    public function lowestPriceIn30Days(?string $currency = null): ?int
+    {
+        $currency ??= app(CurrencyContext::class)->current();
+        $since = now()->subDays(30);
+        $history = DB::table('product_price_history')
+            ->where('product_id', $this->id)->where('currency', $currency);
+
+        $amounts = (clone $history)->where('recorded_at', '>=', $since)->pluck('amount')->all();
+
+        // Cena platná na začiatku obdobia (posledná zmena pred ním).
+        $atStart = (clone $history)->where('recorded_at', '<', $since)->orderByDesc('recorded_at')->value('amount');
+
+        if ($atStart !== null) {
+            $amounts[] = $atStart;
+        }
+
+        if ($amounts === []) {
+            return null;
+        }
+
+        return app(TaxCalculator::class)->grossFromEntered((int) min($amounts), $this->vatRate());
     }
 
     /**

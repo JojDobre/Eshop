@@ -6,6 +6,8 @@ use App\Core\Events\EshopInstalled;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
+use Modules\Catalog\Events\StockLow;
+use Modules\Catalog\Listeners\NotifyAboutLowStock;
 use Modules\Catalog\Listeners\SeedDemoCatalog;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
@@ -24,6 +26,7 @@ class CatalogServiceProvider extends ModuleServiceProvider
         parent::boot();
 
         Event::listen(EshopInstalled::class, SeedDemoCatalog::class);
+        Event::listen(StockLow::class, NotifyAboutLowStock::class);
 
         // Kategórie v hlavičke obchodu.
         View::composer('theme::partials.header', function (\Illuminate\View\View $view): void {
@@ -37,6 +40,8 @@ class CatalogServiceProvider extends ModuleServiceProvider
                 'latestProducts' => Product::query()->visible()->with('prices')->latest()->limit(8)->get(),
             ]);
         });
+
+        $this->app->singleton(StockService::class);
 
         $this->app->make(SitemapRegistry::class)->add(function (): iterable {
             foreach (Category::query()->visible()->lazyById(200) as $category) {

@@ -1,5 +1,25 @@
 # Prehľad zmien
 
+## 0.7.0 – Rozšírený katalóg a sklad (krok 4b)
+
+Všetky novinky sa zapínajú v **Nastavenia → Funkcie obchodu** (predvolene vypnuté) a ich parametre
+sa menia v **Nastavenia → Katalóg**. Vypnutím sa nič nemaže.
+
+- **Typy produktov:** sady vlastných polí podľa typu, merná jednotka a cena za kg/l/m, produkty bez dopravy
+  (služby, digitálne), jedinečný kus (napr. zviera) – dá sa kúpiť iba raz.
+- **Vlastné polia** aj pre kategórie, výrobcov, zákazníkov a objednávky (pole v pokladni), textové
+  hodnoty v každom jazyku.
+- **Doplnkové voľby** k produktu s príplatkom a voliteľným textom (gravírovanie, darčekové balenie).
+- **Balíčky** viacerých produktov: dostupnosť a odpis skladu podľa zložiek, zobrazenie úspory.
+- **Viac skladov** s poradím výdaja, **šarže** s dátumom výroby a spotreby, výdaj od najskoršej expirácie
+  (FEFO), príjem, inventúra, presun a odpis, šarže na položkách objednávky (dohľadateľnosť).
+- **Expirácia:** tovar sa prestane predávať po dátume (alebo X dní pred ním), automatická zľava v lehote
+  upozornenia, dátum spotreby na webe.
+- **Predobjednávky** s očakávaným dátumom a limitom kusov, aj čiastočné.
+- **Digitálne produkty:** súbory na súkromnom disku, odkazy s limitom stiahnutí a platnosťou,
+  upraviteľný e-mail s odkazmi.
+- Odpis skladu si pamätá, odkiaľ sa tovar vydal – storno vráti presne to isté (aj zložky balíčka a šarže).
+
 ## 0.6.0 – Jazyky, meny a DPH v EÚ (krok 4a)
 
 - **Viac jazykov obchodu:** ďalšie jazyky v nastaveniach, predvolený jazyk bez predpony, ostatné

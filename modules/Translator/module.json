@@ -11,7 +11,7 @@
     "core": false,
     "enabled": true,
     "requires": {
-        "eshop": "^0.6"
+        "eshop": "^0.7"
     },
     "permissions": ["translations.manage"]
 }

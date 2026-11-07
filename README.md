@@ -3,11 +3,21 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4a – jazyky, meny a DPH v EÚ (0.6.0). Obchod predáva vo viacerých jazykoch a menách,
-> s DPH podľa krajín EÚ, variantmi, dokladmi, platbou kartou a zákazníckymi účtami.
+> **Stav:** krok 4b – rozšírený katalóg a sklad (0.7.0). Obchod predáva vo viacerých jazykoch a menách,
+> s DPH podľa krajín EÚ, a zvládne aj potraviny so šaržami a expiráciou, balíčky, predobjednávky
+> či digitálne produkty – každá z týchto funkcií sa zapína v nastaveniach.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Rozšírený katalóg a sklad (krok 4b)** – zapína sa v Nastavenia → Funkcie obchodu
+
+- **Typy produktov** s vlastnými poliami, cenou za mernú jednotku, bez dopravy a jedinečným kusom.
+- **Vlastné polia** pre kategórie, výrobcov, zákazníkov a objednávky, texty v každom jazyku.
+- **Doplnkové voľby** s príplatkom, **balíčky** produktov, **predobjednávky**.
+- **Viac skladov, šarže a expirácia:** výdaj od najskoršej expirácie, inventúra, presun, odpis, zľava
+  na končiaci tovar, dohľadanie šarže z objednávky.
+- **Digitálne produkty** s odkazmi na stiahnutie (limit, platnosť).
 
 **Jazyky, meny a DPH v EÚ (krok 4a)**
 

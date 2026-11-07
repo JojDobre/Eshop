@@ -1,6 +1,6 @@
 {
     "name": "storefront",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "title": {
         "sk": "Obchod",
         "cs": "Obchod",
@@ -14,7 +14,7 @@
     "provider": "Modules\\Storefront\\StorefrontServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.6"
+        "eshop": "^0.7"
     },
     "permissions": []
 }

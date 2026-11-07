@@ -157,6 +157,21 @@ modules/Storefront/
 - **DPH** (`Modules\Tax\TaxRules`): `TaxContext` (tuzemsko, OSS, prenesenie daňovej povinnosti) podľa krajiny
   doručenia a IČ DPH overeného vo VIES; `CheckoutTotals` podľa neho upraví ceny a sadzby položiek.
 
+## Funkcie obchodu a sklad
+
+- **Prepínače funkcií** (`App\Core\Features\FeatureToggles`): jadro aj moduly registrujú `FeatureToggle`
+  (názov, popis, odkaz na nastavenia, závislosti). Stránka Nastavenia → Funkcie obchodu ich zobrazí všetky.
+  Katalóg: `Modules\Catalog\CatalogFeatures::enabled('bundles')`. Vypnutie nič nemaže, iba skryje funkciu.
+- **Sklad:** celkový stav je v `products.stock_quantity` / `product_variants.stock_quantity` a každá zmena ide
+  cez `StockService` (história v `stock_movements`). `StockService::take()` vráti záznam, odkiaľ sa tovar vydal
+  (`order_items.allocations`) – balíček zo zložiek, šarže, predobjednané kusy – a `giveBack()` ho pri storne vráti.
+- **Sklady a šarže** (`Modules\Catalog\StockLots`): `stock_lots` rozpisuje celkový stav podľa skladu a šarže,
+  súčet vždy sedí s celkovým stavom (`reconcile()` dorovná ručné zmeny). Výdaj v poradí skladov a od najskoršej
+  expirácie (FEFO); nepredajný tovar (neaktívny sklad, expirácia) odpočíta `sellableStock()`.
+- **Predobjednávky:** chýbajúce kusy sa odpíšu do mínusu, príjem tovaru ich pokryje.
+- **Digitálne produkty:** súbory na disku `local` (`storage/app/private`), odkazy `download_links`
+  s náhodným kľúčom, sťahovanie cez `DownloadController` (žiadne verejné súbory ani symbolické odkazy).
+
 ## Šablóny vzhľadu
 
 ```

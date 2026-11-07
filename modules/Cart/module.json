@@ -1,6 +1,6 @@
 {
     "name": "cart",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "title": {
         "sk": "Košík",
         "cs": "Košík",
@@ -14,9 +14,9 @@
     "provider": "Modules\\Cart\\CartServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.6",
+        "eshop": "^0.7",
         "modules": {
-            "catalog": "^0.4"
+            "catalog": "^0.5"
         }
     }
 }

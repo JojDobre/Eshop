@@ -13,6 +13,6 @@
     },
     "author": "E-shop",
     "requires": {
-        "eshop": "^0.1"
+        "eshop": "^0.2"
     }
 }

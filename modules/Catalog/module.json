@@ -10,7 +10,7 @@
     "provider": "Modules\\Catalog\\CatalogServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.1",
+        "eshop": "^0.2",
         "modules": { "storefront": "^0.1" }
     },
     "permissions": ["catalog.manage"]

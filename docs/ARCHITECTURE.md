@@ -11,8 +11,8 @@ používame ho. Vlastný kód pridávame iba tam, kde to vyžaduje modulárnosť
 | Administrácia | Filament 5 |
 | Nastavenia | `spatie/laravel-settings` (`app/Settings`) |
 | Roly | `spatie/laravel-permission` |
-| Preklady obsahu (pripravené pre krok 4a) | `spatie/laravel-translatable` |
-| Peniaze (pripravené pre krok 2) | `brick/money` |
+| Preklady obsahu | `spatie/laravel-translatable` + `HasContentTranslations` (jazyk obsahu = jazyk obchodu) |
+| Peniaze | `brick/money`, celé čísla v najmenších jednotkách meny (`App\Core\Support\Price`) |
 | **Moduly** | vlastná tenká vrstva `app/Core/Modules` |
 | **Šablóny vzhľadu** | vlastná tenká vrstva `app/Core/Themes` nad Blade |
 | **Inštalátor** | `app/Core/Installer` |
@@ -43,6 +43,20 @@ themes/                 šablóny vzhľadu obchodu
   a po inštalácii sa všetky odkazy tvoria z `APP_URL`, takže adresy neobsahujú `/public`.
 
 ## Moduly
+
+| Modul | Obsah | Závisí od |
+|---|---|---|
+| `storefront` | úvodná stránka, sitemap, robots.txt, register právnych stránok | – |
+| `catalog` | kategórie, produkty, ceny podľa meny, vyhľadávanie | storefront |
+| `shipping` | spôsoby dopravy | – |
+| `payments` | spôsoby platby a ich obmedzenie na dopravu | shipping |
+| `cart` | košík (v databáze, token v session) | catalog |
+| `orders` | pokladňa, objednávky, e-maily, administrácia objednávok, nástenka | catalog, cart, shipping, payments |
+| `pages` | statické stránky, odkazy v päte, obchodné podmienky v pokladni | storefront |
+
+Moduly komunikujú cez **udalosti** (`EshopInstalled` → predvolené dáta, `OrderPlaced` → e-maily,
+`OrderStatusChanged`, `OrderPaid`) a cez **view composery** (napr. katalóg dodá kategórie do hlavičky,
+košík počet kusov). Šablóna tak nemusí vedieť, ktoré moduly sú zapnuté.
 
 Modul je **obyčajný Laravel Service Provider** s popisným súborom `module.json`.
 

@@ -3,10 +3,27 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 1 – technický prototyp (verzia 0.1.0). Obchod zatiaľ nepredáva, obsahuje inštalátor,
-> administráciu, nastavenia, používateľov, systém modulov a prvú šablónu vzhľadu. Plán: [`PLAN.md`](PLAN.md).
+> **Stav:** krok 2 – prvý funkčný obchod (verzia 0.2.0). Obchod prijíma objednávky v jednom jazyku a jednej mene.
+> Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Obchod (krok 2)**
+
+- **Katalóg:** kategórie a podkategórie, produkty s obrázkami, cenou a skladom, triedenie, vyhľadávanie bez diakritiky.
+- **Košík a pokladňa na jednej stránke:** nákup bez registrácie, firemné údaje, iná doručovacia adresa,
+  doprava (osobný odber, doprava s pevnou cenou, doprava zadarmo od sumy) a platba (prevod, dobierka,
+  platba na predajni) s obmedzením, ktorá platba je dostupná pri ktorej doprave.
+- **Objednávky:** číslovanie (zároveň variabilný symbol), odpis skladu, potvrdenie e-mailom zákazníkovi
+  a upozornenie obchodníkovi, stránka objednávky pre zákazníka s platobnými údajmi.
+- **Administrácia objednávok:** zoznam s filtrami, detail, zmena stavu (storno vráti tovar na sklad),
+  označenie platby, interné poznámky a história, prehľad tržieb na nástenke.
+- **Stránky:** obchodné podmienky, ochrana osobných údajov, doprava a platba, kontakt (vzorové kostry).
+- **E-maily:** nastavenie SMTP servera v administrácii s testovacím e-mailom.
+- **SEO:** titulky a popisy, kanonické adresy, Open Graph, štruktúrované dáta produktu, `sitemap.xml`, `robots.txt`.
+- Pri inštalácii sa dá nahrať **ukážkový katalóg**.
+
+**Základ (krok 1)**
 
 - **Webový inštalátor** v slovenčine, češtine a angličtine: kontrola webhostingu, pripojenie k databáze,
   nastavenie obchodu a administrátora. Netreba SSH, Composer ani npm.

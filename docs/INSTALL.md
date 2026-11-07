@@ -53,6 +53,11 @@ V administrácii (`/admin`) nastavte:
 
 - **Nastavenia → Značka:** logo, favicon a hlavnú farbu,
 - **Nastavenia → Firemné údaje:** obchodné meno, IČO, DIČ, IČ DPH, adresu a bankový účet,
+- **Nastavenia → E-maily:** SMTP server (údaje k e-mailovej schránke z webhostingu) a odošlite testovací e-mail.
+  Bez toho zákazníci nedostanú potvrdenie objednávky.
+- **Nastavenia → Doprava a Platby:** ceny dopravy, hranicu pre dopravu zadarmo, adresu predajne pri osobnom odbere.
+- **Obsah → Stránky:** doplňte obchodné podmienky a ochranu osobných údajov (predvolene je tam iba kostra).
+- **Katalóg:** kategórie a produkty (ukážkové produkty môžete zmazať).
 - **Systém → Používatelia:** ďalšie účty pre kolegov.
 
 ## Riešenie problémov

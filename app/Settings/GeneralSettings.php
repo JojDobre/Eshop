@@ -27,6 +27,9 @@ class GeneralSettings extends Settings
      */
     public array $locales;
 
+    /** Hlavný vypínač ďalších jazykov (vypnutím sa výber jazykov zachová). */
+    public bool $locales_enabled;
+
     /** Predvolená mena (ISO 4217, napr. „EUR"). */
     public string $default_currency;
 

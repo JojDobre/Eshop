@@ -315,4 +315,25 @@ return [
         'fee_in' => 'Poplatek v :currency',
         'free_from_in' => 'Zdarma od částky v :currency',
     ],
+
+    'features' => [
+        'title' => 'Funkce obchodu',
+        'intro' => 'Zde zapnete nebo vypnete funkce obchodu. Vypnutím se nic nemaže – nastavení i data zůstanou a po zapnutí se obnoví.',
+        'settings' => 'Nastavení',
+        'modules' => 'Moduly',
+        'modules_help' => 'Větší části obchodu. Modul nelze vypnout, pokud ho potřebuje jiný zapnutý modul.',
+        'error' => 'Změnu se nepodařilo uložit',
+        'saved' => 'Funkce byly uloženy.',
+        'save' => 'Uložit',
+        'locales' => 'Více jazyků',
+        'locales_help' => 'Obchod v dalších jazycích (adresy /cz/…, /en/…). Texty produktů a stránek píšete v každém jazyce sami, strojový překlad je jen pomocník.',
+        'locales_choose' => 'Nejprve vyberte jazyky v Nastavení → Obchod.',
+        'currencies' => 'Více měn',
+        'currencies_help' => 'Zákazník si vybere měnu. Ceny zadáte ručně v každé měně, nebo se přepočítají kurzem.',
+        'currencies_choose' => 'Nejprve vyberte měny a kurzy v Nastavení → Měny.',
+        'groups' => [
+            'international' => 'Jazyky a měny',
+            'storefront' => 'Obchod',
+        ],
+    ],
 ];

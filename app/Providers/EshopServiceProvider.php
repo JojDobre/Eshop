@@ -8,6 +8,8 @@ use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
 use App\Core\Content\TranslatableModels;
 use App\Core\Eshop;
+use App\Core\Features\CoreFeatures;
+use App\Core\Features\FeatureToggles;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
 use App\Core\Installer\RequirementsChecker;
@@ -56,6 +58,12 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->singleton(LocalizedUrls::class);
         $this->app->scoped(AlternateUrls::class);
         $this->app->singleton(TranslatableModels::class);
+        $this->app->singleton(FeatureToggles::class, function () {
+            $toggles = new FeatureToggles;
+            CoreFeatures::register($toggles);
+
+            return $toggles;
+        });
 
         // Mena zákazníka sa nastavuje pre každú požiadavku obchodu (SetStorefrontLocale).
         $this->app->scoped(CurrencyContext::class);

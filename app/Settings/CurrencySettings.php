@@ -30,6 +30,9 @@ class CurrencySettings extends Settings
      */
     public array $rounding;
 
+    /** Hlavný vypínač ďalších mien (vypnutím sa kurzy aj ručné ceny zachovajú). */
+    public bool $multicurrency_enabled;
+
     /** Kurzy sa každý deň aktualizujú z ECB. */
     public bool $auto_update;
 

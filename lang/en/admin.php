@@ -315,4 +315,25 @@ return [
         'fee_in' => 'Fee in :currency',
         'free_from_in' => 'Free from total in :currency',
     ],
+
+    'features' => [
+        'title' => 'Shop features',
+        'intro' => 'Turn shop features on or off here. Turning off deletes nothing – settings and data stay and come back when you turn it on.',
+        'settings' => 'Settings',
+        'modules' => 'Modules',
+        'modules_help' => 'Larger parts of the shop. A module cannot be turned off while another enabled module needs it.',
+        'error' => 'The change could not be saved',
+        'saved' => 'Features saved.',
+        'save' => 'Save',
+        'locales' => 'Multiple languages',
+        'locales_help' => 'The shop in additional languages (URLs /cz/…, /en/…). You write product and page texts in each language yourself; machine translation is just a helper.',
+        'locales_choose' => 'First choose the languages in Settings → Shop.',
+        'currencies' => 'Multiple currencies',
+        'currencies_help' => 'Customers choose a currency. Enter prices manually in each currency or let them be converted by the rate.',
+        'currencies_choose' => 'First choose currencies and rates in Settings → Currencies.',
+        'groups' => [
+            'international' => 'Languages and currencies',
+            'storefront' => 'Shop',
+        ],
+    ],
 ];

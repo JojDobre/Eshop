@@ -5,6 +5,8 @@ namespace Modules\Storefront;
 use App\Core\Content\AlternateUrls;
 use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
+use App\Core\Features\FeatureToggle;
+use App\Core\Features\FeatureToggles;
 use App\Core\Modules\ModuleServiceProvider;
 use App\Core\Support\Currencies;
 use App\Settings\BrandingSettings;
@@ -13,6 +15,7 @@ use App\Settings\GeneralSettings;
 use App\Settings\TaxSettings;
 use Illuminate\Support\Facades\View;
 use Modules\Storefront\Cookies\CookieConsent;
+use Modules\Storefront\Cookies\CookieSettings;
 use Modules\Storefront\Http\Middleware\SetStorefrontLocale;
 use Modules\Storefront\Pages\LegalPages;
 use Modules\Storefront\Sitemap\SitemapRegistry;
@@ -34,6 +37,23 @@ class StorefrontServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // Prepínač lišty cookies v Nastavenia → Funkcie obchodu.
+        $toggles = $this->app->make(FeatureToggles::class);
+        $toggles->group('storefront', fn () => __('admin.features.groups.storefront'));
+        $toggles->register(new FeatureToggle(
+            key: 'storefront.cookies',
+            group: 'storefront',
+            label: fn () => __('storefront::admin.cookies.enabled'),
+            description: fn () => __('storefront::admin.cookies.enabled_help'),
+            isEnabled: fn () => app(CookieSettings::class)->enabled,
+            set: function (bool $enabled): void {
+                $settings = app(CookieSettings::class);
+                $settings->enabled = $enabled;
+                $settings->save();
+            },
+            settingsUrl: fn () => url('/admin/settings/cookies'),
+        ));
 
         // Trasy s jazykom obchodu dostanú v odkazoch predponu jazyka (/en/…).
         $this->app->make(LocalizedUrls::class)->markRoutesWith(SetStorefrontLocale::class);

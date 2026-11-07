@@ -71,10 +71,15 @@ class ManageCurrencySettings extends BaseSettingsPage
             Section::make()
                 ->description($t('intro', ['default' => $default]))
                 ->schema([
+                    Toggle::make('multicurrency_enabled')
+                        ->label(__('admin.features.currencies'))
+                        ->helperText(__('admin.features.currencies_help'))
+                        ->live(),
                     CheckboxList::make('enabled')
                         ->label($t('enabled'))
                         ->options($others->mapWithKeys(fn (string $symbol, string $code) => [$code => "{$code} ({$symbol})"])->all())
                         ->columns(4)
+                        ->visible(fn (Get $get) => (bool) $get('multicurrency_enabled'))
                         ->live(),
                     Toggle::make('auto_update')
                         ->label($t('auto_update'))
@@ -83,7 +88,7 @@ class ManageCurrencySettings extends BaseSettingsPage
                             : '')),
                 ]),
             Section::make($t('rates'))
-                ->visible(fn (Get $get) => ($get('enabled') ?? []) !== [])
+                ->visible(fn (Get $get) => $get('multicurrency_enabled') && ($get('enabled') ?? []) !== [])
                 ->schema($rows),
         ]);
     }

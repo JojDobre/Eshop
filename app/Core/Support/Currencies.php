@@ -148,7 +148,7 @@ class Currencies
             try {
                 $default = app(GeneralSettings::class)->default_currency;
                 $settings = app(CurrencySettings::class);
-                $others = $settings->enabled;
+                $others = $settings->multicurrency_enabled ? $settings->enabled : [];
                 $this->rounding = $settings->rounding;
 
                 foreach ($settings->rates as $currency => $rate) {

@@ -10,6 +10,7 @@ use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -79,12 +80,18 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)]))
                         ->required()
                         ->native(false),
+                    Toggle::make('locales_enabled')
+                        ->label(__('admin.features.locales'))
+                        ->helperText(__('admin.features.locales_help'))
+                        ->live()
+                        ->columnSpanFull(),
                     CheckboxList::make('locales')
                         ->label(__('admin.settings.general.locales'))
                         ->helperText(__('admin.settings.general.locales_help'))
                         ->options(fn (Get $get) => collect(config('eshop.content_locales'))->except($get('default_locale'))->all())
                         ->columns(4)
                         ->columnSpanFull()
+                        ->visible(fn (Get $get) => (bool) $get('locales_enabled'))
                         ->dehydrateStateUsing(fn (?array $state, Get $get) => array_values(array_diff($state ?? [], [$get('default_locale')]))),
                 ]),
             Section::make(__('admin.settings.general.section_theme'))

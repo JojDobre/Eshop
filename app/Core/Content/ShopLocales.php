@@ -89,7 +89,7 @@ class ShopLocales
             try {
                 $settings = app(GeneralSettings::class);
                 $default = $settings->default_locale;
-                $others = $settings->locales ?? [];
+                $others = $settings->locales_enabled ? ($settings->locales ?? []) : [];
             } catch (Throwable) {
                 // Databáza nie je dostupná: iba predvolený jazyk.
             }

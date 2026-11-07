@@ -15,6 +15,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldValue;
 use Modules\Catalog\StockService;
 use Modules\Tax\Models\TaxRate;
 use Modules\Tax\TaxCalculator;
@@ -151,6 +153,32 @@ class Product extends Model
     public function prices(): HasMany
     {
         return $this->hasMany(ProductPrice::class)->whereNull('product_variant_id');
+    }
+
+    /**
+     * @return HasMany<CustomFieldValue, $this>
+     */
+    public function customFieldValues(): HasMany
+    {
+        return $this->hasMany(CustomFieldValue::class, 'entity_id')
+            ->where('entity_type', CustomField::PRODUCT);
+    }
+
+    /**
+     * Parametre na zobrazenie zákazníkovi: [názov => hodnota].
+     *
+     * @return array<string, string>
+     */
+    public function visibleParameters(): array
+    {
+        $this->loadMissing('customFieldValues.field');
+
+        return $this->customFieldValues
+            ->filter(fn ($value) => $value->field !== null && $value->field->is_visible)
+            ->sortBy(fn ($value) => [$value->field->position, $value->field->id])
+            ->mapWithKeys(fn ($value) => [$value->field->name => $value->field->display($value->value())])
+            ->filter(fn ($display) => $display !== null)
+            ->all();
     }
 
     /**

@@ -35,6 +35,8 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldsForm;
 use Modules\Catalog\Filament\Resources\Manufacturers\ManufacturerResource;
 use Modules\Catalog\Filament\Resources\Products\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
@@ -93,6 +95,10 @@ class ProductResource extends Resource
                     RichEditor::make('description')->label($t('description'))
                         ->toolbarButtons([['bold', 'italic', 'underline', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'table'], ['undo', 'redo']]),
                 ]),
+                Section::make(__('catalog::admin.custom_fields.plural'))
+                    ->schema(fn () => CustomFieldsForm::components(CustomField::PRODUCT))
+                    ->columns(2)
+                    ->visible(fn () => CustomField::query()->forEntity(CustomField::PRODUCT)->exists()),
                 Section::make($t('images'))->schema([
                     FileUpload::make('images')->hiddenLabel()
                         ->helperText($t('images_help'))

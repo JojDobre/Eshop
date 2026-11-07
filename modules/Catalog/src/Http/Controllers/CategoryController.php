@@ -5,6 +5,7 @@ namespace Modules\Catalog\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Catalog\CustomFields\CustomFieldFilters;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 
@@ -12,21 +13,27 @@ class CategoryController extends Controller
 {
     use ProductListing;
 
-    public function __invoke(Request $request, string $slug): View
+    public function __invoke(Request $request, string $slug, CustomFieldFilters $filters): View
     {
         $category = Category::query()->visible()->whereSlug($slug)->firstOrFail();
         $sort = $this->sortOption($request);
+        $selected = $filters->input($request->query('f'));
 
-        $products = $this->applySort(
-            Product::query()->visible()->whereHas('categories', fn ($query) => $query->whereIn('categories.id', $category->descendantIdsWithSelf())),
-            $sort,
-        )->paginate(24)->withQueryString();
+        $base = Product::query()->visible()->whereHas('categories', fn ($query) => $query->whereIn('categories.id', $category->descendantIdsWithSelf()));
+        $available = $filters->available($base);
+
+        $filtered = clone $base;
+        $filters->apply($filtered, $selected);
+
+        $products = $this->applySort($filtered, $sort)->paginate(24)->withQueryString();
 
         return view('theme::templates.category', [
             'category' => $category,
             'subcategories' => $category->children()->visible()->get(),
             'products' => $products,
             'sort' => $sort,
+            'filters' => $available,
+            'selectedFilters' => $selected,
         ]);
     }
 }

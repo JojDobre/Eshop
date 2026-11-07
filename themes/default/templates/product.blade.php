@@ -197,6 +197,20 @@
                     <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{!! $product->description !!}</div>
                 @endif
 
+                @if ($parameters = $product->visibleParameters())
+                    <section class="mt-10 border-t border-zinc-100 pt-8" aria-labelledby="parameters">
+                        <h2 id="parameters" class="font-semibold">{{ __('catalog::shop.parameters') }}</h2>
+                        <dl class="mt-4 divide-y divide-zinc-100 text-sm">
+                            @foreach ($parameters as $label => $value)
+                                <div class="grid grid-cols-2 gap-4 py-2.5">
+                                    <dt class="text-zinc-500">{{ $label }}</dt>
+                                    <dd class="text-zinc-900">{{ $value }}</dd>
+                                </div>
+                            @endforeach
+                        </dl>
+                    </section>
+                @endif
+
                 @if ($manufacturer || $safetyInfo)
                     <details class="group mt-8 border-t border-zinc-100 pt-6 text-sm">
                         <summary class="cursor-pointer list-none font-medium marker:hidden">

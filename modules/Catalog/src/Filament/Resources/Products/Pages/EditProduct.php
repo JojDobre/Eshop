@@ -12,6 +12,8 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\DB;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldValues;
 use Modules\Catalog\Filament\Resources\Products\ProductResource;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\StockMovement;
@@ -34,6 +36,7 @@ class EditProduct extends EditRecord
         $data = $this->fillContentTranslations($data);
         $data['price'] = $price === null ? null : Price::toDecimal($price, $currency);
         $data['compare_at_price'] = $compareAt === null ? null : Price::toDecimal($compareAt, $currency);
+        $data['custom_fields'] = app(CustomFieldValues::class)->get(CustomField::PRODUCT, $product->id);
 
         return $data;
     }

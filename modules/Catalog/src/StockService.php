@@ -30,6 +30,7 @@ class StockService
         ?User $user = null,
         ?ProductVariant $variant = null,
         ?StockLot $lot = null,
+        bool $syncLots = true,
     ): void {
         if ($quantity === 0 || ! $product->track_stock) {
             return;
@@ -38,7 +39,7 @@ class StockService
         if ($variant !== null) {
             $before = $variant->stock_quantity;
             ProductVariant::withoutStockLogging(fn () => $variant->increment('stock_quantity', $quantity));
-            $this->record($product, $quantity, $type, $reference, $note, $user, $variant, $lot);
+            $this->record($product, $quantity, $type, $reference, $note, $user, $variant, $lot, $syncLots);
 
             if ($quantity < 0) {
                 $this->notifyIfLow($product, $before, $variant->stock_quantity, $variant);
@@ -53,7 +54,7 @@ class StockService
             $product->increment('stock_quantity', $quantity);
         });
 
-        $this->record($product, $quantity, $type, $reference, $note, $user, lot: $lot);
+        $this->record($product, $quantity, $type, $reference, $note, $user, lot: $lot, syncLots: $syncLots);
 
         if ($quantity < 0) {
             $this->notifyIfLow($product, $before, $product->stock_quantity);
@@ -95,13 +96,26 @@ class StockService
             throw new InsufficientStock($variant ? $product->name.' – '.$variant->name() : $product->name);
         }
 
-        if ($product->track_stock && app(StockLots::class)->enabled()) {
-            return app(StockLots::class)->take($product, $variant, $quantity, $type, $reference);
+        // Čo nie je na sklade, je predobjednávka (stav skladu ide do mínusu, príjem ju neskôr pokryje).
+        $fromStock = $product->track_stock ? min($quantity, $variant ? $variant->sellableStock() : $product->sellableStock()) : $quantity;
+        $preorder = $quantity - $fromStock;
+        $allocations = [];
+
+        if ($fromStock > 0) {
+            if ($product->track_stock && app(StockLots::class)->enabled()) {
+                $allocations = app(StockLots::class)->take($product, $variant, $fromStock, $type, $reference);
+            } else {
+                $this->adjust($product, -$fromStock, $type, $reference, variant: $variant);
+                $allocations[] = ['product_id' => $product->id, 'variant_id' => $variant?->id, 'quantity' => $fromStock];
+            }
         }
 
-        $this->adjust($product, -$quantity, $type, $reference, variant: $variant);
+        if ($preorder > 0) {
+            $this->adjust($product, -$preorder, $type, $reference, variant: $variant, syncLots: false);
+            $allocations[] = ['product_id' => $product->id, 'variant_id' => $variant?->id, 'quantity' => $preorder, 'preorder' => true];
+        }
 
-        return [['product_id' => $product->id, 'variant_id' => $variant?->id, 'quantity' => $quantity]];
+        return $allocations;
     }
 
     /**
@@ -132,7 +146,7 @@ class StockService
         }
     }
 
-    public function record(Product $product, int $quantity, string $type, ?string $reference = null, ?string $note = null, ?User $user = null, ?ProductVariant $variant = null, ?StockLot $lot = null): void
+    public function record(Product $product, int $quantity, string $type, ?string $reference = null, ?string $note = null, ?User $user = null, ?ProductVariant $variant = null, ?StockLot $lot = null, bool $syncLots = true): void
     {
         StockMovement::query()->create([
             'warehouse_id' => $lot?->warehouse_id,
@@ -149,7 +163,7 @@ class StockService
         ]);
 
         // Zmena bez určenej zásoby (ručná úprava čísla): rozpis po skladoch a šaržiach sa dorovná.
-        if ($lot === null) {
+        if ($lot === null && $syncLots) {
             app(StockLots::class)->reconcile($product, $variant);
         }
     }

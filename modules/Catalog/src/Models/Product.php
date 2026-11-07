@@ -70,6 +70,9 @@ class Product extends Model
             'weight' => 'integer',
             'unit_amount' => 'decimal:4',
             'is_bundle' => 'boolean',
+            'preorder_enabled' => 'boolean',
+            'preorder_available_at' => 'date',
+            'preorder_limit' => 'integer',
             'is_visible' => 'boolean',
             'low_stock_threshold' => 'integer',
         ];
@@ -454,7 +457,45 @@ class Product extends Model
             return $this->variants->contains(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->isAvailable($quantity));
         }
 
-        return ! $this->track_stock || $this->sellableStock() >= $quantity;
+        return ! $this->track_stock || $this->sellableStock() >= $quantity || $this->canPreorder($quantity, $this->sellableStock(), $this->stock_quantity);
+    }
+
+    /** Prijíma produkt predobjednávky? (iba so zapnutou funkciou a sledovaným skladom) */
+    public function acceptsPreorders(): bool
+    {
+        return $this->preorder_enabled && $this->track_stock && ! $this->is_bundle && CatalogFeatures::enabled('preorders');
+    }
+
+    /**
+     * Dá sa predobjednať chýbajúce množstvo? (v rámci limitu predobjednávok)
+     *
+     * @param  int  $stock  celkový stav (pri predobjednávkach môže byť záporný)
+     */
+    public function canPreorder(int $quantity, int $sellable, int $stock): bool
+    {
+        if (! $this->acceptsPreorders()) {
+            return false;
+        }
+
+        if ($this->preorder_limit === null) {
+            return true;
+        }
+
+        return max(0, $quantity - $sellable) + max(0, -$stock) <= $this->preorder_limit;
+    }
+
+    /** Bude daný počet kusov (aspoň sčasti) predobjednávkou? */
+    public function isPreorder(int $quantity = 1): bool
+    {
+        return $this->acceptsPreorders() && ! $this->hasVariants() && $this->sellableStock() < $quantity;
+    }
+
+    /**
+     * Najväčší počet kusov vrátane predobjednávok (null = bez obmedzenia).
+     */
+    public function preorderMax(int $sellable, int $stock): ?int
+    {
+        return $this->preorder_limit === null ? null : $sellable + max(0, $this->preorder_limit - max(0, -$stock));
     }
 
     /**
@@ -539,6 +580,10 @@ class Product extends Model
     public function maxPurchasableQuantity(): ?int
     {
         $max = $this->track_stock ? $this->sellableStock() : null;
+
+        if ($max !== null && $this->acceptsPreorders()) {
+            $max = $this->preorderMax($max, $this->stock_quantity);
+        }
 
         // Balíček: koľko kompletných balíčkov sa dá zložiť zo skladu zložiek.
         if ($this->isBundle()) {

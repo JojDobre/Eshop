@@ -324,4 +324,12 @@ return [
         'written_off' => 'Zásoba byla odepsána.',
         'managed_in_lots' => 'Sklad se upravuje v části Zásoby níže (příjem, inventura).',
     ],
+    'preorder' => [
+        'enabled' => 'Přijímat předobjednávky',
+        'enabled_help' => 'Když zboží není skladem, zákazník si ho může objednat předem. Stav skladu jde do mínusu a příjem zboží předobjednávky pokryje.',
+        'available_at' => 'Očekávané naskladnění',
+        'available_at_help' => 'Zobrazí se zákazníkovi. Nepovinné.',
+        'limit' => 'Nejvýše předobjednaných kusů',
+        'limit_help' => 'Prázdné = bez omezení.',
+    ],
 ];

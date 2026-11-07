@@ -324,4 +324,12 @@ return [
         'written_off' => 'Zásoba bola odpísaná.',
         'managed_in_lots' => 'Sklad sa upravuje v časti Zásoby nižšie (príjem, inventúra).',
     ],
+    'preorder' => [
+        'enabled' => 'Prijímať predobjednávky',
+        'enabled_help' => 'Keď tovar nie je na sklade, zákazník ho môže objednať vopred. Stav skladu ide do mínusu a príjem tovaru predobjednávky pokryje.',
+        'available_at' => 'Očakávané naskladnenie',
+        'available_at_help' => 'Zobrazí sa zákazníkovi. Nepovinné.',
+        'limit' => 'Najviac predobjednaných kusov',
+        'limit_help' => 'Prázdne = bez obmedzenia.',
+    ],
 ];

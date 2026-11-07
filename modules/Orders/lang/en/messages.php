@@ -12,4 +12,5 @@ return [
     'coupon_min_order' => 'This discount code applies to orders from :amount.',
     'coupon_applied' => 'Discount code :code has been applied.',
     'coupon_removed' => 'The discount code has been removed.',
+    'preorder' => 'pre-order',
 ];

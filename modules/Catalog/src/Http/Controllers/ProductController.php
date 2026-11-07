@@ -57,6 +57,7 @@ class ProductController extends Controller
                     'price' => $price === null ? null : format_price($price),
                     'available' => $price !== null && $variant->isAvailable(),
                     'max' => $variant->maxPurchasableQuantity(),
+                    'preorder' => $variant->isPreorder(),
                     'images' => array_filter($variant->images ?? []) === [] ? null : $variant->imageUrls(),
                 ];
             })->values(),

@@ -169,7 +169,7 @@ class ProductVariant extends Model
     {
         return $this->is_active
             && $this->product->is_visible
-            && (! $this->product->track_stock || $this->sellableStock() >= $quantity);
+            && (! $this->product->track_stock || $this->sellableStock() >= $quantity || $this->product->canPreorder($quantity, $this->sellableStock(), $this->stock_quantity));
     }
 
     /**
@@ -180,9 +180,19 @@ class ProductVariant extends Model
         return max(0, $this->stock_quantity - app(StockLots::class)->blockedQuantity($this->product, $this));
     }
 
+    /** Bude daný počet kusov (aspoň sčasti) predobjednávkou? */
+    public function isPreorder(int $quantity = 1): bool
+    {
+        return $this->product->acceptsPreorders() && $this->sellableStock() < $quantity;
+    }
+
     public function maxPurchasableQuantity(): ?int
     {
         $max = $this->product->track_stock ? $this->sellableStock() : null;
+
+        if ($max !== null && $this->product->acceptsPreorders()) {
+            $max = $this->product->preorderMax($max, $this->stock_quantity);
+        }
 
         return $this->product->isUnique() ? min(1, $max ?? 1) : $max;
     }

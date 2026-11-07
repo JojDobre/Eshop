@@ -15,6 +15,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -234,6 +235,13 @@ class ProductResource extends Resource
                         ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && (bool) $record?->hasVariants()),
                     TextInput::make('low_stock_threshold')->label($t('low_stock_threshold'))->helperText($t('low_stock_threshold_help'))
                         ->integer()->minValue(0)->visible(fn (Get $get) => (bool) $get('track_stock')),
+                    Toggle::make('preorder_enabled')->label(__('catalog::admin.preorder.enabled'))->helperText(__('catalog::admin.preorder.enabled_help'))->live()
+                        ->visible(fn (Get $get) => (bool) $get('track_stock') && CatalogFeatures::enabled('preorders')),
+                    DatePicker::make('preorder_available_at')->label(__('catalog::admin.preorder.available_at'))->helperText(__('catalog::admin.preorder.available_at_help'))
+                        ->visible(fn (Get $get) => (bool) $get('track_stock') && (bool) $get('preorder_enabled') && CatalogFeatures::enabled('preorders')),
+                    TextInput::make('preorder_limit')->label(__('catalog::admin.preorder.limit'))->helperText(__('catalog::admin.preorder.limit_help'))
+                        ->integer()->minValue(1)->suffix(__('catalog::admin.pieces'))
+                        ->visible(fn (Get $get) => (bool) $get('track_stock') && (bool) $get('preorder_enabled') && CatalogFeatures::enabled('preorders')),
                     TextInput::make('weight')->label($t('weight'))->integer()->minValue(0)->suffix('g'),
                 ]),
             ]),

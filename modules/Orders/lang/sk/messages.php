@@ -12,4 +12,5 @@ return [
     'coupon_min_order' => 'Zľavový kód platí pri nákupe od :amount.',
     'coupon_applied' => 'Zľavový kód :code bol uplatnený.',
     'coupon_removed' => 'Zľavový kód bol odstránený.',
+    'preorder' => 'predobjednávka',
 ];

@@ -174,4 +174,8 @@ return [
     'bundle_saving' => 'You save :amount compared to buying separately',
     'best_before' => 'Use by :date',
     'short_expiry' => 'Short expiry: :percent % off',
+    'preorder' => 'Available for pre-order',
+    'preorder_from' => 'Available for pre-order, expected :date',
+    'preorder_button' => 'Pre-order',
+    'preorder_line' => 'Pre-order',
 ];

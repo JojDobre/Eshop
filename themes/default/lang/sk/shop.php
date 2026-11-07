@@ -174,4 +174,8 @@ return [
     'bundle_saving' => 'Ušetríte :amount oproti samostatnému nákupu',
     'best_before' => 'Spotrebujte do :date',
     'short_expiry' => 'Krátka expirácia: zľava :percent %',
+    'preorder' => 'Na predobjednávku',
+    'preorder_from' => 'Na predobjednávku, očakávame :date',
+    'preorder_button' => 'Predobjednať',
+    'preorder_line' => 'Predobjednávka',
 ];

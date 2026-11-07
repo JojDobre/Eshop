@@ -324,4 +324,12 @@ return [
         'written_off' => 'The lot was written off.',
         'managed_in_lots' => 'Stock is managed in the Stock section below (receipts, stocktake).',
     ],
+    'preorder' => [
+        'enabled' => 'Accept pre-orders',
+        'enabled_help' => 'When out of stock, customers can order in advance. Stock goes negative and incoming goods cover the pre-orders.',
+        'available_at' => 'Expected in stock',
+        'available_at_help' => 'Shown to customers. Optional.',
+        'limit' => 'Maximum pre-ordered units',
+        'limit_help' => 'Empty = unlimited.',
+    ],
 ];

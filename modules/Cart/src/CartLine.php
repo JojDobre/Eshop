@@ -33,6 +33,12 @@ final class CartLine
     }
 
     /** Doplnkové voľby na zobrazenie, napr. „Gravírovanie: Pre Janu“. */
+    /** Je riadok (aspoň sčasti) predobjednávkou? */
+    public function isPreorder(): bool
+    {
+        return $this->variant ? $this->variant->setRelation('product', $this->product)->isPreorder($this->quantity) : $this->product->isPreorder($this->quantity);
+    }
+
     public function addonsLabel(): ?string
     {
         if ($this->addons === []) {

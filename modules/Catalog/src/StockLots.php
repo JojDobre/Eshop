@@ -141,7 +141,8 @@ class StockLots
             ? ProductVariant::query()->whereKey($variant->id)->value('stock_quantity')
             : Product::query()->whereKey($product->id)->value('stock_quantity'));
         $lots = $this->lotsFor($product, $variant, lock: true);
-        $difference = $total - (int) $lots->sum('quantity');
+        // Záporný stav (predobjednávky) znamená prázdne zásoby.
+        $difference = max(0, $total) - (int) $lots->sum('quantity');
 
         if ($difference > 0) {
             $default = Warehouse::default();

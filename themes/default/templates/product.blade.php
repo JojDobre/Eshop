@@ -5,6 +5,11 @@
     $images = $product->imageUrls();
     $available = $price !== null && $product->isAvailable();
     $maxQuantity = $product->maxPurchasableQuantity();
+    // Predobjednávka: tovar nie je na sklade, ale dá sa objednať vopred.
+    $preorder = $available && $product->isPreorder();
+    $preorderText = $product->preorder_available_at
+        ? __('theme::shop.preorder_from', ['date' => $product->preorder_available_at->format(app()->getLocale() === 'en' ? 'j M Y' : 'j. n. Y')])
+        : __('theme::shop.preorder');
     $compareAt = $product->compareAtPriceIn();
     $lowest30 = $compareAt ? $product->lowestPriceIn30Days() : null;
     $manufacturer = $product->manufacturer;
@@ -131,10 +136,17 @@
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
                 @endif
 
-                <p @class(['mt-4 inline-flex items-center gap-2 text-sm font-medium', 'text-emerald-700' => $available, 'text-zinc-500' => ! $available]) @if ($variantData) x-data x-show="false" @endif>
-                    <span @class(['size-2 rounded-full', 'bg-emerald-500' => $available, 'bg-zinc-400' => ! $available]) aria-hidden="true"></span>
-                    {{ $available ? ($maxQuantity !== null && $maxQuantity <= 5 ? __('theme::shop.in_stock_few', ['count' => $maxQuantity]) : __('theme::shop.in_stock')) : __('theme::shop.sold_out') }}
-                </p>
+                @if ($preorder)
+                    <p class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                        <span class="size-2 rounded-full bg-amber-500" aria-hidden="true"></span>
+                        {{ $preorderText }}
+                    </p>
+                @else
+                    <p @class(['mt-4 inline-flex items-center gap-2 text-sm font-medium', 'text-emerald-700' => $available, 'text-zinc-500' => ! $available]) @if ($variantData) x-data x-show="false" @endif>
+                        <span @class(['size-2 rounded-full', 'bg-emerald-500' => $available, 'bg-zinc-400' => ! $available]) aria-hidden="true"></span>
+                        {{ $available ? ($maxQuantity !== null && $maxQuantity <= 5 ? __('theme::shop.in_stock_few', ['count' => $maxQuantity]) : __('theme::shop.in_stock')) : __('theme::shop.sold_out') }}
+                    </p>
+                @endif
 
                 {{-- Expirácia (šarže): dátum spotreby tovaru, ktorý zákazník dostane, a zľava pri krátkej expirácii. --}}
                 @if ($available && ! $product->hasVariants() && $product->track_stock)
@@ -203,14 +215,14 @@
                         <p class="text-sm" x-show="variant" x-cloak>
                             <span class="font-semibold" x-text="variant && variant.price"></span>
                             <span class="ml-2" :class="variant && variant.available ? 'text-emerald-700' : 'text-zinc-500'"
-                                  x-text="variant && variant.available ? '{{ __('theme::shop.in_stock') }}' : '{{ __('theme::shop.sold_out') }}'"></span>
+                                  x-text="variant && variant.available ? (variant.preorder ? @js($preorderText) : '{{ __('theme::shop.in_stock') }}') : '{{ __('theme::shop.sold_out') }}'"></span>
                         </p>
 
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
                             <input id="quantity" type="number" name="quantity" value="1" min="1" :max="variant && variant.max !== null ? variant.max : null" class="input w-20 text-center">
                             <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10" :disabled="! variant || ! variant.available">
-                                <span x-text="variant ? '{{ __('theme::shop.add_to_cart') }}' : '{{ __('theme::shop.choose_variant') }}'">{{ __('theme::shop.add_to_cart') }}</span>
+                                <span x-text="variant ? (variant.preorder ? '{{ __('theme::shop.preorder_button') }}' : '{{ __('theme::shop.add_to_cart') }}') : '{{ __('theme::shop.choose_variant') }}'">{{ __('theme::shop.add_to_cart') }}</span>
                             </button>
                         </div>
                     </form>
@@ -222,7 +234,7 @@
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
                             <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-20 text-center">
-                            <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ __('theme::shop.add_to_cart') }}</button>
+                            <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ $preorder ? __('theme::shop.preorder_button') : __('theme::shop.add_to_cart') }}</button>
                         </div>
                     </form>
                 @endif

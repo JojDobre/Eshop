@@ -31,6 +31,7 @@ class OrderItem extends Model
         return [
             'addons' => 'array',
             'allocations' => 'array',
+            'is_preorder' => 'boolean',
             'quantity' => 'integer',
             'unit_price' => 'integer',
             'total' => 'integer',
@@ -61,6 +62,10 @@ class OrderItem extends Model
         // Doplnkové voľby: „Hrnček + Gravírovanie: Pre Janu, Darčekové balenie“.
         if (! empty($this->addons)) {
             $name .= ' + '.implode(', ', array_map(fn (array $addon) => filled($addon['text'] ?? null) ? $addon['name'].': '.$addon['text'] : $addon['name'], $this->addons));
+        }
+
+        if ($this->is_preorder) {
+            $name .= ' ('.__('orders::messages.preorder').')';
         }
 
         return $name;

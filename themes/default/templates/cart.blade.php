@@ -26,6 +26,9 @@
                                     @if ($line->variant)
                                         <p class="text-sm text-zinc-600">{{ $line->variant->name() }}</p>
                                     @endif
+                                    @if ($line->isPreorder())
+                                        <p class="text-sm font-medium text-amber-700">{{ __('theme::shop.preorder_line') }}</p>
+                                    @endif
                                     @if ($line->addonsLabel())
                                         <p class="text-sm text-zinc-600">+ {{ $line->addonsLabel() }}</p>
                                     @endif

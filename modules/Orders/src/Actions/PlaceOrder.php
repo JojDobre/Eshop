@@ -116,6 +116,7 @@ class PlaceOrder
                     'name' => $line->product->name,
                     'variant_name' => $line->variant?->name(),
                     'allocations' => $allocations[$index] ?? null,
+                    'is_preorder' => collect($allocations[$index] ?? [])->contains(fn (array $allocation) => ! empty($allocation['preorder'])),
                     'addons' => $line->addons === [] ? null : array_map(fn (array $addon) => ['name' => $addon['name'], 'price' => $addon['price'], 'text' => $addon['text']], $line->addons),
                     'sku' => $line->variant?->sku ?? $line->product->sku,
                     'quantity' => $line->quantity,

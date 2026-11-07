@@ -22,9 +22,11 @@
                     <span class="block text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($cardUnitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
                 @endif
             </span>
-            @unless ($product->isAvailable())
+            @if (! $product->isAvailable())
                 <span class="text-xs text-zinc-500">{{ __('theme::shop.sold_out') }}</span>
-            @endunless
+            @elseif ($product->isPreorder())
+                <span class="text-xs font-medium text-amber-700">{{ __('theme::shop.preorder') }}</span>
+            @endif
         </div>
     </div>
 </article>

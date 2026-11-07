@@ -3,10 +3,32 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 2 – prvý funkčný obchod (verzia 0.2.0). Obchod prijíma objednávky v jednom jazyku a jednej mene.
+> **Stav:** krok 3 – pilotná verzia pre malého obchodníka (0.5.0). Obchod predáva v jednom jazyku a jednej mene,
+> s DPH, variantmi, dokladmi, platbou kartou a zákazníckymi účtami.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Pilotná verzia (krok 3)**
+
+- **Dane a zákony:** sadzby DPH (SK, CZ), ceny s DPH aj bez, rozpis DPH, neplatca DPH; výrobcovia a údaje
+  o bezpečnosti výrobkov (GPSR); najnižšia cena za 30 dní pri zľave (Omnibus); pohyby skladu a upozornenie na nízky sklad.
+- **Varianty a vlastné polia:** voliteľné vlastnosti (veľkosť, farba…), generovanie variantov s cenou, skladom
+  a obrázkom; vlastné polia produktov s filtrami v kategórii.
+- **Kupóny a doprava:** percentuálne a pevné zľavy, minimálna suma, počet použití, platnosť; cena dopravy podľa hmotnosti.
+- **Doklady v PDF:** zálohová faktúra (v prílohe potvrdenia pri prevode), faktúra po zaplatení, dobropis;
+  nemenné doklady s číselnými radmi, stiahnutie pre zákazníka aj administráciu.
+- **Upraviteľné e-maily:** texty všetkých e-mailov s premennými, náhľadom a testovacím e-mailom;
+  e-maily zákazníkovi pri zmene stavu objednávky.
+- **Platby:** QR kód na platbu prevodom (PAY by square, QR Platba, EPC QR) na stránke objednávky aj v PDF;
+  platba kartou, Apple Pay a Google Pay cez **Stripe** (stačí zadať kľúče).
+- **Zákaznícke účty:** registrácia, prihlásenie, zabudnuté heslo, prehľad objednávok, uložené adresy,
+  predvyplnená pokladňa, zrušenie účtu; správa zákazníkov v administrácii.
+- **Právne minimum:** verzie obchodných podmienok a zaznamenaný súhlas pri objednávke a registrácii,
+  podmienky v PDF v prílohe potvrdenia, lišta cookies (kódy analytiky až po súhlase),
+  odstúpenie od zmluvy a reklamácie online so zákonnými lehotami.
+- **Prevádzka:** zálohy v PHP (bez mysqldump), webový cron, prehliadač logov, stav systému,
+  dvojfaktorové prihlásenie do administrácie, knižnica súborov.
 
 **Obchod (krok 2)**
 

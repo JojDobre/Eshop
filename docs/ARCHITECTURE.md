@@ -46,17 +46,38 @@ themes/                 šablóny vzhľadu obchodu
 
 | Modul | Obsah | Závisí od |
 |---|---|---|
-| `storefront` | úvodná stránka, sitemap, robots.txt, register právnych stránok | – |
-| `catalog` | kategórie, produkty, ceny podľa meny, vyhľadávanie | storefront |
-| `shipping` | spôsoby dopravy | – |
-| `payments` | spôsoby platby a ich obmedzenie na dopravu | shipping |
+| `storefront` | úvodná stránka, sitemap, robots.txt, právne stránky a ich verzie, súhlas s cookies | – |
+| `tax` | sadzby DPH, výpočet DPH | – |
+| `catalog` | kategórie, produkty, varianty, vlastné polia, výrobcovia (GPSR), sklad, história cien | storefront, tax |
+| `shipping` | spôsoby dopravy, cena podľa hmotnosti | – |
+| `payments` | spôsoby platby, QR kódy na platbu (PAY by square, QR Platba, EPC) | shipping |
 | `cart` | košík (v databáze, token v session) | catalog |
-| `orders` | pokladňa, objednávky, e-maily, administrácia objednávok, nástenka | catalog, cart, shipping, payments |
-| `pages` | statické stránky, odkazy v päte, obchodné podmienky v pokladni | storefront |
+| `orders` | pokladňa, objednávky, kupóny, e-maily, register platobných brán, administrácia objednávok | storefront, catalog, cart, shipping, payments, tax |
+| `pages` | statické stránky, verzie obchodných podmienok a zásad ochrany údajov | storefront |
+| `invoices` | zálohové faktúry, faktúry, dobropisy v PDF | orders, tax |
+| `stripe` | platba kartou cez Stripe Checkout a webhook | orders, payments |
+| `customers` | zákaznícke účty (samostatné prihlásenie `customer`) | storefront, orders |
+| `returns` | odstúpenie od zmluvy a reklamácie | orders |
 
 Moduly komunikujú cez **udalosti** (`EshopInstalled` → predvolené dáta, `OrderPlaced` → e-maily,
-`OrderStatusChanged`, `OrderPaid`) a cez **view composery** (napr. katalóg dodá kategórie do hlavičky,
-košík počet kusov). Šablóna tak nemusí vedieť, ktoré moduly sú zapnuté.
+zálohová faktúra, priradenie k účtu; `OrderStatusChanged` → e-mail zákazníkovi; `OrderPaid` → faktúra)
+a cez **view composery** (napr. katalóg dodá kategórie do hlavičky, košík počet kusov). Šablóna tak
+nemusí vedieť, ktoré moduly sú zapnuté.
+
+Ďalšie body rozšírenia (registre v kontajneri):
+
+| Register | Na čo |
+|---|---|
+| `EmailTemplates` (jadro) | modul zaregistruje upraviteľný e-mail (`EmailTemplateDefinition`), odosiela cez `TemplateMail` |
+| `LegalPages` (storefront) | adresy a aktuálne verzie právnych dokumentov (`LegalDocument`) |
+| `SitemapRegistry` (storefront) | adresy do `sitemap.xml` |
+| `OrderMailAttachments` (orders) | prílohy potvrdenia objednávky (zálohová faktúra, obchodné podmienky) |
+| `PaymentGateways` (orders) | platobné brány (`PaymentGateway`), napr. Stripe |
+| `OrderResource::registerRelationManager()` | záložky v detaile objednávky (doklady, reklamácie) |
+| `PaymentQrRegistry` (invoices) | QR kód na dokladoch |
+
+Nastavenia modulu môžu byť v module (trieda `Settings` z `spatie/laravel-settings` a migrácia
+v `database/migrations`), napr. `Modules\Stripe\StripeSettings`.
 
 Modul je **obyčajný Laravel Service Provider** s popisným súborom `module.json`.
 
@@ -148,6 +169,15 @@ themes/default/
   okrem mazania používateľov, ktoré vždy kontroluje `UserPolicy`:
   nikto nezmaže sám seba ani posledného hlavného administrátora.
 - Ďalšie roly a ich oprávnenia pribudnú v ďalších krokoch.
+- Zákazníci majú vlastnú tabuľku `customers` a strážcu `customer`; s účtami administrácie sa nemiešajú.
+- Dvojfaktorové prihlásenie do administrácie: Filament MFA (overovacia aplikácia, záložné kódy), tajný kľúč šifrovane.
+
+## Prevádzka
+
+- **Zálohy** (`App\Core\Backup`): export databázy v PHP cez PDO (bez `mysqldump`), ZIP s nahranými súbormi
+  a nastaveniami do `storage/app/backups`, automaticky denne cez plánovač.
+- **Plánovač:** `routes/console.php`; cron `schedule:run` alebo webový cron `/cron/{kľúč}` (kľúč odvodený od `APP_KEY`).
+- **Logy a stav systému:** Systém → Logy, Systém → Stav systému (`App\Core\System`).
 
 ## Testy
 

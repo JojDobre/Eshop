@@ -1,5 +1,22 @@
 # Prehľad zmien
 
+## 0.5.0 – Pilotná verzia pre malého obchodníka (krok 3)
+
+- **DPH:** modul Dane so sadzbami SK a CZ, ceny s DPH podľa nastavenia, rozpis DPH v objednávke a na dokladoch.
+- **GPSR a Omnibus:** výrobcovia s údajmi o bezpečnosti, história cien a najnižšia cena za 30 dní pri zľave.
+- **Sklad:** pohyby skladu, upozornenie na nízky sklad (e-mail, nástenka).
+- **Varianty** s vlastnou cenou, skladom a obrázkom; **vlastné polia** produktov s filtrami.
+- **Kupóny** a cena dopravy podľa hmotnosti.
+- Modul **Doklady**: zálohové faktúry, faktúry a dobropisy v PDF.
+- **Upraviteľné texty e-mailov** a e-maily pri zmene stavu objednávky.
+- **QR platba** (PAY by square, QR Platba, EPC QR) a modul **Stripe** na platbu kartou.
+- Modul **Zákazníci**: registrácia, prihlásenie, objednávky, adresy, zrušenie účtu.
+- **Verzie právnych dokumentov** a záznam súhlasu, obchodné podmienky v PDF k potvrdeniu.
+- **Lišta cookies** s načítaním analytiky až po súhlase.
+- Modul **Vrátenie a reklamácie** so zákonnými lehotami.
+- **Zálohy**, webový cron, **logy**, **stav systému**, **dvojfaktorové prihlásenie**, **knižnica súborov**.
+- Odstránený balík spatie/laravel-backup (nahradený zálohou v PHP, ktorá nepotrebuje mysqldump).
+
 ## 0.2.0 – Prvý funkčný obchod (krok 2)
 
 - Moduly **Katalóg, Doprava, Platby, Košík, Objednávky, Stránky**.

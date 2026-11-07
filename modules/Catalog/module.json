@@ -14,7 +14,7 @@
     "provider": "Modules\\Catalog\\CatalogServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.2",
+        "eshop": "^0.5",
         "modules": {
             "storefront": "^0.1",
             "tax": "^0.3"

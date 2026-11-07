@@ -23,6 +23,9 @@ class TaxRateResource extends Resource
 {
     protected static ?string $model = TaxRate::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalculator;
 
     protected static ?int $navigationSort = 36;

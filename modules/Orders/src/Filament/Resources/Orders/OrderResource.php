@@ -31,6 +31,9 @@ class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
 
     protected static ?int $navigationSort = 10;
@@ -119,11 +122,11 @@ class OrderResource extends Resource
                             TableColumn::make($t('item_total'))->alignment('end'),
                         ])
                         ->schema([
-                            TextEntry::make('name')->formatStateUsing(fn ($state, $record) => $record->fullName()),
-                            TextEntry::make('sku')->placeholder('—'),
-                            TextEntry::make('quantity'),
-                            TextEntry::make('unit_price')->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
-                            TextEntry::make('total')->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
+                            TextEntry::make('name')->label($t('item_name'))->formatStateUsing(fn ($state, $record) => $record->fullName()),
+                            TextEntry::make('sku')->label($t('item_sku'))->placeholder('—'),
+                            TextEntry::make('quantity')->label($t('item_quantity')),
+                            TextEntry::make('unit_price')->label($t('item_unit_price'))->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
+                            TextEntry::make('total')->label($t('item_total'))->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),
                         ]),
                     Grid::make(5)->schema([
                         TextEntry::make('subtotal')->label($t('subtotal'))->formatStateUsing(fn (Order $record) => $money($record, $record->subtotal)),

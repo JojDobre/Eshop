@@ -31,6 +31,9 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?int $navigationSort = 10;

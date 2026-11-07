@@ -28,6 +28,9 @@ class CustomFieldResource extends Resource
 {
     protected static ?string $model = CustomField::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedAdjustmentsHorizontal;
 
     protected static ?int $navigationSort = 25;

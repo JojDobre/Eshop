@@ -32,6 +32,9 @@ class ShippingMethodResource extends Resource
 {
     protected static ?string $model = ShippingMethod::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
 
     protected static ?int $navigationSort = 50;

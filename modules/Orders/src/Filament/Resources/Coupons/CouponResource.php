@@ -30,6 +30,9 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
 
     protected static ?int $navigationSort = 20;

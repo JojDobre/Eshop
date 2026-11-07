@@ -31,6 +31,9 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+    // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
+    protected static bool $hasTitleCaseModelLabel = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolder;
 
     protected static ?int $navigationSort = 20;

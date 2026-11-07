@@ -9,8 +9,11 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
 use Modules\Cart\CartManager;
 use Modules\Cart\CartSummary;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldValues;
 use Modules\Orders\Actions\PlaceOrder;
 use Modules\Orders\CheckoutException;
+use Modules\Orders\CheckoutFields;
 use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Coupons;
 use Modules\Orders\Http\Requests\CheckoutRequest;
@@ -56,6 +59,7 @@ class CheckoutController extends Controller
             'coupon' => $coupon,
             'countries' => config('eshop.countries'),
             'legalPages' => app(LegalPages::class),
+            'checkoutFields' => CheckoutFields::fields(),
         ]);
     }
 
@@ -82,6 +86,11 @@ class CheckoutController extends Controller
             );
         } catch (CheckoutException $e) {
             return redirect()->route('cart.show')->with('error', $e->getMessage());
+        }
+
+        // Polia, ktoré zákazník vyplnil v pokladni (vlastné polia objednávky).
+        if (CheckoutFields::fields()->isNotEmpty()) {
+            app(CustomFieldValues::class)->save(CustomField::ORDER, $order->id, (array) $request->input('custom_fields', []));
         }
 
         $this->cart->clear();

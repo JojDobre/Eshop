@@ -152,6 +152,7 @@ return [
     'reverse_charge_applied' => 'Objednávka je bez DPH – prenesenie daňovej povinnosti (IČ DPH overené v systéme VIES).',
     'unit_price' => ':price / :unit',
     'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
+    'additional_details' => 'Doplňujúce údaje',
     'currency' => 'Mena',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatiť kartou',

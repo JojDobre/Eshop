@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\CustomFields;
 
+use App\Core\Content\ContentLocale;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -19,11 +20,12 @@ class CustomFieldValues
     }
 
     /**
-     * Hodnoty objektu: kľúč poľa => hodnota.
+     * Hodnoty objektu: kľúč poľa => hodnota. Preložiteľné polia v zadanom jazyku
+     * (null = jazyk obsahu, s náhradou za predvolený jazyk).
      *
      * @return array<string, mixed>
      */
-    public function get(string $entity, int $id): array
+    public function get(string $entity, int $id, ?string $locale = null, bool $fallback = true): array
     {
         return CustomFieldValue::query()
             ->with('field')
@@ -31,7 +33,7 @@ class CustomFieldValues
             ->where('entity_id', $id)
             ->get()
             ->filter(fn (CustomFieldValue $value) => $value->field !== null)
-            ->mapWithKeys(fn (CustomFieldValue $value) => [$value->field->key => $value->value()])
+            ->mapWithKeys(fn (CustomFieldValue $value) => [$value->field->key => $value->valueIn($locale, $fallback)])
             ->all();
     }
 
@@ -40,9 +42,9 @@ class CustomFieldValues
      *
      * @param  array<string, mixed>  $values
      */
-    public function save(string $entity, int $id, array $values): void
+    public function save(string $entity, int $id, array $values, ?string $locale = null): void
     {
-        DB::transaction(function () use ($entity, $id, $values): void {
+        DB::transaction(function () use ($entity, $id, $values, $locale): void {
             foreach ($this->fields($entity) as $field) {
                 if (! array_key_exists($field->key, $values)) {
                     continue;
@@ -50,6 +52,22 @@ class CustomFieldValues
 
                 $value = $this->normalize($field, $values[$field->key]);
                 $where = ['custom_field_id' => $field->id, 'entity_type' => $entity, 'entity_id' => $id];
+
+                // Preložiteľné pole: hodnota sa uloží do zvoleného jazyka, ostatné jazyky ostanú.
+                if ($field->storesTranslations()) {
+                    $existing = CustomFieldValue::query()->where($where)->first();
+                    $translations = array_filter([...(array) ($existing?->value_json ?? []), ($locale ?? app(ContentLocale::class)->current()) => $value], fn ($text) => filled($text));
+
+                    if ($translations === []) {
+                        CustomFieldValue::query()->where($where)->delete();
+                    } else {
+                        CustomFieldValue::query()->updateOrCreate($where, [
+                            'value_string' => null, 'value_text' => null, 'value_number' => null, 'value_boolean' => null, 'value_json' => $translations,
+                        ]);
+                    }
+
+                    continue;
+                }
 
                 if ($value === null) {
                     CustomFieldValue::query()->where($where)->delete();

@@ -44,6 +44,7 @@ return [
     'customer_note' => 'Customer note',
     'legal_consents' => 'Accepted documents',
     'version' => 'version :version',
+    'additional_details' => 'Additional details from the customer',
     'variable_symbol' => 'Payment reference',
     'paid_at' => 'Paid',
     'section_history' => 'History',

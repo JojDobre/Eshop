@@ -278,6 +278,7 @@ return [
     ],
 
     'translations' => [
+        'language_short' => 'Jazyk',
         'translate_from' => 'Preložiť z jazyka :language',
         'translate_confirm' => 'Texty v tomto jazyku sa nahradia strojovým prekladom. Preklad potom skontrolujte.',
         'translate_failed' => 'Preklad sa nepodaril',

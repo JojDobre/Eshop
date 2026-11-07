@@ -30,6 +30,18 @@ class CustomField extends Model
 
     public const PRODUCT = 'product';
 
+    public const CATEGORY = 'category';
+
+    public const MANUFACTURER = 'manufacturer';
+
+    public const CUSTOMER = 'customer';
+
+    /** Polia objednávky vypĺňa zákazník v pokladni (napr. „Text na tortu“). */
+    public const ORDER = 'order';
+
+    /** Objekty, pre ktoré sa dajú vytvoriť polia (ostatné okrem produktu iba so zapnutou funkciou). */
+    public const ENTITIES = [self::PRODUCT, self::CATEGORY, self::MANUFACTURER, self::CUSTOMER, self::ORDER];
+
     protected $guarded = [];
 
     /** @var list<string> */
@@ -40,6 +52,7 @@ class CustomField extends Model
         'is_required' => false,
         'is_filterable' => false,
         'is_visible' => true,
+        'is_translatable' => false,
         'position' => 0,
     ];
 
@@ -51,6 +64,7 @@ class CustomField extends Model
             'is_required' => 'boolean',
             'is_filterable' => 'boolean',
             'is_visible' => 'boolean',
+            'is_translatable' => 'boolean',
             'position' => 'integer',
         ];
     }
@@ -143,5 +157,11 @@ class CustomField extends Model
             CustomFieldType::Date => Carbon::parse($value)->format(app()->getLocale() === 'en' ? 'j M Y' : 'j. n. Y'),
             default => $value.$unit,
         };
+    }
+
+    /** Ukladá sa hodnota v každom jazyku? (iba textové polia) */
+    public function storesTranslations(): bool
+    {
+        return $this->is_translatable && in_array($this->type, [CustomFieldType::Text, CustomFieldType::Textarea], true);
     }
 }

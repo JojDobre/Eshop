@@ -19,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Modules\Orders\CheckoutFields;
 use Modules\Orders\Filament\Resources\Orders\Pages\ListOrders;
 use Modules\Orders\Filament\Resources\Orders\Pages\ViewOrder;
 use Modules\Orders\Models\Order;
@@ -153,6 +154,10 @@ class OrderResource extends Resource
                     TextEntry::make('shipping_street')->label($t('shipping_address'))->placeholder('—')
                         ->formatStateUsing(fn (Order $record) => implode(', ', array_filter([$record->shipping_name, $record->shipping_street, trim($record->shipping_zip.' '.$record->shipping_city), $record->shipping_country]))),
                     TextEntry::make('customer_note')->label($t('customer_note'))->placeholder('—')->columnSpanFull(),
+                    TextEntry::make('order_fields')->label(__('orders::admin.additional_details'))
+                        ->state(fn (Order $record) => collect(CheckoutFields::display($record->id))->map(fn ($value, $label) => $label.': '.$value)->values()->all() ?: null)
+                        ->listWithLineBreaks()->columnSpanFull()
+                        ->visible(fn (Order $record) => CheckoutFields::display($record->id) !== []),
                 ]),
             ]),
             Group::make()->schema([

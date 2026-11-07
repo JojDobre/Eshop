@@ -36,7 +36,8 @@ class EditProduct extends EditRecord
         $data = $this->fillContentTranslations($data);
         $data['price'] = $price === null ? null : Price::toDecimal($price, $currency);
         $data['compare_at_price'] = $compareAt === null ? null : Price::toDecimal($compareAt, $currency);
-        $data['custom_fields'] = app(CustomFieldValues::class)->get(CustomField::PRODUCT, $product->id);
+        // Preložiteľné polia v jazyku, ktorý sa práve upravuje (bez náhrady za iný jazyk).
+        $data['custom_fields'] = app(CustomFieldValues::class)->get(CustomField::PRODUCT, $product->id, $this->currentEditingLocale(), fallback: false);
 
         foreach ($product->prices->whereNull('product_variant_id')->where('currency', '!=', $currency) as $row) {
             $data['other_prices'][$row->currency] = [

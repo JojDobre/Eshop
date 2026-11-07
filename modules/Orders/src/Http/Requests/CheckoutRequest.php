@@ -4,6 +4,7 @@ namespace Modules\Orders\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Modules\Orders\CheckoutFields;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
 
@@ -52,6 +53,7 @@ class CheckoutRequest extends FormRequest
 
             'customer_note' => ['nullable', 'string', 'max:1000'],
             'terms' => ['accepted'],
+            ...CheckoutFields::rules(),
         ];
     }
 

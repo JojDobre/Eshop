@@ -127,6 +127,8 @@
                     @error('payment_method_id') <p class="field-error">{{ $message }}</p> @enderror
                 </fieldset>
 
+                @include('theme::partials.checkout-fields')
+
                 <div>
                     <label for="customer_note" class="label">{{ __('theme::shop.note') }} <span class="font-normal text-zinc-500">({{ __('theme::shop.optional') }})</span></label>
                     <textarea id="customer_note" name="customer_note" rows="3" maxlength="1000" class="input mt-1.5">{{ old('customer_note') }}</textarea>

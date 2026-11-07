@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Unique;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldsSection;
 use Modules\Customers\Filament\Resources\Customers\Pages\EditCustomer;
 use Modules\Customers\Filament\Resources\Customers\Pages\ListCustomers;
 use Modules\Customers\Filament\Resources\Customers\RelationManagers\OrdersRelationManager;
@@ -86,6 +88,7 @@ class CustomerResource extends Resource
                     ->dehydrateStateUsing(fn (string $state) => Str::lower(trim($state))),
                 TextInput::make('phone')->label($t('phone'))->tel()->maxLength(40),
             ]),
+            CustomFieldsSection::make(CustomField::CUSTOMER)->columnSpan(2),
             Section::make()->columnSpan(1)->schema([
                 TextEntry::make('created_at')->label($t('created_at'))->dateTime(),
                 TextEntry::make('last_login_at')->label($t('last_login_at'))->dateTime()->placeholder('—'),

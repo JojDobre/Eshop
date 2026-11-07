@@ -143,6 +143,19 @@ return [
     ],
 
     'custom_fields' => [
+        'entity' => 'Pre',
+        'entity_help' => 'Kde sa pole použije. Polia objednávky vypĺňa zákazník v pokladni.',
+        'entities' => [
+            'product' => 'Produkty',
+            'category' => 'Kategórie',
+            'manufacturer' => 'Výrobcovia',
+            'customer' => 'Zákazníci',
+            'order' => 'Objednávky (pokladňa)',
+        ],
+        'is_translatable' => 'Hodnota v každom jazyku',
+        'is_translatable_help' => 'Text sa zadáva zvlášť pre každý jazyk obchodu.',
+        'yes' => 'Áno',
+        'no' => 'Nie',
         'label' => 'Parameter',
         'plural' => 'Parametre',
         'name' => 'Názov',

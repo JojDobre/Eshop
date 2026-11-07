@@ -278,6 +278,7 @@ return [
     ],
 
     'translations' => [
+        'language_short' => 'Language',
         'translate_from' => 'Translate from :language',
         'translate_confirm' => 'Texts in this language will be replaced with a machine translation. Please review it afterwards.',
         'translate_failed' => 'Translation failed',

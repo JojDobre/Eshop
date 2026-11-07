@@ -73,6 +73,7 @@ class OrdersServiceProvider extends ModuleServiceProvider
             }
 
             $view->with('paymentQr', $qr);
+            $view->with('orderFields', $order instanceof Order ? CheckoutFields::display($order->id) : []);
         });
 
         View::composer('theme::templates.cart', function (\Illuminate\View\View $view): void {

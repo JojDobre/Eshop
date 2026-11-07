@@ -13,6 +13,9 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldsSection;
+use Modules\Catalog\CustomFields\CustomFieldValues;
 use Modules\Catalog\Filament\Resources\Manufacturers\Pages\ManageManufacturers;
 use Modules\Catalog\Models\Manufacturer;
 use UnitEnum;
@@ -71,7 +74,7 @@ class ManufacturerResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return $schema->columns(1)->components(self::formFields());
+        return $schema->columns(1)->components([...self::formFields(), CustomFieldsSection::make(CustomField::MANUFACTURER)]);
     }
 
     public static function table(Table $table): Table
@@ -86,11 +89,35 @@ class ManufacturerResource extends Resource
                 TextColumn::make('products_count')->label($t('products'))->badge()->color('gray'),
             ])
             ->defaultSort('name')
-            ->recordActions([EditAction::make(), DeleteAction::make()]);
+            ->recordActions([
+                EditAction::make()
+                    ->mutateRecordDataUsing(fn (array $data, Manufacturer $record) => [...$data, 'custom_fields' => app(CustomFieldValues::class)->get(CustomField::MANUFACTURER, $record->id)])
+                    ->using(fn (Manufacturer $record, array $data) => self::saveWithCustomFields($record, $data)),
+                DeleteAction::make(),
+            ]);
     }
 
     public static function getPages(): array
     {
         return ['index' => ManageManufacturers::route('/')];
+    }
+
+    /**
+     * Uloženie výrobcu aj s vlastnými poľami (nie sú stĺpcami tabuľky).
+     *
+     * @param  array<string, mixed>  $data
+     */
+    public static function saveWithCustomFields(Manufacturer $record, array $data): Manufacturer
+    {
+        $values = $data['custom_fields'] ?? null;
+        unset($data['custom_fields']);
+
+        $record->fill($data)->save();
+
+        if (is_array($values)) {
+            app(CustomFieldValues::class)->save(CustomField::MANUFACTURER, $record->id, $values);
+        }
+
+        return $record;
     }
 }

@@ -152,6 +152,7 @@ return [
     'reverse_charge_applied' => 'Objednávka je bez DPH – přenesení daňové povinnosti (DIČ ověřeno v systému VIES).',
     'unit_price' => ':price / :unit',
     'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
+    'additional_details' => 'Doplňující údaje',
     'currency' => 'Měna',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatit kartou',

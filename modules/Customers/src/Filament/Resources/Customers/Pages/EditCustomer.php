@@ -8,6 +8,8 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Password;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\HandlesCustomFields;
 use Modules\Customers\Actions\DeleteCustomer;
 use Modules\Customers\Filament\Resources\Customers\CustomerResource;
 use Modules\Customers\Models\Customer;
@@ -17,7 +19,29 @@ use Modules\Customers\Models\Customer;
  */
 class EditCustomer extends EditRecord
 {
+    use HandlesCustomFields;
+
     protected static string $resource = CustomerResource::class;
+
+    protected function customFieldEntity(): string
+    {
+        return CustomField::CUSTOMER;
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        return $this->withCustomFields($data, $this->record);
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        return $this->withoutCustomFields($data);
+    }
+
+    protected function afterSave(): void
+    {
+        $this->saveCustomFields($this->record);
+    }
 
     protected function getHeaderActions(): array
     {

@@ -137,6 +137,17 @@
             @endif
         </section>
 
+        @if (! empty($orderFields))
+            <section class="mt-10 text-sm">
+                <h2 class="font-semibold">{{ __('theme::shop.additional_details') }}</h2>
+                <dl class="mt-2 space-y-1 text-zinc-600">
+                    @foreach ($orderFields as $label => $value)
+                        <div><dt class="inline font-medium text-zinc-900">{{ $label }}:</dt> <dd class="inline">{{ $value }}</dd></div>
+                    @endforeach
+                </dl>
+            </section>
+        @endif
+
         @if (($returnRequests ?? collect())->isNotEmpty())
             <section class="mt-10 text-sm">
                 <h2 class="font-semibold">{{ __('theme::shop.returns_requests') }}</h2>

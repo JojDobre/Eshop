@@ -180,7 +180,7 @@ class Product extends Model
         return $this->customFieldValues
             ->filter(fn ($value) => $value->field !== null && $value->field->is_visible)
             ->sortBy(fn ($value) => [$value->field->position, $value->field->id])
-            ->mapWithKeys(fn ($value) => [$value->field->name => $value->field->display($value->value())])
+            ->mapWithKeys(fn ($value) => [$value->field->name => $value->field->display($value->valueIn())])
             ->filter(fn ($display) => $display !== null)
             ->all();
     }

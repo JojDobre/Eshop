@@ -143,6 +143,19 @@ return [
     ],
 
     'custom_fields' => [
+        'entity' => 'For',
+        'entity_help' => 'Where the field is used. Order fields are filled in by the customer at checkout.',
+        'entities' => [
+            'product' => 'Products',
+            'category' => 'Categories',
+            'manufacturer' => 'Manufacturers',
+            'customer' => 'Customers',
+            'order' => 'Orders (checkout)',
+        ],
+        'is_translatable' => 'Value in each language',
+        'is_translatable_help' => 'The text is entered separately for each shop language.',
+        'yes' => 'Yes',
+        'no' => 'No',
         'label' => 'Specification',
         'plural' => 'Specifications',
         'name' => 'Name',

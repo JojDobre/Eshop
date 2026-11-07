@@ -22,6 +22,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\CustomFields\CustomFieldsSection;
 use Modules\Catalog\Filament\Resources\Categories\Pages\CreateCategory;
 use Modules\Catalog\Filament\Resources\Categories\Pages\EditCategory;
 use Modules\Catalog\Filament\Resources\Categories\Pages\ListCategories;
@@ -74,6 +76,7 @@ class CategoryResource extends Resource
                     RichEditor::make('description')->label($t('description'))
                         ->toolbarButtons([['bold', 'italic', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList'], ['undo', 'redo']]),
                 ]),
+                CustomFieldsSection::make(CustomField::CATEGORY),
                 Section::make(__('catalog::admin.seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label(__('catalog::admin.meta_title'))->maxLength(70),
                     Textarea::make('meta_description')->label(__('catalog::admin.meta_description'))->rows(2)->maxLength(170),

@@ -44,6 +44,7 @@ return [
     'customer_note' => 'Poznámka zákazníka',
     'legal_consents' => 'Souhlas s dokumenty',
     'version' => 'verze :version',
+    'additional_details' => 'Doplňující údaje od zákazníka',
     'variable_symbol' => 'Variabilní symbol',
     'paid_at' => 'Zaplacena',
     'section_history' => 'Historie',

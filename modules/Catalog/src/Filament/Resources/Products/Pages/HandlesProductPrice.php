@@ -44,7 +44,8 @@ trait HandlesProductPrice
     private function savePrice(Product $product): void
     {
         if ($this->pendingCustomFields !== null) {
-            app(CustomFieldValues::class)->save(CustomField::PRODUCT, $product->id, $this->pendingCustomFields);
+            $locale = method_exists($this, 'currentEditingLocale') ? $this->currentEditingLocale() : null;
+            app(CustomFieldValues::class)->save(CustomField::PRODUCT, $product->id, $this->pendingCustomFields, $locale);
         }
 
         if ($this->pendingPrice !== null) {

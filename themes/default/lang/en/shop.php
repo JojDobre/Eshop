@@ -152,6 +152,7 @@ return [
     'reverse_charge_applied' => 'This order is without VAT – reverse charge (VAT ID verified in VIES).',
     'unit_price' => ':price / :unit',
     'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
+    'additional_details' => 'Additional details',
     'currency' => 'Currency',
     'language' => 'Language',
     'pay_online' => 'Pay by card',

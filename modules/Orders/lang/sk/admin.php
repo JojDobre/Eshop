@@ -102,4 +102,13 @@ return [
         'is_active' => 'Aktívny',
     ],
     'batches' => 'Šarže: :batches',
+    'downloads' => [
+        'title' => 'Odkazy na stiahnutie',
+        'file' => 'Súbor',
+        'count' => 'Stiahnuté',
+        'expires_at' => 'Platnosť do',
+        'send' => 'Poslať odkazy na stiahnutie',
+        'send_help' => 'Vytvoria sa chýbajúce odkazy a zákazníkovi sa pošle e-mail so všetkými odkazmi.',
+        'sent' => 'Odkazy boli odoslané.',
+    ],
 ];

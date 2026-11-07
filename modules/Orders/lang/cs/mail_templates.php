@@ -65,4 +65,9 @@ MD,
         'subject' => 'Objednávka č. {order_number} byla zrušena',
         'body' => "Dobrý den {customer_name},\n\nvaše objednávka č. **{order_number}** byla zrušena. Máte-li dotazy, odpovězte na tento e-mail.\n\nS pozdravem\\\n{shop_name}",
     ],
+    'downloads' => [
+        'label' => 'Odkazy ke stažení',
+        'subject' => 'Soubory k objednávce č. {order_number}',
+        'body' => "Dobrý den {customer_name},\n\nděkujeme za nákup. Zakoupené soubory si stáhnete zde:\n\n{download_links}\n\nOdkazy najdete také na stránce objednávky: {order_url}\n\nS pozdravem\\\n{shop_name}",
+    ],
 ];

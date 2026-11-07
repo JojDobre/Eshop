@@ -127,6 +127,13 @@ return [
         'expiration_hide_days_help' => 'Koľko dní pred dátumom spotreby sa tovar prestane predávať. 0 = predáva sa do dátumu spotreby vrátane.',
         'expiration_show_date' => 'Zobraziť dátum spotreby na webe',
         'expiration_show_date_help' => 'Pri produkte sa zobrazí dátum spotreby tovaru, ktorý zákazník dostane.',
+        'digital' => 'Digitálne produkty',
+        'digital_download_limit' => 'Počet stiahnutí',
+        'digital_download_limit_help' => 'Koľkokrát môže zákazník každý súbor stiahnuť (na kus). 0 = bez obmedzenia.',
+        'digital_download_days' => 'Platnosť odkazu',
+        'digital_download_days_help' => 'Koľko dní od vydania odkaz platí. 0 = bez obmedzenia.',
+        'digital_deliver_unpaid' => 'Poslať odkazy hneď po objednávke',
+        'digital_deliver_unpaid_help' => 'Inak sa pošlú až po zaplatení (objednávka zadarmo hneď).',
     ],
 
     'variants' => [
@@ -331,5 +338,15 @@ return [
         'available_at_help' => 'Zobrazí sa zákazníkovi. Nepovinné.',
         'limit' => 'Najviac predobjednaných kusov',
         'limit_help' => 'Prázdne = bez obmedzenia.',
+    ],
+    'digital' => [
+        'title' => 'Digitálny produkt',
+        'help' => 'Súbory, ktoré si zákazník po zaplatení stiahne. Neposielajú sa a nie sú verejne dostupné.',
+        'is_digital' => 'Produkt je na stiahnutie',
+        'is_digital_help' => 'Nevyžaduje dopravu. Odkazy prídu e-mailom a sú aj na stránke objednávky.',
+        'add_file' => 'Pridať súbor',
+        'file' => 'Súbor',
+        'name' => 'Názov pre zákazníka',
+        'name_help' => 'Predvolene pôvodný názov súboru.',
     ],
 ];

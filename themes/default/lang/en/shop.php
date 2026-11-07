@@ -178,4 +178,8 @@ return [
     'preorder_from' => 'Available for pre-order, expected :date',
     'preorder_button' => 'Pre-order',
     'preorder_line' => 'Pre-order',
+    'downloads' => 'Files to download',
+    'download' => 'Download',
+    'downloads_left' => ':count left',
+    'download_valid_until' => 'valid until :date',
 ];

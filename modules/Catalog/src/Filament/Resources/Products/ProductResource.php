@@ -54,6 +54,7 @@ use Modules\Catalog\Filament\Resources\Products\RelationManagers\VariantsRelatio
 use Modules\Catalog\Models\Addon;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductFile;
 use Modules\Catalog\Models\ProductType;
 use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\StockLots;
@@ -138,6 +139,26 @@ class ProductResource extends Resource
                             ->relationship('addons', 'id')
                             ->getOptionLabelFromRecordUsing(fn (Addon $record) => $record->name.' (+'.Price::format($record->price, $record->currency).')')
                             ->multiple()->preload(),
+                    ]),
+                Section::make(__('catalog::admin.digital.title'))
+                    ->description(__('catalog::admin.digital.help'))
+                    ->visible(fn () => CatalogFeatures::enabled('digital'))
+                    ->collapsed(fn (?Product $record) => ! $record?->is_digital)
+                    ->schema([
+                        Toggle::make('is_digital')->label(__('catalog::admin.digital.is_digital'))->helperText(__('catalog::admin.digital.is_digital_help'))->live(),
+                        Repeater::make('files')->hiddenLabel()
+                            ->relationship('files')
+                            ->visible(fn (Get $get) => (bool) $get('is_digital'))
+                            ->orderColumn('position')
+                            ->columns(2)
+                            ->addActionLabel(__('catalog::admin.digital.add_file'))
+                            ->schema([
+                                FileUpload::make('path')->label(__('catalog::admin.digital.file'))
+                                    // Súkromný disk: súbor sa dá stiahnuť iba cez odkaz z objednávky.
+                                    ->disk(ProductFile::DISK)->directory(ProductFile::DIRECTORY)->visibility('private')
+                                    ->storeFileNamesIn('name')->maxSize(512000)->required()->downloadable(),
+                                TextInput::make('name')->label(__('catalog::admin.digital.name'))->helperText(__('catalog::admin.digital.name_help'))->maxLength(255),
+                            ]),
                     ]),
                 Section::make(__('catalog::admin.bundle.title'))
                     ->description(__('catalog::admin.bundle.help'))

@@ -13,4 +13,5 @@ return [
     'coupon_applied' => 'Discount code :code has been applied.',
     'coupon_removed' => 'The discount code has been removed.',
     'preorder' => 'pre-order',
+    'download_unavailable' => 'The file can no longer be downloaded (validity or download count has expired).',
 ];

@@ -70,6 +70,7 @@ class Product extends Model
             'weight' => 'integer',
             'unit_amount' => 'decimal:4',
             'is_bundle' => 'boolean',
+            'is_digital' => 'boolean',
             'preorder_enabled' => 'boolean',
             'preorder_available_at' => 'date',
             'preorder_limit' => 'integer',
@@ -620,7 +621,28 @@ class Product extends Model
     /** Potrebuje tovar dopravu? (služby a digitálne produkty nie) */
     public function requiresShipping(): bool
     {
+        // Digitálny produkt sa neposiela.
+        if ($this->isDigital()) {
+            return false;
+        }
+
         return $this->activeType()?->requires_shipping ?? true;
+    }
+
+    /** Je produkt digitálny (súbory na stiahnutie)? Iba so zapnutou funkciou. */
+    public function isDigital(): bool
+    {
+        return $this->is_digital && CatalogFeatures::enabled('digital');
+    }
+
+    /**
+     * Súbory na stiahnutie.
+     *
+     * @return HasMany<ProductFile, $this>
+     */
+    public function files(): HasMany
+    {
+        return $this->hasMany(ProductFile::class)->orderBy('position')->orderBy('id');
     }
 
     public function isUnique(): bool

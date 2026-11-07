@@ -48,6 +48,15 @@ class CatalogSettings extends Settings
     /** Zobraziť na webe „trvanlivosť minimálne do …“. */
     public bool $expiration_show_date;
 
+    /** Koľkokrát sa dá súbor digitálneho produktu stiahnuť (0 = bez obmedzenia). */
+    public int $digital_download_limit;
+
+    /** Koľko dní platí odkaz na stiahnutie (0 = bez obmedzenia). */
+    public int $digital_download_days;
+
+    /** Poslať odkazy hneď po objednávke, nielen po zaplatení. */
+    public bool $digital_deliver_unpaid;
+
     public static function group(): string
     {
         return 'catalog';

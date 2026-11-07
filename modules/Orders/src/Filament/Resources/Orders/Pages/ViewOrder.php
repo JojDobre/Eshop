@@ -13,6 +13,7 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
 use Modules\Orders\Actions\AddOrderNote;
 use Modules\Orders\Actions\ChangeOrderStatus;
+use Modules\Orders\Actions\IssueDownloads;
 use Modules\Orders\Actions\SetPaymentStatus;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
@@ -34,6 +35,17 @@ class ViewOrder extends ViewRecord
         $t = fn (string $key) => __('orders::admin.actions.'.$key);
 
         return [
+            Action::make('sendDownloads')
+                ->label(__('orders::admin.downloads.send'))
+                ->icon(Heroicon::OutlinedArrowDownTray)
+                ->visible(fn () => IssueDownloads::hasDigitalItems($this->order()))
+                ->requiresConfirmation()
+                ->modalDescription(__('orders::admin.downloads.send_help'))
+                ->action(function (IssueDownloads $downloads): void {
+                    $downloads->handle($this->order());
+                    Notification::make()->success()->title(__('orders::admin.downloads.sent'))->send();
+                    $this->record = $this->order()->fresh(['items.order', 'history.user']);
+                }),
             Action::make('changeStatus')
                 ->label($t('change_status'))
                 ->icon(Heroicon::OutlinedArrowPath)

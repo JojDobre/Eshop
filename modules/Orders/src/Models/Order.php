@@ -90,6 +90,14 @@ class Order extends Model
     }
 
     /**
+     * @return HasMany<DownloadLink, $this>
+     */
+    public function downloadLinks(): HasMany
+    {
+        return $this->hasMany(DownloadLink::class)->orderBy('id');
+    }
+
+    /**
      * @return HasMany<OrderItem, $this>
      */
     public function items(): HasMany

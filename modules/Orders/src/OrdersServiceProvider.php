@@ -12,8 +12,10 @@ use Illuminate\Mail\Attachment;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Modules\Orders\Events\OrderPaid;
 use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Events\OrderStatusChanged;
+use Modules\Orders\Listeners\IssueDownloadsForOrder;
 use Modules\Orders\Listeners\NotifyCustomerAboutStatus;
 use Modules\Orders\Listeners\SendOrderEmails;
 use Modules\Orders\Models\Order;
@@ -42,6 +44,7 @@ class OrdersServiceProvider extends ModuleServiceProvider
 
         Event::listen(OrderPlaced::class, SendOrderEmails::class);
         Event::listen(OrderStatusChanged::class, NotifyCustomerAboutStatus::class);
+        Event::listen([OrderPlaced::class, OrderPaid::class], IssueDownloadsForOrder::class);
 
         $this->registerEmailTemplates();
 
@@ -108,6 +111,10 @@ class OrdersServiceProvider extends ModuleServiceProvider
         $templates->register(new EmailTemplateDefinition('orders.confirmation', 'orders::mail_templates.confirmation', $order, sample: $sample));
         $templates->register(new EmailTemplateDefinition('orders.notification', 'orders::mail_templates.notification',
             ['order_number', 'customer_name', 'customer_email', 'customer_phone', 'order_total', 'order_items', 'shipping_method', 'payment_method', 'customer_note', 'admin_url'], sample: $sample));
+
+        $templates->register(new EmailTemplateDefinition('orders.downloads', 'orders::mail_templates.downloads',
+            ['customer_name', 'order_number', 'download_links', 'order_url', 'shop_name'],
+            sample: [...$sample, 'download_links' => '- [ebook.pdf]('.url('/').')']));
 
         foreach ([OrderStatus::Processing, OrderStatus::ReadyForPickup, OrderStatus::Shipped, OrderStatus::Completed, OrderStatus::Cancelled] as $status) {
             $templates->register(new EmailTemplateDefinition(

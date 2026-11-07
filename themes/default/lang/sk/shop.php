@@ -178,4 +178,8 @@ return [
     'preorder_from' => 'Na predobjednávku, očakávame :date',
     'preorder_button' => 'Predobjednať',
     'preorder_line' => 'Predobjednávka',
+    'downloads' => 'Súbory na stiahnutie',
+    'download' => 'Stiahnuť',
+    'downloads_left' => 'zostáva :count',
+    'download_valid_until' => 'platné do :date',
 ];

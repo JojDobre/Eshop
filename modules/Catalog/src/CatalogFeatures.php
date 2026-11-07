@@ -16,7 +16,7 @@ final class CatalogFeatures
     public const ALL = ['product_types', 'extra_custom_fields', 'addons', 'bundles', 'warehouses', 'batches', 'expiration', 'preorders', 'digital'];
 
     /** Funkcie s ďalšími nastaveniami (odkaz z prehľadu funkcií). */
-    private const WITH_SETTINGS = ['expiration'];
+    private const WITH_SETTINGS = ['expiration', 'digital'];
 
     /** Závislosti medzi funkciami. */
     private const REQUIRES = ['expiration' => 'batches'];

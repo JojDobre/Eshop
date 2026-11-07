@@ -102,4 +102,13 @@ return [
         'is_active' => 'Active',
     ],
     'batches' => 'Batches: :batches',
+    'downloads' => [
+        'title' => 'Download links',
+        'file' => 'File',
+        'count' => 'Downloaded',
+        'expires_at' => 'Valid until',
+        'send' => 'Send download links',
+        'send_help' => 'Missing links are created and the customer receives an e-mail with all links.',
+        'sent' => 'Links were sent.',
+    ],
 ];

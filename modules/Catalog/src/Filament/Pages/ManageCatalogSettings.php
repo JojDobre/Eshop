@@ -58,6 +58,18 @@ class ManageCatalogSettings extends BaseSettingsPage
                     Toggle::make('expiration_show_date')->label(__('catalog::admin.settings.expiration_show_date'))
                         ->helperText(__('catalog::admin.settings.expiration_show_date_help')),
                 ]),
+            Section::make(__('catalog::admin.settings.digital'))
+                ->visible(fn () => CatalogFeatures::enabled('digital'))
+                ->columns(2)
+                ->schema([
+                    TextInput::make('digital_download_limit')->label(__('catalog::admin.settings.digital_download_limit'))
+                        ->helperText(__('catalog::admin.settings.digital_download_limit_help'))->integer()->minValue(0)->maxValue(1000)->required(),
+                    TextInput::make('digital_download_days')->label(__('catalog::admin.settings.digital_download_days'))
+                        ->helperText(__('catalog::admin.settings.digital_download_days_help'))->integer()->minValue(0)->maxValue(3650)->required()
+                        ->suffix(__('catalog::admin.settings.days')),
+                    Toggle::make('digital_deliver_unpaid')->label(__('catalog::admin.settings.digital_deliver_unpaid'))
+                        ->helperText(__('catalog::admin.settings.digital_deliver_unpaid_help')),
+                ]),
         ]);
     }
 }

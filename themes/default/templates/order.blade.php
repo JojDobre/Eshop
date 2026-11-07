@@ -74,6 +74,33 @@
             </section>
         @endif
 
+        @php($downloadLinks = \Modules\Orders\Models\DownloadLink::query()->where('order_id', $order->id)->with('order')->orderBy('id')->get())
+        @if ($downloadLinks->isNotEmpty())
+            <section class="mt-10">
+                <h2 class="text-lg font-semibold">{{ __('theme::shop.downloads') }}</h2>
+                <ul class="mt-4 divide-y divide-zinc-100 rounded-2xl border border-zinc-200">
+                    @foreach ($downloadLinks as $link)
+                        <li class="flex flex-wrap items-center justify-between gap-3 p-4 text-sm">
+                            <span>
+                                <span class="font-medium">{{ $link->file_name }}</span>
+                                <span class="block text-xs text-zinc-500">
+                                    {{ collect([
+                                        $link->remainingDownloads() !== null ? __('theme::shop.downloads_left', ['count' => $link->remainingDownloads()]) : null,
+                                        $link->expires_at ? __('theme::shop.download_valid_until', ['date' => $link->expires_at->format(app()->getLocale() === 'en' ? 'j M Y' : 'j. n. Y')]) : null,
+                                    ])->filter()->implode(' · ') }}
+                                </span>
+                            </span>
+                            @if ($link->isUsable())
+                                <a href="{{ $link->url() }}" class="btn btn-primary px-4 py-1.5">{{ __('theme::shop.download') }}</a>
+                            @else
+                                <span class="text-xs text-zinc-500">{{ __('orders::messages.download_unavailable') }}</span>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
         <section class="mt-10">
             <h2 class="text-lg font-semibold">{{ __('theme::shop.order_summary') }}</h2>
             <ul class="mt-4 divide-y divide-zinc-100 border-y border-zinc-100 text-sm">

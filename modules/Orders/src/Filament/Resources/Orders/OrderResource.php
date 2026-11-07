@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Modules\Orders\CheckoutFields;
 use Modules\Orders\Filament\Resources\Orders\Pages\ListOrders;
 use Modules\Orders\Filament\Resources\Orders\Pages\ViewOrder;
+use Modules\Orders\Models\DownloadLink;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderHistoryEntry;
 use Modules\Orders\OrderStatus;
@@ -113,6 +114,21 @@ class OrderResource extends Resource
 
         return $schema->columns(3)->components([
             Group::make()->columnSpan(2)->schema([
+                Section::make(__('orders::admin.downloads.title'))
+                    ->visible(fn (Order $record) => DownloadLink::query()->where('order_id', $record->id)->exists())
+                    ->schema([
+                        RepeatableEntry::make('downloadLinks')->hiddenLabel()
+                            ->table([
+                                TableColumn::make(__('orders::admin.downloads.file')),
+                                TableColumn::make(__('orders::admin.downloads.count'))->alignment('center'),
+                                TableColumn::make(__('orders::admin.downloads.expires_at')),
+                            ])
+                            ->schema([
+                                TextEntry::make('file_name'),
+                                TextEntry::make('downloads')->formatStateUsing(fn ($state, $record) => $record->max_downloads ? $state.' / '.$record->max_downloads : (string) $state),
+                                TextEntry::make('expires_at')->dateTime()->placeholder('—'),
+                            ]),
+                    ]),
                 Section::make($t('section_items'))->schema([
                     RepeatableEntry::make('items')->hiddenLabel()
                         ->table([

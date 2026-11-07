@@ -65,4 +65,9 @@ MD,
         'subject' => 'Order no. {order_number} has been cancelled',
         'body' => "Hello {customer_name},\n\nyour order no. **{order_number}** has been cancelled. If you have any questions, reply to this e-mail.\n\nKind regards\\\n{shop_name}",
     ],
+    'downloads' => [
+        'label' => 'Download links',
+        'subject' => 'Files for order no. {order_number}',
+        'body' => "Hello {customer_name},\n\nthank you for your purchase. Download your files here:\n\n{download_links}\n\nYou can also find the links on the order page: {order_url}\n\nKind regards\\\n{shop_name}",
+    ],
 ];

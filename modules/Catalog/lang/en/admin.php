@@ -127,6 +127,13 @@ return [
         'expiration_hide_days_help' => 'How many days before the expiry date goods stop being sold. 0 = sold up to and including the expiry date.',
         'expiration_show_date' => 'Show expiry date in the shop',
         'expiration_show_date_help' => 'The product page shows the expiry date of the goods the customer will receive.',
+        'digital' => 'Digital products',
+        'digital_download_limit' => 'Download limit',
+        'digital_download_limit_help' => 'How many times the customer can download each file (per unit). 0 = unlimited.',
+        'digital_download_days' => 'Link validity',
+        'digital_download_days_help' => 'How many days a link is valid after it is issued. 0 = unlimited.',
+        'digital_deliver_unpaid' => 'Send links right after ordering',
+        'digital_deliver_unpaid_help' => 'Otherwise they are sent after payment (free orders immediately).',
     ],
 
     'variants' => [
@@ -331,5 +338,15 @@ return [
         'available_at_help' => 'Shown to customers. Optional.',
         'limit' => 'Maximum pre-ordered units',
         'limit_help' => 'Empty = unlimited.',
+    ],
+    'digital' => [
+        'title' => 'Digital product',
+        'help' => 'Files the customer downloads after payment. Nothing is shipped and the files are not public.',
+        'is_digital' => 'Product is a download',
+        'is_digital_help' => 'No shipping required. Links are sent by e-mail and shown on the order page.',
+        'add_file' => 'Add file',
+        'file' => 'File',
+        'name' => 'Name for the customer',
+        'name_help' => 'Defaults to the original file name.',
     ],
 ];

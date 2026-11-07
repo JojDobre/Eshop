@@ -13,4 +13,5 @@ return [
     'coupon_applied' => 'Zľavový kód :code bol uplatnený.',
     'coupon_removed' => 'Zľavový kód bol odstránený.',
     'preorder' => 'predobjednávka',
+    'download_unavailable' => 'Súbor už nie je možné stiahnuť (platnosť alebo počet stiahnutí vypršal).',
 ];

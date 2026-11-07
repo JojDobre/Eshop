@@ -110,6 +110,7 @@ return [
     'order_received' => 'Objednávku č. :number sme prijali. Potvrdenie sme poslali na :email.',
     'order_number' => 'Objednávka č. :number',
     'order_status' => 'Stav objednávky',
+    'documents' => 'Doklady',
     'payment_details' => 'Platobné údaje',
     'iban' => 'Číslo účtu (IBAN)',
     'variable_symbol' => 'Variabilný symbol',

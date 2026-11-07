@@ -174,6 +174,24 @@ class OrderResource extends Resource
         ]);
     }
 
+    /** @var list<class-string> Záložky v detaile objednávky dodané inými modulmi (napr. doklady). */
+    private static array $extraRelations = [];
+
+    /**
+     * @param  class-string  $relationManager
+     */
+    public static function registerRelationManager(string $relationManager): void
+    {
+        if (! in_array($relationManager, self::$extraRelations, true)) {
+            self::$extraRelations[] = $relationManager;
+        }
+    }
+
+    public static function getRelations(): array
+    {
+        return self::$extraRelations;
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->with(['items.order', 'history.user']);

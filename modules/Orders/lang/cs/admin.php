@@ -55,6 +55,8 @@ return [
         'change_status' => 'Změnit stav',
         'new_status' => 'Nový stav',
         'status_changed' => 'Stav objednávky byl změněn.',
+        'notify_customer' => 'Poslat zákazníkovi e-mail',
+        'notify_customer_help' => 'Text e-mailu upravíte v Nastavení → E-maily. Pro stav „Nová“ se e-mail neposílá.',
         'mark_paid' => 'Označit jako zaplacenou',
         'mark_unpaid' => 'Označit jako nezaplacenou',
         'payment_changed' => 'Stav platby byl změněn.',

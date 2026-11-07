@@ -110,6 +110,7 @@ return [
     'order_received' => 'We have received order no. :number. A confirmation has been sent to :email.',
     'order_number' => 'Order no. :number',
     'order_status' => 'Order status',
+    'documents' => 'Documents',
     'payment_details' => 'Payment details',
     'iban' => 'Account number (IBAN)',
     'variable_symbol' => 'Payment reference',

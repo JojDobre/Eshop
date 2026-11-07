@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
@@ -42,10 +43,16 @@ class ViewOrder extends ViewRecord
                         ->default(fn () => $this->order()->status)
                         ->required()
                         ->native(false),
+                    Toggle::make('notify')->label($t('notify_customer'))->helperText($t('notify_customer_help'))->default(true),
                 ])
                 ->action(function (array $data, ChangeOrderStatus $change) use ($t): void {
                     try {
-                        $change->handle($this->order(), OrderStatus::from($data['status'] instanceof OrderStatus ? $data['status']->value : $data['status']), $this->user());
+                        $change->handle(
+                            $this->order(),
+                            OrderStatus::from($data['status'] instanceof OrderStatus ? $data['status']->value : $data['status']),
+                            $this->user(),
+                            (bool) ($data['notify'] ?? true),
+                        );
                     } catch (CheckoutException $e) {
                         Notification::make()->danger()->title($e->getMessage())->send();
 

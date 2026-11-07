@@ -1,0 +1,17 @@
+{
+    "name": "invoices",
+    "version": "0.3.0",
+    "title": { "sk": "Doklady", "cs": "Doklady", "en": "Invoices" },
+    "description": {
+        "sk": "Zálohové faktúry, faktúry a dobropisy v PDF s číselnými radmi, odosielané e-mailom.",
+        "cs": "Zálohové faktury, faktury a dobropisy v PDF s číselnými řadami, odesílané e-mailem.",
+        "en": "Proforma invoices, invoices and credit notes as PDF with numbering, sent by e-mail."
+    },
+    "provider": "Modules\\Invoices\\InvoicesServiceProvider",
+    "core": true,
+    "requires": {
+        "eshop": "^0.2",
+        "modules": { "orders": "^0.3", "tax": "^0.3" }
+    },
+    "permissions": ["invoices.manage"]
+}

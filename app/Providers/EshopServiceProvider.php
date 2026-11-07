@@ -7,6 +7,7 @@ use App\Core\Eshop;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
 use App\Core\Installer\RequirementsChecker;
+use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
 use App\Core\Support\CurrencyContext;
@@ -47,6 +48,8 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->singleton(ContentLocale::class);
 
         $this->app->singleton(CurrencyContext::class);
+
+        $this->app->singleton(EmailTemplates::class);
 
         $this->app->singleton(ThemeManager::class, fn ($app) => new ThemeManager(
             themesPath: (string) config('eshop.paths.themes'),

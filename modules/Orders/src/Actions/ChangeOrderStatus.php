@@ -22,7 +22,7 @@ class ChangeOrderStatus
 {
     public function __construct(private readonly StockService $stock) {}
 
-    public function handle(Order $order, OrderStatus $status, ?User $user = null): void
+    public function handle(Order $order, OrderStatus $status, ?User $user = null, bool $notifyCustomer = true): void
     {
         $from = $order->status;
 
@@ -45,7 +45,7 @@ class ChangeOrderStatus
             ]);
         });
 
-        OrderStatusChanged::dispatch($order, $from, $status);
+        OrderStatusChanged::dispatch($order, $from, $status, $notifyCustomer);
     }
 
     private function adjustStock(Order $order, int $direction): void

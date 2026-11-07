@@ -55,6 +55,8 @@ return [
         'change_status' => 'Change status',
         'new_status' => 'New status',
         'status_changed' => 'The order status has been changed.',
+        'notify_customer' => 'Send the customer an e-mail',
+        'notify_customer_help' => 'Edit the e-mail text in Settings → E-mails. No e-mail is sent for the “New” status.',
         'mark_paid' => 'Mark as paid',
         'mark_unpaid' => 'Mark as unpaid',
         'payment_changed' => 'The payment status has been changed.',

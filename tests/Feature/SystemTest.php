@@ -43,6 +43,17 @@ class SystemTest extends InstalledTestCase
         $sql = tempnam(sys_get_temp_dir(), 'dump');
         app(DatabaseDumper::class)->dump($sql);
 
+        if (DB::getDriverName() !== 'sqlite') {
+            // Na MySQL/MariaDB sa overí obsah (obnova do novej databázy potrebuje práva CREATE DATABASE).
+            $dump = (string) file_get_contents($sql);
+            unlink($sql);
+            $this->assertStringContainsString('SET FOREIGN_KEY_CHECKS=0;', $dump);
+            $this->assertStringContainsString('CREATE TABLE `users`', $dump);
+            $this->assertStringContainsString(DB::getPdo()->quote("O'Brien \"Jožko\""), $dump);
+
+            return;
+        }
+
         $restored = new PDO('sqlite::memory:');
         $restored->exec((string) file_get_contents($sql));
         unlink($sql);

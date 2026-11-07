@@ -19,7 +19,6 @@
         "filament/spatie-laravel-settings-plugin": "^5.11",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
-        "spatie/laravel-backup": "^10.3",
         "spatie/laravel-permission": "^8.5",
         "spatie/laravel-settings": "^3.10",
         "spatie/laravel-translatable": "^6.14",

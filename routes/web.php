@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CronController;
 use App\Http\Controllers\InstallController;
 use App\Http\Middleware\SetInstallerLocale;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,9 @@ Route::prefix('install')
         Route::post('/shop', 'install')->name('run')->middleware('throttle:10,1');
         Route::get('/done', 'done')->name('done');
     });
+
+// Webový cron pre hostingy bez plánovača úloh (adresa s tajným kľúčom je v Systém → Stav systému).
+Route::get('/cron/{token}', CronController::class)
+    ->name('cron.web')
+    ->where('token', '[a-f0-9]{32}')
+    ->middleware('throttle:6,1');

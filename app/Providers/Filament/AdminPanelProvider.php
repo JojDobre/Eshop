@@ -11,6 +11,7 @@ use App\Http\Middleware\EnsureInstalled;
 use App\Http\Middleware\SetAdminLocale;
 use App\Settings\BrandingSettings;
 use App\Settings\GeneralSettings;
+use Filament\Auth\MultiFactor\App\AppAuthentication;
 use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -44,6 +45,8 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->passwordReset()
             ->profile(EditProfile::class, isSimple: false)
+            // Dvojfaktorové prihlásenie si každý používateľ zapne v profile (nepovinné).
+            ->multiFactorAuthentication([AppAuthentication::make()->recoverable()])
             ->brandName(fn () => $this->general()?->shop_name ?? 'E-shop')
             ->brandLogo(fn () => $this->branding()?->logoUrl())
             ->darkModeBrandLogo(fn () => $this->branding()?->darkLogoUrl())

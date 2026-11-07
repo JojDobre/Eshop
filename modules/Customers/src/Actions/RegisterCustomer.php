@@ -7,6 +7,7 @@ use App\Core\Mail\TemplateMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Modules\Customers\Models\Customer;
+use Modules\Storefront\Pages\LegalPages;
 use Throwable;
 
 class RegisterCustomer
@@ -22,6 +23,7 @@ class RegisterCustomer
             'password' => $data['password'],
             'locale' => $locale,
             'terms_accepted_at' => now(),
+            'legal_consents' => app(LegalPages::class)->consentRecords(),
         ]);
 
         if (app(EmailTemplates::class)->isEnabled('customers.welcome')) {

@@ -39,6 +39,7 @@ class Customer extends Authenticatable implements CanResetPasswordContract
             'shipping_address' => 'array',
             'last_login_at' => 'datetime',
             'terms_accepted_at' => 'datetime',
+            'legal_consents' => 'array',
         ];
     }
 

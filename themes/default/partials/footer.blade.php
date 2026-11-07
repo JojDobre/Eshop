@@ -37,5 +37,8 @@
     </div>
     <div class="border-t border-zinc-200/60 py-4 text-center text-xs text-zinc-400">
         © {{ date('Y') }} {{ $company->company_name ?: $shop->shop_name }}
+        @if (isset($cookieConsent) && $cookieConsent->isActive())
+            · <button type="button" class="underline-offset-2 hover:underline" x-data @click="$dispatch('open-cookie-settings')">{{ __('theme::shop.cookies_settings') }}</button>
+        @endif
     </div>
 </footer>

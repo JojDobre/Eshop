@@ -6,6 +6,7 @@ return [
     'price' => 'Cena',
     'discount' => 'Zľava (:code)',
     'pay_online' => 'Zaplatiť objednávku kartou',
+    'document_meta' => 'Obchod :shop · verzia :version platná od :date',
     'qr_message' => 'Objednávka :number',
     'total' => 'Spolu',
     'confirmation' => [

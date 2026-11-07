@@ -27,6 +27,12 @@
     <style>:root { --brand-primary: {{ $branding->primaryColor() }}; --brand-primary-foreground: {{ $branding->primaryForegroundColor() }}; }</style>
     @vite(['themes/default/assets/css/theme.css', 'themes/default/assets/js/theme.js'])
     @stack('head')
+    @isset($cookieConsent)
+        {{-- Kódy analytiky a marketingu iba so súhlasom zákazníka (vkladá ich obchodník v administrácii). --}}
+        @foreach ($cookieConsent->allowedCodes() as $consentCode)
+            {!! $consentCode !!}
+        @endforeach
+    @endisset
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-zinc-900 antialiased">
     <a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:shadow">
@@ -41,6 +47,8 @@
     </main>
 
     @include('theme::partials.footer')
+
+    @include('theme::partials.cookie-bar')
 
     @stack('scripts')
 </body>

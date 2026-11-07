@@ -42,6 +42,8 @@ return [
     'billing_address' => 'Fakturační adresa',
     'shipping_address' => 'Doručovací adresa',
     'customer_note' => 'Poznámka zákazníka',
+    'legal_consents' => 'Souhlas s dokumenty',
+    'version' => 'verze :version',
     'variable_symbol' => 'Variabilní symbol',
     'paid_at' => 'Zaplacena',
     'section_history' => 'Historie',

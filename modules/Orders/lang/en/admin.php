@@ -42,6 +42,8 @@ return [
     'billing_address' => 'Billing address',
     'shipping_address' => 'Shipping address',
     'customer_note' => 'Customer note',
+    'legal_consents' => 'Accepted documents',
+    'version' => 'version :version',
     'variable_symbol' => 'Payment reference',
     'paid_at' => 'Paid',
     'section_history' => 'History',

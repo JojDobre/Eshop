@@ -156,6 +156,13 @@ return [
         'reset_confirm' => 'The customized subject and text will be replaced with the default text.',
         'reset_done' => 'The default text has been restored.',
         'vars' => [
+            'request_number' => 'request number',
+            'request_type' => 'request type (withdrawal / complaint)',
+            'request_status' => 'request status',
+            'request_items' => 'returned items',
+            'reason' => 'reason / defect',
+            'resolution' => 'resolution',
+            'deadline' => 'statutory deadline',
             'account_url' => 'link to the customer account',
             'reset_url' => 'link to set a new password',
             'customer_name' => 'customer name',

@@ -20,6 +20,9 @@ class LegalPages
     /** @var array<string, ?string> */
     private array $resolved = [];
 
+    /** @var array<string, Closure(): ?LegalDocument> */
+    private array $documentResolvers = [];
+
     /**
      * @param  Closure(): ?string  $resolver
      */
@@ -36,5 +39,30 @@ class LegalPages
         }
 
         return $this->resolved[$key];
+    }
+
+    /**
+     * @param  Closure(): ?LegalDocument  $resolver  Aktuálna verzia dokumentu.
+     */
+    public function registerDocument(string $key, Closure $resolver): void
+    {
+        $this->documentResolvers[$key] = $resolver;
+    }
+
+    public function current(string $key): ?LegalDocument
+    {
+        return isset($this->documentResolvers[$key]) ? ($this->documentResolvers[$key])() : null;
+    }
+
+    /**
+     * Záznamy súhlasu s aktuálnymi verziami dokumentov (obchodné podmienky, ochrana osobných údajov).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function consentRecords(string ...$keys): array
+    {
+        $keys = $keys ?: [self::TERMS, self::PRIVACY];
+
+        return array_values(array_filter(array_map(fn (string $key) => $this->current($key)?->consentRecord(), $keys)));
     }
 }

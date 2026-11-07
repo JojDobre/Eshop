@@ -5,8 +5,12 @@ namespace Modules\Orders;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Settings\GeneralSettings;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Mail\Attachment;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Events\OrderStatusChanged;
 use Modules\Orders\Listeners\NotifyCustomerAboutStatus;
@@ -16,6 +20,7 @@ use Modules\Orders\Payments\PaymentGateways;
 use Modules\Payments\PaymentType;
 use Modules\Payments\Qr\PaymentQr;
 use Modules\Shipping\Models\ShippingMethod;
+use Modules\Storefront\Pages\LegalPages;
 
 class OrdersServiceProvider extends ModuleServiceProvider
 {
@@ -38,6 +43,22 @@ class OrdersServiceProvider extends ModuleServiceProvider
         Event::listen(OrderStatusChanged::class, NotifyCustomerAboutStatus::class);
 
         $this->registerEmailTemplates();
+
+        // Obchodné podmienky v prílohe potvrdenia (zmluvné podmienky na trvanlivom nosiči).
+        $this->app->make(OrderMailAttachments::class)->register(OrderMailAttachments::CONFIRMATION, function (Order $order): ?Attachment {
+            $document = app(LegalPages::class)->current(LegalPages::TERMS);
+
+            if ($document === null || blank(strip_tags($document->html))) {
+                return null;
+            }
+
+            $shopName = app(GeneralSettings::class)->shop_name;
+
+            return Attachment::fromData(
+                fn () => Pdf::loadView('orders::pdf.legal-document', ['document' => $document, 'shopName' => $shopName])->setPaper('a4')->output(),
+                Str::slug($document->title).'-v'.$document->version.'.pdf',
+            )->withMime('application/pdf');
+        });
 
         // Košík: koľko chýba do dopravy zadarmo (najnižšia hranica zo spôsobov doručenia).
         // QR kód na platbu prevodom na stránke objednávky.

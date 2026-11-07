@@ -156,6 +156,13 @@ return [
         'reset_confirm' => 'Upravený předmět a text se nahradí výchozím textem.',
         'reset_done' => 'Výchozí text byl obnoven.',
         'vars' => [
+            'request_number' => 'číslo žádosti',
+            'request_type' => 'typ žádosti (odstoupení / reklamace)',
+            'request_status' => 'stav žádosti',
+            'request_items' => 'vrácené zboží',
+            'reason' => 'důvod / popis vady',
+            'resolution' => 'vyřízení',
+            'deadline' => 'zákonná lhůta',
             'account_url' => 'odkaz na účet zákazníka',
             'reset_url' => 'odkaz na nastavení nového hesla',
             'customer_name' => 'jméno zákazníka',

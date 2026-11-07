@@ -14,4 +14,15 @@ class PageController extends Controller
             'page' => Page::query()->visible()->whereSlug($slug)->firstOrFail(),
         ]);
     }
+
+    /**
+     * Archívna verzia právnej stránky (odkaz z objednávky: „súhlasili ste s verziou 3“).
+     */
+    public function version(string $slug, int $version): View
+    {
+        $page = Page::query()->whereSlug($slug)->firstOrFail();
+        $archived = $page->versions()->where('version', $version)->firstOrFail();
+
+        return view('theme::templates.page', ['page' => $page, 'version' => $archived]);
+    }
 }

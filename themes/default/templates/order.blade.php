@@ -133,6 +133,37 @@
             @endif
         </section>
 
+        @if (($returnRequests ?? collect())->isNotEmpty())
+            <section class="mt-10 text-sm">
+                <h2 class="font-semibold">{{ __('theme::shop.returns_requests') }}</h2>
+                <ul class="mt-2 space-y-1 text-zinc-600">
+                    @foreach ($returnRequests as $returnRequest)
+                        <li>{{ $returnRequest->type->getLabel() }} {{ $returnRequest->number }} · <strong>{{ $returnRequest->status->getLabel() }}</strong>@if ($returnRequest->resolution) – {{ $returnRequest->resolution }}@endif</li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
+        @if ($canRequestReturn ?? false)
+            <p class="mt-10 text-sm text-zinc-600">
+                {{ __('theme::shop.returns_question') }}
+                <a href="{{ route('returns.create', $order->token) }}" class="underline underline-offset-2">{{ __('theme::shop.returns_withdraw_link') }}</a>
+                ·
+                <a href="{{ route('returns.create', [$order->token, 'typ' => 'complaint']) }}" class="underline underline-offset-2">{{ __('theme::shop.returns_complaint_link') }}</a>
+            </p>
+        @endif
+
+        @if (! empty($order->legal_consents))
+            <section class="mt-10 text-sm">
+                <h2 class="font-semibold">{{ __('theme::shop.accepted_documents') }}</h2>
+                <ul class="mt-2 space-y-1 text-zinc-600">
+                    @foreach ($order->legal_consents as $consent)
+                        <li><a href="{{ $consent['url'] }}" class="underline underline-offset-2" target="_blank">{{ $consent['title'] }}</a> ({{ __('theme::shop.document_version_short', ['version' => $consent['version']]) }})</li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
         <a href="{{ route('storefront.home') }}" class="btn btn-secondary mt-12">{{ __('theme::shop.continue_shopping') }}</a>
     </div>
 @endsection

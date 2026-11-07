@@ -6,6 +6,7 @@ return [
     'price' => 'Price',
     'discount' => 'Discount (:code)',
     'pay_online' => 'Pay the order by card',
+    'document_meta' => 'Shop :shop · version :version valid from :date',
     'qr_message' => 'Order :number',
     'total' => 'Total',
     'confirmation' => [

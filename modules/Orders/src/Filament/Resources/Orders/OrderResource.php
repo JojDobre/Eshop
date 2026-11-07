@@ -161,6 +161,10 @@ class OrderResource extends Resource
                     TextEntry::make('payment_status')->label($t('payment_status'))->badge(),
                     TextEntry::make('paid_at')->label($t('paid_at'))->dateTime()->visible(fn (Order $record) => $record->paid_at !== null),
                     TextEntry::make('variable_symbol')->label($t('variable_symbol'))->state(fn (Order $record) => $record->variableSymbol())->copyable(),
+                    TextEntry::make('legal_consents')->label($t('legal_consents'))
+                        ->state(fn (Order $record) => collect($record->legal_consents ?? [])
+                            ->map(fn (array $consent) => $consent['title'].' ('.__('orders::admin.version', ['version' => $consent['version']]).')')->all() ?: null)
+                        ->listWithLineBreaks()->placeholder('—'),
                 ]),
                 Section::make($t('section_history'))->schema([
                     RepeatableEntry::make('history')->hiddenLabel()->contained(false)->schema([

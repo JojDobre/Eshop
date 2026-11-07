@@ -16,6 +16,7 @@
     "requires": {
         "eshop": "^0.2",
         "modules": {
+            "storefront": "^0.1",
             "catalog": "^0.3",
             "cart": "^0.2",
             "shipping": "^0.2",

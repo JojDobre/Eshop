@@ -6,6 +6,7 @@ use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -41,6 +42,55 @@ class Page extends Model
         'position' => 0,
         'is_visible' => true,
     ];
+
+    /** Stránky, ktorých znenie sa archivuje po verziách (zákazník s nimi súhlasí). */
+    public const VERSIONED_ROLES = [self::ROLE_TERMS, self::ROLE_PRIVACY];
+
+    protected static function booted(): void
+    {
+        static::saved(function (Page $page): void {
+            if ($page->isVersioned() && ($page->wasRecentlyCreated || $page->wasChanged(['name', 'content', 'role']) || ! $page->versions()->exists())) {
+                $page->createVersion();
+            }
+        });
+    }
+
+    /**
+     * @return HasMany<PageVersion, $this>
+     */
+    public function versions(): HasMany
+    {
+        return $this->hasMany(PageVersion::class)->orderByDesc('version');
+    }
+
+    public function isVersioned(): bool
+    {
+        return in_array($this->role, self::VERSIONED_ROLES, true);
+    }
+
+    /**
+     * Aktuálna verzia (pri staršej inštalácii bez verzií sa vytvorí prvá).
+     */
+    public function currentVersion(): PageVersion
+    {
+        return $this->versions()->first() ?? $this->createVersion();
+    }
+
+    private function createVersion(): PageVersion
+    {
+        $last = $this->versions()->first();
+
+        // Nová verzia iba vtedy, keď sa text naozaj zmenil.
+        if ($last !== null && $last->getTranslations('content') === $this->getTranslations('content') && $last->getTranslations('name') === $this->getTranslations('name')) {
+            return $last;
+        }
+
+        return $this->versions()->create([
+            'version' => ($last->version ?? 0) + 1,
+            'name' => $this->getTranslations('name'),
+            'content' => $this->getTranslations('content'),
+        ]);
+    }
 
     protected function casts(): array
     {

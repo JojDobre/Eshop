@@ -20,6 +20,7 @@ use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
+use Modules\Storefront\Pages\LegalPages;
 use Modules\Tax\TaxCalculator;
 
 /**
@@ -93,6 +94,7 @@ class PlaceOrder
                 'subtotal' => $totals->subtotal,
                 'total' => $totals->total(),
                 'terms_accepted_at' => now(),
+                'legal_consents' => app(LegalPages::class)->consentRecords(),
                 'ip_address' => $ipAddress,
             ]);
 

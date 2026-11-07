@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Pred inštaláciou presmeruje všetko na inštalátor, po inštalácii inštalátor vypne.
         $middleware->web(append: [EnsureInstalled::class]);
+        // Voľbu cookies nastavuje lišta v prehliadači (JavaScript), preto nie je šifrovaná.
+        $middleware->encryptCookies(except: ['eshop_consent']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

@@ -161,7 +161,8 @@ class CustomerAccountTest extends ShopTestCase
         ])->assertSessionHasNoErrors();
         $customer->refresh();
         $this->assertSame('jana.mala@example.com', $customer->email);
-        $this->assertSame(['street' => 'Nová 5', 'city' => 'Košice', 'zip' => '040 01', 'country' => 'SK'], $customer->billing_address);
+        // MySQL 8 mení poradie kľúčov v stĺpci JSON, porovnáva sa iba obsah.
+        $this->assertEquals(['street' => 'Nová 5', 'city' => 'Košice', 'zip' => '040 01', 'country' => 'SK'], $customer->billing_address);
 
         $this->put(route('customer.profile.password'), ['current_password' => 'zle', 'password' => 'nove1234', 'password_confirmation' => 'nove1234'])
             ->assertSessionHasErrorsIn('password', 'current_password');

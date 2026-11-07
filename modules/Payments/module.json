@@ -1,0 +1,17 @@
+{
+    "name": "payments",
+    "version": "0.2.0",
+    "title": { "sk": "Platby", "cs": "Platby", "en": "Payments" },
+    "description": {
+        "sk": "Spôsoby platby: bankový prevod, dobierka a hotovosť pri osobnom odbere.",
+        "cs": "Způsoby platby: bankovní převod, dobírka a hotovost při osobním odběru.",
+        "en": "Payment methods: bank transfer, cash on delivery and cash on pickup."
+    },
+    "provider": "Modules\\Payments\\PaymentsServiceProvider",
+    "core": true,
+    "requires": {
+        "eshop": "^0.1",
+        "modules": { "shipping": "^0.2" }
+    },
+    "permissions": ["payments.manage"]
+}

@@ -3,9 +3,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@hasSection('title')@yield('title') · @endif{{ $shop->shop_name }}</title>
-    @if ($shop->tagline)
-        <meta name="description" content="{{ $shop->tagline }}">
+    @php($pageTitle = trim($__env->yieldContent('title')))
+    <title>{{ $pageTitle !== '' ? $pageTitle.' · '.$shop->shop_name : $shop->shop_name.($shop->tagline ? ' · '.$shop->tagline : '') }}</title>
+    @php($metaDescription = trim($__env->yieldContent('meta_description')) ?: $shop->tagline)
+    @if ($metaDescription)
+        <meta name="description" content="{{ $metaDescription }}">
+    @endif
+    @hasSection('noindex')
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+    <link rel="canonical" href="{{ trim($__env->yieldContent('canonical')) ?: url()->current() }}">
+    <meta property="og:site_name" content="{{ $shop->shop_name }}">
+    <meta property="og:title" content="{{ $pageTitle ?: $shop->shop_name }}">
+    @if ($metaDescription)
+        <meta property="og:description" content="{{ $metaDescription }}">
+    @endif
+    @hasSection('og_image')
+        <meta property="og:image" content="@yield('og_image')">
     @endif
     @if ($favicon = $branding->faviconUrl())
         <link rel="icon" href="{{ $favicon }}">
@@ -22,6 +36,7 @@
     @include('theme::partials.header')
 
     <main id="content" class="flex-1">
+        @include('theme::partials.flash')
         @yield('content')
     </main>
 

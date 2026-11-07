@@ -71,7 +71,7 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->native(false),
                     Select::make('country')
                         ->label(__('admin.settings.general.country'))
-                        ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('installer.countries.'.$code)]))
+                        ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)]))
                         ->required()
                         ->native(false),
                 ]),

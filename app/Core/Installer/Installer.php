@@ -2,7 +2,10 @@
 
 namespace App\Core\Installer;
 
+use App\Core\Content\ContentLocale;
 use App\Core\Eshop;
+use App\Core\Events\EshopInstalled;
+use App\Core\Support\CurrencyContext;
 use App\Models\User;
 use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
@@ -28,8 +31,9 @@ class Installer
     /**
      * @param  array{shop_name: string, contact_email: string, locale: string, currency: string, country: string, url: string}  $shop
      * @param  array{name: string, email: string, password: string}  $admin
+     * @param  bool  $withDemoData  Nahrať ukážkové kategórie a produkty.
      */
-    public function install(array $shop, array $admin): User
+    public function install(array $shop, array $admin, bool $withDemoData = false): User
     {
         if ($this->installation->isInstalled()) {
             throw new RuntimeException('The e-shop is already installed.');
@@ -43,10 +47,19 @@ class Installer
             throw new RuntimeException(trim(Artisan::output()) ?: 'Database migration failed.');
         }
 
-        $user = DB::transaction(function () use ($shop, $admin): User {
+        $user = DB::transaction(function () use ($shop, $admin, $withDemoData): User {
             $this->saveSettings($shop);
 
-            return $this->createAdministrator($admin, $shop['locale']);
+            $user = $this->createAdministrator($admin, $shop['locale']);
+
+            // Obsah sa ukladá v jazyku a mene obchodu, nie v jazyku inštalátora.
+            app(ContentLocale::class)->set($shop['locale']);
+            app(CurrencyContext::class)->set($shop['currency']);
+
+            // Moduly vytvoria predvolené dáta (doprava, platby, stránky, ukážkový katalóg).
+            EshopInstalled::dispatch($shop['locale'], $shop['currency'], $shop['country'], $withDemoData);
+
+            return $user;
         });
 
         $this->environment->set([

@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Core\Installer\Installation;
+use App\Core\Modules\ModuleManager;
+use App\Filament\AdminGroup;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Http\Middleware\EnsureInstalled;
 use App\Http\Middleware\SetAdminLocale;
@@ -10,6 +12,7 @@ use App\Settings\BrandingSettings;
 use App\Settings\GeneralSettings;
 use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
+use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -31,6 +34,8 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $this->discoverModuleComponents($panel);
+
         return $panel
             ->default()
             ->id('admin')
@@ -51,6 +56,9 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter Variable', url: fn () => Vite::asset('resources/css/admin-font.css'), provider: LocalFontProvider::class)
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth('7xl')
+            ->navigationGroups(collect(AdminGroup::cases())->mapWithKeys(fn (AdminGroup $group) => [
+                $group->name => NavigationGroup::make()->label(fn () => $group->label()),
+            ])->all())
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -76,6 +84,34 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    /**
+     * Administrácia modulov: zdroje, stránky a widgety z adresára src/Filament každého zapnutého modulu.
+     */
+    private function discoverModuleComponents(Panel $panel): void
+    {
+        foreach (app(ModuleManager::class)->active() as $module) {
+            $directory = $module->sourcePath().'/Filament';
+
+            if ($module->namespace === null || ! is_dir($directory)) {
+                continue;
+            }
+
+            $namespace = $module->namespace.'Filament';
+
+            if (is_dir($directory.'/Resources')) {
+                $panel->discoverResources(in: $directory.'/Resources', for: $namespace.'\\Resources');
+            }
+
+            if (is_dir($directory.'/Pages')) {
+                $panel->discoverPages(in: $directory.'/Pages', for: $namespace.'\\Pages');
+            }
+
+            if (is_dir($directory.'/Widgets')) {
+                $panel->discoverWidgets(in: $directory.'/Widgets', for: $namespace.'\\Widgets');
+            }
+        }
     }
 
     private function general(): ?GeneralSettings

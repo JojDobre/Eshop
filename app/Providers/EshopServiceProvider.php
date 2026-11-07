@@ -2,14 +2,17 @@
 
 namespace App\Providers;
 
+use App\Core\Content\ContentLocale;
 use App\Core\Eshop;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
 use App\Core\Installer\RequirementsChecker;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
+use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeManager;
 use App\Settings\GeneralSettings;
+use App\Settings\MailSettings;
 use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -40,6 +43,10 @@ class EshopServiceProvider extends ServiceProvider
             safeMode: (bool) config('eshop.safe_mode'),
         ));
 
+        $this->app->singleton(ContentLocale::class);
+
+        $this->app->singleton(CurrencyContext::class);
+
         $this->app->singleton(ThemeManager::class, fn ($app) => new ThemeManager(
             themesPath: (string) config('eshop.paths.themes'),
             defaultTheme: (string) config('eshop.default_theme'),
@@ -51,6 +58,8 @@ class EshopServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->applyMailSettings();
+
         $themes = $this->app->make(ThemeManager::class);
 
         View::addNamespace('theme', $themes->viewPaths());
@@ -97,6 +106,22 @@ class EshopServiceProvider extends ServiceProvider
                     'exception' => $e,
                 ]);
             }
+        }
+    }
+
+    /**
+     * Nastavenia odosielania e-mailov z administrácie majú prednosť pred súborom .env.
+     */
+    private function applyMailSettings(): void
+    {
+        if (! $this->app->make(Installation::class)->isInstalled()) {
+            return;
+        }
+
+        try {
+            $this->app->make(MailSettings::class)->applyToConfig($this->app->make(GeneralSettings::class));
+        } catch (Throwable) {
+            // Databáza nie je dostupná alebo ešte neprebehli migrácie (napr. počas aktualizácie).
         }
     }
 

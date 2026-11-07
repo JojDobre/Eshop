@@ -1,0 +1,16 @@
+{
+    "name": "pages",
+    "version": "0.2.0",
+    "title": { "sk": "Stránky", "cs": "Stránky", "en": "Pages" },
+    "description": {
+        "sk": "Statické stránky: obchodné podmienky, ochrana osobných údajov, kontakt a ďalšie.",
+        "cs": "Statické stránky: obchodní podmínky, ochrana osobních údajů, kontakt a další.",
+        "en": "Static pages: terms and conditions, privacy policy, contact and more."
+    },
+    "provider": "Modules\\Pages\\PagesServiceProvider",
+    "requires": {
+        "eshop": "^0.1",
+        "modules": { "storefront": "^0.1" }
+    },
+    "permissions": ["pages.manage"]
+}

@@ -1,1 +1,4 @@
-// Skripty šablóny. Interaktivita (košík, filtre) pribudne v ďalších krokoch.
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+Alpine.start();

@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
+@plugin '@tailwindcss/typography';
 
 @source '../../**/*.blade.php';
 
@@ -16,4 +17,38 @@
     --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
     --color-primary: var(--brand-primary);
     --color-primary-foreground: var(--brand-primary-foreground);
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .btn-primary {
+        @apply bg-primary text-primary-foreground hover:opacity-90;
+    }
+
+    .btn-secondary {
+        @apply border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-50;
+    }
+
+    .input {
+        @apply block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-xs outline-none transition placeholder:text-zinc-400 focus:border-primary focus:ring-2 focus:ring-primary/20 aria-invalid:border-red-500;
+    }
+
+    .label {
+        @apply block text-sm font-medium text-zinc-800;
+    }
+
+    .field-error {
+        @apply mt-1 text-xs text-red-600;
+    }
+
+    .container-shop {
+        @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+    }
 }

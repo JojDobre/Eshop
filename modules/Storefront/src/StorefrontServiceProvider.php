@@ -7,12 +7,20 @@ use App\Settings\BrandingSettings;
 use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\View;
+use Modules\Storefront\Pages\LegalPages;
+use Modules\Storefront\Sitemap\SitemapRegistry;
 
 class StorefrontServiceProvider extends ModuleServiceProvider
 {
     protected function moduleName(): string
     {
         return 'storefront';
+    }
+
+    public function register(): void
+    {
+        $this->app->singleton(SitemapRegistry::class);
+        $this->app->singleton(LegalPages::class);
     }
 
     public function boot(): void
@@ -25,6 +33,7 @@ class StorefrontServiceProvider extends ModuleServiceProvider
                 'shop' => app(GeneralSettings::class),
                 'branding' => app(BrandingSettings::class),
                 'company' => app(CompanySettings::class),
+                'legalPages' => app(LegalPages::class),
             ]);
         });
     }

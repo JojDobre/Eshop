@@ -32,7 +32,7 @@
                 <x-installer.select name="currency" :label="__('installer.shop.currency')"
                     :options="collect($currencies)->mapWithKeys(fn ($symbol, $code) => [$code => $code.' ('.$symbol.')'])" :value="$defaults['currency']" />
                 <x-installer.select name="country" :label="__('installer.shop.country')"
-                    :options="collect($countries)->mapWithKeys(fn ($code) => [$code => __('installer.countries.'.$code)])" :value="$defaults['country']" />
+                    :options="collect($countries)->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)])" :value="$defaults['country']" />
             </div>
         </fieldset>
 
@@ -47,6 +47,14 @@
                 <x-installer.field name="admin_password_confirmation" type="password" :label="__('installer.shop.admin_password_confirmation')" autocomplete="new-password" />
             </div>
         </fieldset>
+
+        <label class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4 text-sm">
+            <input type="checkbox" name="demo_data" value="1" @checked(old('demo_data')) class="mt-0.5 size-4 rounded border-zinc-300">
+            <span>
+                <span class="font-medium text-zinc-900">{{ __('installer.shop.demo_data') }}</span>
+                <span class="mt-1 block text-zinc-500">{{ __('installer.shop.demo_data_help') }}</span>
+            </span>
+        </label>
 
         <div class="flex items-center justify-between gap-3">
             <x-installer.button variant="secondary" :href="route('install.database')">{{ __('installer.back') }}</x-installer.button>

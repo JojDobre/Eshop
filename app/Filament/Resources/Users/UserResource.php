@@ -8,11 +8,13 @@ use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
+use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class UserResource extends Resource
 {
@@ -34,9 +36,9 @@ class UserResource extends Resource
         return __('admin.users.plural');
     }
 
-    public static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return __('admin.navigation.system');
+        return AdminGroup::System;
     }
 
     public static function form(Schema $schema): Schema

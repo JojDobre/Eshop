@@ -53,7 +53,7 @@ class ManageCompanySettings extends BaseSettingsPage
                     TextInput::make('city')->label($t('city'))->maxLength(120),
                     Select::make('country')
                         ->label($t('country'))
-                        ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('installer.countries.'.$code)]))
+                        ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)]))
                         ->native(false),
                 ]),
             Section::make($t('section_bank'))

@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Core\Modules\Exceptions\ModuleException;
 use App\Core\Modules\Module;
 use App\Core\Modules\ModuleManager;
+use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -14,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use UnitEnum;
 
 /**
  * Prehľad modulov so zapínaním a vypínaním.
@@ -35,9 +37,9 @@ class Modules extends Page implements HasTable
         return __('admin.modules.title');
     }
 
-    public static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return __('admin.navigation.system');
+        return AdminGroup::System;
     }
 
     public function getTitle(): string

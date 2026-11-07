@@ -1,0 +1,17 @@
+{
+    "name": "catalog",
+    "version": "0.2.0",
+    "title": { "sk": "Katalóg", "cs": "Katalog", "en": "Catalogue" },
+    "description": {
+        "sk": "Kategórie a produkty, výpis v obchode a vyhľadávanie.",
+        "cs": "Kategorie a produkty, výpis v obchodě a vyhledávání.",
+        "en": "Categories and products, shop listings and search."
+    },
+    "provider": "Modules\\Catalog\\CatalogServiceProvider",
+    "core": true,
+    "requires": {
+        "eshop": "^0.1",
+        "modules": { "storefront": "^0.1" }
+    },
+    "permissions": ["catalog.manage"]
+}

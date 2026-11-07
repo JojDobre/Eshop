@@ -1,6 +1,11 @@
-<header class="border-b border-zinc-100">
-    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
-        <a href="{{ route('storefront.home') }}" class="flex items-center gap-3 font-semibold tracking-tight">
+<header class="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur" x-data="{ menu: false, search: false }">
+    <div class="container-shop flex h-16 items-center gap-4">
+        <button type="button" class="-ml-2 rounded-md p-2 text-zinc-600 hover:bg-zinc-100 md:hidden" @click="menu = ! menu"
+                :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
+            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+        </button>
+
+        <a href="{{ route('storefront.home') }}" class="flex shrink-0 items-center gap-3 font-semibold tracking-tight">
             @if ($logo = $branding->logoUrl())
                 <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-8 w-auto">
             @else
@@ -8,6 +13,55 @@
             @endif
         </a>
 
-        @stack('header-actions')
+        @if (! empty($navigationCategories) && $navigationCategories->isNotEmpty())
+            <nav class="hidden flex-1 items-center gap-6 text-sm text-zinc-600 md:flex" aria-label="{{ __('theme::shop.categories') }}">
+                @foreach ($navigationCategories as $navCategory)
+                    <a href="{{ $navCategory->url() }}" class="hover:text-zinc-900">{{ $navCategory->name }}</a>
+                @endforeach
+            </nav>
+        @else
+            <div class="flex-1"></div>
+        @endif
+
+        <div class="ml-auto flex items-center gap-1">
+            @if (Route::has('catalog.search'))
+                <form action="{{ route('catalog.search') }}" method="GET" role="search" class="hidden lg:block">
+                    <label for="header-search" class="sr-only">{{ __('theme::shop.search') }}</label>
+                    <input id="header-search" type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('theme::shop.search_placeholder') }}"
+                           class="input w-56 py-1.5">
+                </form>
+                <button type="button" class="rounded-md p-2 text-zinc-600 hover:bg-zinc-100 lg:hidden" @click="search = ! search" aria-label="{{ __('theme::shop.search') }}">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+                </button>
+            @endif
+
+            @if (Route::has('cart.show'))
+                <a href="{{ route('cart.show') }}" class="relative rounded-md p-2 text-zinc-700 hover:bg-zinc-100" aria-label="{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+                    @if (($cartCount ?? 0) > 0)
+                        <span class="absolute -right-0.5 -top-0.5 flex min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold leading-5 text-primary-foreground">{{ $cartCount }}</span>
+                    @endif
+                </a>
+            @endif
+        </div>
     </div>
+
+    @if (Route::has('catalog.search'))
+        <div x-show="search" x-cloak class="border-t border-zinc-100 lg:hidden">
+            <form action="{{ route('catalog.search') }}" method="GET" role="search" class="container-shop py-3">
+                <label for="mobile-search" class="sr-only">{{ __('theme::shop.search') }}</label>
+                <input id="mobile-search" type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('theme::shop.search_placeholder') }}" class="input">
+            </form>
+        </div>
+    @endif
+
+    @if (! empty($navigationCategories) && $navigationCategories->isNotEmpty())
+        <nav id="mobile-menu" x-show="menu" x-cloak class="border-t border-zinc-100 md:hidden" aria-label="{{ __('theme::shop.categories') }}">
+            <ul class="container-shop divide-y divide-zinc-100 py-2">
+                @foreach ($navigationCategories as $navCategory)
+                    <li><a href="{{ $navCategory->url() }}" class="block py-3 text-zinc-700">{{ $navCategory->name }}</a></li>
+                @endforeach
+            </ul>
+        </nav>
+    @endif
 </header>

@@ -1,0 +1,16 @@
+{
+    "name": "cart",
+    "version": "0.2.0",
+    "title": { "sk": "Košík", "cs": "Košík", "en": "Cart" },
+    "description": {
+        "sk": "Nákupný košík zákazníka.",
+        "cs": "Nákupní košík zákazníka.",
+        "en": "Customer shopping cart."
+    },
+    "provider": "Modules\\Cart\\CartServiceProvider",
+    "core": true,
+    "requires": {
+        "eshop": "^0.1",
+        "modules": { "catalog": "^0.2" }
+    }
+}

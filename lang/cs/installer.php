@@ -72,6 +72,8 @@ return [
         'admin_password' => 'Heslo',
         'admin_password_help' => 'Alespoň 10 znaků, písmena i čísla.',
         'admin_password_confirmation' => 'Heslo znovu',
+        'demo_data' => 'Nahrát ukázkové produkty',
+        'demo_data_help' => 'Několik kategorií a produktů na vyzkoušení obchodu. Později je můžete smazat.',
         'submit' => 'Nainstalovat e-shop',
         'installing' => 'Instaluji…',
         'failed' => 'Instalace selhala: :message',
@@ -86,14 +88,4 @@ return [
         'cron_intro' => 'Cron spouští pravidelné úlohy (e-maily, kurzy měn, zálohy). V administraci webhostingu nastavte spouštění každou minutu:',
     ],
 
-    'countries' => [
-        'SK' => 'Slovensko',
-        'CZ' => 'Česko',
-        'AT' => 'Rakousko',
-        'DE' => 'Německo',
-        'HU' => 'Maďarsko',
-        'PL' => 'Polsko',
-        'GB' => 'Spojené království',
-        'US' => 'Spojené státy',
-    ],
 ];

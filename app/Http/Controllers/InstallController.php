@@ -146,6 +146,7 @@ class InstallController extends Controller
             'admin_name' => ['required', 'string', 'max:120'],
             'admin_email' => ['required', 'email', 'max:255'],
             'admin_password' => ['required', 'confirmed', Password::min(10)->letters()->numbers()],
+            'demo_data' => ['nullable', 'boolean'],
         ]);
 
         try {
@@ -163,6 +164,7 @@ class InstallController extends Controller
                     'email' => $data['admin_email'],
                     'password' => $data['admin_password'],
                 ],
+                withDemoData: (bool) ($data['demo_data'] ?? false),
             );
         } catch (Throwable $e) {
             Log::error('Installation failed.', ['exception' => $e]);

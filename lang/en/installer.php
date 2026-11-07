@@ -72,6 +72,8 @@ return [
         'admin_password' => 'Password',
         'admin_password_help' => 'At least 10 characters, letters and numbers.',
         'admin_password_confirmation' => 'Confirm password',
+        'demo_data' => 'Load demo products',
+        'demo_data_help' => 'A few categories and products to try out the shop. You can delete them later.',
         'submit' => 'Install the e-shop',
         'installing' => 'Installing…',
         'failed' => 'Installation failed: :message',
@@ -86,14 +88,4 @@ return [
         'cron_intro' => 'Cron runs scheduled tasks (e-mails, exchange rates, backups). In your hosting control panel, schedule it to run every minute:',
     ],
 
-    'countries' => [
-        'SK' => 'Slovakia',
-        'CZ' => 'Czechia',
-        'AT' => 'Austria',
-        'DE' => 'Germany',
-        'HU' => 'Hungary',
-        'PL' => 'Poland',
-        'GB' => 'United Kingdom',
-        'US' => 'United States',
-    ],
 ];

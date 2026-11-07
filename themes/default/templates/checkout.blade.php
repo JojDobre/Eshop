@@ -9,8 +9,8 @@
     $checkoutState = [
         'shipping' => (int) $firstShipping,
         'payment' => (int) old('payment_method_id', 0),
-        'isCompany' => (bool) old('is_company'),
-        'different' => (bool) old('ship_to_different_address'),
+        'isCompany' => (bool) old('is_company', $prefill['is_company'] ?? false),
+        'different' => (bool) old('ship_to_different_address', $prefill['ship_to_different_address'] ?? false),
         'subtotal' => $summary->subtotal(),
         'discount' => $totals->discount,
         'availability' => $paymentAvailability,
@@ -37,6 +37,9 @@
             <div class="space-y-10 lg:col-span-2">
                 <fieldset class="space-y-4">
                     <legend class="text-lg font-semibold">{{ __('theme::shop.contact_details') }}</legend>
+                    @if (empty($customer) && Route::has('customer.login'))
+                        <p class="text-sm text-zinc-600">{{ __('theme::account.checkout_have_account') }} <a href="{{ route('customer.login') }}" class="font-medium text-zinc-900 underline underline-offset-2">{{ __('theme::account.login') }}</a></p>
+                    @endif
                     <div class="grid gap-4 sm:grid-cols-2">
                         @include('theme::partials.field', ['name' => 'email', 'type' => 'email', 'label' => __('theme::shop.email'), 'autocomplete' => 'email'])
                         @include('theme::partials.field', ['name' => 'phone', 'type' => 'tel', 'label' => __('theme::shop.phone'), 'autocomplete' => 'tel'])

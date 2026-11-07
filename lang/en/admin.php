@@ -156,6 +156,8 @@ return [
         'reset_confirm' => 'The customized subject and text will be replaced with the default text.',
         'reset_done' => 'The default text has been restored.',
         'vars' => [
+            'account_url' => 'link to the customer account',
+            'reset_url' => 'link to set a new password',
             'customer_name' => 'customer name',
             'customer_email' => 'customer e-mail',
             'customer_phone' => 'customer phone',

@@ -156,6 +156,8 @@ return [
         'reset_confirm' => 'Upravený předmět a text se nahradí výchozím textem.',
         'reset_done' => 'Výchozí text byl obnoven.',
         'vars' => [
+            'account_url' => 'odkaz na účet zákazníka',
+            'reset_url' => 'odkaz na nastavení nového hesla',
             'customer_name' => 'jméno zákazníka',
             'customer_email' => 'e-mail zákazníka',
             'customer_phone' => 'telefon zákazníka',

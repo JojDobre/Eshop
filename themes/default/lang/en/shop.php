@@ -153,6 +153,8 @@ return [
     'unit_price' => ':price / :unit',
     'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
     'additional_details' => 'Additional details',
+    'addons' => 'Add-on options',
+    'addon_text' => 'Your text',
     'currency' => 'Currency',
     'language' => 'Language',
     'pay_online' => 'Pay by card',
@@ -168,4 +170,6 @@ return [
     'not_found' => 'Page not found',
     'not_found_text' => 'The page you are looking for does not exist or has been moved.',
     'back_home' => 'Back to home page',
+    'bundle_contents' => 'Bundle contents',
+    'bundle_saving' => 'You save :amount compared to buying separately',
 ];

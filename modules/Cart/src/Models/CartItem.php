@@ -22,7 +22,7 @@ class CartItem extends Model
 
     protected function casts(): array
     {
-        return ['quantity' => 'integer'];
+        return ['quantity' => 'integer', 'addons' => 'array'];
     }
 
     /**

@@ -140,11 +140,27 @@
                     <p class="mt-6 text-zinc-600">{{ $product->short_description }}</p>
                 @endif
 
+                @if ($product->isBundle() && $product->bundleItems->isNotEmpty())
+                    @php($componentsPrice = $product->bundleComponentsPrice())
+                    <div class="mt-6 rounded-lg border border-zinc-200 p-4">
+                        <h2 class="text-sm font-semibold">{{ __('theme::shop.bundle_contents') }}</h2>
+                        <ul class="mt-2 space-y-1 text-sm text-zinc-600">
+                            @foreach ($product->bundleItems as $item)
+                                <li>{{ $item->quantity }} × {{ $item->name() }}</li>
+                            @endforeach
+                        </ul>
+                        @if ($price !== null && $componentsPrice !== null && $componentsPrice > $price)
+                            <p class="mt-2 text-sm font-semibold text-primary">{{ __('theme::shop.bundle_saving', ['amount' => format_price($componentsPrice - $price)]) }}</p>
+                        @endif
+                    </div>
+                @endif
+
                 @if ($variantData && Route::has('cart.add'))
                     <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-6" x-data="variantPicker(@js($variantData))">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="variant_id" :value="variant ? variant.id : ''">
+                        @include('theme::partials.product-addons')
 
                         <template x-for="option in options" :key="option.id">
                             <fieldset>
@@ -187,12 +203,15 @@
                         </div>
                     </form>
                 @elseif ($available && Route::has('cart.add'))
-                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 flex gap-3">
+                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-4">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
-                        <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-20 text-center">
-                        <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ __('theme::shop.add_to_cart') }}</button>
+                        @include('theme::partials.product-addons')
+                        <div class="flex gap-3">
+                            <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
+                            <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-20 text-center">
+                            <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ __('theme::shop.add_to_cart') }}</button>
+                        </div>
                     </form>
                 @endif
 

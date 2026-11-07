@@ -4,9 +4,11 @@ namespace Modules\Cart;
 
 use App\Core\Support\CurrencyContext;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\Cart\Models\Cart;
 use Modules\Cart\Models\CartItem;
+use Modules\Catalog\Models\Addon;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductVariant;
 
@@ -44,9 +46,13 @@ class CartManager
         return $this->cart;
     }
 
-    public function add(Product $product, int $quantity = 1, ?ProductVariant $variant = null): CartItem
+    /**
+     * @param  array<int|string, string|null>  $addons  Zvolené doplnkové voľby: id => text (alebo null).
+     */
+    public function add(Product $product, int $quantity = 1, ?ProductVariant $variant = null, array $addons = []): CartItem
     {
         $quantity = max(1, $quantity);
+        $addons = $this->normalizeAddons($product, $addons);
 
         if ($product->hasVariants() && $variant === null) {
             throw new CartException(__('cart::messages.choose_variant', ['product' => $product->name]));
@@ -60,9 +66,11 @@ class CartManager
         $this->ensurePurchasable($product, $variant);
 
         $cart = $this->currentOrCreate();
+        // Rovnaký produkt s inými doplnkovými voľbami je samostatná položka.
+        $hash = $addons === [] ? null : sha1((string) json_encode($addons));
         $item = $cart->items()->firstOrNew(
-            ['product_id' => $product->id, 'product_variant_id' => $variant?->id],
-            ['quantity' => 0],
+            ['product_id' => $product->id, 'product_variant_id' => $variant?->id, 'addons_hash' => $hash],
+            ['quantity' => 0, 'addons' => $addons === [] ? null : $addons],
         );
         $newQuantity = min(self::MAX_QUANTITY, $item->quantity + $quantity);
 
@@ -119,11 +127,18 @@ class CartManager
 
         $cart->load('items.product.prices', 'items.product.taxRate', 'items.variant.prices', 'items.variant.values');
         $lines = [];
+        $addonIds = $cart->items->flatMap(fn (CartItem $item) => array_keys((array) $item->addons))->unique()->all();
+        $addonModels = $addonIds === [] ? collect() : Addon::query()->whereIn('id', $addonIds)->where('is_active', true)->get()->keyBy('id');
 
         foreach ($cart->items as $item) {
             $product = $item->product;
             $variant = $item->variant?->setRelation('product', $product);
             $unitPrice = $variant ? $variant->priceIn($currency) : $product->priceIn($currency);
+            $addons = $this->lineAddons($item, $addonModels, $currency);
+
+            if ($unitPrice !== null) {
+                $unitPrice += array_sum(array_column($addons, 'price'));
+            }
 
             // Produkt, ktorý medzitým dostal varianty, sa musí vybrať znova.
             $available = $variant
@@ -137,6 +152,7 @@ class CartManager
                 unitPrice: $unitPrice,
                 isAvailable: $unitPrice !== null && $available,
                 variant: $variant,
+                addons: $addons,
             );
         }
 
@@ -211,5 +227,58 @@ class CartManager
                 ? __('cart::messages.sold_out', ['product' => $name])
                 : __('cart::messages.not_enough_stock', ['product' => $name, 'available' => $max]));
         }
+    }
+
+    /**
+     * Overí zvolené doplnkové voľby (patria k produktu, povinný text).
+     *
+     * @param  array<int|string, string|null>  $addons
+     * @return array<int, string|null> id => text, zoradené podľa id
+     */
+    private function normalizeAddons(Product $product, array $addons): array
+    {
+        if ($addons === []) {
+            return [];
+        }
+
+        $available = $product->availableAddons()->keyBy('id');
+        $normalized = [];
+
+        foreach ($addons as $id => $text) {
+            $addon = $available->get((int) $id);
+
+            if ($addon === null) {
+                throw new CartException(__('cart::messages.addon_unavailable'));
+            }
+
+            $text = $addon->needs_text ? mb_substr(trim((string) $text), 0, $addon->text_max_length) : null;
+
+            if ($addon->needs_text && $text === '') {
+                throw new CartException(__('cart::messages.addon_text_required', ['addon' => $addon->name]));
+            }
+
+            $normalized[(int) $id] = $text;
+        }
+
+        ksort($normalized);
+
+        return $normalized;
+    }
+
+    /**
+     * @param  Collection<int, Addon>  $models
+     * @return list<array{id: int, name: string, price: int, text: string|null}>
+     */
+    private function lineAddons(CartItem $item, Collection $models, string $currency): array
+    {
+        $addons = [];
+
+        foreach ((array) $item->addons as $id => $text) {
+            if ($addon = $models->get((int) $id)) {
+                $addons[] = ['id' => $addon->id, 'name' => $addon->name, 'price' => $addon->priceIn($currency), 'text' => $text];
+            }
+        }
+
+        return $addons;
     }
 }

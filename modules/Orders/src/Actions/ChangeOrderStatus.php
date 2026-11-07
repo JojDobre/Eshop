@@ -4,6 +4,7 @@ namespace Modules\Orders\Actions;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Modules\Catalog\InsufficientStock;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\Models\StockMovement;
@@ -12,6 +13,7 @@ use Modules\Orders\CheckoutException;
 use Modules\Orders\Events\OrderStatusChanged;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderHistoryEntry;
+use Modules\Orders\Models\OrderItem;
 use Modules\Orders\OrderStatus;
 
 /**
@@ -51,6 +53,17 @@ class ChangeOrderStatus
     private function adjustStock(Order $order, int $direction): void
     {
         foreach ($order->items as $item) {
+            // Novšie objednávky si pamätajú, odkiaľ sa tovar vydal (vrátane zložiek balíčka).
+            if (! empty($item->allocations)) {
+                if ($direction > 0) {
+                    $this->stock->giveBack($item->allocations, StockMovement::CANCEL, $order->number);
+                } else {
+                    $this->retake($item, $order);
+                }
+
+                continue;
+            }
+
             if ($item->product_id === null) {
                 continue;
             }
@@ -78,5 +91,31 @@ class ChangeOrderStatus
                 variant: $variant,
             );
         }
+    }
+
+    /**
+     * Obnovenie zrušenej objednávky: tovar sa vydá znova podľa pôvodného záznamu.
+     */
+    private function retake(OrderItem $item, Order $order): void
+    {
+        $allocations = [];
+
+        foreach ($item->allocations as $allocation) {
+            $product = Product::query()->whereKey($allocation['product_id'])->lockForUpdate()->first();
+
+            if ($product === null) {
+                continue;
+            }
+
+            $variant = $allocation['variant_id'] ? ProductVariant::query()->whereKey($allocation['variant_id'])->lockForUpdate()->first()?->setRelation('product', $product) : null;
+
+            try {
+                $allocations = [...$allocations, ...$this->stock->take($product, $variant, (int) $allocation['quantity'], StockMovement::RESTORE, $order->number)];
+            } catch (InsufficientStock) {
+                throw new CheckoutException(__('orders::messages.not_enough_stock_to_restore', ['product' => $item->name]));
+            }
+        }
+
+        $item->update(['allocations' => $allocations]);
     }
 }

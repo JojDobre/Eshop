@@ -153,6 +153,8 @@ return [
     'unit_price' => ':price / :unit',
     'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
     'additional_details' => 'Doplňujúce údaje',
+    'addons' => 'Doplnkové voľby',
+    'addon_text' => 'Váš text',
     'currency' => 'Mena',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatiť kartou',
@@ -168,4 +170,6 @@ return [
     'not_found' => 'Stránka sa nenašla',
     'not_found_text' => 'Stránka, ktorú hľadáte, neexistuje alebo bola presunutá.',
     'back_home' => 'Späť na úvod',
+    'bundle_contents' => 'Obsah balíčka',
+    'bundle_saving' => 'Ušetríte :amount oproti samostatnému nákupu',
 ];

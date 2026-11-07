@@ -6,6 +6,7 @@ use App\Core\Support\Currencies;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Cart\CartSummary;
+use Modules\Catalog\InsufficientStock;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\Models\StockMovement;
@@ -58,7 +59,7 @@ class PlaceOrder
 
         $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress, $coupon): Order {
             $number = $this->numbers->nextOrderNumber();
-            $this->reserveStock($cart, $number);
+            $allocations = $this->reserveStock($cart, $number);
             $coupon = $this->claimCoupon($coupon, $cart);
 
             $needsAddress = $shipping->type->requiresShippingAddress();
@@ -114,6 +115,8 @@ class PlaceOrder
                     'product_variant_id' => $line->variant?->id,
                     'name' => $line->product->name,
                     'variant_name' => $line->variant?->name(),
+                    'allocations' => $allocations[$index] ?? null,
+                    'addons' => $line->addons === [] ? null : array_map(fn (array $addon) => ['name' => $addon['name'], 'price' => $addon['price'], 'text' => $addon['text']], $line->addons),
                     'sku' => $line->variant?->sku ?? $line->product->sku,
                     'quantity' => $line->quantity,
                     'unit_price' => $totals->lines[$index]['unit'],
@@ -156,24 +159,33 @@ class PlaceOrder
     /**
      * Odpíše sklad. Riadky produktov sa zamknú, aby dvaja zákazníci nekúpili posledný kus naraz.
      */
-    private function reserveStock(CartSummary $cart, string $orderNumber): void
+    /**
+     * Odpíše sklad pre všetky položky (so zámkom riadkov) a vráti, odkiaľ sa tovar vydal.
+     *
+     * @return array<int, list<array{product_id: int, variant_id: int|null, quantity: int}>> podľa indexu položky
+     */
+    private function reserveStock(CartSummary $cart, string $orderNumber): array
     {
-        foreach ($cart->lines as $line) {
+        $allocations = [];
+
+        foreach ($cart->lines as $index => $line) {
             /** @var Product|null $product */
             $product = Product::query()->whereKey($line->product->id)->lockForUpdate()->first();
             $variant = $line->variant
                 ? ProductVariant::query()->whereKey($line->variant->id)->lockForUpdate()->first()?->setRelation('product', $product)
                 : null;
 
-            $available = $product !== null && ($line->variant
-                ? $variant !== null && $variant->isAvailable($line->quantity)
-                : $product->isAvailable($line->quantity));
-
-            if (! $available) {
+            if ($product === null || ($line->variant && $variant === null)) {
                 throw new CheckoutException(__('orders::messages.out_of_stock', ['product' => $line->name()]));
             }
 
-            $this->stock->adjust($product, -$line->quantity, StockMovement::ORDER, $orderNumber, variant: $variant);
+            try {
+                $allocations[$index] = $this->stock->take($product, $variant, $line->quantity, StockMovement::ORDER, $orderNumber);
+            } catch (InsufficientStock) {
+                throw new CheckoutException(__('orders::messages.out_of_stock', ['product' => $line->name()]));
+            }
         }
+
+        return $allocations;
     }
 }

@@ -20,6 +20,8 @@ final class CartLine
         /** Dá sa riadok objednať (produkt je zobrazený, má cenu a dosť kusov na sklade)? */
         public readonly bool $isAvailable,
         public readonly ?ProductVariant $variant = null,
+        /** @var list<array{id: int, name: string, price: int, text: string|null}> Doplnkové voľby (cena je v jednotkovej cene). */
+        public readonly array $addons = [],
     ) {}
 
     /**
@@ -28,6 +30,16 @@ final class CartLine
     public function name(): string
     {
         return $this->variant ? $this->product->name.' – '.$this->variant->name() : $this->product->name;
+    }
+
+    /** Doplnkové voľby na zobrazenie, napr. „Gravírovanie: Pre Janu“. */
+    public function addonsLabel(): ?string
+    {
+        if ($this->addons === []) {
+            return null;
+        }
+
+        return implode(', ', array_map(fn (array $addon) => $addon['text'] !== null ? $addon['name'].': '.$addon['text'] : $addon['name'], $this->addons));
     }
 
     public function maxQuantity(): ?int

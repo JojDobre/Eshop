@@ -26,7 +26,14 @@ class CartController extends Controller
             'product_id' => ['required', 'integer'],
             'quantity' => ['nullable', 'integer', 'min:1', 'max:'.CartManager::MAX_QUANTITY],
             'variant_id' => ['nullable', 'integer'],
+            'addons' => ['nullable', 'array'],
+            'addon_texts' => ['nullable', 'array'],
+            'addon_texts.*' => ['nullable', 'string', 'max:500'],
         ]);
+
+        // Zaškrtnuté doplnkové voľby: id => text (pri voľbách s textom).
+        $addons = collect($data['addons'] ?? [])->filter(fn ($checked) => (bool) $checked)
+            ->mapWithKeys(fn ($checked, $id) => [(int) $id => $data['addon_texts'][$id] ?? null])->all();
 
         $product = Product::query()->with(['prices', 'variants'])->find($data['product_id']);
 
@@ -43,7 +50,7 @@ class CartController extends Controller
                 throw new CartException(__('cart::messages.unavailable', ['product' => $product->name]));
             }
 
-            $this->cart->add($product, (int) ($data['quantity'] ?? 1), $variant);
+            $this->cart->add($product, (int) ($data['quantity'] ?? 1), $variant, $addons);
         } catch (CartException $e) {
             return back()->with('error', $e->getMessage());
         }

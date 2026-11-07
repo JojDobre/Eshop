@@ -68,6 +68,7 @@ class Product extends Model
             'stock_quantity' => 'integer',
             'weight' => 'integer',
             'unit_amount' => 'decimal:4',
+            'is_bundle' => 'boolean',
             'is_visible' => 'boolean',
             'low_stock_threshold' => 'integer',
         ];
@@ -416,6 +417,13 @@ class Product extends Model
             return false;
         }
 
+        // Balíček je dostupný, ak sú dostupné všetky zložky v potrebnom počte.
+        if ($this->isBundle()) {
+            return $this->bundleItems->isNotEmpty() && $this->bundleItems->every(fn (BundleItem $item) => $item->variant
+                ? $item->variant->setRelation('product', $item->product)->isAvailable($quantity * $item->quantity)
+                : (bool) $item->product?->isAvailable($quantity * $item->quantity));
+        }
+
         // Produkt s variantmi je dostupný, ak je dostupný aspoň jeden variant.
         if ($this->hasVariants()) {
             return $this->variants->contains(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->isAvailable($quantity));
@@ -427,9 +435,80 @@ class Product extends Model
     /**
      * Najväčšie množstvo, ktoré sa dá kúpiť (null = bez obmedzenia skladom).
      */
+    /**
+     * Doplnkové voľby k produktu (zobrazia sa iba so zapnutou funkciou).
+     *
+     * @return BelongsToMany<Addon, $this>
+     */
+    public function addons(): BelongsToMany
+    {
+        return $this->belongsToMany(Addon::class);
+    }
+
+    /**
+     * @return Collection<int, Addon>
+     */
+    public function availableAddons(): Collection
+    {
+        return CatalogFeatures::enabled('addons') ? $this->addons()->active()->get() : collect();
+    }
+
+    /**
+     * Zložky balíčka.
+     *
+     * @return HasMany<BundleItem, $this>
+     */
+    public function bundleItems(): HasMany
+    {
+        return $this->hasMany(BundleItem::class, 'bundle_id')->orderBy('position')->orderBy('id');
+    }
+
+    /** Je produkt balíček? (iba so zapnutou funkciou balíčkov) */
+    public function isBundle(): bool
+    {
+        return $this->is_bundle && CatalogFeatures::enabled('bundles');
+    }
+
+    /**
+     * Súčet cien zložiek (na zobrazenie úspory pri balíčku).
+     */
+    public function bundleComponentsPrice(?string $currency = null): ?int
+    {
+        if (! $this->isBundle()) {
+            return null;
+        }
+
+        $sum = 0;
+
+        foreach ($this->bundleItems as $item) {
+            $price = $item->variant ? $item->variant->setRelation('product', $item->product)->priceIn($currency) : $item->product?->priceIn($currency);
+
+            if ($price === null) {
+                return null;
+            }
+
+            $sum += $price * $item->quantity;
+        }
+
+        return $sum;
+    }
+
     public function maxPurchasableQuantity(): ?int
     {
         $max = $this->track_stock ? max(0, $this->stock_quantity) : null;
+
+        // Balíček: koľko kompletných balíčkov sa dá zložiť zo skladu zložiek.
+        if ($this->isBundle()) {
+            $max = null;
+
+            foreach ($this->bundleItems as $item) {
+                $componentMax = $item->variant ? $item->variant->setRelation('product', $item->product)->maxPurchasableQuantity() : $item->product?->maxPurchasableQuantity();
+
+                if ($componentMax !== null) {
+                    $max = min($max ?? PHP_INT_MAX, intdiv($componentMax, max(1, $item->quantity)));
+                }
+            }
+        }
 
         // Jedinečný kus (napr. zviera) sa dá kúpiť iba raz.
         return $this->isUnique() ? min(1, $max ?? 1) : $max;

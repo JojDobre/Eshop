@@ -16,6 +16,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -27,6 +28,7 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Text;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
@@ -48,9 +50,11 @@ use Modules\Catalog\Filament\Resources\Products\Pages\ListProducts;
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\OptionsRelationManager;
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\StockMovementsRelationManager;
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\VariantsRelationManager;
+use Modules\Catalog\Models\Addon;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductType;
+use Modules\Catalog\Models\ProductVariant;
 use Modules\Tax\Models\TaxRate;
 use UnitEnum;
 
@@ -123,6 +127,46 @@ class ProductResource extends Resource
                         ->imageResizeTargetWidth('2000')->imageResizeTargetHeight('2000')->imageResizeMode('contain')
                         ->imageResizeUpscale(false),
                 ]),
+                Section::make(__('catalog::admin.addon.plural'))
+                    ->description(__('catalog::admin.addon.product_help'))
+                    ->visible(fn () => CatalogFeatures::enabled('addons'))
+                    ->collapsed()
+                    ->schema([
+                        Select::make('addons')->hiddenLabel()
+                            ->relationship('addons', 'id')
+                            ->getOptionLabelFromRecordUsing(fn (Addon $record) => $record->name.' (+'.Price::format($record->price, $record->currency).')')
+                            ->multiple()->preload(),
+                    ]),
+                Section::make(__('catalog::admin.bundle.title'))
+                    ->description(__('catalog::admin.bundle.help'))
+                    ->visible(fn () => CatalogFeatures::enabled('bundles'))
+                    ->collapsed(fn (?Product $record) => ! $record?->is_bundle)
+                    ->schema([
+                        Toggle::make('is_bundle')->label(__('catalog::admin.bundle.is_bundle'))->live(),
+                        Repeater::make('bundleItems')->hiddenLabel()
+                            ->relationship('bundleItems')
+                            ->visible(fn (Get $get) => (bool) $get('is_bundle'))
+                            ->orderColumn('position')
+                            ->columns(3)
+                            ->addActionLabel(__('catalog::admin.bundle.add_item'))
+                            ->schema([
+                                Select::make('product_id')->label(__('catalog::admin.bundle.product'))
+                                    // Balíček nemôže obsahovať seba ani iný balíček.
+                                    ->options(fn ($livewire) => Product::query()
+                                        ->where('is_bundle', false)
+                                        ->when(($livewire->record ?? null) instanceof Product, fn ($query) => $query->whereKeyNot($livewire->record->id))
+                                        ->orderBy('id')->get()->mapWithKeys(fn (Product $product) => [$product->id => $product->name])->all())
+                                    ->searchable()->required()->live()
+                                    ->afterStateUpdated(fn (Set $set) => $set('product_variant_id', null)),
+                                Select::make('product_variant_id')->label(__('catalog::admin.bundle.variant'))
+                                    ->options(fn (Get $get) => ProductVariant::query()
+                                        ->where('product_id', $get('product_id'))->get()
+                                        ->mapWithKeys(fn ($variant) => [$variant->id => $variant->name()])->all())
+                                    ->visible(fn (Get $get) => filled($get('product_id')) && ProductVariant::query()->where('product_id', $get('product_id'))->exists())
+                                    ->required(fn (Get $get) => filled($get('product_id')) && ProductVariant::query()->where('product_id', $get('product_id'))->exists()),
+                                TextInput::make('quantity')->label(__('catalog::admin.bundle.quantity'))->numeric()->integer()->minValue(1)->default(1)->required(),
+                            ]),
+                    ]),
                 Section::make($t('section_safety'))->description($t('section_safety_help'))->collapsed()->schema([
                     Select::make('manufacturer_id')->label($t('manufacturer'))
                         ->relationship('manufacturer', 'name')

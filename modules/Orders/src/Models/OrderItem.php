@@ -29,6 +29,8 @@ class OrderItem extends Model
     protected function casts(): array
     {
         return [
+            'addons' => 'array',
+            'allocations' => 'array',
             'quantity' => 'integer',
             'unit_price' => 'integer',
             'total' => 'integer',
@@ -41,7 +43,14 @@ class OrderItem extends Model
      */
     public function fullName(): string
     {
-        return $this->variant_name ? $this->name.' – '.$this->variant_name : $this->name;
+        $name = $this->variant_name ? $this->name.' – '.$this->variant_name : $this->name;
+
+        // Doplnkové voľby: „Hrnček + Gravírovanie: Pre Janu, Darčekové balenie“.
+        if (! empty($this->addons)) {
+            $name .= ' + '.implode(', ', array_map(fn (array $addon) => filled($addon['text'] ?? null) ? $addon['name'].': '.$addon['text'] : $addon['name'], $this->addons));
+        }
+
+        return $name;
     }
 
     /**

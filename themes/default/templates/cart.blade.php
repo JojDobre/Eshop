@@ -26,6 +26,9 @@
                                     @if ($line->variant)
                                         <p class="text-sm text-zinc-600">{{ $line->variant->name() }}</p>
                                     @endif
+                                    @if ($line->addonsLabel())
+                                        <p class="text-sm text-zinc-600">+ {{ $line->addonsLabel() }}</p>
+                                    @endif
                                     <p class="mt-1 text-sm text-zinc-500">{{ $line->unitPrice !== null ? format_price($line->unitPrice) : '' }} / {{ __('theme::shop.piece') }}</p>
                                     @unless ($line->isAvailable)
                                         <p class="mt-1 text-sm font-medium text-red-600">{{ __('theme::shop.line_unavailable') }}</p>

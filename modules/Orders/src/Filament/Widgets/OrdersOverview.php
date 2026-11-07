@@ -33,7 +33,7 @@ class OrdersOverview extends StatsOverviewWidget
                 ->url(OrderResource::getUrl('index', ['filters' => ['status' => ['values' => [OrderStatus::New->value]]]])),
             Stat::make($t('revenue_today'), Price::format((int) $counted()->whereDate('created_at', today())->sum('total'), $currency)),
             Stat::make($t('revenue_30_days'), Price::format((int) (clone $last30)->sum('total'), $currency))
-                ->description($t('orders_30_days', ['count' => (clone $last30)->count()])),
+                ->description(trans_choice('orders::admin.widget.orders_30_days', $count = (clone $last30)->count(), ['count' => $count])),
         ];
     }
 }

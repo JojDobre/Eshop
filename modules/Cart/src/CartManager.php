@@ -21,7 +21,8 @@ class CartManager
 
     private ?Cart $cart = null;
 
-    private bool $resolved = false;
+    /** Token, pre ktorý je načítaný $cart (false = ešte nenačítané). */
+    private string|false|null $resolvedToken = false;
 
     public function __construct(
         private readonly Session $session,
@@ -30,10 +31,13 @@ class CartManager
 
     public function current(): ?Cart
     {
-        if (! $this->resolved) {
-            $token = $this->session->get(self::SESSION_KEY);
-            $this->cart = is_string($token) ? Cart::query()->where('token', $token)->first() : null;
-            $this->resolved = true;
+        $token = $this->session->get(self::SESSION_KEY);
+        $token = is_string($token) ? $token : null;
+
+        // Košík sa načíta znova, ak sa medzitým zmenila session (iný návštevník, odhlásenie a pod.).
+        if ($this->resolvedToken !== $token) {
+            $this->cart = $token !== null ? Cart::query()->where('token', $token)->first() : null;
+            $this->resolvedToken = $token;
         }
 
         return $this->cart;
@@ -87,6 +91,7 @@ class CartManager
         $this->current()?->delete();
         $this->session->forget(self::SESSION_KEY);
         $this->cart = null;
+        $this->resolvedToken = null;
     }
 
     public function summary(): CartSummary
@@ -136,6 +141,7 @@ class CartManager
         ]);
 
         $this->session->put(self::SESSION_KEY, $this->cart->token);
+        $this->resolvedToken = $this->cart->token;
 
         return $this->cart;
     }

@@ -43,7 +43,7 @@ class ViewOrder extends ViewRecord
                         ->required()
                         ->native(false),
                 ])
-                ->action(function (array $data, ChangeOrderStatus $change): void {
+                ->action(function (array $data, ChangeOrderStatus $change) use ($t): void {
                     try {
                         $change->handle($this->order(), OrderStatus::from($data['status'] instanceof OrderStatus ? $data['status']->value : $data['status']), $this->user());
                     } catch (CheckoutException $e) {
@@ -61,7 +61,7 @@ class ViewOrder extends ViewRecord
                 ->color('success')
                 ->requiresConfirmation()
                 ->visible(fn () => ! $this->order()->isPaid())
-                ->action(fn (SetPaymentStatus $action) => $this->setPayment($action, PaymentStatus::Paid)),
+                ->action(fn (SetPaymentStatus $setPaymentStatus) => $this->setPayment($setPaymentStatus, PaymentStatus::Paid)),
             Action::make('addNote')
                 ->label($t('add_note'))
                 ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
@@ -69,8 +69,8 @@ class ViewOrder extends ViewRecord
                 ->schema([
                     Textarea::make('note')->label($t('note'))->helperText($t('note_help'))->required()->maxLength(2000)->rows(4),
                 ])
-                ->action(function (array $data, AddOrderNote $action): void {
-                    $action->handle($this->order(), $data['note'], $this->user());
+                ->action(function (array $data, AddOrderNote $addNote) use ($t): void {
+                    $addNote->handle($this->order(), $data['note'], $this->user());
                     Notification::make()->success()->title($t('note_added'))->send();
                     $this->refreshOrder();
                 }),
@@ -80,7 +80,7 @@ class ViewOrder extends ViewRecord
                     ->icon(Heroicon::OutlinedXCircle)
                     ->requiresConfirmation()
                     ->visible(fn () => $this->order()->isPaid())
-                    ->action(fn (SetPaymentStatus $action) => $this->setPayment($action, PaymentStatus::Unpaid)),
+                    ->action(fn (SetPaymentStatus $setPaymentStatus) => $this->setPayment($setPaymentStatus, PaymentStatus::Unpaid)),
                 Action::make('customerPage')
                     ->label($t('view_customer_page'))
                     ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
@@ -114,5 +114,8 @@ class ViewOrder extends ViewRecord
     private function refreshOrder(): void
     {
         $this->record = $this->order()->fresh(['items.order', 'history.user']);
+
+        // Detail objednávky sa vykreslí znova s novými údajmi (stav, platba, história).
+        $this->cachedSchemas = [];
     }
 }

@@ -6,10 +6,18 @@ use App\Core\Installer\Installation;
 use App\Core\Installer\Installer;
 use App\Settings\GeneralSettings;
 use Dotenv\Dotenv;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Modules\Catalog\Models\Product;
+use Modules\Pages\Models\Page;
+use Modules\Payments\Models\PaymentMethod;
+use Modules\Shipping\Models\ShippingMethod;
 use Tests\TestCase;
 
 class InstallerTest extends TestCase
 {
+    // Inštalácia zapisuje do databázy, po každom teste sa preto databáza vráti do pôvodného stavu.
+    use RefreshDatabase;
+
     public function test_everything_redirects_to_installer_before_installation(): void
     {
         $this->get('/')->assertRedirect(route('install.welcome'));
@@ -69,6 +77,26 @@ class InstallerTest extends TestCase
         $this->assertSame('Kaviareň u Jožka', $env['APP_NAME']);
         $this->assertSame('https://kaviaren.sk', $env['APP_URL']);
         $this->assertSame('false', $env['APP_DEBUG']);
+    }
+
+    public function test_installer_creates_default_shop_data_and_optional_demo_catalog(): void
+    {
+        $this->app->make(Installer::class)->install(
+            shop: ['shop_name' => 'Obchod', 'contact_email' => 'info@obchod.sk', 'url' => 'https://obchod.sk', 'locale' => 'cs', 'currency' => 'CZK', 'country' => 'CZ'],
+            admin: ['name' => 'Admin', 'email' => 'admin@obchod.sk', 'password' => 'Heslo12345'],
+            withDemoData: true,
+        );
+
+        $this->assertSame(2, ShippingMethod::count());
+        $this->assertSame(3, PaymentMethod::count());
+        $this->assertSame(4, Page::count());
+        $this->assertSame(8, Product::count());
+
+        // Ukážkové dáta sú v jazyku a mene obchodu.
+        $product = Product::query()->with('prices')->firstOrFail();
+        $this->assertArrayHasKey('cs', $product->getTranslations('name'));
+        $this->assertNotNull($product->priceIn('CZK'));
+        $this->assertSame(11900, ShippingMethod::query()->where('price', '>', 0)->value('price'));
     }
 
     public function test_full_web_installation_and_completion_page(): void

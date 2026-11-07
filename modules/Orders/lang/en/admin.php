@@ -68,6 +68,6 @@ return [
         'new_orders_description' => 'waiting to be processed',
         'revenue_today' => 'Revenue today',
         'revenue_30_days' => 'Revenue in 30 days',
-        'orders_30_days' => ':count orders',
+        'orders_30_days' => '{1} :count order|[0,*] :count orders',
     ],
 ];

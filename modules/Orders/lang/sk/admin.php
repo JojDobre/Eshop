@@ -68,6 +68,6 @@ return [
         'new_orders_description' => 'čakajú na spracovanie',
         'revenue_today' => 'Tržby dnes',
         'revenue_30_days' => 'Tržby za 30 dní',
-        'orders_30_days' => ':count objednávok',
+        'orders_30_days' => '{1} :count objednávka|[2,4] :count objednávky|[0,*] :count objednávok',
     ],
 ];

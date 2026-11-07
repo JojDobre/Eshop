@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Core\Installer\Installation;
 use App\Core\Modules\ModuleManager;
 use App\Filament\AdminGroup;
+use App\Filament\BrandPalette;
 use App\Filament\Pages\Auth\EditProfile;
 use App\Http\Middleware\EnsureInstalled;
 use App\Http\Middleware\SetAdminLocale;
@@ -12,10 +13,10 @@ use App\Settings\BrandingSettings;
 use App\Settings\GeneralSettings;
 use Filament\FontProviders\LocalFontProvider;
 use Filament\Http\Middleware\Authenticate;
-use Filament\Navigation\NavigationGroup;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -34,11 +35,11 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $panel->default()->id('admin');
+
         $this->discoverModuleComponents($panel);
 
         return $panel
-            ->default()
-            ->id('admin')
             ->path('admin')
             ->login()
             ->passwordReset()
@@ -49,7 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('2rem')
             ->favicon(fn () => $this->branding()?->faviconUrl())
             ->colors(fn () => [
-                'primary' => Color::hex($this->branding()?->primaryColor() ?? BrandingSettings::DEFAULT_PRIMARY_COLOR),
+                'primary' => BrandPalette::fromHex($this->branding()?->primaryColor() ?? BrandingSettings::DEFAULT_PRIMARY_COLOR),
                 'gray' => Color::Zinc,
             ])
             // Písmo je uložené priamo na hostingu (nie z externej služby), kvôli GDPR.

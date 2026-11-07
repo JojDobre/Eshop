@@ -17,6 +17,7 @@ use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Translatable\Translatable;
 use Throwable;
 
 /**
@@ -59,6 +60,10 @@ class EshopServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->applyMailSettings();
+
+        // Ak obsah nemá preklad v jazyku obchodu (napr. po zmene jazyka), použije sa ktorýkoľvek
+        // dostupný preklad namiesto prázdnej hodnoty.
+        $this->app->make(Translatable::class)->fallback(fallbackAny: true);
 
         $themes = $this->app->make(ThemeManager::class);
 

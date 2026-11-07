@@ -3,6 +3,7 @@
 namespace Modules\Cart;
 
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Support\CurrencyContext;
 use Illuminate\Support\Facades\View;
 
 class CartServiceProvider extends ModuleServiceProvider
@@ -16,7 +17,7 @@ class CartServiceProvider extends ModuleServiceProvider
     {
         $this->app->scoped(CartManager::class, fn ($app) => new CartManager(
             $app->make('session.store'),
-            $app->make(\App\Core\Support\CurrencyContext::class),
+            $app->make(CurrencyContext::class),
         ));
     }
 

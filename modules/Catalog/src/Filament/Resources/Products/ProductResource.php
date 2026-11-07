@@ -5,6 +5,7 @@ namespace Modules\Catalog\Filament\Resources\Products;
 use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
+use App\Filament\Forms\MoneyInput;
 use BackedEnum;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -111,7 +112,7 @@ class ProductResource extends Resource
                 ]),
                 Section::make($t('section_price'))->schema([
                     TextInput::make('price')->label($t('price'))->helperText($t('price_help'))
-                        ->required()->numeric()->minValue(0)->step('0.01')->suffix($currency),
+                        ->required()->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($currency),
                     TextInput::make('sku')->label($t('sku'))->maxLength(64)->unique(ignoreRecord: true),
                 ]),
                 Section::make($t('section_stock'))->schema([

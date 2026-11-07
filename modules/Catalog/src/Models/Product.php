@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
 use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldValue;
+use Modules\Catalog\StockLots;
 use Modules\Catalog\StockService;
 use Modules\Tax\Models\TaxRate;
 use Modules\Tax\TaxCalculator;
@@ -277,6 +278,14 @@ class Product extends Model
      */
     public function priceIn(?string $currency = null): ?int
     {
+        return self::withExpiryDiscount($this->regularPriceIn($currency), app(StockLots::class)->expiryDiscountPercent($this, null));
+    }
+
+    /**
+     * Cena bez automatickej zľavy pri blížiacej sa expirácii.
+     */
+    public function regularPriceIn(?string $currency = null): ?int
+    {
         $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
 
@@ -285,7 +294,15 @@ class Product extends Model
         }
 
         // Cena v mene chýba: prepočet z predvolenej meny kurzom (so zaokrúhlením meny).
-        return $this->convertedFromDefault(fn (string $default) => $this->priceIn($default), $currency);
+        return $this->convertedFromDefault(fn (string $default) => $this->regularPriceIn($default), $currency);
+    }
+
+    /**
+     * Zníži cenu o zľavu pri blížiacej sa expirácii.
+     */
+    public static function withExpiryDiscount(?int $price, int $percent): ?int
+    {
+        return $price === null || $percent === 0 ? $price : (int) round($price * (100 - $percent) / 100);
     }
 
     /**
@@ -313,6 +330,14 @@ class Product extends Model
         $currency ??= app(CurrencyContext::class)->current();
         $row = $this->prices->firstWhere('currency', $currency);
         $price = $this->priceIn($currency);
+        $regular = $this->regularPriceIn($currency);
+
+        // Pri zľave pre blížiacu sa expiráciu sa prečiarkne bežná cena (ak nie je zadaná vyššia).
+        if ($price !== null && $regular !== null && $regular > $price) {
+            $compareAt = $row?->compare_at_amount !== null ? app(TaxCalculator::class)->grossFromEntered($row->compare_at_amount, $this->vatRate()) : null;
+
+            return max($regular, $compareAt ?? 0);
+        }
 
         if ($row === null) {
             // Bez ceny v mene: prepočítaná pôvodná cena z predvolenej meny.
@@ -429,7 +454,15 @@ class Product extends Model
             return $this->variants->contains(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->isAvailable($quantity));
         }
 
-        return ! $this->track_stock || $this->stock_quantity >= $quantity;
+        return ! $this->track_stock || $this->sellableStock() >= $quantity;
+    }
+
+    /**
+     * Počet kusov, ktoré sa dajú predať (bez tovaru v neaktívnych skladoch a expirovaného).
+     */
+    public function sellableStock(): int
+    {
+        return max(0, $this->stock_quantity - app(StockLots::class)->blockedQuantity($this, null));
     }
 
     /**
@@ -461,6 +494,16 @@ class Product extends Model
     public function bundleItems(): HasMany
     {
         return $this->hasMany(BundleItem::class, 'bundle_id')->orderBy('position')->orderBy('id');
+    }
+
+    /**
+     * Zásoby po skladoch a šaržiach.
+     *
+     * @return HasMany<StockLot, $this>
+     */
+    public function stockLots(): HasMany
+    {
+        return $this->hasMany(StockLot::class);
     }
 
     /** Je produkt balíček? (iba so zapnutou funkciou balíčkov) */
@@ -495,7 +538,7 @@ class Product extends Model
 
     public function maxPurchasableQuantity(): ?int
     {
-        $max = $this->track_stock ? max(0, $this->stock_quantity) : null;
+        $max = $this->track_stock ? $this->sellableStock() : null;
 
         // Balíček: koľko kompletných balíčkov sa dá zložiť zo skladu zložiek.
         if ($this->isBundle()) {

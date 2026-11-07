@@ -41,6 +41,19 @@ class OrderItem extends Model
     /**
      * Názov s variantom, napr. „Tričko – M / červená".
      */
+    /**
+     * Šarže, z ktorých sa položka vydala (dohľadateľnosť), napr. „L2411 (2), L2412 (1)“.
+     */
+    public function batchesLabel(): ?string
+    {
+        $batches = collect($this->allocations ?? [])
+            ->filter(fn (array $allocation) => filled($allocation['batch_number'] ?? null))
+            ->groupBy('batch_number')
+            ->map(fn ($group, $batch) => $batch.' ('.$group->sum('quantity').')');
+
+        return $batches->isEmpty() ? null : $batches->implode(', ');
+    }
+
     public function fullName(): string
     {
         $name = $this->variant_name ? $this->name.' – '.$this->variant_name : $this->name;

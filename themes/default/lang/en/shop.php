@@ -172,4 +172,6 @@ return [
     'back_home' => 'Back to home page',
     'bundle_contents' => 'Bundle contents',
     'bundle_saving' => 'You save :amount compared to buying separately',
+    'best_before' => 'Use by :date',
+    'short_expiry' => 'Short expiry: :percent % off',
 ];

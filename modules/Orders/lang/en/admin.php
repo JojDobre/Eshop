@@ -101,4 +101,5 @@ return [
         'ends_at' => 'Valid until',
         'is_active' => 'Active',
     ],
+    'batches' => 'Batches: :batches',
 ];

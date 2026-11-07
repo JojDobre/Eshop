@@ -101,4 +101,5 @@ return [
         'ends_at' => 'Platí do',
         'is_active' => 'Aktivní',
     ],
+    'batches' => 'Šarže: :batches',
 ];

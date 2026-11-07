@@ -172,4 +172,6 @@ return [
     'back_home' => 'Zpět na úvod',
     'bundle_contents' => 'Obsah balíčku',
     'bundle_saving' => 'Ušetříte :amount oproti samostatnému nákupu',
+    'best_before' => 'Spotřebujte do :date',
+    'short_expiry' => 'Krátká expirace: sleva :percent %',
 ];

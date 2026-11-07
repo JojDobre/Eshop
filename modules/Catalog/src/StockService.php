@@ -7,6 +7,7 @@ use App\Settings\CatalogSettings;
 use Modules\Catalog\Events\StockLow;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductVariant;
+use Modules\Catalog\Models\StockLot;
 use Modules\Catalog\Models\StockMovement;
 use Throwable;
 
@@ -28,6 +29,7 @@ class StockService
         ?string $note = null,
         ?User $user = null,
         ?ProductVariant $variant = null,
+        ?StockLot $lot = null,
     ): void {
         if ($quantity === 0 || ! $product->track_stock) {
             return;
@@ -36,7 +38,7 @@ class StockService
         if ($variant !== null) {
             $before = $variant->stock_quantity;
             ProductVariant::withoutStockLogging(fn () => $variant->increment('stock_quantity', $quantity));
-            $this->record($product, $quantity, $type, $reference, $note, $user, $variant);
+            $this->record($product, $quantity, $type, $reference, $note, $user, $variant, $lot);
 
             if ($quantity < 0) {
                 $this->notifyIfLow($product, $before, $variant->stock_quantity, $variant);
@@ -51,7 +53,7 @@ class StockService
             $product->increment('stock_quantity', $quantity);
         });
 
-        $this->record($product, $quantity, $type, $reference, $note, $user);
+        $this->record($product, $quantity, $type, $reference, $note, $user, lot: $lot);
 
         if ($quantity < 0) {
             $this->notifyIfLow($product, $before, $product->stock_quantity);
@@ -93,6 +95,10 @@ class StockService
             throw new InsufficientStock($variant ? $product->name.' – '.$variant->name() : $product->name);
         }
 
+        if ($product->track_stock && app(StockLots::class)->enabled()) {
+            return app(StockLots::class)->take($product, $variant, $quantity, $type, $reference);
+        }
+
         $this->adjust($product, -$quantity, $type, $reference, variant: $variant);
 
         return [['product_id' => $product->id, 'variant_id' => $variant?->id, 'quantity' => $quantity]];
@@ -113,13 +119,25 @@ class StockService
             }
 
             $variant = $allocation['variant_id'] ? ProductVariant::query()->whereKey($allocation['variant_id'])->lockForUpdate()->first() : null;
+            $lot = isset($allocation['lot_id']) && app(StockLots::class)->enabled() ? StockLot::query()->whereKey($allocation['lot_id'])->lockForUpdate()->first() : null;
+
+            // Tovar sa vráti do tej istej šarže a skladu, odkiaľ sa vydal.
+            if ($lot !== null) {
+                app(StockLots::class)->adjustLot($lot->setRelation('product', $product), (int) $allocation['quantity'], $type, $reference);
+
+                continue;
+            }
+
             $this->adjust($product, (int) $allocation['quantity'], $type, $reference, variant: $variant);
         }
     }
 
-    public function record(Product $product, int $quantity, string $type, ?string $reference = null, ?string $note = null, ?User $user = null, ?ProductVariant $variant = null): void
+    public function record(Product $product, int $quantity, string $type, ?string $reference = null, ?string $note = null, ?User $user = null, ?ProductVariant $variant = null, ?StockLot $lot = null): void
     {
         StockMovement::query()->create([
+            'warehouse_id' => $lot?->warehouse_id,
+            'stock_lot_id' => $lot?->id,
+            'batch_number' => $lot?->batch_number,
             'product_id' => $product->id,
             'product_variant_id' => $variant?->id,
             'quantity' => $quantity,
@@ -129,6 +147,11 @@ class StockService
             'note' => $note,
             'user_id' => $user?->id ?? (auth()->user() instanceof User ? auth()->id() : null),
         ]);
+
+        // Zmena bez určenej zásoby (ručná úprava čísla): rozpis po skladoch a šaržiach sa dorovná.
+        if ($lot === null) {
+            app(StockLots::class)->reconcile($product, $variant);
+        }
     }
 
     public function lowStockThreshold(Product $product): int

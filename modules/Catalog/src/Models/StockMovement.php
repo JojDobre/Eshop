@@ -33,6 +33,12 @@ class StockMovement extends Model
 
     public const EDIT = 'edit';
 
+    public const RECEIPT = 'receipt';
+
+    public const TRANSFER = 'transfer';
+
+    public const WRITE_OFF = 'write_off';
+
     public const UPDATED_AT = null;
 
     protected $guarded = [];
@@ -48,6 +54,14 @@ class StockMovement extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @return BelongsTo<Warehouse, $this>
+     */
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 
     /**

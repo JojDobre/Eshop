@@ -123,7 +123,8 @@ class OrderResource extends Resource
                             TableColumn::make($t('item_total'))->alignment('end'),
                         ])
                         ->schema([
-                            TextEntry::make('name')->label($t('item_name'))->formatStateUsing(fn ($state, $record) => $record->fullName()),
+                            TextEntry::make('name')->label($t('item_name'))->formatStateUsing(fn ($state, $record) => $record->fullName())
+                                ->helperText(fn ($record) => ($batches = $record->batchesLabel()) ? __('orders::admin.batches', ['batches' => $batches]) : null),
                             TextEntry::make('sku')->label($t('item_sku'))->placeholder('—'),
                             TextEntry::make('quantity')->label($t('item_quantity')),
                             TextEntry::make('unit_price')->label($t('item_unit_price'))->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use Modules\Catalog\StockLots;
 use Modules\Catalog\StockService;
 use Modules\Tax\TaxCalculator;
 
@@ -124,6 +125,14 @@ class ProductVariant extends Model
      */
     public function priceIn(?string $currency = null): ?int
     {
+        return Product::withExpiryDiscount($this->regularPriceIn($currency), app(StockLots::class)->expiryDiscountPercent($this->product, $this));
+    }
+
+    /**
+     * Cena bez automatickej zľavy pri blížiacej sa expirácii.
+     */
+    public function regularPriceIn(?string $currency = null): ?int
+    {
         $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
 
@@ -136,10 +145,10 @@ class ProductVariant extends Model
         $default = $currencies->default();
 
         if ($currency !== $default && $this->enteredPriceIn($default) !== null && $currencies->hasRate($currency)) {
-            return $currencies->convert((int) $this->priceIn($default), $default, $currency);
+            return $currencies->convert((int) $this->regularPriceIn($default), $default, $currency);
         }
 
-        return $this->product->priceIn($currency);
+        return $this->product->regularPriceIn($currency);
     }
 
     public function setPrice(string $currency, ?int $amount): void
@@ -160,12 +169,20 @@ class ProductVariant extends Model
     {
         return $this->is_active
             && $this->product->is_visible
-            && (! $this->product->track_stock || $this->stock_quantity >= $quantity);
+            && (! $this->product->track_stock || $this->sellableStock() >= $quantity);
+    }
+
+    /**
+     * Počet kusov, ktoré sa dajú predať (bez tovaru v neaktívnych skladoch a expirovaného).
+     */
+    public function sellableStock(): int
+    {
+        return max(0, $this->stock_quantity - app(StockLots::class)->blockedQuantity($this->product, $this));
     }
 
     public function maxPurchasableQuantity(): ?int
     {
-        $max = $this->product->track_stock ? max(0, $this->stock_quantity) : null;
+        $max = $this->product->track_stock ? $this->sellableStock() : null;
 
         return $this->product->isUnique() ? min(1, $max ?? 1) : $max;
     }

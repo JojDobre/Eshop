@@ -136,6 +136,18 @@
                     {{ $available ? ($maxQuantity !== null && $maxQuantity <= 5 ? __('theme::shop.in_stock_few', ['count' => $maxQuantity]) : __('theme::shop.in_stock')) : __('theme::shop.sold_out') }}
                 </p>
 
+                {{-- Expirácia (šarže): dátum spotreby tovaru, ktorý zákazník dostane, a zľava pri krátkej expirácii. --}}
+                @if ($available && ! $product->hasVariants() && $product->track_stock)
+                    @php($stockLots = app(\Modules\Catalog\StockLots::class))
+                    @php($expiryDiscount = $stockLots->expiryDiscountPercent($product, null))
+                    @if ($expiryDiscount > 0)
+                        <p class="mt-2 text-sm font-semibold text-amber-700">{{ __('theme::shop.short_expiry', ['percent' => $expiryDiscount]) }}</p>
+                    @endif
+                    @if ($stockLots->expirationEnabled() && rescue(fn () => app(\App\Settings\CatalogSettings::class)->expiration_show_date, false, false) && ($nextExpiry = $stockLots->nextExpiry($product, null)))
+                        <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.best_before', ['date' => $nextExpiry->format(app()->getLocale() === 'en' ? 'j M Y' : 'j. n. Y')]) }}</p>
+                    @endif
+                @endif
+
                 @if ($product->short_description)
                     <p class="mt-6 text-zinc-600">{{ $product->short_description }}</p>
                 @endif

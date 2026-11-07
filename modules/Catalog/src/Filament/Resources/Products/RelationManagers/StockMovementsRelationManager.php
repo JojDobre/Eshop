@@ -6,6 +6,8 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Catalog\CatalogFeatures;
+use Modules\Catalog\Models\StockMovement;
 
 /**
  * História skladu produktu (iba na čítanie – zmeny sa robia akciou „Upraviť sklad").
@@ -29,7 +31,7 @@ class StockMovementsRelationManager extends RelationManager
         $t = fn (string $key) => __('catalog::admin.stock.'.$key);
 
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with(['user', 'variant.values']))
+            ->modifyQueryUsing(fn ($query) => $query->with(['user', 'variant.values', 'warehouse']))
             ->columns([
                 TextColumn::make('created_at')->label($t('date'))->dateTime(),
                 TextColumn::make('type')->label($t('type'))->badge()->color('gray')
@@ -39,6 +41,10 @@ class StockMovementsRelationManager extends RelationManager
                 TextColumn::make('quantity')->label($t('change'))
                     ->formatStateUsing(fn (int $state) => ($state > 0 ? '+' : '').$state)
                     ->color(fn (int $state) => $state > 0 ? 'success' : 'danger'),
+                TextColumn::make('warehouse.name')->label(__('catalog::admin.lots.warehouse'))->placeholder('—')
+                    ->visible(fn () => CatalogFeatures::enabled('warehouses')),
+                TextColumn::make('batch_number')->label(__('catalog::admin.lots.batch_number'))->placeholder('—')->searchable()
+                    ->visible(fn () => CatalogFeatures::enabled('batches')),
                 TextColumn::make('stock_after')->label($t('after')),
                 TextColumn::make('reference')->label($t('reference'))->placeholder('—'),
                 TextColumn::make('note')->label($t('note'))->placeholder('—')->wrap(),

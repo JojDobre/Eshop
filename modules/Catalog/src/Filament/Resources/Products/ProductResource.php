@@ -55,6 +55,7 @@ use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductType;
 use Modules\Catalog\Models\ProductVariant;
+use Modules\Catalog\StockLots;
 use Modules\Tax\Models\TaxRate;
 use UnitEnum;
 
@@ -225,6 +226,9 @@ class ProductResource extends Resource
                 Section::make($t('section_stock'))->schema([
                     Toggle::make('track_stock')->label($t('track_stock'))->helperText($t('track_stock_help'))->default(true)->live(),
                     TextInput::make('stock_quantity')->label($t('stock_quantity'))->integer()->default(0)
+                        // Pri skladoch a šaržiach sa sklad mení príjmom a inventúrou v časti „Zásoby“.
+                        ->disabled(fn (?Product $record) => $record !== null && app(StockLots::class)->enabled())
+                        ->helperText(fn (?Product $record) => $record !== null && app(StockLots::class)->enabled() ? __('catalog::admin.lots.managed_in_lots') : null)
                         ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && ! $record?->hasVariants()),
                     Text::make(__('catalog::admin.variants.stock_on_variants'))
                         ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && (bool) $record?->hasVariants()),
@@ -293,6 +297,7 @@ class ProductResource extends Resource
         return [
             OptionsRelationManager::class,
             VariantsRelationManager::class,
+            RelationManagers\StockLotsRelationManager::class,
             StockMovementsRelationManager::class,
         ];
     }

@@ -50,6 +50,7 @@ class CatalogServiceProvider extends ModuleServiceProvider
         });
 
         $this->app->singleton(StockService::class);
+        $this->app->scoped(StockLots::class);
 
         $this->app->make(SitemapRegistry::class)->add(function (): iterable {
             foreach (Category::query()->visible()->lazyById(200) as $category) {

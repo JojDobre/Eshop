@@ -15,6 +15,9 @@ final class CatalogFeatures
 {
     public const ALL = ['product_types', 'extra_custom_fields', 'addons', 'bundles', 'warehouses', 'batches', 'expiration', 'preorders', 'digital'];
 
+    /** Funkcie s ďalšími nastaveniami (odkaz z prehľadu funkcií). */
+    private const WITH_SETTINGS = ['expiration'];
+
     /** Závislosti medzi funkciami. */
     private const REQUIRES = ['expiration' => 'batches'];
 
@@ -38,6 +41,7 @@ final class CatalogFeatures
                 label: fn () => __('catalog::admin.features.'.$feature),
                 description: fn () => __('catalog::admin.features.'.$feature.'_help'),
                 isEnabled: fn () => self::enabled($feature),
+                settingsUrl: in_array($feature, self::WITH_SETTINGS, true) ? fn () => url('/admin/settings/catalog') : null,
                 set: function (bool $enabled) use ($feature): void {
                     if ($enabled && isset(self::REQUIRES[$feature]) && ! self::enabled(self::REQUIRES[$feature])) {
                         throw new RuntimeException(__('catalog::admin.features.requires', ['feature' => __('catalog::admin.features.'.self::REQUIRES[$feature])]));

@@ -1,6 +1,6 @@
 {
     "name": "tax",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": { "sk": "DPH", "cs": "DPH", "en": "VAT" },
     "description": {
         "sk": "Sadzby DPH, ceny s DPH alebo bez DPH, obchodník platiteľ alebo neplatiteľ DPH.",
@@ -9,6 +9,6 @@
     },
     "provider": "Modules\\Tax\\TaxServiceProvider",
     "core": true,
-    "requires": { "eshop": "^0.5" },
+    "requires": { "eshop": "^0.6" },
     "permissions": ["tax.manage"]
 }

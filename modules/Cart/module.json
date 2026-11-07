@@ -14,9 +14,9 @@
     "provider": "Modules\\Cart\\CartServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.5",
+        "eshop": "^0.6",
         "modules": {
-            "catalog": "^0.3"
+            "catalog": "^0.4"
         }
     }
 }

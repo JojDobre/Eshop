@@ -3,11 +3,19 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 3 – pilotná verzia pre malého obchodníka (0.5.0). Obchod predáva v jednom jazyku a jednej mene,
-> s DPH, variantmi, dokladmi, platbou kartou a zákazníckymi účtami.
+> **Stav:** krok 4a – jazyky, meny a DPH v EÚ (0.6.0). Obchod predáva vo viacerých jazykoch a menách,
+> s DPH podľa krajín EÚ, variantmi, dokladmi, platbou kartou a zákazníckymi účtami.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Jazyky, meny a DPH v EÚ (krok 4a)**
+
+- **Viac jazykov:** adresy `/cz/…`, `/en/…` s preloženými adresami stránok, `hreflang`, prepínač jazyka,
+  preklady obsahu v administrácii s prehľadom chýbajúcich prekladov, e-maily a doklady v jazyku zákazníka.
+- **Strojový preklad** cez DeepL alebo Google so slovníkom pojmov, limitom a hromadným prekladom.
+- **Viac mien:** kurzy z ECB alebo ručne, zaokrúhľovanie, ručné ceny v každej mene.
+- **DPH v EÚ:** režim OSS a prenesenie daňovej povinnosti s overením IČ DPH vo VIES.
 
 **Pilotná verzia (krok 3)**
 

@@ -1,5 +1,19 @@
 # Prehľad zmien
 
+## 0.6.0 – Jazyky, meny a DPH v EÚ (krok 4a)
+
+- **Viac jazykov obchodu:** ďalšie jazyky v nastaveniach, predvolený jazyk bez predpony, ostatné
+  s predponou v adrese (`/cz/…`, `/en/…`), preložené adresy produktov, kategórií a stránok, `hreflang`,
+  prepínač jazyka, sitemap vo všetkých jazykoch, objednávky a e-maily v jazyku zákazníka.
+- **Preklady v administrácii:** prepínač jazyka obsahu na stránkach úprav, stĺpec s chýbajúcimi prekladmi.
+- **Viac mien:** kurzy ručne alebo denne z ECB, zaokrúhľovanie (matematicky, na celé jednotky, na ,99),
+  prepínač meny, ručné ceny v každej mene s prepočtom chýbajúcich, doprava, platby a kupóny v mene
+  objednávky, kurz uložený v objednávke a tržby prepočítané do predvolenej meny.
+- **DPH v EÚ:** sadzby pre ďalšie krajiny EÚ (s predvyplnením), režim OSS, prenesenie daňovej povinnosti
+  s overením IČ DPH vo VIES a povinným textom na faktúre; zoznam krajín EÚ v pokladni.
+- Modul **Strojový preklad** (DeepL, Google): tlačidlo Preložiť, slovník pojmov, mesačný limit,
+  označenie „na kontrolu“ a hromadný preklad po dávkach.
+
 ## 0.5.0 – Pilotná verzia pre malého obchodníka (krok 3)
 
 - **DPH:** modul Dane so sadzbami SK a CZ, ceny s DPH podľa nastavenia, rozpis DPH v objednávke a na dokladoch.

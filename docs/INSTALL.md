@@ -72,6 +72,19 @@ V administrácii (`/admin`) nastavte:
 - **Systém → Používatelia:** ďalšie účty pre kolegov. V profile si zapnite **dvojfaktorové prihlásenie**.
 - **Systém → Zálohy:** vytvorte prvú zálohu a stiahnite si ju. Automatická záloha beží každú noc (ak beží cron).
 
+## Viac jazykov a mien
+
+- **Nastavenia → Obchod → Ďalšie jazyky obchodu:** zapnite napr. češtinu a angličtinu. Obchod bude dostupný
+  na adresách `/cz/…` a `/en/…`, predvolený jazyk ostáva bez predpony. Texty prekladáte pri úprave produktu,
+  kategórie či stránky prepínačom **Jazyk** v hlavičke. Kým preklad chýba, zobrazí sa predvolený jazyk.
+- **Nastavenia → Strojový preklad:** zadajte kľúč DeepL (bezplatný účet stačí) alebo Google. Potom pri úprave
+  v inom jazyku stačí kliknúť **Preložiť** alebo použiť **Obsah → Hromadný preklad**. Strojový preklad
+  skontrolujte – kým ho neuložíte alebo neschválite, je označený „na kontrolu“.
+- **Nastavenia → Meny:** zapnite ďalšie meny a zadajte kurz (alebo nechajte denné sťahovanie z ECB – vyžaduje cron).
+  Pri produkte, doprave a platbe môžete zadať aj vlastnú cenu v každej mene.
+- **Nastavenia → DPH:** pri predaji do iných krajín EÚ zapnite režim OSS a kliknite **Predvyplniť sadzby EÚ**
+  (sadzby skontrolujte). Prenesenie daňovej povinnosti pre firmy s IČ DPH sa overuje v systéme VIES.
+
 ## Zálohy a obnova
 
 Záloha (ZIP) obsahuje `database.sql`, nahrané súbory (`uploads/`), nastavenia modulov (`eshop/`)

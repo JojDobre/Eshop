@@ -58,6 +58,7 @@ themes/                 šablóny vzhľadu obchodu
 | `stripe` | platba kartou cez Stripe Checkout a webhook | orders, payments |
 | `customers` | zákaznícke účty (samostatné prihlásenie `customer`) | storefront, orders |
 | `returns` | odstúpenie od zmluvy a reklamácie | orders |
+| `translator` | strojový preklad (DeepL, Google), hromadný preklad | – |
 
 Moduly komunikujú cez **udalosti** (`EshopInstalled` → predvolené dáta, `OrderPlaced` → e-maily,
 zálohová faktúra, priradenie k účtu; `OrderStatusChanged` → e-mail zákazníkovi; `OrderPaid` → faktúra)
@@ -138,6 +139,23 @@ modules/Storefront/
 
 > Podrobné spracovanie chýb za behu (dočasná nedostupnosť integrácií, izolácia pri opakovaných chybách)
 > pribudne spolu s prvými integráciami (platby, kuriéri). Pozri `PLAN.md`, kapitola 2.6.
+
+## Jazyky, meny a DPH
+
+- **Jazyky obchodu** (`App\Core\Content\ShopLocales`): predvolený jazyk bez predpony, ďalšie s predponou
+  (`/en/…`, čeština `/cz/…`). Predponu odstráni globálny middleware `ResolveLocalePrefix` ešte pred výberom
+  trasy a pri tvorbe odkazov ju pridá `LocalizedUrls` (`URL::formatPathUsing`) – iba trasám označeným
+  middlewarom jazyka obchodu. Moduly tak registrujú trasy iba raz. Odkazy pre iný jazyk:
+  `app(LocalizedUrls::class)->in('en', fn () => route(...))`.
+- **Preložené adresy:** `HasLocalizedSlug` vytvára adresu v každom jazyku s názvom; chýbajúca adresa sa
+  nahradí adresou v predvolenom jazyku. Stránky s vlastnou adresou nastavia `AlternateUrls` (prepínač, hreflang).
+- **Preklady v administrácii:** trait `FillsContentTranslations` (prepínač jazyka, ukladanie do zvoleného
+  jazyka, tlačidlá strojového prekladu, ak je v kontajneri `MachineTranslator`).
+- **Meny** (`App\Core\Support\Currencies`): kurzy a zaokrúhľovanie, `convert()`. Ručná cena v mene má prednosť,
+  inak prepočet. Mena zákazníka sa nastavuje iba v obchode (`SetStorefrontLocale`), administrácia pracuje
+  v predvolenej mene. Kurzy z ECB (`EcbRates`).
+- **DPH** (`Modules\Tax\TaxRules`): `TaxContext` (tuzemsko, OSS, prenesenie daňovej povinnosti) podľa krajiny
+  doručenia a IČ DPH overeného vo VIES; `CheckoutTotals` podľa neho upraví ceny a sadzby položiek.
 
 ## Šablóny vzhľadu
 

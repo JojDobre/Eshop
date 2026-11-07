@@ -1,6 +1,6 @@
 {
     "name": "catalog",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": {
         "sk": "Katalóg",
         "cs": "Katalog",
@@ -14,10 +14,10 @@
     "provider": "Modules\\Catalog\\CatalogServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.5",
+        "eshop": "^0.6",
         "modules": {
-            "storefront": "^0.1",
-            "tax": "^0.3"
+            "storefront": "^0.2",
+            "tax": "^0.4"
         }
     },
     "permissions": [

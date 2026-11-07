@@ -8,6 +8,7 @@ use App\Settings\GeneralSettings;
 use Livewire\Livewire;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
 use Modules\Catalog\Models\Product;
+use Modules\Orders\Mail\OrderConfirmation;
 use Modules\Orders\Models\Order;
 
 class MultilingualTest extends ShopTestCase
@@ -89,6 +90,13 @@ class MultilingualTest extends ShopTestCase
         $this->assertStringContainsString('/en/objednavka/', $order->publicUrl());
         $response->assertRedirect($order->publicUrl());
         $this->get($order->publicUrl())->assertOk()->assertSee('Ethiopia beans');
+        $this->assertSame('Ethiopia beans', $order->items->first()->name);
+
+        // E-maily v jazyku objednávky, aj keď ich posiela administrácia v slovenčine.
+        app()->setLocale('sk');
+        $mail = new OrderConfirmation($order);
+        $this->assertSame('Order confirmation no. '.$order->number, $mail->envelope()->subject);
+        $this->assertStringContainsString('/en/objednavka/', $mail->render());
     }
 
     public function test_admin_edits_translations_with_language_switcher(): void

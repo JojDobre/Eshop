@@ -11,8 +11,8 @@
     "core": false,
     "enabled": true,
     "requires": {
-        "eshop": "^0.5",
-        "modules": { "orders": "^0.4", "payments": "^0.3" }
+        "eshop": "^0.6",
+        "modules": { "orders": "^0.5", "payments": "^0.4" }
     },
     "permissions": ["payments.manage"]
 }

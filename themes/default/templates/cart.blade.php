@@ -18,11 +18,14 @@
                     @foreach ($summary->lines as $line)
                         <li class="flex gap-4 py-5">
                             <a href="{{ $line->product->url() }}" class="size-20 shrink-0 overflow-hidden rounded-lg bg-zinc-100 sm:size-24">
-                                @include('theme::partials.product-image', ['url' => $line->product->mainImageUrl(), 'alt' => $line->product->name])
+                                @include('theme::partials.product-image', ['url' => $line->imageUrls()[0] ?? null, 'alt' => $line->name()])
                             </a>
                             <div class="flex flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                                 <div>
                                     <a href="{{ $line->product->url() }}" class="font-medium hover:underline">{{ $line->product->name }}</a>
+                                    @if ($line->variant)
+                                        <p class="text-sm text-zinc-600">{{ $line->variant->name() }}</p>
+                                    @endif
                                     <p class="mt-1 text-sm text-zinc-500">{{ $line->unitPrice !== null ? format_price($line->unitPrice) : '' }} / {{ __('theme::shop.piece') }}</p>
                                     @unless ($line->isAvailable)
                                         <p class="mt-1 text-sm font-medium text-red-600">{{ __('theme::shop.line_unavailable') }}</p>
@@ -33,14 +36,14 @@
                                         @csrf @method('PATCH')
                                         <label for="qty-{{ $line->item->id }}" class="sr-only">{{ __('theme::shop.quantity') }}</label>
                                         <input id="qty-{{ $line->item->id }}" type="number" name="quantity" value="{{ $line->quantity }}" min="0"
-                                               @if ($line->product->maxPurchasableQuantity() !== null) max="{{ $line->product->maxPurchasableQuantity() }}" @endif
+                                               @if ($line->maxQuantity() !== null) max="{{ $line->maxQuantity() }}" @endif
                                                class="input w-16 py-1.5 text-center" onchange="this.form.submit()">
                                         <noscript><button class="text-sm underline">{{ __('theme::shop.update') }}</button></noscript>
                                     </form>
                                     <span class="w-24 text-right font-medium">{{ format_price($line->total()) }}</span>
                                     <form method="POST" action="{{ route('cart.remove', $line->item->id) }}">
                                         @csrf @method('DELETE')
-                                        <button type="submit" class="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700" aria-label="{{ __('theme::shop.remove', ['product' => $line->product->name]) }}">
+                                        <button type="submit" class="rounded-md p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700" aria-label="{{ __('theme::shop.remove', ['product' => $line->name()]) }}">
                                             <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
                                         </button>
                                     </form>

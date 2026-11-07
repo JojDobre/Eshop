@@ -131,7 +131,7 @@
                 <ul class="space-y-3 text-sm">
                     @foreach ($summary->lines as $line)
                         <li class="flex justify-between gap-4">
-                            <span>{{ $line->quantity }} × {{ $line->product->name }}</span>
+                            <span>{{ $line->quantity }} × {{ $line->name() }}</span>
                             <span class="shrink-0">{{ format_price($line->total()) }}</span>
                         </li>
                     @endforeach

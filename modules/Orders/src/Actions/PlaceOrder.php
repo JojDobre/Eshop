@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Cart\CartSummary;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\Models\StockMovement;
 use Modules\Catalog\StockService;
 use Modules\Orders\CheckoutException;
@@ -93,8 +94,10 @@ class PlaceOrder
             foreach ($cart->lines as $line) {
                 $order->items()->create([
                     'product_id' => $line->product->id,
+                    'product_variant_id' => $line->variant?->id,
                     'name' => $line->product->name,
-                    'sku' => $line->product->sku,
+                    'variant_name' => $line->variant?->name(),
+                    'sku' => $line->variant?->sku ?? $line->product->sku,
                     'quantity' => $line->quantity,
                     'unit_price' => (int) $line->unitPrice,
                     'total' => $line->total(),
@@ -121,12 +124,19 @@ class PlaceOrder
         foreach ($cart->lines as $line) {
             /** @var Product|null $product */
             $product = Product::query()->whereKey($line->product->id)->lockForUpdate()->first();
+            $variant = $line->variant
+                ? ProductVariant::query()->whereKey($line->variant->id)->lockForUpdate()->first()?->setRelation('product', $product)
+                : null;
 
-            if ($product === null || ! $product->isAvailable($line->quantity)) {
-                throw new CheckoutException(__('orders::messages.out_of_stock', ['product' => $line->product->name]));
+            $available = $product !== null && ($line->variant
+                ? $variant !== null && $variant->isAvailable($line->quantity)
+                : $product->isAvailable($line->quantity));
+
+            if (! $available) {
+                throw new CheckoutException(__('orders::messages.out_of_stock', ['product' => $line->name()]));
             }
 
-            $this->stock->adjust($product, -$line->quantity, StockMovement::ORDER, $orderNumber);
+            $this->stock->adjust($product, -$line->quantity, StockMovement::ORDER, $orderNumber, variant: $variant);
         }
     }
 }

@@ -119,7 +119,7 @@ class OrderResource extends Resource
                             TableColumn::make($t('item_total'))->alignment('end'),
                         ])
                         ->schema([
-                            TextEntry::make('name'),
+                            TextEntry::make('name')->formatStateUsing(fn ($state, $record) => $record->fullName()),
                             TextEntry::make('sku')->placeholder('—'),
                             TextEntry::make('quantity'),
                             TextEntry::make('unit_price')->formatStateUsing(fn ($state, $record) => Price::format((int) $state, $record->order->currency)),

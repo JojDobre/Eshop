@@ -29,11 +29,13 @@ class StockMovementsRelationManager extends RelationManager
         $t = fn (string $key) => __('catalog::admin.stock.'.$key);
 
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with('user'))
+            ->modifyQueryUsing(fn ($query) => $query->with(['user', 'variant.values']))
             ->columns([
                 TextColumn::make('created_at')->label($t('date'))->dateTime(),
                 TextColumn::make('type')->label($t('type'))->badge()->color('gray')
                     ->formatStateUsing(fn (string $state) => __('catalog::admin.stock.types.'.$state)),
+                TextColumn::make('variant')->label(__('catalog::admin.variants.variant'))->placeholder('—')
+                    ->state(fn (StockMovement $record) => $record->variant?->name()),
                 TextColumn::make('quantity')->label($t('change'))
                     ->formatStateUsing(fn (int $state) => ($state > 0 ? '+' : '').$state)
                     ->color(fn (int $state) => $state > 0 ? 'success' : 'danger'),

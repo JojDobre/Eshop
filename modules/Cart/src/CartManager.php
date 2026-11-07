@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Modules\Cart\Models\Cart;
 use Modules\Cart\Models\CartItem;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductVariant;
 
 /**
  * Košík aktuálneho návštevníka. Identifikuje sa náhodným tokenom uloženým v session.
@@ -43,17 +44,29 @@ class CartManager
         return $this->cart;
     }
 
-    public function add(Product $product, int $quantity = 1): CartItem
+    public function add(Product $product, int $quantity = 1, ?ProductVariant $variant = null): CartItem
     {
         $quantity = max(1, $quantity);
 
-        $this->ensurePurchasable($product);
+        if ($product->hasVariants() && $variant === null) {
+            throw new CartException(__('cart::messages.choose_variant', ['product' => $product->name]));
+        }
+
+        if ($variant !== null && ($variant->product_id !== $product->id || ! $variant->is_active)) {
+            throw new CartException(__('cart::messages.unavailable', ['product' => $product->name]));
+        }
+
+        $variant?->setRelation('product', $product);
+        $this->ensurePurchasable($product, $variant);
 
         $cart = $this->currentOrCreate();
-        $item = $cart->items()->firstOrNew(['product_id' => $product->id], ['quantity' => 0]);
+        $item = $cart->items()->firstOrNew(
+            ['product_id' => $product->id, 'product_variant_id' => $variant?->id],
+            ['quantity' => 0],
+        );
         $newQuantity = min(self::MAX_QUANTITY, $item->quantity + $quantity);
 
-        $this->ensureStock($product, $newQuantity);
+        $this->ensureStock($product, $newQuantity, $variant);
 
         $item->quantity = $newQuantity;
         $item->save();
@@ -73,7 +86,8 @@ class CartManager
         }
 
         $quantity = min(self::MAX_QUANTITY, $quantity);
-        $this->ensureStock($item->product, $quantity);
+        $item->variant?->setRelation('product', $item->product);
+        $this->ensureStock($item->product, $quantity, $item->variant);
 
         $item->update(['quantity' => $quantity]);
     }
@@ -103,19 +117,26 @@ class CartManager
             return new CartSummary([], $currency);
         }
 
-        $cart->load('items.product.prices', 'items.product.taxRate');
+        $cart->load('items.product.prices', 'items.product.taxRate', 'items.variant.prices', 'items.variant.values');
         $lines = [];
 
         foreach ($cart->items as $item) {
             $product = $item->product;
-            $unitPrice = $product->priceIn($currency);
+            $variant = $item->variant?->setRelation('product', $product);
+            $unitPrice = $variant ? $variant->priceIn($currency) : $product->priceIn($currency);
+
+            // Produkt, ktorý medzitým dostal varianty, sa musí vybrať znova.
+            $available = $variant
+                ? $variant->isAvailable($item->quantity)
+                : ! $product->hasVariants() && $product->isAvailable($item->quantity);
 
             $lines[] = new CartLine(
                 item: $item,
                 product: $product,
                 quantity: $item->quantity,
                 unitPrice: $unitPrice,
-                isAvailable: $unitPrice !== null && $product->isAvailable($item->quantity),
+                isAvailable: $unitPrice !== null && $available,
+                variant: $variant,
             );
         }
 
@@ -148,7 +169,7 @@ class CartManager
 
     private function findItem(int $itemId): CartItem
     {
-        $item = $this->current()?->items()->with('product')->find($itemId);
+        $item = $this->current()?->items()->with(['product', 'variant.values'])->find($itemId);
 
         if ($item === null) {
             throw new CartException(__('cart::messages.item_not_found'));
@@ -157,21 +178,24 @@ class CartManager
         return $item;
     }
 
-    private function ensurePurchasable(Product $product): void
+    private function ensurePurchasable(Product $product, ?ProductVariant $variant = null): void
     {
-        if (! $product->is_visible || $product->priceIn($this->currency->current()) === null) {
+        $price = $variant ? $variant->priceIn($this->currency->current()) : $product->priceIn($this->currency->current());
+
+        if (! $product->is_visible || $price === null) {
             throw new CartException(__('cart::messages.unavailable', ['product' => $product->name]));
         }
     }
 
-    private function ensureStock(Product $product, int $quantity): void
+    private function ensureStock(Product $product, int $quantity, ?ProductVariant $variant = null): void
     {
-        $max = $product->maxPurchasableQuantity();
+        $max = $variant ? $variant->maxPurchasableQuantity() : $product->maxPurchasableQuantity();
+        $name = $variant ? $product->name.' ('.$variant->name().')' : $product->name;
 
         if ($max !== null && $quantity > $max) {
             throw new CartException($max === 0
-                ? __('cart::messages.sold_out', ['product' => $product->name])
-                : __('cart::messages.not_enough_stock', ['product' => $product->name, 'available' => $max]));
+                ? __('cart::messages.sold_out', ['product' => $name])
+                : __('cart::messages.not_enough_stock', ['product' => $name, 'available' => $max]));
         }
     }
 }

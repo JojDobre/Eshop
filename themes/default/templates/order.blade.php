@@ -50,7 +50,7 @@
             <ul class="mt-4 divide-y divide-zinc-100 border-y border-zinc-100 text-sm">
                 @foreach ($order->items as $item)
                     <li class="flex justify-between gap-4 py-3">
-                        <span>{{ $item->quantity }} × {{ $item->name }}</span>
+                        <span>{{ $item->quantity }} × {{ $item->fullName() }}</span>
                         <span class="shrink-0">{{ $money($item->total) }}</span>
                     </li>
                 @endforeach

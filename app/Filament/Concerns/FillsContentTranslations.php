@@ -30,6 +30,18 @@ trait FillsContentTranslations
         /** @var Model $record */
         $record = $this->getRecord();
 
+        return self::contentTranslationsForForm($record, $data);
+    }
+
+    /**
+     * Nahradí v dátach formulára preložiteľné stĺpce textom v jazyku obsahu.
+     * Použiteľné aj mimo stránok (napr. akcie a opakovače v relation manageroch).
+     *
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    public static function contentTranslationsForForm(Model $record, array $data): array
+    {
         if (method_exists($record, 'getTranslatableAttributes')) {
             foreach ($record->getTranslatableAttributes() as $attribute) {
                 $data[$attribute] = $record->getTranslation($attribute, $record->getLocale(), false) ?: null;

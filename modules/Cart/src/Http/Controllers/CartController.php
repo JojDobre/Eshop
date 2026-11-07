@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Modules\Cart\CartException;
 use Modules\Cart\CartManager;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductVariant;
 
 class CartController extends Controller
 {
@@ -24,21 +25,30 @@ class CartController extends Controller
         $data = $request->validate([
             'product_id' => ['required', 'integer'],
             'quantity' => ['nullable', 'integer', 'min:1', 'max:'.CartManager::MAX_QUANTITY],
+            'variant_id' => ['nullable', 'integer'],
         ]);
 
-        $product = Product::query()->with('prices')->find($data['product_id']);
+        $product = Product::query()->with(['prices', 'variants'])->find($data['product_id']);
 
         if ($product === null) {
             return back()->with('error', __('cart::messages.item_not_found'));
         }
 
         try {
-            $this->cart->add($product, (int) ($data['quantity'] ?? 1));
+            $variant = isset($data['variant_id'])
+                ? ProductVariant::query()->with(['prices', 'values'])->where('product_id', $product->id)->find($data['variant_id'])
+                : null;
+
+            if (isset($data['variant_id']) && $variant === null) {
+                throw new CartException(__('cart::messages.unavailable', ['product' => $product->name]));
+            }
+
+            $this->cart->add($product, (int) ($data['quantity'] ?? 1), $variant);
         } catch (CartException $e) {
             return back()->with('error', $e->getMessage());
         }
 
-        return back()->with('cart_added', $product->name);
+        return back()->with('cart_added', isset($variant) && $variant ? $product->name.' ('.$variant->name().')' : $product->name);
     }
 
     public function update(Request $request, int $item): RedirectResponse

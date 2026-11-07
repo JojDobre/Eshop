@@ -1,4 +1,5 @@
-@php($cardPrice = $product->priceIn())
+@php($cardPrice = $product->priceFrom())
+@php($cardFrom = $product->hasVaryingPrices())
 @php($cardCompareAt = $product->compareAtPriceIn())
 <article class="group relative flex flex-col">
     <div class="relative aspect-square overflow-hidden rounded-xl bg-zinc-100">
@@ -13,7 +14,7 @@
         </h3>
         <div class="mt-1 flex items-baseline justify-between gap-2 text-sm">
             <span>
-                <span class="font-semibold">{{ $cardPrice !== null ? format_price($cardPrice) : '' }}</span>
+                <span class="font-semibold">{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}</span>
                 @if ($cardCompareAt)
                     <del class="ml-1 text-xs text-zinc-500">{{ format_price($cardCompareAt) }}</del>
                 @endif

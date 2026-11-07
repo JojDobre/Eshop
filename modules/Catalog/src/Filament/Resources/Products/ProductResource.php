@@ -22,6 +22,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Text;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -38,7 +39,9 @@ use Modules\Catalog\Filament\Resources\Manufacturers\ManufacturerResource;
 use Modules\Catalog\Filament\Resources\Products\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\ListProducts;
+use Modules\Catalog\Filament\Resources\Products\RelationManagers\OptionsRelationManager;
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\StockMovementsRelationManager;
+use Modules\Catalog\Filament\Resources\Products\RelationManagers\VariantsRelationManager;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Tax\Models\TaxRate;
@@ -137,7 +140,9 @@ class ProductResource extends Resource
                 Section::make($t('section_stock'))->schema([
                     Toggle::make('track_stock')->label($t('track_stock'))->helperText($t('track_stock_help'))->default(true)->live(),
                     TextInput::make('stock_quantity')->label($t('stock_quantity'))->integer()->default(0)
-                        ->visible(fn (Get $get) => (bool) $get('track_stock')),
+                        ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && ! $record?->hasVariants()),
+                    Text::make(__('catalog::admin.variants.stock_on_variants'))
+                        ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && (bool) $record?->hasVariants()),
                     TextInput::make('low_stock_threshold')->label($t('low_stock_threshold'))->helperText($t('low_stock_threshold_help'))
                         ->integer()->minValue(0)->visible(fn (Get $get) => (bool) $get('track_stock')),
                     TextInput::make('weight')->label($t('weight'))->integer()->minValue(0)->suffix('g'),
@@ -199,7 +204,11 @@ class ProductResource extends Resource
 
     public static function getRelations(): array
     {
-        return [StockMovementsRelationManager::class];
+        return [
+            OptionsRelationManager::class,
+            VariantsRelationManager::class,
+            StockMovementsRelationManager::class,
+        ];
     }
 
     public static function getGloballySearchableAttributes(): array

@@ -5,6 +5,7 @@ namespace Modules\Orders\Actions;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\Models\StockMovement;
 use Modules\Catalog\StockService;
 use Modules\Orders\CheckoutException;
@@ -60,7 +61,12 @@ class ChangeOrderStatus
                 continue;
             }
 
-            if ($direction < 0 && $product->stock_quantity < $item->quantity) {
+            $variant = $item->product_variant_id
+                ? ProductVariant::query()->whereKey($item->product_variant_id)->lockForUpdate()->first()
+                : null;
+            $available = $variant?->stock_quantity ?? $product->stock_quantity;
+
+            if ($direction < 0 && $available < $item->quantity) {
                 throw new CheckoutException(__('orders::messages.not_enough_stock_to_restore', ['product' => $item->name]));
             }
 
@@ -69,6 +75,7 @@ class ChangeOrderStatus
                 $direction * $item->quantity,
                 $direction > 0 ? StockMovement::CANCEL : StockMovement::RESTORE,
                 $order->number,
+                variant: $variant,
             );
         }
     }

@@ -150,7 +150,63 @@ class Product extends Model
      */
     public function prices(): HasMany
     {
-        return $this->hasMany(ProductPrice::class);
+        return $this->hasMany(ProductPrice::class)->whereNull('product_variant_id');
+    }
+
+    /**
+     * @return HasMany<ProductOption, $this>
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(ProductOption::class)->orderBy('position')->orderBy('id');
+    }
+
+    /**
+     * @return HasMany<ProductVariant, $this>
+     */
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class)->orderBy('position')->orderBy('id');
+    }
+
+    /**
+     * Má produkt varianty? (Vtedy si zákazník musí vybrať variant a sklad sa sleduje pri variantoch.)
+     */
+    public function hasVariants(): bool
+    {
+        return $this->relationLoaded('variants') ? $this->variants->isNotEmpty() : $this->variants()->exists();
+    }
+
+    /**
+     * Najnižšia cena produktu alebo jeho aktívnych variantov (pre „od X €" vo výpise).
+     */
+    public function priceFrom(?string $currency = null): ?int
+    {
+        $prices = [$this->priceIn($currency)];
+
+        if ($this->hasVariants()) {
+            $variants = $this->variants->where('is_active', true);
+            $variants->loadMissing('prices');
+            $prices = $variants->map(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->priceIn($currency))->all();
+        }
+
+        $prices = array_filter($prices, fn ($price) => $price !== null);
+
+        return $prices === [] ? null : min($prices);
+    }
+
+    /**
+     * Majú varianty rôzne ceny?
+     */
+    public function hasVaryingPrices(?string $currency = null): bool
+    {
+        if (! $this->hasVariants()) {
+            return false;
+        }
+
+        return $this->variants->where('is_active', true)
+            ->map(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->priceIn($currency))
+            ->unique()->count() > 1;
     }
 
     /**
@@ -235,7 +291,10 @@ class Product extends Model
     {
         $previous = $this->prices()->where('currency', $currency)->value('amount');
 
-        $this->prices()->updateOrCreate(['currency' => $currency], ['amount' => $amount, 'compare_at_amount' => $compareAt]);
+        ProductPrice::query()->updateOrCreate(
+            ['product_id' => $this->id, 'product_variant_id' => null, 'currency' => $currency],
+            ['amount' => $amount, 'compare_at_amount' => $compareAt],
+        );
         $this->unsetRelation('prices');
 
         if ($previous === null || (int) $previous !== $amount) {
@@ -279,7 +338,16 @@ class Product extends Model
      */
     public function isAvailable(int $quantity = 1): bool
     {
-        return $this->is_visible && (! $this->track_stock || $this->stock_quantity >= $quantity);
+        if (! $this->is_visible) {
+            return false;
+        }
+
+        // Produkt s variantmi je dostupný, ak je dostupný aspoň jeden variant.
+        if ($this->hasVariants()) {
+            return $this->variants->contains(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->isAvailable($quantity));
+        }
+
+        return ! $this->track_stock || $this->stock_quantity >= $quantity;
     }
 
     /**

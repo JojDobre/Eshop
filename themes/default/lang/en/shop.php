@@ -45,6 +45,8 @@ return [
     'manufacturer' => 'Manufacturer',
     'eu_responsible_person' => 'Responsible person in the EU',
     'safety_information' => 'Safety information',
+    'price_from' => 'from :price',
+    'choose_variant' => 'Choose a variant',
     'price_unavailable' => 'Price on request',
     'in_stock' => 'In stock',
     'in_stock_few' => 'Only :count left in stock',

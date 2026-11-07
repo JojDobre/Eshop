@@ -53,6 +53,6 @@ final class CartSummary
      */
     public function weight(): int
     {
-        return array_sum(array_map(fn (CartLine $line) => ($line->product->weight ?? 0) * $line->quantity, $this->lines));
+        return array_sum(array_map(fn (CartLine $line) => ($line->variant?->weight ?? $line->product->weight ?? 0) * $line->quantity, $this->lines));
     }
 }

@@ -19,7 +19,7 @@ class NotifyAboutLowStock
     {
         try {
             $recipient = app(MailSettings::class)->notificationAddress(app(GeneralSettings::class));
-            Mail::to($recipient)->send(new LowStockNotification($event->product));
+            Mail::to($recipient)->send(new LowStockNotification($event->product, $event->variant));
         } catch (Throwable $e) {
             Log::error('Low stock notification failed.', ['product' => $event->product->id, 'exception' => $e]);
         }

@@ -5,12 +5,15 @@ namespace Modules\Catalog\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductVariant;
 
 class ProductController extends Controller
 {
     public function __invoke(string $slug): View
     {
-        $product = Product::query()->visible()->whereSlug($slug)->with(['prices', 'categories'])->firstOrFail();
+        $product = Product::query()->visible()->whereSlug($slug)
+            ->with(['prices', 'categories', 'taxRate', 'manufacturer', 'options.values', 'variants' => fn ($query) => $query->where('is_active', true)->with(['values', 'prices'])])
+            ->firstOrFail();
         $category = $product->categories->firstWhere('is_visible', true);
 
         $related = $category === null ? collect() : Product::query()->visible()
@@ -23,8 +26,38 @@ class ProductController extends Controller
 
         return view('theme::templates.product', [
             'product' => $product,
+            'variantData' => $product->hasVariants() ? $this->variantData($product) : null,
             'category' => $category,
             'relatedProducts' => $related,
         ]);
+    }
+
+    /**
+     * Údaje pre výber variantu v prehliadači (možnosti, varianty, ceny, sklad, obrázky).
+     *
+     * @return array<string, mixed>
+     */
+    private function variantData(Product $product): array
+    {
+        return [
+            'options' => $product->options->map(fn ($option) => [
+                'id' => $option->id,
+                'name' => $option->name,
+                'values' => $option->values->map(fn ($value) => ['id' => $value->id, 'value' => $value->value, 'color' => $value->color])->values(),
+            ])->values(),
+            'variants' => $product->variants->map(function (ProductVariant $variant) use ($product) {
+                $variant->setRelation('product', $product);
+                $price = $variant->priceIn();
+
+                return [
+                    'id' => $variant->id,
+                    'values' => $variant->values->pluck('id')->values(),
+                    'price' => $price === null ? null : format_price($price),
+                    'available' => $price !== null && $variant->isAvailable(),
+                    'max' => $variant->maxPurchasableQuantity(),
+                    'images' => array_filter($variant->images ?? []) === [] ? null : $variant->imageUrls(),
+                ];
+            })->values(),
+        ];
     }
 }

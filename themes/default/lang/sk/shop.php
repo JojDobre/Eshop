@@ -45,6 +45,8 @@ return [
     'manufacturer' => 'Výrobca',
     'eu_responsible_person' => 'Zodpovedná osoba v EÚ',
     'safety_information' => 'Bezpečnostné informácie',
+    'price_from' => 'od :price',
+    'choose_variant' => 'Vyberte variant',
     'price_unavailable' => 'Cena na vyžiadanie',
     'in_stock' => 'Skladom',
     'in_stock_few' => 'Skladom posledné kusy (:count ks)',

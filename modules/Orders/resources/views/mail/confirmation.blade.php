@@ -8,7 +8,7 @@
 | {{ __('orders::mail.product') }} | {{ __('orders::mail.quantity') }} | {{ __('orders::mail.price') }} |
 |:--|:-:|--:|
 @foreach ($order->items as $item)
-| {{ $item->name }} | {{ $item->quantity }} | {{ $money($item->total) }} |
+| {{ $item->fullName() }} | {{ $item->quantity }} | {{ $money($item->total) }} |
 @endforeach
 | {{ $order->shipping_method_name }} | | {{ $money($order->shipping_price) }} |
 @if ($order->payment_fee > 0)

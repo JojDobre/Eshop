@@ -9,7 +9,7 @@
 | {{ __('orders::mail.product') }} | {{ __('orders::mail.quantity') }} | {{ __('orders::mail.price') }} |
 |:--|:-:|--:|
 @foreach ($order->items as $item)
-| {{ $item->name }} | {{ $item->quantity }} | {{ $money($item->total) }} |
+| {{ $item->fullName() }} | {{ $item->quantity }} | {{ $money($item->total) }} |
 @endforeach
 | **{{ __('orders::mail.total') }}** | | **{{ $money($order->total) }}** |
 </x-mail::table>

@@ -12,7 +12,9 @@ use Modules\Catalog\Models\Product;
  * @property int $id
  * @property int $order_id
  * @property int|null $product_id
+ * @property int|null $product_variant_id
  * @property string $name
+ * @property string|null $variant_name
  * @property string|null $sku
  * @property int $quantity
  * @property int $unit_price
@@ -32,6 +34,14 @@ class OrderItem extends Model
             'total' => 'integer',
             'tax_rate' => 'float',
         ];
+    }
+
+    /**
+     * Názov s variantom, napr. „Tričko – M / červená".
+     */
+    public function fullName(): string
+    {
+        return $this->variant_name ? $this->name.' – '.$this->variant_name : $this->name;
     }
 
     /**

@@ -4,6 +4,7 @@ return [
     'unavailable' => 'Produkt „:product" momentálně nelze koupit.',
     'sold_out' => 'Produkt „:product" je vyprodaný.',
     'not_enough_stock' => 'Produktu „:product" máme skladem pouze :available ks.',
+    'choose_variant' => 'Vyberte si prosím variantu produktu „:product".',
     'item_not_found' => 'Položka se v košíku nenašla.',
     'removed' => 'Položka byla odstraněna z košíku.',
 ];

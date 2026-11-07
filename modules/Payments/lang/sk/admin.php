@@ -10,6 +10,7 @@ return [
         'bank_transfer' => 'Bankový prevod',
         'cash_on_delivery' => 'Dobierka',
         'cash' => 'Platba pri osobnom odbere',
+        'card' => 'Platba kartou online',
     ],
     'description' => 'Popis',
     'description_help' => 'Zobrazí sa zákazníkovi pri výbere platby.',

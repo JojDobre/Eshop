@@ -1,11 +1,11 @@
 {
     "name": "payments",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "title": { "sk": "Platby", "cs": "Platby", "en": "Payments" },
     "description": {
-        "sk": "Spôsoby platby: bankový prevod, dobierka a hotovosť pri osobnom odbere.",
-        "cs": "Způsoby platby: bankovní převod, dobírka a hotovost při osobním odběru.",
-        "en": "Payment methods: bank transfer, cash on delivery and cash on pickup."
+        "sk": "Spôsoby platby: bankový prevod s QR kódom, dobierka, hotovosť pri osobnom odbere a karta cez platobnú bránu.",
+        "cs": "Způsoby platby: bankovní převod s QR kódem, dobírka, hotovost při osobním odběru a karta přes platební bránu.",
+        "en": "Payment methods: bank transfer with QR code, cash on delivery, cash on pickup and card via a payment gateway."
     },
     "provider": "Modules\\Payments\\PaymentsServiceProvider",
     "core": true,

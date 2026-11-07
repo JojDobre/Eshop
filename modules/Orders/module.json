@@ -1,6 +1,6 @@
 {
     "name": "orders",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": {
         "sk": "Objednávky",
         "cs": "Objednávky",
@@ -19,7 +19,7 @@
             "catalog": "^0.3",
             "cart": "^0.2",
             "shipping": "^0.2",
-            "payments": "^0.2",
+            "payments": "^0.3",
             "tax": "^0.3"
         }
     },

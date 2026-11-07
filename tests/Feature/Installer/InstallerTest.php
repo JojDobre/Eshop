@@ -88,7 +88,9 @@ class InstallerTest extends TestCase
         );
 
         $this->assertSame(2, ShippingMethod::count());
-        $this->assertSame(3, PaymentMethod::count());
+        $this->assertSame(4, PaymentMethod::count());
+        // Platba kartou sa zapne až po nastavení platobnej brány.
+        $this->assertFalse(PaymentMethod::query()->where('type', 'card')->firstOrFail()->is_active);
         $this->assertSame(4, Page::count());
         $this->assertSame(8, Product::count());
 

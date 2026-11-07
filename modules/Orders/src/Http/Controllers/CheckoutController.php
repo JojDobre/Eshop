@@ -13,6 +13,7 @@ use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Coupons;
 use Modules\Orders\Http\Requests\CheckoutRequest;
 use Modules\Orders\Models\Coupon;
+use Modules\Orders\Payments\PaymentGateways;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
 use Modules\Storefront\Pages\LegalPages;
@@ -32,7 +33,9 @@ class CheckoutController extends Controller
         $coupon = app(Coupons::class)->forCart($summary);
         $weight = $summary->weight();
         $shippingMethods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight))->values();
-        $paymentMethods = PaymentMethod::query()->active()->with('shippingMethods')->get();
+        $gateways = app(PaymentGateways::class);
+        $paymentMethods = PaymentMethod::query()->active()->with('shippingMethods')->get()
+            ->filter(fn (PaymentMethod $method) => $gateways->supports($method->type))->values();
         $afterDiscount = $summary->subtotal() - ($coupon?->discountFor($summary->subtotal()) ?? 0);
 
         return view('theme::templates.checkout', [
@@ -59,7 +62,7 @@ class CheckoutController extends Controller
         $shipping = $request->shippingMethod();
         $payment = $request->paymentMethod();
 
-        if ($shipping === null || $payment === null || ! $payment->isAvailableFor($shipping) || ! $shipping->isAvailableForWeight($summary->weight())) {
+        if ($shipping === null || $payment === null || ! app(PaymentGateways::class)->supports($payment->type) || ! $payment->isAvailableFor($shipping) || ! $shipping->isAvailableForWeight($summary->weight())) {
             return back()->withInput()->withErrors(['payment_method_id' => __('orders::messages.payment_not_available')]);
         }
 
@@ -78,7 +81,13 @@ class CheckoutController extends Controller
         }
 
         $this->cart->clear();
+        session()->flash('order_placed', true);
 
-        return redirect()->to($order->publicUrl())->with('order_placed', true);
+        // Platba kartou: hneď na platobnú bránu (stránka objednávky ostane ako návrat aj pri zrušení platby).
+        if (app(PaymentGateways::class)->forPayableOrder($order) !== null) {
+            return redirect()->route('orders.pay', $order->token);
+        }
+
+        return redirect()->to($order->publicUrl());
     }
 }

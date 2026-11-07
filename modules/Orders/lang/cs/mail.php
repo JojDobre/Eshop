@@ -5,6 +5,8 @@ return [
     'quantity' => 'Ks',
     'price' => 'Cena',
     'discount' => 'Sleva (:code)',
+    'pay_online' => 'Zaplatit objednávku kartou',
+    'qr_message' => 'Objednávka :number',
     'total' => 'Celkem',
     'confirmation' => [
         'subject' => 'Potvrzení objednávky č. :number',

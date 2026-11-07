@@ -18,8 +18,25 @@
             <p class="mt-3 text-zinc-600">{{ __('theme::shop.order_status') }}: <strong>{{ $order->status->getLabel() }}</strong></p>
         @endif
 
+        @if (session('payment_error'))
+            <p class="mt-6 rounded-xl bg-red-50 p-4 text-sm text-red-800" role="alert">{{ session('payment_error') }}</p>
+        @elseif (session('payment_result') === 'paid')
+            <p class="mt-6 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800" role="status">{{ __('theme::shop.payment_success') }}</p>
+        @elseif (session('payment_result') === 'cancelled')
+            <p class="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-900" role="status">{{ __('theme::shop.payment_cancelled') }}</p>
+        @endif
+
+        @if ($canPayOnline ?? false)
+            <section class="mt-8 flex flex-col gap-4 rounded-2xl border border-zinc-200 p-6 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-sm text-zinc-700">{{ __('theme::shop.payment_waiting') }} <strong>{{ $money($order->total) }}</strong></p>
+                <a href="{{ route('orders.pay', $order->token) }}" class="btn btn-primary px-6 py-3">{{ __('theme::shop.pay_online') }}</a>
+            </section>
+        @endif
+
         @if ($order->payment_type === \Modules\Payments\PaymentType::BankTransfer && ! $order->isPaid() && ! $order->isCancelled())
             <section class="mt-8 rounded-2xl border border-zinc-200 p-6">
+                <div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                <div class="flex-1">
                 <h2 class="font-semibold">{{ __('theme::shop.payment_details') }}</h2>
                 <dl class="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                     @if ($company->iban)
@@ -31,6 +48,14 @@
                     <div><dt class="text-zinc-500">{{ __('theme::shop.variable_symbol') }}</dt><dd class="font-mono font-medium">{{ $order->variableSymbol() }}</dd></div>
                     <div><dt class="text-zinc-500">{{ __('theme::shop.amount') }}</dt><dd class="font-medium">{{ $money($order->total) }}</dd></div>
                 </dl>
+                </div>
+                @if ($paymentQr ?? null)
+                    <figure class="shrink-0 text-center">
+                        <img src="{{ $paymentQr }}" alt="{{ __('theme::shop.pay_by_qr') }}" class="mx-auto size-40 rounded-lg border border-zinc-200 bg-white">
+                        <figcaption class="mt-2 text-xs text-zinc-500">{{ __('theme::shop.pay_by_qr') }}</figcaption>
+                    </figure>
+                @endif
+                </div>
             </section>
         @endif
 

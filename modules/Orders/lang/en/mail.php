@@ -5,6 +5,8 @@ return [
     'quantity' => 'Qty',
     'price' => 'Price',
     'discount' => 'Discount (:code)',
+    'pay_online' => 'Pay the order by card',
+    'qr_message' => 'Order :number',
     'total' => 'Total',
     'confirmation' => [
         'subject' => 'Order confirmation no. :number',

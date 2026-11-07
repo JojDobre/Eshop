@@ -17,6 +17,8 @@ use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Models\Order;
 use Modules\Orders\OrderMailAttachments;
+use Modules\Payments\Qr\PaymentQr;
+use Modules\Payments\Qr\PaymentQrData;
 
 class InvoicesServiceProvider extends ModuleServiceProvider
 {
@@ -58,6 +60,26 @@ class InvoicesServiceProvider extends ModuleServiceProvider
             $proforma = app(IssueInvoice::class)->forOrder($order, InvoiceType::Proforma);
 
             return Attachment::fromData(fn () => app(InvoicePdf::class)->render($proforma), $proforma->fileName())->withMime('application/pdf');
+        });
+
+        // QR kód na platbu na nezaplatených dokladoch.
+        $this->app->make(PaymentQrRegistry::class)->register(function (Invoice $invoice): ?string {
+            $supplier = $invoice->supplier;
+
+            if ($invoice->type === InvoiceType::CreditNote || $invoice->order?->isPaid() || blank($supplier['iban'] ?? null)) {
+                return null;
+            }
+
+            return app(PaymentQr::class)->dataUri(new PaymentQrData(
+                iban: $supplier['iban'],
+                bic: $supplier['swift'] ?? null,
+                amount: $invoice->total,
+                currency: $invoice->currency,
+                variableSymbol: (string) $invoice->variable_symbol,
+                beneficiaryName: (string) ($supplier['name'] ?? ''),
+                message: $invoice->type->getLabel().' '.$invoice->number,
+                dueDate: $invoice->due_at,
+            ));
         });
 
         OrderResource::registerRelationManager(InvoicesRelationManager::class);

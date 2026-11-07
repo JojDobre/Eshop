@@ -52,5 +52,15 @@ class CreateDefaultPaymentMethods
             'currency' => $event->currency,
             'position' => 3,
         ])->shippingMethods()->sync($pickup);
+
+        // Zapne sa po nastavení platobnej brány (napr. Stripe).
+        PaymentMethod::query()->create([
+            'name' => $local(['sk' => 'Platba kartou', 'cs' => 'Platba kartou', 'en' => 'Card payment']),
+            'description' => $local(['sk' => 'Bezpečná platba kartou, Apple Pay alebo Google Pay.', 'cs' => 'Bezpečná platba kartou, Apple Pay nebo Google Pay.', 'en' => 'Secure payment by card, Apple Pay or Google Pay.']),
+            'type' => PaymentType::Card,
+            'currency' => $event->currency,
+            'position' => 0,
+            'is_active' => false,
+        ]);
     }
 }

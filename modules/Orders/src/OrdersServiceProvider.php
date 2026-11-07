@@ -11,6 +11,10 @@ use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Events\OrderStatusChanged;
 use Modules\Orders\Listeners\NotifyCustomerAboutStatus;
 use Modules\Orders\Listeners\SendOrderEmails;
+use Modules\Orders\Models\Order;
+use Modules\Orders\Payments\PaymentGateways;
+use Modules\Payments\PaymentType;
+use Modules\Payments\Qr\PaymentQr;
 use Modules\Shipping\Models\ShippingMethod;
 
 class OrdersServiceProvider extends ModuleServiceProvider
@@ -22,6 +26,7 @@ class OrdersServiceProvider extends ModuleServiceProvider
 
     public function register(): void
     {
+        $this->app->singleton(PaymentGateways::class);
         $this->app->singleton(OrderMailAttachments::class);
     }
 
@@ -35,6 +40,19 @@ class OrdersServiceProvider extends ModuleServiceProvider
         $this->registerEmailTemplates();
 
         // Košík: koľko chýba do dopravy zadarmo (najnižšia hranica zo spôsobov doručenia).
+        // QR kód na platbu prevodom na stránke objednávky.
+        View::composer('theme::templates.order', function (\Illuminate\View\View $view): void {
+            $order = $view->getData()['order'] ?? null;
+            $qr = null;
+
+            if ($order instanceof Order && $order->payment_type === PaymentType::BankTransfer && ! $order->isPaid() && ! $order->isCancelled()) {
+                $data = $order->paymentQrData();
+                $qr = $data ? app(PaymentQr::class)->dataUri($data) : null;
+            }
+
+            $view->with('paymentQr', $qr);
+        });
+
         View::composer('theme::templates.cart', function (\Illuminate\View\View $view): void {
             $threshold = ShippingMethod::query()->active()->whereNotNull('free_from')->where('price', '>', 0)->min('free_from');
             $summary = $view->getData()['summary'] ?? null;

@@ -10,6 +10,7 @@ return [
         'bank_transfer' => 'Bank transfer',
         'cash_on_delivery' => 'Cash on delivery',
         'cash' => 'Pay on pickup',
+        'card' => 'Online card payment',
     ],
     'description' => 'Description',
     'description_help' => 'Shown to the customer when choosing payment.',

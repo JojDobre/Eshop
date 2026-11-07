@@ -2,6 +2,8 @@
 
 namespace Modules\Orders\Models;
 
+use App\Settings\CompanySettings;
+use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +12,7 @@ use Illuminate\Support\Carbon;
 use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 use Modules\Payments\PaymentType;
+use Modules\Payments\Qr\PaymentQrData;
 use Modules\Shipping\ShippingType;
 use Modules\Tax\TaxCalculator;
 
@@ -153,6 +156,28 @@ class Order extends Model
     /**
      * Variabilný symbol pre bankový prevod (číslice z čísla objednávky).
      */
+    /**
+     * Údaje pre QR kód na platbu prevodom (null, ak obchod nemá zadaný účet).
+     */
+    public function paymentQrData(): ?PaymentQrData
+    {
+        $company = app(CompanySettings::class);
+
+        if (blank($company->iban)) {
+            return null;
+        }
+
+        return new PaymentQrData(
+            iban: $company->iban,
+            bic: $company->swift,
+            amount: $this->total,
+            currency: $this->currency,
+            variableSymbol: $this->variableSymbol(),
+            beneficiaryName: $company->company_name ?: app(GeneralSettings::class)->shop_name,
+            message: __('orders::mail.qr_message', ['number' => $this->number], $this->locale),
+        );
+    }
+
     public function variableSymbol(): string
     {
         return substr((string) preg_replace('/\D/', '', $this->number), -10);

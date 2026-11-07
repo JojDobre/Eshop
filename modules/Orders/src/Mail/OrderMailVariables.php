@@ -5,6 +5,7 @@ namespace Modules\Orders\Mail;
 use App\Core\Support\Price;
 use App\Settings\CompanySettings;
 use Modules\Orders\Models\Order;
+use Modules\Orders\Payments\PaymentGateways;
 use Modules\Payments\PaymentType;
 
 /**
@@ -78,6 +79,10 @@ class OrderMailVariables
 
             $lines[] = __('orders::mail.bank.variable_symbol').': **'.$order->variableSymbol().'**';
             $lines[] = __('orders::mail.bank.amount').': **'.$money($order->total).'**';
+        }
+
+        if (app(PaymentGateways::class)->forPayableOrder($order) !== null) {
+            $lines[] = '['.__('orders::mail.pay_online').']('.route('orders.pay', $order->token).')';
         }
 
         if ($order->payment_instructions) {

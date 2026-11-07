@@ -11,7 +11,7 @@
     "core": true,
     "requires": {
         "eshop": "^0.2",
-        "modules": { "orders": "^0.3", "tax": "^0.3" }
+        "modules": { "orders": "^0.4", "tax": "^0.3" }
     },
     "permissions": ["invoices.manage"]
 }

@@ -165,7 +165,9 @@ class ProductVariant extends Model
 
     public function maxPurchasableQuantity(): ?int
     {
-        return $this->product->track_stock ? max(0, $this->stock_quantity) : null;
+        $max = $this->product->track_stock ? max(0, $this->stock_quantity) : null;
+
+        return $this->product->isUnique() ? min(1, $max ?? 1) : $max;
     }
 
     /**

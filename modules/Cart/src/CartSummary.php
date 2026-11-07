@@ -55,4 +55,16 @@ final class CartSummary
     {
         return array_sum(array_map(fn (CartLine $line) => ($line->variant?->weight ?? $line->product->weight ?? 0) * $line->quantity, $this->lines));
     }
+
+    /** Obsahuje košík tovar, ktorý treba doručiť? (Služby a digitálne produkty nie.) */
+    public function requiresShipping(): bool
+    {
+        foreach ($this->lines as $line) {
+            if ($line->product->requiresShipping()) {
+                return true;
+            }
+        }
+
+        return $this->lines === [];
+    }
 }

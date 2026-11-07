@@ -121,6 +121,9 @@
                         <span class="rounded-full bg-primary px-2.5 py-0.5 text-sm font-semibold text-primary-foreground">−{{ (int) round((1 - $price / $compareAt) * 100) }} %</span>
                     @endif
                 </div>
+                @if ($unitPrice = $product->unitPriceIn())
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($unitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</p>
+                @endif
                 @if ($lowest30)
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.lowest_price_30_days', ['price' => format_price($lowest30)]) }}</p>
                 @endif

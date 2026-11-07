@@ -18,6 +18,9 @@
                 @if ($cardCompareAt)
                     <del class="ml-1 text-xs text-zinc-500">{{ format_price($cardCompareAt) }}</del>
                 @endif
+                @if ($cardUnitPrice = $product->unitPriceIn())
+                    <span class="block text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($cardUnitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
+                @endif
             </span>
             @unless ($product->isAvailable())
                 <span class="text-xs text-zinc-500">{{ __('theme::shop.sold_out') }}</span>

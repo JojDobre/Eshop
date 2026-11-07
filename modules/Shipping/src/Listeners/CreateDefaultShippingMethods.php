@@ -14,7 +14,7 @@ class CreateDefaultShippingMethods
 {
     public function handle(EshopInstalled $event): void
     {
-        if (ShippingMethod::query()->exists()) {
+        if (ShippingMethod::query()->where('type', '!=', ShippingType::None)->exists()) {
             return;
         }
 
@@ -41,5 +41,17 @@ class CreateDefaultShippingMethods
             'currency' => $event->currency,
             'position' => 2,
         ]);
+
+        // Ponúkne sa iba košíku bez tovaru na doručenie (služby, digitálne produkty).
+        if (! ShippingMethod::query()->where('type', ShippingType::None)->exists()) {
+            ShippingMethod::query()->create([
+                'name' => $local(['sk' => 'Bez dopravy', 'cs' => 'Bez dopravy', 'en' => 'No shipping']),
+                'description' => $local(['sk' => 'Služba alebo elektronický tovar – nič sa neposiela.', 'cs' => 'Služba nebo elektronické zboží – nic se neposílá.', 'en' => 'A service or electronic goods – nothing is shipped.']),
+                'type' => ShippingType::None,
+                'price' => 0,
+                'currency' => $event->currency,
+                'position' => 99,
+            ]);
+        }
     }
 }

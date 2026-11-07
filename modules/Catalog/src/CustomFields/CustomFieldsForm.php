@@ -19,10 +19,13 @@ class CustomFieldsForm
     /**
      * @return list<Field>
      */
-    public static function components(string $entity): array
+    /**
+     * @param  (\Closure(CustomField): \Closure)|null  $visibility  Pre pole vráti podmienku viditeľnosti (napr. podľa typu produktu).
+     */
+    public static function components(string $entity, ?\Closure $visibility = null): array
     {
         return app(CustomFieldValues::class)->fields($entity)
-            ->map(fn (CustomField $field) => self::component($field))
+            ->map(fn (CustomField $field) => $visibility === null ? self::component($field) : self::component($field)->visible($visibility($field)))
             ->values()
             ->all();
     }

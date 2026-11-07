@@ -38,6 +38,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldsForm;
 use Modules\Catalog\Filament\Resources\Manufacturers\ManufacturerResource;
@@ -49,6 +50,7 @@ use Modules\Catalog\Filament\Resources\Products\RelationManagers\StockMovementsR
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\VariantsRelationManager;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductType;
 use Modules\Tax\Models\TaxRate;
 use UnitEnum;
 
@@ -102,7 +104,12 @@ class ProductResource extends Resource
                         ->toolbarButtons([['bold', 'italic', 'underline', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'table'], ['undo', 'redo']]),
                 ]),
                 Section::make(__('catalog::admin.custom_fields.plural'))
-                    ->schema(fn () => CustomFieldsForm::components(CustomField::PRODUCT))
+                    // Pri zapnutých typoch produktov sa zobrazia iba polia typu (typ bez polí = všetky polia).
+                    ->schema(fn () => CustomFieldsForm::components(CustomField::PRODUCT, fn (CustomField $field) => function (Get $get) use ($field): bool {
+                        $type = CatalogFeatures::enabled('product_types') && $get('product_type_id') ? ProductType::query()->with('customFields')->find($get('product_type_id')) : null;
+
+                        return $type === null || $type->customFields->isEmpty() || $type->customFields->contains('id', $field->id);
+                    }))
                     ->columns(2)
                     ->visible(fn () => CustomField::query()->forEntity(CustomField::PRODUCT)->exists()),
                 Section::make($t('images'))->schema([
@@ -131,6 +138,16 @@ class ProductResource extends Resource
             Group::make()->schema([
                 Section::make()->schema([
                     Toggle::make('is_visible')->label($t('is_visible'))->helperText($t('is_visible_help'))->default(true),
+                    Select::make('product_type_id')->label(__('catalog::admin.product_type.label'))
+                        ->options(fn () => ProductType::query()->ordered()->get()->mapWithKeys(fn (ProductType $type) => [$type->id => $type->name])->all())
+                        ->placeholder(__('catalog::admin.product_type.none'))
+                        ->live()->native(false)
+                        ->visible(fn () => CatalogFeatures::enabled('product_types')),
+                    TextInput::make('unit_amount')->label(__('catalog::admin.product_type.unit_amount'))
+                        ->helperText(__('catalog::admin.product_type.unit_amount_help'))
+                        ->numeric()->minValue(0.0001)
+                        ->suffix(fn (Get $get) => ($type = $get('product_type_id') ? ProductType::find($get('product_type_id')) : null) ? __('catalog::admin.product_type.units.'.$type->unit) : null)
+                        ->visible(fn (Get $get) => CatalogFeatures::enabled('product_types') && $get('product_type_id') && ProductType::find($get('product_type_id'))?->hasUnitPrice()),
                     Select::make('categories')->label($t('categories'))
                         ->relationship('categories', 'id')
                         ->getOptionLabelFromRecordUsing(fn (Category $record) => $record->pathName())

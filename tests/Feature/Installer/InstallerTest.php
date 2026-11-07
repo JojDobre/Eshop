@@ -87,7 +87,8 @@ class InstallerTest extends TestCase
             withDemoData: true,
         );
 
-        $this->assertSame(2, ShippingMethod::count());
+        // Osobný odber, kuriér a „Bez dopravy“ (iba pre služby a digitálny tovar).
+        $this->assertSame(3, ShippingMethod::count());
         $this->assertSame(4, PaymentMethod::count());
         // Platba kartou sa zapne až po nastavení platobnej brány.
         $this->assertFalse(PaymentMethod::query()->where('type', 'card')->firstOrFail()->is_active);

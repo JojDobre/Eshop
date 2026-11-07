@@ -150,6 +150,8 @@ return [
     'returns_complaint_link' => 'Reklamovat zboží',
     'reverse_charge_hint' => 'Firma z jiné země EU s platným DIČ nakupuje bez DPH (přenesení daňové povinnosti). DIČ ověříme v systému VIES.',
     'reverse_charge_applied' => 'Objednávka je bez DPH – přenesení daňové povinnosti (DIČ ověřeno v systému VIES).',
+    'unit_price' => ':price / :unit',
+    'units' => ['kg' => 'kg', 'l' => 'l', 'm' => 'm'],
     'currency' => 'Měna',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatit kartou',

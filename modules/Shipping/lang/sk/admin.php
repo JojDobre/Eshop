@@ -9,6 +9,7 @@ return [
     'types' => [
         'pickup' => 'Osobný odber',
         'delivery' => 'Doručenie na adresu',
+        'none' => 'Bez dopravy (služby, digitálny tovar)',
     ],
     'description' => 'Popis',
     'description_help' => 'Zobrazí sa zákazníkovi pri výbere dopravy.',

@@ -17,6 +17,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldValue;
 use Modules\Catalog\StockService;
@@ -66,6 +67,7 @@ class Product extends Model
             'track_stock' => 'boolean',
             'stock_quantity' => 'integer',
             'weight' => 'integer',
+            'unit_amount' => 'decimal:4',
             'is_visible' => 'boolean',
             'low_stock_threshold' => 'integer',
         ];
@@ -427,7 +429,54 @@ class Product extends Model
      */
     public function maxPurchasableQuantity(): ?int
     {
-        return $this->track_stock ? max(0, $this->stock_quantity) : null;
+        $max = $this->track_stock ? max(0, $this->stock_quantity) : null;
+
+        // Jedinečný kus (napr. zviera) sa dá kúpiť iba raz.
+        return $this->isUnique() ? min(1, $max ?? 1) : $max;
+    }
+
+    /**
+     * Typ produktu (iba ak je funkcia typov zapnutá).
+     *
+     * @return BelongsTo<ProductType, $this>
+     */
+    public function productType(): BelongsTo
+    {
+        return $this->belongsTo(ProductType::class);
+    }
+
+    private function activeType(): ?ProductType
+    {
+        return $this->product_type_id !== null && CatalogFeatures::enabled('product_types') ? $this->productType : null;
+    }
+
+    /** Potrebuje tovar dopravu? (služby a digitálne produkty nie) */
+    public function requiresShipping(): bool
+    {
+        return $this->activeType()?->requires_shipping ?? true;
+    }
+
+    public function isUnique(): bool
+    {
+        return (bool) $this->activeType()?->is_unique;
+    }
+
+    /** Merná jednotka ceny za jednotku (kg, l, m), alebo null. */
+    public function unit(): ?string
+    {
+        $type = $this->activeType();
+
+        return $type !== null && $type->hasUnitPrice() && (float) $this->unit_amount > 0 ? $type->unit : null;
+    }
+
+    /**
+     * Cena za mernú jednotku (napr. za 1 kg) s DPH.
+     */
+    public function unitPriceIn(?string $currency = null): ?int
+    {
+        $price = $this->priceIn($currency);
+
+        return $price === null || $this->unit() === null ? null : (int) round($price / (float) $this->unit_amount);
     }
 
     public function url(): string

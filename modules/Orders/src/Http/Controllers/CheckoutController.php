@@ -6,7 +6,9 @@ use App\Core\Content\ContentLocale;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
 use Modules\Cart\CartManager;
+use Modules\Cart\CartSummary;
 use Modules\Orders\Actions\PlaceOrder;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutTotals;
@@ -16,6 +18,7 @@ use Modules\Orders\Models\Coupon;
 use Modules\Orders\Payments\PaymentGateways;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
+use Modules\Shipping\ShippingType;
 use Modules\Storefront\Pages\LegalPages;
 
 class CheckoutController extends Controller
@@ -32,7 +35,7 @@ class CheckoutController extends Controller
 
         $coupon = app(Coupons::class)->forCart($summary);
         $weight = $summary->weight();
-        $shippingMethods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight))->values();
+        $shippingMethods = self::availableShipping($summary);
         $gateways = app(PaymentGateways::class);
         $paymentMethods = PaymentMethod::query()->active()->with('shippingMethods')->get()
             ->filter(fn (PaymentMethod $method) => $gateways->supports($method->type))->values();
@@ -62,7 +65,8 @@ class CheckoutController extends Controller
         $shipping = $request->shippingMethod();
         $payment = $request->paymentMethod();
 
-        if ($shipping === null || $payment === null || ! app(PaymentGateways::class)->supports($payment->type) || ! $payment->isAvailableFor($shipping) || ! $shipping->isAvailableForWeight($summary->weight())) {
+        if ($shipping === null || $payment === null || ! app(PaymentGateways::class)->supports($payment->type) || ! $payment->isAvailableFor($shipping)
+            || ! self::availableShipping($summary)->contains('id', $shipping->id)) {
             return back()->withInput()->withErrors(['payment_method_id' => __('orders::messages.payment_not_available')]);
         }
 
@@ -89,5 +93,25 @@ class CheckoutController extends Controller
         }
 
         return redirect()->to($order->publicUrl());
+    }
+
+    /**
+     * Doprava pre košík: podľa hmotnosti, a „Bez dopravy“ iba pre košík bez tovaru na doručenie
+     * (služby, digitálne produkty). Ak „Bez dopravy“ nie je, ponúknu sa bežné spôsoby.
+     *
+     * @return Collection<int, ShippingMethod>
+     */
+    public static function availableShipping(CartSummary $summary): Collection
+    {
+        $weight = $summary->weight();
+        $methods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight));
+        $none = $methods->filter(fn (ShippingMethod $method) => $method->type === ShippingType::None);
+        $regular = $methods->reject(fn (ShippingMethod $method) => $method->type === ShippingType::None);
+
+        if (! $summary->requiresShipping() && $none->isNotEmpty()) {
+            return $none->values();
+        }
+
+        return $regular->values();
     }
 }

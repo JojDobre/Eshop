@@ -4,6 +4,7 @@ namespace Modules\Catalog;
 
 use App\Core\Content\TranslatableModels;
 use App\Core\Events\EshopInstalled;
+use App\Core\Features\FeatureToggles;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
@@ -25,6 +26,8 @@ class CatalogServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        CatalogFeatures::register($this->app->make(FeatureToggles::class));
 
         // Preložiteľný obsah (hromadný preklad).
         $this->app->make(TranslatableModels::class)->register(Product::class, fn () => __('catalog::admin.product.plural'));

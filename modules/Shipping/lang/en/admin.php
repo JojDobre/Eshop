@@ -9,6 +9,7 @@ return [
     'types' => [
         'pickup' => 'In-store pickup',
         'delivery' => 'Delivery to address',
+        'none' => 'No shipping (services, digital goods)',
     ],
     'description' => 'Description',
     'description_help' => 'Shown to the customer when choosing shipping.',

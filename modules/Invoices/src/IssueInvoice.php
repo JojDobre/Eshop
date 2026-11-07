@@ -52,7 +52,7 @@ class IssueInvoice
                 'vat_breakdown' => $order->vat_payer ? $order->vatBreakdown() : [],
                 'total' => $order->total,
                 'locale' => $order->locale,
-                'note' => $this->settings->footer,
+                'note' => $this->note($order),
             ]);
         });
     }
@@ -175,5 +175,18 @@ class IssueInvoice
         }
 
         return $lines;
+    }
+
+    /**
+     * Poznámka na doklade: pri prenesení daňovej povinnosti povinný text, potom pätička z nastavení.
+     */
+    private function note(Order $order): ?string
+    {
+        $notes = array_filter([
+            $order->isReverseCharge() ? __('invoices::invoices.reverse_charge', [], $order->locale) : null,
+            $this->settings->footer,
+        ]);
+
+        return $notes === [] ? null : implode("\n", $notes);
     }
 }

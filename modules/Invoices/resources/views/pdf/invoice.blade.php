@@ -159,7 +159,7 @@
 
     <div class="footer">
         {{ $s['name'] }}@if ($s['email']) · {{ $s['email'] }}@endif @if ($s['phone']) · {{ $s['phone'] }}@endif
-        @if ($invoice->note)<br>{{ $invoice->note }}@endif
+        @if ($invoice->note)<br>{!! nl2br(e($invoice->note)) !!}@endif
     </div>
 </body>
 </html>

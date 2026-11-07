@@ -148,6 +148,8 @@ return [
     'returns_question' => 'Potrebujete tovar vrátiť alebo reklamovať?',
     'returns_withdraw_link' => 'Odstúpiť od zmluvy',
     'returns_complaint_link' => 'Reklamovať tovar',
+    'reverse_charge_hint' => 'Firma z inej krajiny EÚ s platným IČ DPH nakupuje bez DPH (prenesenie daňovej povinnosti). IČ DPH overíme v systéme VIES.',
+    'reverse_charge_applied' => 'Objednávka je bez DPH – prenesenie daňovej povinnosti (IČ DPH overené v systéme VIES).',
     'currency' => 'Mena',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatiť kartou',

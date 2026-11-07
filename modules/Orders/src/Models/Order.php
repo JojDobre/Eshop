@@ -16,6 +16,7 @@ use Modules\Payments\PaymentType;
 use Modules\Payments\Qr\PaymentQrData;
 use Modules\Shipping\ShippingType;
 use Modules\Tax\TaxCalculator;
+use Modules\Tax\TaxContext;
 
 /**
  * @property int $id
@@ -144,6 +145,12 @@ class Order extends Model
         }
 
         return TaxCalculator::breakdown($lines);
+    }
+
+    /** Prenesenie daňovej povinnosti (firma z inej krajiny EÚ, bez DPH). */
+    public function isReverseCharge(): bool
+    {
+        return $this->tax_mode === TaxContext::REVERSE_CHARGE;
     }
 
     public function isPaid(): bool

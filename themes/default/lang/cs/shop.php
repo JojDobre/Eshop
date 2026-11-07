@@ -148,6 +148,8 @@ return [
     'returns_question' => 'Potřebujete zboží vrátit nebo reklamovat?',
     'returns_withdraw_link' => 'Odstoupit od smlouvy',
     'returns_complaint_link' => 'Reklamovat zboží',
+    'reverse_charge_hint' => 'Firma z jiné země EU s platným DIČ nakupuje bez DPH (přenesení daňové povinnosti). DIČ ověříme v systému VIES.',
+    'reverse_charge_applied' => 'Objednávka je bez DPH – přenesení daňové povinnosti (DIČ ověřeno v systému VIES).',
     'currency' => 'Měna',
     'language' => 'Jazyk',
     'pay_online' => 'Zaplatit kartou',

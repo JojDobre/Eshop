@@ -65,6 +65,9 @@
                         @include('theme::partials.field', ['name' => 'billing_company_id', 'label' => __('theme::shop.company_id')])
                         @include('theme::partials.field', ['name' => 'billing_tax_id', 'label' => __('theme::shop.tax_id'), 'required' => false])
                         @include('theme::partials.field', ['name' => 'billing_vat_id', 'label' => __('theme::shop.vat_id'), 'required' => false])
+                        @if ($vatPayer)
+                            <p class="text-xs text-zinc-500 sm:col-span-2">{{ __('theme::shop.reverse_charge_hint') }}</p>
+                        @endif
                     </div>
                 </fieldset>
 

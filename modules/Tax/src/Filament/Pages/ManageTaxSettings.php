@@ -5,11 +5,14 @@ namespace Modules\Tax\Filament\Pages;
 use App\Filament\Pages\Settings\BaseSettingsPage;
 use App\Settings\TaxSettings;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Modules\Tax\Actions\FillEuRates;
 
 class ManageTaxSettings extends BaseSettingsPage
 {
@@ -41,6 +44,31 @@ class ManageTaxSettings extends BaseSettingsPage
                 Toggle::make('prices_include_vat')->label($t('prices_include_vat'))->helperText($t('prices_include_vat_help'))
                     ->visible(fn (Get $get) => (bool) $get('vat_payer')),
             ]),
+            Section::make($t('section_eu'))
+                ->description($t('section_eu_help'))
+                ->visible(fn (Get $get) => (bool) $get('vat_payer'))
+                ->schema([
+                    Toggle::make('reverse_charge_enabled')->label($t('reverse_charge'))->helperText($t('reverse_charge_help')),
+                    Toggle::make('oss_enabled')->label($t('oss'))->helperText($t('oss_help'))->live(),
+                    Toggle::make('oss_keep_gross_prices')->label($t('oss_keep_gross'))->helperText($t('oss_keep_gross_help'))
+                        ->visible(fn (Get $get) => (bool) $get('oss_enabled')),
+                ]),
         ]);
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('fillEuRates')
+                ->label(__('tax::admin.settings.fill_eu_rates'))
+                ->icon(Heroicon::OutlinedGlobeEuropeAfrica)
+                ->color('gray')
+                ->requiresConfirmation()
+                ->modalDescription(__('tax::admin.settings.fill_eu_rates_help'))
+                ->action(function (): void {
+                    $count = FillEuRates::run();
+                    Notification::make()->success()->title(__('tax::admin.settings.fill_eu_rates_done', ['count' => $count]))->send();
+                }),
+        ];
     }
 }

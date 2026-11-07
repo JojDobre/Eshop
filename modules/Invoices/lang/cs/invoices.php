@@ -33,4 +33,5 @@ return [
     'paid' => 'Uhrazeno',
     'pay_by_qr' => 'Zaplaťte přes QR kód',
     'discount' => 'Sleva (:code)',
+    'reverse_charge' => 'Přenesení daňové povinnosti – dodání zboží do jiného členského státu osvobozené od daně (čl. 138 směrnice 2006/112/ES).',
 ];

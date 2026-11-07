@@ -24,6 +24,7 @@ class TaxRate extends Model
     protected function casts(): array
     {
         return [
+            'country_rates' => 'array',
             'rate' => 'decimal:2',
             'is_default' => 'boolean',
             'position' => 'integer',
@@ -53,5 +54,19 @@ class TaxRate extends Model
     public function label(): string
     {
         return $this->name.' ('.rtrim(rtrim(number_format($this->percent(), 2, ',', ''), '0'), ',').' %)';
+    }
+
+    /**
+     * Sadzba v krajine (null = sadzba pre krajinu nie je zadaná).
+     */
+    public function rateFor(string $country, string $homeCountry): ?float
+    {
+        if ($country === $homeCountry) {
+            return (float) $this->rate;
+        }
+
+        $rate = $this->country_rates[$country] ?? null;
+
+        return is_numeric($rate) ? (float) $rate : null;
     }
 }

@@ -59,6 +59,10 @@
             </section>
         @endif
 
+        @if ($order->isReverseCharge())
+            <p class="mt-6 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">{{ __('theme::shop.reverse_charge_applied') }}</p>
+        @endif
+
         @if ($order->payment_instructions)
             <p class="mt-6 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">{{ $order->payment_instructions }}</p>
         @endif

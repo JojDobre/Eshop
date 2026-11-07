@@ -96,6 +96,6 @@ return [
         'NOK' => 'kr',
     ],
 
-    'countries' => ['SK', 'CZ', 'AT', 'DE', 'HU', 'PL', 'GB', 'US'],
+    'countries' => ['SK', 'CZ', 'AT', 'DE', 'HU', 'PL', 'BE', 'BG', 'HR', 'CY', 'DK', 'EE', 'FI', 'FR', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'RO', 'SI', 'ES', 'SE', 'GB', 'CH', 'NO', 'UA', 'US'],
 
 ];

@@ -6,6 +6,7 @@ use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -15,6 +16,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Modules\Tax\EuVat;
 use Modules\Tax\Filament\Resources\TaxRates\Pages\ManageTaxRates;
 use Modules\Tax\Models\TaxRate;
 use UnitEnum;
@@ -67,6 +69,17 @@ class TaxRateResource extends Resource
                 TextInput::make('rate')->label($t('rate'))->required()->numeric()->minValue(0)->maxValue(100)->step('0.01')->suffix('%'),
                 TextInput::make('position')->label($t('position'))->integer()->default(0),
                 Toggle::make('is_default')->label($t('is_default'))->helperText($t('is_default_help'))->inline(false),
+            ]),
+            // Sadzby v iných krajinách EÚ (režim OSS).
+            Section::make($t('country_rates'))->description($t('country_rates_help'))->collapsed()->schema([
+                KeyValue::make('country_rates')->hiddenLabel()
+                    ->keyLabel($t('country'))->valueLabel($t('rate'))
+                    ->addActionLabel($t('add_country_rate'))
+                    ->rules(['array'])
+                    ->dehydrateStateUsing(fn (?array $state) => collect($state ?? [])
+                        ->mapWithKeys(fn ($rate, $country) => [strtoupper(trim((string) $country)) => (float) str_replace(',', '.', (string) $rate)])
+                        ->filter(fn ($rate, $country) => EuVat::isMember($country))
+                        ->all()),
             ]),
         ]);
     }

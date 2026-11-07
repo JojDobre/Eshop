@@ -23,6 +23,7 @@ use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
 use Modules\Storefront\Pages\LegalPages;
 use Modules\Tax\TaxCalculator;
+use Modules\Tax\TaxRules;
 
 /**
  * Vytvorí objednávku z košíka: overí dostupnosť, odpíše sklad a uloží kópiu všetkých údajov.
@@ -60,10 +61,15 @@ class PlaceOrder
             $this->reserveStock($cart, $number);
             $coupon = $this->claimCoupon($coupon, $cart);
 
-            $totals = CheckoutTotals::calculate($cart, $shipping, $payment, $coupon);
             $needsAddress = $shipping->type->requiresShippingAddress();
-            // Doprava a platba sa zdaňujú predvolenou (základnou) sadzbou.
-            $serviceRate = $this->tax->effectiveRate(Product::defaultVatRate());
+            // DPH podľa krajiny doručenia (pri osobnom odbere sa tovar predáva v krajine obchodu).
+            $taxContext = app(TaxRules::class)->context(
+                $needsAddress ? ($customer['shipping_country'] ?? null) : null,
+                filled($customer['billing_company'] ?? null),
+                $customer['billing_vat_id'] ?? null,
+            );
+            $totals = CheckoutTotals::calculate($cart, $shipping, $payment, $coupon, $taxContext);
+            $serviceRate = (float) $totals->serviceRate;
 
             $order = Order::query()->create([
                 ...$customer,
@@ -73,6 +79,8 @@ class PlaceOrder
                 ]),
                 'number' => $number,
                 'vat_payer' => $this->tax->isVatPayer(),
+                'tax_mode' => $taxContext->mode,
+                'tax_country' => $taxContext->country,
                 'shipping_tax_rate' => $serviceRate,
                 'payment_tax_rate' => $serviceRate,
                 'token' => Str::random(48),
@@ -100,7 +108,7 @@ class PlaceOrder
                 'ip_address' => $ipAddress,
             ]);
 
-            foreach ($cart->lines as $line) {
+            foreach ($cart->lines as $index => $line) {
                 $order->items()->create([
                     'product_id' => $line->product->id,
                     'product_variant_id' => $line->variant?->id,
@@ -108,9 +116,9 @@ class PlaceOrder
                     'variant_name' => $line->variant?->name(),
                     'sku' => $line->variant?->sku ?? $line->product->sku,
                     'quantity' => $line->quantity,
-                    'unit_price' => (int) $line->unitPrice,
-                    'total' => $line->total(),
-                    'tax_rate' => $this->tax->effectiveRate($line->product->vatRate()),
+                    'unit_price' => $totals->lines[$index]['unit'],
+                    'total' => $totals->lines[$index]['total'],
+                    'tax_rate' => $totals->lines[$index]['rate'],
                 ]);
             }
 

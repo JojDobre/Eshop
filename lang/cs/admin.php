@@ -278,6 +278,13 @@ return [
     ],
 
     'translations' => [
+        'translate_from' => 'Přeložit z jazyka :language',
+        'translate_confirm' => 'Texty v tomto jazyce se nahradí strojovým překladem. Překlad poté zkontrolujte.',
+        'translate_failed' => 'Překlad se nezdařil',
+        'translated' => 'Přeloženo (:count znaků). Zkontrolujte překlad a uložte.',
+        'approve' => 'Schválit překlad',
+        'approved' => 'Překlad je schválen.',
+        'needs_review' => 'ke kontrole',
         'column' => 'Chybí překlad',
         'column_help' => 'Jazyky, ve kterých chybí název',
         'missing' => 'chybí překlad',

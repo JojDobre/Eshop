@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog;
 
+use App\Core\Content\TranslatableModels;
 use App\Core\Events\EshopInstalled;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -24,6 +25,10 @@ class CatalogServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // Preložiteľný obsah (hromadný preklad).
+        $this->app->make(TranslatableModels::class)->register(Product::class, fn () => __('catalog::admin.product.plural'));
+        $this->app->make(TranslatableModels::class)->register(Category::class, fn () => __('catalog::admin.category.plural'));
 
         Event::listen(EshopInstalled::class, SeedDemoCatalog::class);
         Event::listen(StockLow::class, NotifyAboutLowStock::class);

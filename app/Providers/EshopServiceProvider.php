@@ -6,6 +6,7 @@ use App\Core\Content\AlternateUrls;
 use App\Core\Content\ContentLocale;
 use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
+use App\Core\Content\TranslatableModels;
 use App\Core\Eshop;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
@@ -54,6 +55,7 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->scoped(ShopLocales::class);
         $this->app->singleton(LocalizedUrls::class);
         $this->app->scoped(AlternateUrls::class);
+        $this->app->singleton(TranslatableModels::class);
 
         // Mena zákazníka sa nastavuje pre každú požiadavku obchodu (SetStorefrontLocale).
         $this->app->scoped(CurrencyContext::class);

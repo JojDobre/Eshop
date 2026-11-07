@@ -1,0 +1,17 @@
+{
+    "name": "translator",
+    "version": "0.1.0",
+    "title": { "sk": "Strojový preklad", "cs": "Strojový překlad", "en": "Machine translation" },
+    "description": {
+        "sk": "Preklad obsahu cez DeepL alebo Google Translate: tlačidlo Preložiť, hromadný preklad, slovník pojmov a mesačný limit.",
+        "cs": "Překlad obsahu přes DeepL nebo Google Translate: tlačítko Přeložit, hromadný překlad, slovník pojmů a měsíční limit.",
+        "en": "Content translation via DeepL or Google Translate: Translate button, bulk translation, glossary and monthly limit."
+    },
+    "provider": "Modules\\Translator\\TranslatorServiceProvider",
+    "core": false,
+    "enabled": true,
+    "requires": {
+        "eshop": "^0.5"
+    },
+    "permissions": ["translations.manage"]
+}

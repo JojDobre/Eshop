@@ -278,6 +278,13 @@ return [
     ],
 
     'translations' => [
+        'translate_from' => 'Translate from :language',
+        'translate_confirm' => 'Texts in this language will be replaced with a machine translation. Please review it afterwards.',
+        'translate_failed' => 'Translation failed',
+        'translated' => 'Translated (:count characters). Review the translation and save.',
+        'approve' => 'Approve translation',
+        'approved' => 'The translation is approved.',
+        'needs_review' => 'to review',
         'column' => 'Missing translation',
         'column_help' => 'Languages where the name is missing',
         'missing' => 'translation missing',

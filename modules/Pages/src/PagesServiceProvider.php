@@ -2,6 +2,7 @@
 
 namespace Modules\Pages;
 
+use App\Core\Content\TranslatableModels;
 use App\Core\Events\EshopInstalled;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -23,6 +24,9 @@ class PagesServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // Preložiteľný obsah (hromadný preklad).
+        $this->app->make(TranslatableModels::class)->register(Page::class, fn () => __('pages::admin.plural'));
 
         Event::listen(EshopInstalled::class, CreateDefaultPages::class);
 

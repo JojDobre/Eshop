@@ -2,9 +2,11 @@
 
 namespace App\Filament\Concerns;
 
+use App\Core\Content\MachineTranslator;
 use App\Core\Content\ShopLocales;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -84,13 +86,18 @@ trait FillsContentTranslations
         // Popisky sa vyhodnotia pri vykreslení (akcie hlavičky si Filament pamätá od načítania stránky).
         foreach ($locales->enabled() as $locale) {
             $actions[] = Action::make('editLocale_'.$locale)
-                ->label(fn () => $locales->label($locale).($this->translationMissing($locale) ? ' – '.__('admin.translations.missing') : ''))
+                ->label(fn () => $locales->label($locale).match (true) {
+                    $this->translationMissing($locale) => ' – '.__('admin.translations.missing'),
+                    (bool) $this->machineTranslator()?->needsReview($this->getRecord(), $locale) => ' – '.__('admin.translations.needs_review'),
+                    default => '',
+                })
                 ->icon(fn () => $locale === $this->currentEditingLocale() ? Heroicon::Check : null)
                 ->color(fn () => $this->translationMissing($locale) ? 'warning' : 'gray')
                 ->action(fn () => $this->switchEditingLocale($locale));
         }
 
         return [
+            ...$this->machineTranslationActions(),
             ActionGroup::make($actions)
                 ->label(fn () => __('admin.translations.language', ['language' => $locales->label($this->currentEditingLocale())]))
                 ->icon(Heroicon::OutlinedLanguage)
@@ -134,7 +141,64 @@ trait FillsContentTranslations
         $record->save();
         $record->useContentLocale(null);
 
+        // Uložením jazyka v administrácii je strojový preklad skontrolovaný.
+        $this->machineTranslator()?->approve($record, $this->currentEditingLocale());
+
         return $record;
+    }
+
+    /**
+     * Tlačidlá strojového prekladu (iba ak je zapnutý modul Prekladač a upravuje sa iný ako predvolený jazyk).
+     *
+     * @return list<Action>
+     */
+    protected function machineTranslationActions(): array
+    {
+        $translator = $this->machineTranslator();
+
+        if ($translator === null) {
+            return [];
+        }
+
+        $locales = app(ShopLocales::class);
+        $isOtherLocale = fn () => $this->currentEditingLocale() !== $locales->default();
+
+        return [
+            Action::make('machineTranslate')
+                ->label(fn () => __('admin.translations.translate_from', ['language' => $locales->label($locales->default())]))
+                ->icon(Heroicon::OutlinedSparkles)
+                ->color('gray')
+                ->visible(fn () => $isOtherLocale() && $translator->isConfigured())
+                ->requiresConfirmation()
+                ->modalDescription(__('admin.translations.translate_confirm'))
+                ->action(function () use ($translator, $locales): void {
+                    try {
+                        $characters = $translator->translateModel($this->getRecord(), $locales->default(), $this->currentEditingLocale());
+                    } catch (\Throwable $e) {
+                        Notification::make()->danger()->title(__('admin.translations.translate_failed'))->body($e->getMessage())->persistent()->send();
+
+                        return;
+                    }
+
+                    $this->getRecord()->refresh();
+                    $this->fillForm();
+                    Notification::make()->success()->title(__('admin.translations.translated', ['count' => $characters]))->send();
+                }),
+            Action::make('approveTranslation')
+                ->label(__('admin.translations.approve'))
+                ->icon(Heroicon::OutlinedCheckBadge)
+                ->color('warning')
+                ->visible(fn () => $isOtherLocale() && $translator->needsReview($this->getRecord(), $this->currentEditingLocale()))
+                ->action(function () use ($translator): void {
+                    $translator->approve($this->getRecord(), $this->currentEditingLocale());
+                    Notification::make()->success()->title(__('admin.translations.approved'))->send();
+                }),
+        ];
+    }
+
+    private function machineTranslator(): ?MachineTranslator
+    {
+        return app()->bound(MachineTranslator::class) ? app(MachineTranslator::class) : null;
     }
 
     /**

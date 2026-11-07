@@ -5,6 +5,7 @@ namespace Modules\Orders;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Support\CurrencyContext;
 use App\Settings\GeneralSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Mail\Attachment;
@@ -75,14 +76,17 @@ class OrdersServiceProvider extends ModuleServiceProvider
         });
 
         View::composer('theme::templates.cart', function (\Illuminate\View\View $view): void {
-            $threshold = ShippingMethod::query()->active()->whereNotNull('free_from')->where('price', '>', 0)->min('free_from');
             $summary = $view->getData()['summary'] ?? null;
+            $currency = $summary->currency ?? app(CurrencyContext::class)->current();
+            // Najnižšia hranica dopravy zadarmo v mene košíka.
+            $threshold = ShippingMethod::query()->active()->whereNotNull('free_from')->where('price', '>', 0)->get()
+                ->map(fn (ShippingMethod $method) => $method->freeFromIn($currency))->filter()->min();
             $coupon = $summary ? app(Coupons::class)->forCart($summary) : null;
 
             $view->with([
                 'freeShippingFrom' => $threshold === null ? null : (int) $threshold,
                 'coupon' => $coupon,
-                'couponDiscount' => $coupon && $summary ? $coupon->discountFor($summary->subtotal()) : 0,
+                'couponDiscount' => $coupon && $summary ? $coupon->discountFor($summary->subtotal(), $summary->currency) : 0,
                 'couponsEnabled' => true,
             ]);
         });

@@ -36,7 +36,7 @@ class CheckoutController extends Controller
         $gateways = app(PaymentGateways::class);
         $paymentMethods = PaymentMethod::query()->active()->with('shippingMethods')->get()
             ->filter(fn (PaymentMethod $method) => $gateways->supports($method->type))->values();
-        $afterDiscount = $summary->subtotal() - ($coupon?->discountFor($summary->subtotal()) ?? 0);
+        $afterDiscount = $summary->subtotal() - ($coupon?->discountFor($summary->subtotal(), $summary->currency) ?? 0);
 
         return view('theme::templates.checkout', [
             'summary' => $summary,
@@ -47,7 +47,7 @@ class CheckoutController extends Controller
                 $shipping->id => $paymentMethods->filter(fn (PaymentMethod $payment) => $payment->isAvailableFor($shipping))->pluck('id')->values(),
             ]),
             'shippingPrices' => $shippingMethods->mapWithKeys(fn (ShippingMethod $shipping) => [
-                $shipping->id => $coupon?->givesFreeShipping() ? 0 : $shipping->priceFor($afterDiscount, $weight),
+                $shipping->id => $coupon?->givesFreeShipping() ? 0 : $shipping->priceFor($afterDiscount, $weight, $summary->currency),
             ]),
             'totals' => CheckoutTotals::calculate($summary, null, null, $coupon),
             'coupon' => $coupon,

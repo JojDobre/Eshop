@@ -2,6 +2,7 @@
 
 namespace Modules\Payments\Filament\Resources\PaymentMethods;
 
+use App\Core\Support\Currencies;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -79,6 +81,12 @@ class PaymentMethodResource extends Resource
                 Textarea::make('instructions')->label($t('instructions'))->helperText($t('instructions_help'))
                     ->rows(3)->maxLength(1000)->columnSpanFull(),
                 MoneyInput::make('fee')->label($t('fee'))->default(0),
+                // Poplatky v ďalších menách (nepovinné, inak prepočet kurzom).
+                Group::make()
+                    ->visible(fn () => app(Currencies::class)->isMulticurrency())
+                    ->schema(fn () => collect(app(Currencies::class)->enabled())->skip(1)->map(fn (string $code) => MoneyInput::make("currency_fees.{$code}", $code)
+                        ->label(__('admin.currencies.fee_in', ['currency' => $code]))
+                        ->helperText(__('admin.currencies.other_prices_help')))->values()->all()),
                 TextInput::make('position')->label($t('position'))->integer()->default(0)->minValue(0),
                 CheckboxList::make('shippingMethods')->label($t('shipping_methods'))->helperText($t('shipping_methods_help'))
                     ->relationship('shippingMethods', 'id')

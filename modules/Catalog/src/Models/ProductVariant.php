@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Models;
 
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -123,13 +124,22 @@ class ProductVariant extends Model
      */
     public function priceIn(?string $currency = null): ?int
     {
+        $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
 
-        if ($entered === null) {
-            return $this->product->priceIn($currency);
+        if ($entered !== null) {
+            return app(TaxCalculator::class)->grossFromEntered($entered, $this->product->vatRate());
         }
 
-        return app(TaxCalculator::class)->grossFromEntered($entered, $this->product->vatRate());
+        // Vlastná cena variantu v predvolenej mene sa prepočíta kurzom, inak cena produktu.
+        $currencies = app(Currencies::class);
+        $default = $currencies->default();
+
+        if ($currency !== $default && $this->enteredPriceIn($default) !== null && $currencies->hasRate($currency)) {
+            return $currencies->convert((int) $this->priceIn($default), $default, $currency);
+        }
+
+        return $this->product->priceIn($currency);
     }
 
     public function setPrice(string $currency, ?int $amount): void

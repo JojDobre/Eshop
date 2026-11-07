@@ -5,6 +5,7 @@ namespace Modules\Catalog\Models;
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
 use App\Core\Content\LocalizedUrls;
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -273,9 +274,32 @@ class Product extends Model
      */
     public function priceIn(?string $currency = null): ?int
     {
+        $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
 
-        return $entered === null ? null : app(TaxCalculator::class)->grossFromEntered($entered, $this->vatRate());
+        if ($entered !== null) {
+            return app(TaxCalculator::class)->grossFromEntered($entered, $this->vatRate());
+        }
+
+        // Cena v mene chýba: prepočet z predvolenej meny kurzom (so zaokrúhlením meny).
+        return $this->convertedFromDefault(fn (string $default) => $this->priceIn($default), $currency);
+    }
+
+    /**
+     * @param  Closure(string): ?int  $inDefault
+     */
+    private function convertedFromDefault(Closure $inDefault, string $currency): ?int
+    {
+        $currencies = app(Currencies::class);
+        $default = $currencies->default();
+
+        if ($currency === $default || ! $currencies->hasRate($currency)) {
+            return null;
+        }
+
+        $amount = $inDefault($default);
+
+        return $amount === null ? null : $currencies->convert($amount, $default, $currency);
     }
 
     /**
@@ -284,8 +308,17 @@ class Product extends Model
     public function compareAtPriceIn(?string $currency = null): ?int
     {
         $currency ??= app(CurrencyContext::class)->current();
-        $compareAt = $this->prices->firstWhere('currency', $currency)?->compare_at_amount;
+        $row = $this->prices->firstWhere('currency', $currency);
         $price = $this->priceIn($currency);
+
+        if ($row === null) {
+            // Bez ceny v mene: prepočítaná pôvodná cena z predvolenej meny.
+            $gross = $this->convertedFromDefault(fn (string $default) => $this->compareAtPriceIn($default), $currency);
+
+            return $gross !== null && $price !== null && $gross > $price ? $gross : null;
+        }
+
+        $compareAt = $row->compare_at_amount;
 
         if ($compareAt === null || $price === null) {
             return null;
@@ -342,6 +375,16 @@ class Product extends Model
     public function lowestPriceIn30Days(?string $currency = null): ?int
     {
         $currency ??= app(CurrencyContext::class)->current();
+
+        // Bez vlastnej ceny v mene sa história prepočíta z predvolenej meny.
+        if ($this->prices->firstWhere('currency', $currency) === null) {
+            $converted = $this->convertedFromDefault(fn (string $default) => $this->lowestPriceIn30Days($default), $currency);
+
+            if ($converted !== null) {
+                return $converted;
+            }
+        }
+
         $since = now()->subDays(30);
         $history = DB::table('product_price_history')
             ->where('product_id', $this->id)->where('currency', $currency);

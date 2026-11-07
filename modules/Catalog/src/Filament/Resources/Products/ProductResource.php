@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Filament\Resources\Products;
 
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
@@ -21,6 +22,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Text;
@@ -147,6 +149,18 @@ class ProductResource extends Resource
                         ->visible(fn () => app(TaxSettings::class)->vat_payer),
                     TextInput::make('sku')->label($t('sku'))->maxLength(64)->unique(ignoreRecord: true),
                 ]),
+                // Ceny v ďalších menách: nepovinné, inak sa prepočítajú kurzom.
+                Section::make(__('admin.currencies.other_prices'))
+                    ->visible(fn () => app(Currencies::class)->isMulticurrency())
+                    ->collapsible()
+                    ->schema(fn () => collect(app(Currencies::class)->enabled())->skip(1)->map(fn (string $code) => Grid::make(2)->schema([
+                        TextInput::make("other_prices.{$code}.price")->label(__('admin.currencies.price_in', ['currency' => $code]))
+                            ->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($code)
+                            ->placeholder(fn (?Product $record) => ($converted = $record?->priceIn($code)) !== null ? Price::toDecimal($converted, $code) : null)
+                            ->helperText(__('admin.currencies.other_prices_help')),
+                        TextInput::make("other_prices.{$code}.compare_at")->label(__('admin.currencies.compare_at_in', ['currency' => $code]))
+                            ->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($code),
+                    ]))->values()->all()),
                 Section::make($t('section_stock'))->schema([
                     Toggle::make('track_stock')->label($t('track_stock'))->helperText($t('track_stock_help'))->default(true)->live(),
                     TextInput::make('stock_quantity')->label($t('stock_quantity'))->integer()->default(0)

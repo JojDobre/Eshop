@@ -38,6 +38,13 @@ class EditProduct extends EditRecord
         $data['compare_at_price'] = $compareAt === null ? null : Price::toDecimal($compareAt, $currency);
         $data['custom_fields'] = app(CustomFieldValues::class)->get(CustomField::PRODUCT, $product->id);
 
+        foreach ($product->prices->whereNull('product_variant_id')->where('currency', '!=', $currency) as $row) {
+            $data['other_prices'][$row->currency] = [
+                'price' => Price::toDecimal($row->amount, $row->currency),
+                'compare_at' => $row->compare_at_amount === null ? null : Price::toDecimal($row->compare_at_amount, $row->currency),
+            ];
+        }
+
         return $data;
     }
 

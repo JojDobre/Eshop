@@ -6,6 +6,7 @@ use App\Core\Content\AlternateUrls;
 use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Support\Currencies;
 use App\Settings\BrandingSettings;
 use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
@@ -47,6 +48,7 @@ class StorefrontServiceProvider extends ModuleServiceProvider
 
         View::composer('theme::*', function (\Illuminate\View\View $view): void {
             $view->with('shopLocales', $this->app->make(ShopLocales::class));
+            $view->with('shopCurrencies', $this->app->make(Currencies::class));
 
             $view->with([
                 'shop' => app(GeneralSettings::class),

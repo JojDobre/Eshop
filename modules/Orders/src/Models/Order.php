@@ -75,6 +75,7 @@ class Order extends Model
             'payment_type' => PaymentType::class,
             'vat_payer' => 'boolean',
             'legal_consents' => 'array',
+            'exchange_rate' => 'decimal:8',
             'shipping_price' => 'integer',
             'shipping_tax_rate' => 'float',
             'payment_tax_rate' => 'float',

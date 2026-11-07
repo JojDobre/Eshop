@@ -3,6 +3,7 @@
 namespace Modules\Payments\Models;
 
 use App\Core\Content\HasContentTranslations;
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -50,6 +51,7 @@ class PaymentMethod extends Model
         return [
             'type' => PaymentType::class,
             'fee' => 'integer',
+            'currency_fees' => 'array',
             'position' => 'integer',
             'is_active' => 'boolean',
         ];
@@ -77,5 +79,20 @@ class PaymentMethod extends Model
     public function isAvailableFor(ShippingMethod $shipping): bool
     {
         return $this->shippingMethods->isEmpty() || $this->shippingMethods->contains('id', $shipping->id);
+    }
+
+    /**
+     * Poplatok v mene: ručne zadaný, inak prepočítaný kurzom z meny platby.
+     */
+    public function feeIn(?string $currency = null): int
+    {
+        $currency ??= app(CurrencyContext::class)->current();
+        $manual = $this->currency_fees[$currency] ?? null;
+
+        if (is_numeric($manual)) {
+            return (int) $manual;
+        }
+
+        return $this->fee === 0 ? 0 : app(Currencies::class)->convert($this->fee, $this->currency, $currency);
     }
 }

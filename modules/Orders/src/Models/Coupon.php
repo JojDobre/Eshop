@@ -2,6 +2,7 @@
 
 namespace Modules\Orders\Models;
 
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -75,9 +76,8 @@ class Coupon extends Model
             $this->starts_at !== null && $this->starts_at->isFuture() => __('orders::messages.coupon_invalid'),
             $this->ends_at !== null && $this->ends_at->isPast() => __('orders::messages.coupon_expired'),
             $this->usage_limit !== null && $this->used_count >= $this->usage_limit => __('orders::messages.coupon_used_up'),
-            $this->type !== CouponType::Percent && $this->currency !== $currency => __('orders::messages.coupon_invalid'),
-            $this->min_order_amount !== null && $subtotal < $this->min_order_amount => __('orders::messages.coupon_min_order', [
-                'amount' => format_price($this->min_order_amount, $this->currency),
+            $this->min_order_amount !== null && $subtotal < $this->amountIn($this->min_order_amount, $currency) => __('orders::messages.coupon_min_order', [
+                'amount' => format_price($this->amountIn($this->min_order_amount, $currency), $currency),
             ]),
             default => null,
         };
@@ -86,15 +86,23 @@ class Coupon extends Model
     /**
      * Zľava z tovaru (nikdy nie viac ako hodnota tovaru).
      */
-    public function discountFor(int $subtotal): int
+    public function discountFor(int $subtotal, ?string $currency = null): int
     {
         $discount = match ($this->type) {
             CouponType::Percent => (int) round($subtotal * min(100, $this->value) / 100),
-            CouponType::Fixed => $this->value,
+            CouponType::Fixed => $this->amountIn($this->value, $currency ?? app(CurrencyContext::class)->current()),
             CouponType::FreeShipping => 0,
         };
 
         return min($subtotal, $discount);
+    }
+
+    /**
+     * Suma kupónu v mene objednávky (prepočet kurzom, bez zaokrúhlenia na „,99“).
+     */
+    public function amountIn(int $amount, string $currency): int
+    {
+        return app(Currencies::class)->convert($amount, $this->currency, $currency, applyRounding: false);
     }
 
     public function givesFreeShipping(): bool

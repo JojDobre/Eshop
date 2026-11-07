@@ -87,6 +87,13 @@ return [
         'CZK' => 'Kč',
         'USD' => '$',
         'GBP' => '£',
+        'PLN' => 'zł',
+        'HUF' => 'Ft',
+        'CHF' => 'CHF',
+        'RON' => 'lei',
+        'SEK' => 'kr',
+        'DKK' => 'kr',
+        'NOK' => 'kr',
     ],
 
     'countries' => ['SK', 'CZ', 'AT', 'DE', 'HU', 'PL', 'GB', 'US'],

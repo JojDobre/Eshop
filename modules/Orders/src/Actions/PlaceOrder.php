@@ -2,6 +2,7 @@
 
 namespace Modules\Orders\Actions;
 
+use App\Core\Support\Currencies;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\Cart\CartSummary;
@@ -79,6 +80,7 @@ class PlaceOrder
                 'payment_status' => PaymentStatus::Unpaid,
                 'locale' => $locale,
                 'currency' => $cart->currency,
+                'exchange_rate' => app(Currencies::class)->rate($cart->currency),
                 'shipping_method_id' => $shipping->id,
                 'shipping_method_name' => $shipping->name,
                 'shipping_type' => $shipping->type,

@@ -2,6 +2,7 @@
 
 namespace Modules\Shipping\Filament\Resources\ShippingMethods;
 
+use App\Core\Support\Currencies;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -89,6 +91,15 @@ class ShippingMethodResource extends Resource
                         MoneyInput::make('price')->label($t('price'))->required(),
                     ])
                     ->columns(2)->defaultItems(0)->addActionLabel($t('add_weight_rate'))->columnSpanFull(),
+                // Ceny v ďalších menách (nepovinné, inak prepočet kurzom).
+                Fieldset::make(__('admin.currencies.other_prices'))
+                    ->visible(fn () => app(Currencies::class)->isMulticurrency())
+                    ->columnSpanFull()
+                    ->schema(fn () => collect(app(Currencies::class)->enabled())->skip(1)->flatMap(fn (string $code) => [
+                        MoneyInput::make("currency_prices.{$code}.price", $code)->label(__('admin.currencies.price_in', ['currency' => $code]))
+                            ->helperText(__('admin.currencies.other_prices_help')),
+                        MoneyInput::make("currency_prices.{$code}.free_from", $code)->label(__('admin.currencies.free_from_in', ['currency' => $code])),
+                    ])->values()->all()),
                 TextInput::make('position')->label($t('position'))->integer()->default(0)->minValue(0),
                 Toggle::make('is_active')->label($t('is_active'))->default(true)->inline(false),
             ]),

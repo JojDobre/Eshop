@@ -27,14 +27,14 @@ final class CheckoutTotals
     public static function calculate(CartSummary $cart, ?ShippingMethod $shipping, ?PaymentMethod $payment, ?Coupon $coupon = null): self
     {
         $subtotal = $cart->subtotal();
-        $discount = $coupon?->discountFor($subtotal) ?? 0;
+        $discount = $coupon?->discountFor($subtotal, $cart->currency) ?? 0;
         // Doprava zadarmo „od sumy" sa posudzuje podľa sumy po zľave.
-        $shippingPrice = $coupon?->givesFreeShipping() ? 0 : ($shipping?->priceFor($subtotal - $discount, $cart->weight()) ?? 0);
+        $shippingPrice = $coupon?->givesFreeShipping() ? 0 : ($shipping?->priceFor($subtotal - $discount, $cart->weight(), $cart->currency) ?? 0);
 
         return new self(
             subtotal: $subtotal,
             shipping: $shippingPrice,
-            paymentFee: $payment?->fee ?? 0,
+            paymentFee: $payment?->feeIn($cart->currency) ?? 0,
             currency: $cart->currency,
             discount: $discount,
             coupon: $coupon,

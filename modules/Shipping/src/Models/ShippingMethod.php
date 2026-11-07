@@ -3,6 +3,7 @@
 namespace Modules\Shipping\Models;
 
 use App\Core\Content\HasContentTranslations;
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -49,6 +50,7 @@ class ShippingMethod extends Model
             'type' => ShippingType::class,
             'price' => 'integer',
             'free_from' => 'integer',
+            'currency_prices' => 'array',
             'weight_rates' => 'array',
             'position' => 'integer',
             'is_active' => 'boolean',
@@ -68,19 +70,43 @@ class ShippingMethod extends Model
      *
      * @param  int  $weight  Hmotnosť objednávky v gramoch.
      */
-    public function priceFor(int $subtotal, int $weight = 0): int
+    public function priceFor(int $subtotal, int $weight = 0, ?string $currency = null): int
     {
-        if ($this->free_from !== null && $subtotal >= $this->free_from) {
+        $currency ??= app(CurrencyContext::class)->current();
+        $freeFrom = $this->freeFromIn($currency);
+
+        if ($freeFrom !== null && $subtotal >= $freeFrom) {
             return 0;
         }
 
         foreach ($this->sortedWeightRates() as $rate) {
             if ($weight <= $rate['up_to']) {
-                return $rate['price'];
+                return $this->convert($rate['price'], $currency);
             }
         }
 
-        return $this->price;
+        return $this->amountIn('price', $this->price, $currency);
+    }
+
+    /** Hranica dopravy zadarmo v mene (null = doprava zadarmo nie je). */
+    public function freeFromIn(?string $currency = null): ?int
+    {
+        return $this->free_from === null ? null : $this->amountIn('free_from', $this->free_from, $currency ?? app(CurrencyContext::class)->current());
+    }
+
+    /**
+     * Suma v mene: ručne zadaná, inak prepočítaná kurzom z meny dopravy.
+     */
+    private function amountIn(string $field, int $amount, string $currency): int
+    {
+        $manual = $this->currency_prices[$currency][$field] ?? null;
+
+        return is_numeric($manual) ? (int) $manual : $this->convert($amount, $currency);
+    }
+
+    private function convert(int $amount, string $currency): int
+    {
+        return $amount === 0 ? 0 : app(Currencies::class)->convert($amount, $this->currency, $currency);
     }
 
     /**
@@ -111,12 +137,14 @@ class ShippingMethod extends Model
     /**
      * Koľko ešte chýba do dopravy zadarmo (null = doprava zadarmo nie je).
      */
-    public function remainingForFreeShipping(int $subtotal): ?int
+    public function remainingForFreeShipping(int $subtotal, ?string $currency = null): ?int
     {
-        if ($this->free_from === null || $this->price === 0) {
+        $freeFrom = $this->freeFromIn($currency);
+
+        if ($freeFrom === null || $this->price === 0) {
             return null;
         }
 
-        return max(0, $this->free_from - $subtotal);
+        return max(0, $freeFrom - $subtotal);
     }
 }

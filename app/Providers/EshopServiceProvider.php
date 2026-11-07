@@ -13,6 +13,7 @@ use App\Core\Installer\RequirementsChecker;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
+use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeManager;
 use App\Settings\GeneralSettings;
@@ -54,7 +55,9 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->singleton(LocalizedUrls::class);
         $this->app->scoped(AlternateUrls::class);
 
-        $this->app->singleton(CurrencyContext::class);
+        // Mena zákazníka sa nastavuje pre každú požiadavku obchodu (SetStorefrontLocale).
+        $this->app->scoped(CurrencyContext::class);
+        $this->app->scoped(Currencies::class);
 
         $this->app->singleton(EmailTemplates::class);
 

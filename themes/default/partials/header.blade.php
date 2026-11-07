@@ -36,6 +36,7 @@
             @endif
 
             @include('theme::partials.language-switcher')
+            @include('theme::partials.currency-switcher')
 
             @if (Route::has('customer.account'))
                 <a href="{{ route('customer.account') }}" class="rounded-md p-2 text-zinc-700 hover:bg-zinc-100" aria-label="{{ empty($customer) ? __('theme::account.login') : __('theme::account.title') }}">

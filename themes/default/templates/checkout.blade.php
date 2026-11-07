@@ -16,7 +16,7 @@
         'availability' => $paymentAvailability,
         'shippingPrices' => $shippingPrices,
         'needsAddress' => $shippingMethods->mapWithKeys(fn ($method) => [$method->id => $method->type->requiresShippingAddress()]),
-        'fees' => $paymentMethods->mapWithKeys(fn ($method) => [$method->id => $method->fee]),
+        'fees' => $paymentMethods->mapWithKeys(fn ($method) => [$method->id => $method->feeIn($summary->currency)]),
         'locale' => str_replace('_', '-', app()->getLocale()),
         'currency' => $summary->currency,
     ];
@@ -113,7 +113,7 @@
                             <span class="flex-1">
                                 <span class="flex justify-between gap-4 font-medium">
                                     <span>{{ $method->name }}</span>
-                                    <span>{{ $method->fee > 0 ? format_price($method->fee) : __('theme::shop.free') }}</span>
+                                    <span>{{ $method->feeIn($summary->currency) > 0 ? format_price($method->feeIn($summary->currency)) : __('theme::shop.free') }}</span>
                                 </span>
                                 @if ($method->description)
                                     <span class="mt-0.5 block text-sm text-zinc-500">{{ $method->description }}</span>

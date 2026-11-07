@@ -2,7 +2,9 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+    // Relatívne cesty v CSS (písma, obrázky), aby fungovali aj v podadresári, napr. mojweb.sk/obchod.
+    base: command === 'build' ? './' : undefined,
     plugins: [
         laravel({
             input: [
@@ -23,4 +25,4 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
-});
+}));

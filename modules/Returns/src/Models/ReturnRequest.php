@@ -23,6 +23,9 @@ use Modules\Returns\ReturnType;
  * @property Carbon $deadline_at
  * @property string|null $resolution
  * @property Carbon|null $resolved_at
+ * @property string|null $outcome
+ * @property int|null $refund_amount
+ * @property int|null $credit_note_id
  * @property-read Order $order
  */
 class ReturnRequest extends Model

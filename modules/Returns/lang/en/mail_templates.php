@@ -46,4 +46,9 @@ the status of your **{request_type}** no. {request_number} has changed to **{req
 Kind regards\\
 {shop_name}',
     ],
+    'deadline_warning' => [
+        'label' => 'Complaint deadline warning',
+        'subject' => 'Request deadlines are approaching',
+        'body' => "The statutory deadline is approaching for these requests:\n\n{requests}\n\nResolve them in the admin: {admin_url}",
+    ],
 ];

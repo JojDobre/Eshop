@@ -69,4 +69,22 @@ class ReturnRequestController extends Controller
 
         return $order;
     }
+
+    public function lookup(): View
+    {
+        return view('returns::lookup');
+    }
+
+    public function find(Request $request): RedirectResponse
+    {
+        $data = $request->validate(['number' => ['required', 'string', 'max:32'], 'email' => ['required', 'email', 'max:255']]);
+        $order = Order::query()->where('number', trim($data['number']))
+            ->where('email', mb_strtolower(trim($data['email'])))->first();
+
+        if ($order === null) {
+            return back()->withInput()->withErrors(['number' => __('returns::returns.lookup_not_found')]);
+        }
+
+        return redirect()->route('returns.create', $order->token);
+    }
 }

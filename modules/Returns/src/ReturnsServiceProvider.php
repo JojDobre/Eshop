@@ -2,9 +2,11 @@
 
 namespace Modules\Returns;
 
+use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\View;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Models\Order;
@@ -29,6 +31,14 @@ class ReturnsServiceProvider extends ModuleServiceProvider
 
         OrderResource::registerRelationManager(ReturnRequestsRelationManager::class);
 
+        // Upozornenie obchodníka pred uplynutím lehoty na vybavenie (webový cron).
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            $schedule->call(fn () => app(ReturnDeadlines::class)->warn())
+                ->name('returns:deadline-warnings')
+                ->dailyAt('07:15')
+                ->when(fn () => app(Installation::class)->isInstalled());
+        });
+
         // Odkazy na odstúpenie a reklamáciu a stav žiadostí na stránke objednávky.
         View::composer('theme::templates.order', function (\Illuminate\View\View $view): void {
             $order = $view->getData()['order'] ?? null;
@@ -49,6 +59,8 @@ class ReturnsServiceProvider extends ModuleServiceProvider
             ['customer_name', 'request_type', 'request_number', 'order_number', 'request_items', 'deadline', 'order_url', 'shop_name'], sample: $sample));
         $templates->register(new EmailTemplateDefinition('returns.notification', 'returns::mail_templates.notification',
             ['request_type', 'request_number', 'order_number', 'customer_name', 'request_items', 'reason', 'deadline', 'admin_url'], sample: $sample));
+        $templates->register(new EmailTemplateDefinition('returns.deadline_warning', 'returns::mail_templates.deadline_warning',
+            ['requests', 'admin_url', 'shop_name'], canBeDisabled: true, sample: [...$sample, 'requests' => '- R'.now()->format('Y').'00001 – do '.now()->addDays(2)->format('j. n. Y')]));
         $templates->register(new EmailTemplateDefinition('returns.status', 'returns::mail_templates.status',
             ['customer_name', 'request_type', 'request_number', 'request_status', 'resolution', 'order_url', 'shop_name'], canBeDisabled: true, sample: $sample));
     }

@@ -46,4 +46,9 @@ stav žiadosti **{request_type}** č. {request_number} sa zmenil na **{request_s
 S pozdravom\\
 {shop_name}',
     ],
+    'deadline_warning' => [
+        'label' => 'Upozornenie na lehotu reklamácie',
+        'subject' => 'Blíži sa lehota na vybavenie žiadostí',
+        'body' => "Týmto žiadostiam sa blíži zákonná lehota na vybavenie:\n\n{requests}\n\nVybavte ich v administrácii: {admin_url}",
+    ],
 ];

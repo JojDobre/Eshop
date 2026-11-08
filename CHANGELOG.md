@@ -1,5 +1,11 @@
 # Prehľad zmien
 
+## 0.11.0 – Rezervácie, dáta a doklady (krok 4f, v príprave)
+
+- **Reklamácie a odstúpenie:** výsledok vybavenia (oprava, výmena, zľava, vrátenie peňazí, zamietnutie) a vrátená
+  suma, reklamačný protokol v PDF, dobropis jedným klikom, upozornenie e-mailom pred uplynutím lehoty, export
+  prehľadu do CSV, formulár bez účtu (číslo objednávky a e-mail) a informácia o alternatívnom riešení sporov.
+
 ## 0.10.0 – Predaj a marketing (krok 4e)
 
 - **Zákaznícke skupiny a B2B ceny:** skupiny so zľavou, vlastné ceny produktov a variantov pre skupinu

@@ -46,6 +46,9 @@
             @if ($shop->contact_phone)
                 <p class="mt-1"><a href="tel:{{ preg_replace('/\s+/', '', $shop->contact_phone) }}" class="hover:text-zinc-900">{{ $shop->contact_phone }}</a></p>
             @endif
+            @if (Route::has('returns.lookup'))
+                <p class="mt-3"><a href="{{ route('returns.lookup') }}" class="hover:text-zinc-900">{{ __('returns::returns.lookup_title') }}</a></p>
+            @endif
             @if (! empty($newsletterEnabled))
                 <div class="mt-6">@include('marketing::newsletter-form')</div>
             @endif

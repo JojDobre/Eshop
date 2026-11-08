@@ -68,4 +68,5 @@
             </div>
         </form>
     </div>
+    <div class="container-shop max-w-3xl pb-10"><p class="text-sm text-zinc-500">{{ __('returns::returns.adr') }}</p></div>
 @endsection

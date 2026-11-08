@@ -14,3 +14,9 @@
         @endforeach
     </ol>
 </nav>
+@php($crumbs = [[__('theme::shop.home'), route('storefront.home')], ...array_map(fn ($item) => [$item[0], $item[1] ?? url()->current()], $items)])
+<script type="application/ld+json">{!! json_encode([
+    '@'.'context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => array_map(fn ($crumb, $index) => ['@type' => 'ListItem', 'position' => $index + 1, 'name' => $crumb[0], 'item' => $crumb[1]], $crumbs, array_keys($crumbs)),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>

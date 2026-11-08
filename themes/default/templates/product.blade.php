@@ -18,10 +18,14 @@
     $quantityDiscounts = $product->applicableQuantityDiscounts();
     $manufacturer = $product->manufacturer;
     $safetyInfo = $product->safety_info ?: $manufacturer?->safety_info;
+    // SEO šablóny (Nastavenia → SEO), ak produkt nemá vlastný titulok a popis.
+    $seo = \App\Settings\SeoSettings::current();
+    $seoVariables = ['name' => $product->name, 'category' => $category?->name ?? $product->categories->first()?->name, 'shop' => $shop->shop_name,
+        'price' => $price !== null ? format_price($price) : null, 'manufacturer' => $manufacturer?->name];
 @endphp
 
-@section('title', $product->meta_title ?: $product->name)
-@section('meta_description', $product->meta_description ?: ($product->short_description ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160)))
+@section('title', $product->meta_title ?: (\App\Settings\SeoSettings::render($seo?->product_title, $seoVariables) ?? $product->name))
+@section('meta_description', $product->meta_description ?: (\App\Settings\SeoSettings::render($seo?->product_description, $seoVariables) ?: $product->short_description ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160)))
 @section('canonical', $product->url())
 @if ($images)
     @section('og_image', $images[0])

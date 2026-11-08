@@ -24,6 +24,10 @@
 - **XML feedy** pre Heureku, Google Merchant a Facebook/Instagram katalóg (varianty, parametre, EAN, kategórie,
   akciové ceny, jazyk a mena v parametroch, obnova raz za hodinu). Nové pole **EAN** pri produkte.
 - **Meracie kódy** Google Analytics 4, Google Ads a Meta Pixel až po súhlase s cookies, vrátane konverzie nákupu.
+- **Pokročilé SEO:** presmerovania 301 (ručné aj automatické pri zmene adresy produktu, kategórie, stránky
+  či článku, so skracovaním reťazí a počítadlom), šablóny titulku a popisu pre produkty a kategórie,
+  štruktúrované dáta BreadcrumbList, Organization a WebSite s vyhľadávaním, „noindex“ pre filtrované výpisy,
+  doplnkové riadky robots.txt.
 - **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
   dobierka, štítky, sledovanie.
 - **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.

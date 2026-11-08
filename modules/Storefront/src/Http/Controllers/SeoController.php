@@ -5,6 +5,7 @@ namespace Modules\Storefront\Http\Controllers;
 use App\Core\Content\ContentLocale;
 use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
+use App\Settings\SeoSettings;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Storefront\Sitemap\SitemapRegistry;
@@ -48,6 +49,8 @@ class SeoController extends Controller
             'Disallow: /kosik',
             'Disallow: /pokladna',
             'Disallow: /objednavka',
+            'Disallow: /porovnanie',
+            ...array_filter(array_map('trim', explode("\n", (string) SeoSettings::current()?->robots_extra))),
             '',
             'Sitemap: '.route('storefront.sitemap'),
         ];

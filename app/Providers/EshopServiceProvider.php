@@ -29,14 +29,18 @@ use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Core\Themes\ThemePackages;
 use App\Core\Themes\ThemeTranslationLoader;
+use App\Models\Redirect;
 use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
 use Composer\Autoload\ClassLoader;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Translatable\Translatable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 /**
@@ -122,6 +126,30 @@ class EshopServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Presmerovania 301: neexistujúca adresa, pre ktorú je uložené presmerovanie.
+        $this->app->make(ExceptionHandler::class)->renderable(function (NotFoundHttpException $e, Request $request) {
+            if (! $request->isMethod('GET') && ! $request->isMethod('HEAD')) {
+                return null;
+            }
+
+            try {
+                $path = Redirect::normalizePath($request->getRequestUri());
+                $redirect = Redirect::query()->whereIn('from_path', array_unique([$path, strtok($path, '?')]))
+                    ->orderByRaw('length(from_path) desc')->first();
+            } catch (Throwable) {
+                return null;
+            }
+
+            if ($redirect === null) {
+                return null;
+            }
+
+            $redirect->forceFill(['hits' => $redirect->hits + 1, 'last_hit_at' => now()])->saveQuietly();
+            $target = str_starts_with($redirect->to_url, 'http') ? $redirect->to_url : url($redirect->to_url);
+
+            return redirect()->to($target, in_array($redirect->status_code, [301, 302, 307, 308], true) ? $redirect->status_code : 301);
+        });
+
         $this->applyMailSettings();
 
         // Ak obsah nemá preklad v jazyku obchodu (napr. po zmene jazyka), použije sa ktorýkoľvek

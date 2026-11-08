@@ -13,8 +13,25 @@ use Illuminate\Support\Str;
  */
 trait HasLocalizedSlug
 {
+    /** @var array<string, string> Adresy pred zmenou slugu (pre automatické presmerovanie 301). */
+    private array $urlsBeforeSlugChange = [];
+
     public static function bootHasLocalizedSlug(): void
     {
+        // Zmena adresy: stará adresa v každom jazyku sa presmeruje na novú.
+        static::updating(function (self $model): void {
+            if ($model->isDirty('slug') && method_exists($model, 'url') && SlugRedirects::enabled()) {
+                $original = (clone $model)->setRawAttributes($model->getRawOriginal());
+                $model->urlsBeforeSlugChange = SlugRedirects::urls($original);
+            }
+        });
+        static::updated(function (self $model): void {
+            if ($model->urlsBeforeSlugChange !== []) {
+                SlugRedirects::record($model->urlsBeforeSlugChange, SlugRedirects::urls($model));
+                $model->urlsBeforeSlugChange = [];
+            }
+        });
+
         static::saving(function (self $model): void {
             $locales = array_unique([$model->getLocale(), ...array_keys(array_filter($model->getTranslations('name')))]);
 

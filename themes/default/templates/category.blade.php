@@ -1,8 +1,14 @@
 @extends('theme::layouts.app')
 
-@section('title', $category->meta_title ?: $category->name)
-@section('meta_description', $category->meta_description ?: \Illuminate\Support\Str::limit(strip_tags((string) $category->description), 160))
+@php($seo = \App\Settings\SeoSettings::current())
+@php($seoVariables = ['name' => $category->name, 'category' => $category->parent?->name, 'shop' => $shop->shop_name])
+@section('title', $category->meta_title ?: (\App\Settings\SeoSettings::render($seo?->category_title, $seoVariables) ?? $category->name))
+@section('meta_description', $category->meta_description ?: (\App\Settings\SeoSettings::render($seo?->category_description, $seoVariables) ?? \Illuminate\Support\Str::limit(strip_tags((string) $category->description), 160)))
 @section('canonical', $category->url())
+{{-- Filtrovaný alebo zoradený výpis sa neindexuje (stránkovanie áno). --}}
+@if (($seo?->noindex_filtered ?? true) && array_diff(array_keys(request()->query()), ['page']) !== [])
+    @section('noindex', true)
+@endif
 
 @section('content')
     <div class="container-shop py-8">

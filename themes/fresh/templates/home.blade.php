@@ -1,5 +1,17 @@
 @extends('theme::layouts.app')
 
+@push('head')
+    <script type="application/ld+json">{!! json_encode(array_filter([
+        '@'.'context' => 'https://schema.org',
+        '@graph' => [
+            array_filter(['@type' => 'Organization', 'name' => $company->company_name ?: $shop->shop_name, 'url' => route('storefront.home'), 'email' => $shop->contact_email, 'telephone' => $shop->contact_phone]),
+            ['@type' => 'WebSite', 'name' => $shop->shop_name, 'url' => route('storefront.home'), 'potentialAction' => Route::has('catalog.search') ? [
+                '@type' => 'SearchAction', 'target' => route('catalog.search').'?q={search_term_string}', 'query-input' => 'required name=search_term_string',
+            ] : null],
+        ],
+    ]), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+@endpush
+
 @section('content')
     @if ($homeBlocks = \App\Models\BlockLayout::blocksFor(\App\Models\BlockLayout::HOME))
         {!! render_blocks($homeBlocks) !!}

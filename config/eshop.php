@@ -101,4 +101,18 @@ return [
 
     'countries' => ['SK', 'CZ', 'AT', 'DE', 'HU', 'PL', 'BE', 'BG', 'HR', 'CY', 'DK', 'EE', 'FI', 'FR', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'RO', 'SI', 'ES', 'SE', 'GB', 'CH', 'NO', 'UA', 'US'],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Bezpečnosť
+    |--------------------------------------------------------------------------
+    |
+    | hsts – na HTTPS posielať hlavičku Strict-Transport-Security (prehliadač potom
+    |        obchod otvára iba cez HTTPS). Vypnite, ak HTTPS ešte nie je spoľahlivé.
+    |
+    */
+
+    'security' => [
+        'hsts' => (bool) env('ESHOP_HSTS', true),
+    ],
+
 ];

@@ -80,7 +80,7 @@ class DataImportPage extends Page implements HasSchemas
                     ->options(collect(app(Importers::class)->all())->map(fn ($importer) => $importer->label())->all()),
                 FileUpload::make('file')->label($t('file'))->required()->disk('local')->directory('imports')->visibility('private')
                     ->acceptedFileTypes(['text/csv', 'text/plain', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])
-                    ->maxSize(51200)->preserveFilenames(),
+                    ->maxSize(51200)->storeFileNamesIn('file_name'),
             ]),
         ]);
     }
@@ -109,7 +109,7 @@ class DataImportPage extends Page implements HasSchemas
             'user_id' => auth()->id(),
             'entity' => $importer->key(),
             'file_path' => $state['file'],
-            'file_name' => basename($state['file']),
+            'file_name' => basename((string) ($state['file_name'] ?? $state['file'])),
             'total_rows' => SpreadsheetReader::count($path),
             'mapping' => $runner->guessMapping($importer, $header),
         ]);

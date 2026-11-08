@@ -31,7 +31,7 @@ class ManageMediaFiles extends ManageRecords
                         ->multiple()
                         ->maxFiles(20)
                         ->maxSize(10240)
-                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml', 'application/pdf'])
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'])
                         ->preserveFilenames(false)
                         ->storeFileNamesIn('original_names')
                         ->required(),

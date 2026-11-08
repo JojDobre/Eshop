@@ -12,7 +12,7 @@
             <p class="starter-note">{{ __('theme::starter.note') }}</p>
         @endif
         <h1 class="mt-6 text-4xl font-semibold tracking-tight">{{ $page->name }}</h1>
-        <div class="prose prose-zinc mt-8 max-w-none">{!! $page->content !!}</div>
+        <div class="prose prose-zinc mt-8 max-w-none">{{ safe_html($page->content) }}</div>
         {!! render_blocks($page->blocks) !!}
     </article>
 @endsection

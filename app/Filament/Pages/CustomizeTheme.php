@@ -102,7 +102,7 @@ class CustomizeTheme extends Page implements HasSchemas
             'select' => Select::make($key)->options(collect($definition['options'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all())->selectablePlaceholder(false)->native(false)->live(),
             'toggle' => Toggle::make($key)->live(),
             'number' => TextInput::make($key)->numeric()->live(debounce: 600),
-            'image' => FileUpload::make($key)->disk('public')->directory('theme')->visibility('public')->image()->maxSize(4096)->live(),
+            'image' => FileUpload::make($key)->disk('public')->directory('theme')->visibility('public')->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])->maxSize(4096)->live(),
             default => TextInput::make($key)->maxLength(500)->live(debounce: 600),
         };
 

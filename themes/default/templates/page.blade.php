@@ -16,10 +16,10 @@
                 {{ __('theme::shop.document_version', ['version' => $version->version, 'date' => $version->created_at->translatedFormat('j. n. Y')]) }}
                 <a href="{{ $page->url() }}" class="underline underline-offset-2">{{ __('theme::shop.document_current') }}</a>
             </p>
-            <div class="prose prose-zinc mt-8 max-w-none">{!! $version->content !!}</div>
+            <div class="prose prose-zinc mt-8 max-w-none">{{ safe_html($version->content) }}</div>
         @else
             <h1 class="mt-6 text-3xl font-semibold tracking-tight">{{ $page->name }}</h1>
-            <div class="prose prose-zinc mt-8 max-w-none">{!! $page->content !!}</div>
+            <div class="prose prose-zinc mt-8 max-w-none">{{ safe_html($page->content) }}</div>
         @endisset
     </article>
 

@@ -20,7 +20,7 @@
         <header class="mt-6 max-w-3xl">
             <h1 class="text-3xl font-semibold tracking-tight">{{ $category->name }}</h1>
             @if ($category->description)
-                <div class="prose prose-zinc mt-4 max-w-none text-zinc-600">{!! $category->description !!}</div>
+                <div class="prose prose-zinc mt-4 max-w-none text-zinc-600">{{ safe_html($category->description) }}</div>
             @endif
         </header>
 

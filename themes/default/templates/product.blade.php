@@ -280,7 +280,7 @@
                 @endif
 
                 @if ($product->description)
-                    <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{!! $product->description !!}</div>
+                    <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{{ safe_html($product->description) }}</div>
                 @endif
 
                 @if ($parameters = $product->visibleParameters())

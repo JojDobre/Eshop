@@ -102,7 +102,9 @@ class Themes extends Page
                         Notification::make()->danger()->title($e->getMessage())->send();
                     }
                 }),
+            // Šablóna obsahuje spustiteľný kód (Blade), preto ju nahrá iba hlavný správca.
             Action::make('upload')
+                ->visible(fn (): bool => (bool) auth()->user()?->isSuperAdmin())
                 ->label(__('admin.themes.upload'))
                 ->icon(Heroicon::OutlinedArrowUpTray)
                 ->modalDescription(__('admin.themes.upload_warning'))

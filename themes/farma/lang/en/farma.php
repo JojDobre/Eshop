@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'notice' => 'Shop notice',
+    'notice_until' => 'valid until :date',
+    'notice_more' => 'More',
+    'close' => 'Close',
+    'shop' => 'Shop',
+    'new' => 'New',
+    'last_pieces' => 'Last pieces',
+    'add_to_cart' => 'Add :name to cart',
+    'show_all' => 'Show all',
+    'more' => 'Learn more',
+    'about_more' => 'More about us',
+    'reviews_title' => 'What our customers say',
+    'faq_title' => 'Frequently asked questions',
+    'faq_text' => 'Did not find an answer? Write to us, we are happy to help.',
+    'benefit_packing' => 'Careful packing',
+    'benefit_packing_text' => 'each item separately',
+    'benefit_fresh' => 'Fresh products',
+    'benefit_fresh_text' => 'straight from our farm',
+    'benefit_advice' => 'Happy to help',
+    'benefit_advice_text' => 'guides and support',
+    'benefit_own' => 'Our own production',
+    'benefit_own_text' => 'everything tested',
+];

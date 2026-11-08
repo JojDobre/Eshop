@@ -1,0 +1,95 @@
+/*
+ * Šablóna Farma: štýly Default + súbory tejto šablóny (Tailwind nájde triedy v oboch).
+ * Hlavná farba je farba značky obchodu (--brand-primary), pätička má vlastnú farbu z nastavení.
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource-variable/nunito';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --farma-cream: #faf6ef;
+    --farma-cream-dark: #f3e9da;
+    --farma-soft: color-mix(in srgb, var(--brand-primary) 12%, white);
+    --farma-ink: #1f1d1a;
+    --farma-muted: #8b867d;
+    --farma-line: #ece8e1;
+    --farma-footer: #4f7d3a;
+    --theme-font: 'Nunito Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility bg-cream {
+    background-color: var(--farma-cream);
+}
+
+@utility bg-soft {
+    background-color: var(--farma-soft);
+}
+
+@utility text-muted {
+    color: var(--farma-muted);
+}
+
+@utility border-line {
+    border-color: var(--farma-line);
+}
+
+@utility bg-footer {
+    background-color: var(--farma-footer);
+}
+
+body {
+    color: var(--farma-ink);
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-[1200px] px-4 sm:px-8;
+    }
+
+    /* Tlačidlá v tvare kapsuly, tučnejšie písmo. */
+    .btn {
+        @apply rounded-full px-6 py-3 font-extrabold;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-[var(--farma-line)] bg-white text-[var(--farma-ink)] hover:border-primary;
+    }
+
+    .input {
+        @apply rounded-2xl border-[1.5px] border-[var(--farma-line)] px-4 py-3 shadow-none;
+    }
+
+    .label {
+        @apply font-bold;
+    }
+
+    .farma-link {
+        @apply border-b-2 border-primary pb-0.5 font-extrabold;
+    }
+
+    .farma-h2 {
+        @apply text-2xl font-black tracking-tight sm:text-4xl;
+    }
+}
+
+/* Prvky predvolenej šablóny v štýle Farmy: zaoblené rámy a krémové plochy. */
+main .rounded-xl,
+main .rounded-lg {
+    border-radius: 1.25rem;
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--farma-cream);
+}
+
+main .border-zinc-200,
+main .border-zinc-100 {
+    border-color: var(--farma-line);
+}
+
+main h1 {
+    font-weight: 900;
+    letter-spacing: -0.01em;
+}

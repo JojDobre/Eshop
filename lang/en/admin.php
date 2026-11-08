@@ -426,6 +426,7 @@ return [
             'catalog' => 'Catalog',
             'style' => 'Style',
             'footer' => 'Footer',
+            'home' => 'Home page',
             'colors' => 'Colours',
         ],
         'errors' => [

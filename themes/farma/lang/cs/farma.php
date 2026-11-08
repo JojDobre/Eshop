@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'notice' => 'Oznámení obchodu',
+    'notice_until' => 'platí do :date',
+    'notice_more' => 'Více',
+    'close' => 'Zavřít',
+    'shop' => 'Obchod',
+    'new' => 'Novinka',
+    'last_pieces' => 'Poslední kusy',
+    'add_to_cart' => 'Přidat :name do košíku',
+    'show_all' => 'Zobrazit vše',
+    'more' => 'Zjistit více',
+    'about_more' => 'Více o nás',
+    'reviews_title' => 'Napsali nám zákazníci',
+    'faq_title' => 'Časté dotazy',
+    'faq_text' => 'Nenašli jste odpověď? Napište nám, rádi poradíme.',
+    'benefit_packing' => 'Pečlivé balení',
+    'benefit_packing_text' => 'každý kus zvlášť',
+    'benefit_fresh' => 'Čerstvé produkty',
+    'benefit_fresh_text' => 'přímo z naší farmy',
+    'benefit_advice' => 'Rádi poradíme',
+    'benefit_advice_text' => 'návody a podpora',
+    'benefit_own' => 'Vlastní chov',
+    'benefit_own_text' => 'vše odzkoušené',
+];

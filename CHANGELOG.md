@@ -1,5 +1,14 @@
 # Prehľad zmien
 
+## 1.0.0 – Produkčná verzia (krok 5, v príprave)
+
+- **Šablóna Farma** pre malé obchody s domácimi produktmi: oznam v hornom pruhu (štítok, zľavový kód, odkaz,
+  dátum platnosti, dá sa zavrieť), hlavička s vyhľadávaním a košíkom, úvodný baner, kategórie v dlaždiciach,
+  karty produktov s pridaním do košíka jedným klikom a stavom skladu, baner, pruh s tipom, sekcia o obchode
+  s výhodami, hodnotenia zákazníkov a časté otázky (aj ako štruktúrované dáta). Všetko sa nastavuje
+  v Vzhľad → Prispôsobiť, písmo Nunito je uložené na hostingu.
+- Oprava: farba značky z nastavení sa v šablónach Default a Fresh neprejavila, lebo ju prepísali predvolené štýly.
+
 ## 0.11.0 – Rezervácie, dáta a doklady (krok 4f)
 
 - **Reklamácie a odstúpenie:** výsledok vybavenia (oprava, výmena, zľava, vrátenie peňazí, zamietnutie) a vrátená

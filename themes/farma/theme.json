@@ -1,0 +1,423 @@
+{
+    "name": "farma",
+    "version": "0.1.0",
+    "title": {
+        "sk": "Farma",
+        "cs": "Farma",
+        "en": "Farm"
+    },
+    "description": {
+        "sk": "Priateľská šablóna pre malé obchody s domácimi produktmi: oznam v hornom pruhu, veľký baner, kategórie v dlaždiciach, čisté karty produktov, sekcia o farme, hodnotenia a časté otázky.",
+        "cs": "Přátelská šablona pro malé obchody s domácími produkty: oznámení v horním pruhu, velký banner, kategorie v dlaždicích, čisté karty produktů, sekce o farmě, hodnocení a časté dotazy.",
+        "en": "A friendly theme for small shops with home-made products: top bar notice, large banner, category tiles, clean product cards, about section, reviews and FAQ."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "screenshot": "screenshot.jpg",
+    "requires": {
+        "eshop": "^0.11"
+    },
+    "vite": [
+        "themes/farma/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ],
+    "settings": {
+        "notice_text": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Oznam v hornom pruhu",
+                "cs": "Oznámení v horním pruhu",
+                "en": "Top bar notice"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. akcia alebo dôležitá informácia. Prázdne = pruh sa nezobrazí.",
+                "cs": "Např. akce nebo důležitá informace. Prázdné = pruh se nezobrazí.",
+                "en": "E.g. a sale or important information. Empty = hidden."
+            }
+        },
+        "notice_label": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Štítok oznamu",
+                "cs": "Štítek oznámení",
+                "en": "Notice badge"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. Akcia, Novinka, Dôležité.",
+                "cs": "Např. Akce, Novinka, Důležité.",
+                "en": "E.g. Sale, New, Important."
+            }
+        },
+        "notice_code": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Zľavový kód v ozname",
+                "cs": "Slevový kód v oznámení",
+                "en": "Discount code in the notice"
+            },
+            "default": ""
+        },
+        "notice_link": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Odkaz oznamu",
+                "cs": "Odkaz oznámení",
+                "en": "Notice link"
+            },
+            "default": ""
+        },
+        "notice_until": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Zobrazovať do (RRRR-MM-DD)",
+                "cs": "Zobrazovat do (RRRR-MM-DD)",
+                "en": "Show until (YYYY-MM-DD)"
+            },
+            "default": ""
+        },
+        "header_note": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Informácia vedľa menu",
+                "cs": "Informace vedle menu",
+                "en": "Note next to the menu"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. Doprava zdarma od 50 €.",
+                "cs": "Např. Doprava zdarma od 1 500 Kč.",
+                "en": "E.g. Free shipping over €50."
+            }
+        },
+        "footer_color": {
+            "type": "color",
+            "group": "style",
+            "label": {
+                "sk": "Farba pätičky",
+                "cs": "Barva patičky",
+                "en": "Footer colour"
+            },
+            "default": "#4f7d3a"
+        },
+        "hero_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Úvodný baner",
+                "cs": "Úvodní banner",
+                "en": "Hero banner"
+            },
+            "default": "",
+            "help": {
+                "sk": "Odporúčaná šírka aspoň 1600 px.",
+                "cs": "Doporučená šířka alespoň 1600 px.",
+                "en": "Recommended width at least 1600 px."
+            }
+        },
+        "hero_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odkaz úvodného baneru",
+                "cs": "Odkaz úvodního banneru",
+                "en": "Hero link"
+            },
+            "default": ""
+        },
+        "products_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Nadpis produktov na úvode",
+                "cs": "Nadpis produktů na úvodu",
+                "en": "Home products heading"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = Novinky.",
+                "cs": "Prázdné = Novinky.",
+                "en": "Empty = New arrivals."
+            }
+        },
+        "banner_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Baner – obrázok",
+                "cs": "Banner – obrázek",
+                "en": "Banner – image"
+            },
+            "default": ""
+        },
+        "banner_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Baner – nadpis",
+                "cs": "Banner – nadpis",
+                "en": "Banner – heading"
+            },
+            "default": ""
+        },
+        "banner_text": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Baner – text",
+                "cs": "Banner – text",
+                "en": "Banner – text"
+            },
+            "default": ""
+        },
+        "banner_button": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Baner – tlačidlo",
+                "cs": "Banner – tlačítko",
+                "en": "Banner – button"
+            },
+            "default": ""
+        },
+        "banner_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Baner – odkaz",
+                "cs": "Banner – odkaz",
+                "en": "Banner – link"
+            },
+            "default": ""
+        },
+        "strip_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Pruh s tipom – obrázok",
+                "cs": "Pruh s tipem – obrázek",
+                "en": "Tip strip – image"
+            },
+            "default": ""
+        },
+        "strip_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Pruh s tipom – nadpis",
+                "cs": "Pruh s tipem – nadpis",
+                "en": "Tip strip – heading"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. doplnkový produkt. Prázdne = skryté.",
+                "cs": "Např. doplňkový produkt. Prázdné = skryté.",
+                "en": "E.g. an add-on product. Empty = hidden."
+            }
+        },
+        "strip_text": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Pruh s tipom – text",
+                "cs": "Pruh s tipem – text",
+                "en": "Tip strip – text"
+            },
+            "default": ""
+        },
+        "strip_button": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Pruh s tipom – tlačidlo",
+                "cs": "Pruh s tipem – tlačítko",
+                "en": "Tip strip – button"
+            },
+            "default": ""
+        },
+        "strip_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Pruh s tipom – odkaz",
+                "cs": "Pruh s tipem – odkaz",
+                "en": "Tip strip – link"
+            },
+            "default": ""
+        },
+        "about_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "O nás – obrázok",
+                "cs": "O nás – obrázek",
+                "en": "About – image"
+            },
+            "default": ""
+        },
+        "about_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "O nás – nadpis",
+                "cs": "O nás – nadpis",
+                "en": "About – heading"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = sekcia sa nezobrazí.",
+                "cs": "Prázdné = sekce se nezobrazí.",
+                "en": "Empty = section hidden."
+            }
+        },
+        "about_text": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "O nás – text",
+                "cs": "O nás – text",
+                "en": "About – text"
+            },
+            "default": ""
+        },
+        "about_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "O nás – odkaz",
+                "cs": "O nás – odkaz",
+                "en": "About – link"
+            },
+            "default": ""
+        },
+        "show_benefits": {
+            "type": "toggle",
+            "group": "home",
+            "label": {
+                "sk": "Výhody obchodu v sekcii O nás",
+                "cs": "Výhody obchodu v sekci O nás",
+                "en": "Shop benefits in the About section"
+            },
+            "default": true
+        },
+        "show_reviews": {
+            "type": "toggle",
+            "group": "home",
+            "label": {
+                "sk": "Hodnotenia zákazníkov na úvode",
+                "cs": "Hodnocení zákazníků na úvodu",
+                "en": "Customer reviews on the home page"
+            },
+            "default": true
+        },
+        "faq_1_q": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Častá otázka 1",
+                "cs": "Častý dotaz 1",
+                "en": "FAQ 1 – question"
+            },
+            "default": ""
+        },
+        "faq_1_a": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odpoveď 1",
+                "cs": "Odpověď 1",
+                "en": "FAQ 1 – answer"
+            },
+            "default": ""
+        },
+        "faq_2_q": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Častá otázka 2",
+                "cs": "Častý dotaz 2",
+                "en": "FAQ 2 – question"
+            },
+            "default": ""
+        },
+        "faq_2_a": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odpoveď 2",
+                "cs": "Odpověď 2",
+                "en": "FAQ 2 – answer"
+            },
+            "default": ""
+        },
+        "faq_3_q": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Častá otázka 3",
+                "cs": "Častý dotaz 3",
+                "en": "FAQ 3 – question"
+            },
+            "default": ""
+        },
+        "faq_3_a": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odpoveď 3",
+                "cs": "Odpověď 3",
+                "en": "FAQ 3 – answer"
+            },
+            "default": ""
+        },
+        "faq_4_q": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Častá otázka 4",
+                "cs": "Častý dotaz 4",
+                "en": "FAQ 4 – question"
+            },
+            "default": ""
+        },
+        "faq_4_a": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odpoveď 4",
+                "cs": "Odpověď 4",
+                "en": "FAQ 4 – answer"
+            },
+            "default": ""
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        }
+    }
+}

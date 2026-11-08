@@ -6,9 +6,10 @@
 
 /*
  * Hlavná farba obchodu sa nastavuje v administrácii (Nastavenia → Značka)
- * a do stránky sa vkladá ako premenná --brand-primary.
+ * a do stránky sa vkladá ako premenná --brand-primary. Tu sú len predvolené hodnoty
+ * s nulovou váhou (:where), aby ich farba z nastavení vždy prepísala.
  */
-:root {
+:where(:root) {
     --brand-primary: #4f46e5;
     --brand-primary-foreground: #ffffff;
 }

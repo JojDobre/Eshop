@@ -5,7 +5,7 @@
 
 @source '../../**/*.blade.php';
 
-:root {
+:where(:root) {
     /* Farba lišty kategórií sa nastavuje v Prispôsobení (premenná --fresh-accent). */
     --fresh-accent: #166534;
 }

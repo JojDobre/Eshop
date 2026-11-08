@@ -426,6 +426,7 @@ return [
             'catalog' => 'Katalóg',
             'style' => 'Štýl',
             'footer' => 'Päta',
+            'home' => 'Úvodná stránka',
             'colors' => 'Farby',
         ],
         'errors' => [

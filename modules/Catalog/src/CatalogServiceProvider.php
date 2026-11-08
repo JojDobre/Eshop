@@ -74,8 +74,8 @@ class CatalogServiceProvider extends ModuleServiceProvider
 
         // Kategórie v hlavičke obchodu.
 
-        View::composer('theme::partials.header', function (\Illuminate\View\View $view): void {
-            $view->with('navigationCategories', Category::query()->visible()->roots()->limit(8)->get());
+        View::composer(['theme::partials.header', 'theme::partials.footer'], function (\Illuminate\View\View $view): void {
+            $view->with('navigationCategories', once(fn () => Category::query()->visible()->roots()->limit(8)->get()));
         });
 
         // Úvodná stránka: kategórie a najnovšie produkty.

@@ -13,7 +13,7 @@
     },
     "author": "E-shop",
     "parent": "default",
-    "screenshot": "screenshot.png",
+    "screenshot": "screenshot.jpg",
     "requires": {
         "eshop": "^0.8"
     },

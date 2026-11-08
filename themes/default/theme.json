@@ -162,5 +162,6 @@
     "vite": [
         "themes/default/assets/css/theme.css",
         "themes/default/assets/js/theme.js"
-    ]
+    ],
+    "screenshot": "screenshot.jpg"
 }

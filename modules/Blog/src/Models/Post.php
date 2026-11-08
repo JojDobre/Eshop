@@ -188,13 +188,25 @@ class Post extends Model
         return $this->cover_image ? Storage::disk('public')->url($this->cover_image) : null;
     }
 
+    /**
+     * Bloky v aktuálnom jazyku (chýbajúci preklad = prázdny zoznam).
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function blockList(): array
+    {
+        $blocks = $this->blocks;
+
+        return is_array($blocks) ? array_values(array_filter($blocks, 'is_array')) : [];
+    }
+
     /** Text článku bez značiek (na čas čítania a popis). */
     public function plainText(): string
     {
         $parts = [(string) $this->excerpt];
 
-        foreach ($this->blocks ?? [] as $block) {
-            $data = $block['data'] ?? [];
+        foreach ($this->blockList() as $block) {
+            $data = is_array($block['data'] ?? null) ? $block['data'] : [];
             $parts[] = strip_tags((string) ($data['content'] ?? ''));
             $parts[] = (string) ($data['text'] ?? '');
         }
@@ -221,7 +233,7 @@ class Post extends Model
         $used = [];
         $blocks = [];
 
-        foreach ($this->blocks ?? [] as $block) {
+        foreach ($this->blockList() as $block) {
             if (($block['type'] ?? null) === 'text' && is_string($block['data']['content'] ?? null)) {
                 $block['data']['content'] = preg_replace_callback('/<h([23])([^>]*)>(.*?)<\/h\1>/is', function (array $match) use (&$toc, &$used): string {
                     $text = trim(html_entity_decode(strip_tags($match[3]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));

@@ -138,4 +138,12 @@ class BlogTest extends ShopTestCase
 
         $this->get('/')->assertSee('Z nášho blogu')->assertSee('Novinka z blogu');
     }
+
+    public function test_post_without_blocks_renders(): void
+    {
+        $post = $this->article(['name' => 'Iba perex', 'blocks' => null]);
+
+        $this->get(route('blog.index'))->assertOk()->assertSee('Iba perex');
+        $this->get($post->url())->assertOk();
+    }
 }

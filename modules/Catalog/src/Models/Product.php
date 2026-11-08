@@ -540,10 +540,27 @@ class Product extends Model
     /**
      * Dá sa kúpiť dané množstvo?
      */
+    /** @var array<string, Closure(Product): bool> Ďalšie podmienky dostupnosti z modulov (napr. rezervovaný kus). */
+    private static array $availabilityChecks = [];
+
+    /**
+     * @param  Closure(Product): bool  $check  false = produkt sa teraz nedá kúpiť
+     */
+    public static function addAvailabilityCheck(string $key, Closure $check): void
+    {
+        self::$availabilityChecks[$key] = $check;
+    }
+
     public function isAvailable(int $quantity = 1): bool
     {
         if (! $this->is_visible) {
             return false;
+        }
+
+        foreach (self::$availabilityChecks as $check) {
+            if (! $check($this)) {
+                return false;
+            }
         }
 
         // Balíček je dostupný, ak sú dostupné všetky zložky v potrebnom počte.

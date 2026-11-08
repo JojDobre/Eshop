@@ -271,6 +271,10 @@
                     </form>
                 @endif
 
+                @isset($productReservation)
+                    @include('reservations::product-reservation')
+                @endisset
+
                 @if (! empty($compareEnabled))
                     @include('theme::partials.compare-button', ['product' => $product])
                 @endif

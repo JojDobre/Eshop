@@ -13,6 +13,13 @@
   posielané e-mailom (denne, týždenne, mesačne), ZIP s PDF dokladmi za obdobie. Import produktov (varianty,
   kategórie, ceny, sklad, vlastné polia) a zákazníkov z CSV a XLSX s priradením stĺpcov, náhľadom a kontrolou
   chýb, spracovaný po častiach v rámci časového limitu webhostingu.
+- **Rezervácie** (nový modul, predvolene vypnutý): služby s trvaním, prestávkou po termíne, kapacitou
+  (skupinové termíny) a cenou; zamestnanci a miestnosti s týždenným rozvrhom (viac úsekov za deň), sviatky
+  a dovolenky; výber voľného termínu bez JavaScriptu, ochrana proti dvojitej rezervácii, platba na mieste,
+  záloha alebo celá suma vopred, zrušenie zákazníkom do nastavenej lehoty, pripomienka e-mailom, pridanie do
+  kalendára (.ics) a kalendárový odber pre obchod (iCal). Administrácia so zoznamom, kalendárom (deň, týždeň,
+  mesiac) a ručnou rezerváciou. Rezervácia jedinečného kusu (napr. zviera) na nastavený počet dní – počas nej
+  sa nedá kúpiť.
 
 ## 0.10.0 – Predaj a marketing (krok 4e)
 

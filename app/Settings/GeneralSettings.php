@@ -42,6 +42,9 @@ class GeneralSettings extends Settings
     /** Veľkosť obchodu: small, medium, large alebo custom (vlastný výber funkcií). */
     public string $shop_size;
 
+    /** Veľkosť z inštalátora čaká na použitie (moduly ešte neboli načítané). */
+    public bool $shop_size_pending;
+
     /** Editor súborov šablóny v administrácii (iba hlavný administrátor). */
     public bool $theme_editor_enabled;
 

@@ -63,12 +63,12 @@ class Installer
             return $user;
         });
 
-        // Veľkosť obchodu zapne zodpovedajúce funkcie (chyba jednej funkcie inštaláciu nezastaví).
-        try {
-            app(ShopSize::class)->apply($shop['size'] ?? 'small');
-        } catch (\Throwable $e) {
-            report($e);
-        }
+        // Veľkosť obchodu: funkcie modulov sa zapnú pri prvej požiadavke po inštalácii,
+        // keď sú moduly načítané (pozri EshopServiceProvider::applyPendingShopSize).
+        app(ShopSize::class)->store($shop['size'] ?? 'small');
+        $settings = app(GeneralSettings::class);
+        $settings->shop_size_pending = true;
+        $settings->save();
 
         $this->environment->set([
             'APP_NAME' => $shop['shop_name'],

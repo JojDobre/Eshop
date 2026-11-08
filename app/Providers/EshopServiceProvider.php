@@ -12,6 +12,7 @@ use App\Core\Content\TranslatableModels;
 use App\Core\Eshop;
 use App\Core\Features\CoreFeatures;
 use App\Core\Features\FeatureToggles;
+use App\Core\Features\ShopSize;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
 use App\Core\Installer\RequirementsChecker;
@@ -137,6 +138,13 @@ class EshopServiceProvider extends ServiceProvider
         if ($langPath = $themes->langPath()) {
             $this->loadTranslationsFrom($langPath, 'theme');
         }
+
+        // Veľkosť obchodu z inštalátora sa použije, keď sú načítané všetky moduly.
+        $this->app->booted(function (): void {
+            if ($this->app->make(Installation::class)->isInstalled()) {
+                $this->app->make(ShopSize::class)->applyPending();
+            }
+        });
 
         // Nastavenia šablóny dostupné v každej šablóne ako $themeOptions.
         View::composer('theme::*', fn ($view) => $view->with([

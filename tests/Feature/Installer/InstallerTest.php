@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Installer;
 
+use App\Core\Features\ShopSize;
 use App\Core\Installer\Installation;
 use App\Core\Installer\Installer;
 use App\Settings\CatalogSettings;
@@ -110,8 +111,14 @@ class InstallerTest extends TestCase
             admin: ['name' => 'Admin', 'email' => 'admin@obchod.sk', 'password' => 'Heslo12345'],
         );
 
+        $this->assertTrue(app(GeneralSettings::class)->refresh()->shop_size_pending);
+
+        // Pri ďalšej požiadavke (moduly sú načítané) sa funkcie zapnú.
+        app(ShopSize::class)->applyPending();
+
         $settings = app(CatalogSettings::class)->refresh();
         $this->assertSame('large', app(GeneralSettings::class)->refresh()->shop_size);
+        $this->assertFalse(app(GeneralSettings::class)->shop_size_pending);
         $this->assertTrue($settings->feature_warehouses);
         $this->assertTrue($settings->feature_bundles);
     }

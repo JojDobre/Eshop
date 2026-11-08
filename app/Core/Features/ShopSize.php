@@ -87,6 +87,26 @@ class ShopSize
         return $errors;
     }
 
+    /**
+     * Použije veľkosť zvolenú v inštalátore (počas inštalácie ešte nie sú načítané moduly a ich funkcie).
+     */
+    public function applyPending(): void
+    {
+        try {
+            $settings = app(GeneralSettings::class);
+
+            if (! $settings->shop_size_pending) {
+                return;
+            }
+
+            $settings->shop_size_pending = false;
+            $settings->save();
+            $this->apply($settings->shop_size);
+        } catch (Throwable $e) {
+            report($e);
+        }
+    }
+
     public function store(string $size): void
     {
         $settings = app(GeneralSettings::class);

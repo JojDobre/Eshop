@@ -25,6 +25,8 @@
         <env name="APP_LOCALE" value="sk"/>
         <env name="SETTINGS_CACHE_ENABLED" value="false"/>
         <env name="ESHOP_SAFE_MODE" value="false"/>
+        <!-- Stav modulov pri štarte testov (zapnuté aj voliteľné moduly, ktoré sú predvolene vypnuté, napr. blog). -->
+        <env name="ESHOP_STATE_PATH" value="tests/fixtures/state"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>

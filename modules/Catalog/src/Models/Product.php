@@ -17,6 +17,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Modules\Blog\Models\Post;
 use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldValue;
@@ -536,6 +537,16 @@ class Product extends Model
     public function bundleItems(): HasMany
     {
         return $this->hasMany(BundleItem::class, 'bundle_id')->orderBy('position')->orderBy('id');
+    }
+
+    /**
+     * Súvisiace články blogu (ak je zapnutý modul Blog).
+     *
+     * @return BelongsToMany<Model, $this>
+     */
+    public function blogPosts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'blog_post_product', 'product_id', 'blog_post_id');
     }
 
     /**

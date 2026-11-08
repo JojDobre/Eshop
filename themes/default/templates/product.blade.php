@@ -299,4 +299,5 @@
             </section>
         @endif
     </div>
+    @include('theme::partials.related-posts', ['relatedPosts' => $relatedPosts ?? null])
 @endsection

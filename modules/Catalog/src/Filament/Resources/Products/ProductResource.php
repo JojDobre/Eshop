@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldsForm;
+use Modules\Catalog\Filament\ProductRelations;
 use Modules\Catalog\Filament\Resources\Manufacturers\ManufacturerResource;
 use Modules\Catalog\Filament\Resources\Products\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
@@ -328,6 +329,7 @@ class ProductResource extends Resource
             VariantsRelationManager::class,
             RelationManagers\StockLotsRelationManager::class,
             StockMovementsRelationManager::class,
+            ...ProductRelations::all(),
         ];
     }
 

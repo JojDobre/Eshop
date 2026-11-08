@@ -62,6 +62,27 @@ final class CoreBlocks
             self::hidden(),
         ], icon: 'heroicon-o-check-badge'));
 
+        $types->register(new BlockType('quote', fn () => $t('types.quote'), fn () => [
+            Textarea::make('text')->label($t('quote_text'))->rows(3)->required()->maxLength(1000),
+            TextInput::make('author')->label($t('quote_author'))->maxLength(120),
+            self::hidden(),
+        ], icon: 'heroicon-o-chat-bubble-bottom-center-text'));
+
+        $types->register(new BlockType('gallery', fn () => $t('types.gallery'), fn () => [
+            TextInput::make('title')->label($t('title'))->maxLength(160),
+            self::image('images')->multiple()->reorderable()->maxFiles(24)->required(),
+            Select::make('columns')->label($t('columns'))->options(['2' => '2', '3' => '3', '4' => '4'])->default('3')->selectablePlaceholder(false),
+            self::hidden(),
+        ], icon: 'heroicon-o-squares-plus'));
+
+        $types->register(new BlockType('cta', fn () => $t('types.cta'), fn () => [
+            TextInput::make('title')->label($t('title'))->required()->maxLength(160),
+            Textarea::make('text')->label($t('text'))->rows(2)->maxLength(500),
+            TextInput::make('button_label')->label($t('button_label'))->required()->maxLength(60),
+            TextInput::make('button_url')->label($t('button_url'))->required()->maxLength(255)->rule('regex:/^(https?:\/\/|\/|#)/'),
+            self::hidden(),
+        ], icon: 'heroicon-o-cursor-arrow-rays'));
+
         $types->register(new BlockType('html', fn () => $t('types.html'), fn () => [
             Textarea::make('html')->label($t('html'))->helperText($t('html_help'))->rows(8)->required(),
             self::hidden(),

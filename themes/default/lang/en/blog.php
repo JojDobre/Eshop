@@ -1,0 +1,23 @@
+<?php
+
+return [
+    'title' => 'Blog',
+    'categories' => 'Blog categories',
+    'all_posts' => 'All articles',
+    'latest' => 'Latest articles',
+    'related' => 'Related articles',
+    'more_posts' => 'More articles',
+    'empty' => 'There are no articles yet.',
+    'reading_time' => '{1} :count minute read|[2,*] :count minute read',
+    'toc' => 'Contents',
+    'recommended_products' => 'Recommended products',
+    'preview_notice' => 'Article preview – customers cannot see it yet.',
+    'comments' => 'Comments',
+    'comment_name' => 'Name',
+    'comment_email' => 'E-mail (not published)',
+    'comment_text' => 'Comment',
+    'comment_submit' => 'Post comment',
+    'comment_privacy' => 'Your name and comment are published below the article; your e-mail is only used to reply.',
+    'comment_pending' => 'Thank you, your comment will appear after approval.',
+    'comment_published' => 'Thank you for your comment.',
+];

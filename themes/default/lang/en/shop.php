@@ -182,4 +182,5 @@ return [
     'download' => 'Download',
     'downloads_left' => ':count left',
     'download_valid_until' => 'valid until :date',
+    'video' => 'Video',
 ];

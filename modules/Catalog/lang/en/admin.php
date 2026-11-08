@@ -349,4 +349,19 @@ return [
         'name' => 'Name for the customer',
         'name_help' => 'Defaults to the original file name.',
     ],
+    'blocks' => [
+        'products' => 'Products',
+        'categories' => 'Categories',
+        'source' => 'Which products',
+        'sources' => [
+            'latest' => 'New arrivals',
+            'sale' => 'On sale',
+            'category' => 'From a category',
+            'selected' => 'Hand-picked',
+        ],
+        'selected_products' => 'Products',
+        'limit' => 'Number of products',
+        'selected_categories' => 'Categories',
+        'selected_categories_help' => 'Empty = top-level categories.',
+    ],
 ];

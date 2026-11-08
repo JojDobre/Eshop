@@ -36,7 +36,7 @@ class Page extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'slug', 'content', 'meta_title', 'meta_description'];
+    public array $translatable = ['name', 'slug', 'content', 'meta_title', 'meta_description', 'blocks'];
 
     protected $attributes = [
         'show_in_footer' => true,

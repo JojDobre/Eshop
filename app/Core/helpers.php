@@ -1,8 +1,11 @@
 <?php
 
+use App\Core\Blocks\BlockTypes;
 use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Core\Themes\ThemeManager;
+use App\Models\BlockLayout;
+use Illuminate\Support\HtmlString;
 
 if (! function_exists('format_price')) {
     /**
@@ -25,5 +28,27 @@ if (! function_exists('theme_asset')) {
         $theme ??= app(ThemeManager::class)->active()?->name ?? (string) config('eshop.default_theme');
 
         return route('theme.asset', ['theme' => $theme, 'path' => ltrim($path, '/')]);
+    }
+}
+
+if (! function_exists('render_blocks')) {
+    /**
+     * Vykreslí bloky (napr. z úvodnej stránky, stránky alebo kategórie) šablónou blocks/{typ}.
+     *
+     * @param  list<array<string, mixed>>|null  $blocks
+     */
+    function render_blocks(?array $blocks): HtmlString
+    {
+        return app(BlockTypes::class)->render($blocks);
+    }
+}
+
+if (! function_exists('block_area')) {
+    /**
+     * Vykreslí bloky oblasti šablóny (oblasti definuje theme.json, obsah sa vkladá v administrácii).
+     */
+    function block_area(string $area): HtmlString
+    {
+        return render_blocks(BlockLayout::blocksFor('area:'.$area));
     }
 }

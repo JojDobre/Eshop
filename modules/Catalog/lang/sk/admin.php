@@ -349,4 +349,19 @@ return [
         'name' => 'Názov pre zákazníka',
         'name_help' => 'Predvolene pôvodný názov súboru.',
     ],
+    'blocks' => [
+        'products' => 'Produkty',
+        'categories' => 'Kategórie',
+        'source' => 'Ktoré produkty',
+        'sources' => [
+            'latest' => 'Novinky',
+            'sale' => 'V akcii',
+            'category' => 'Z kategórie',
+            'selected' => 'Vybrané ručne',
+        ],
+        'selected_products' => 'Produkty',
+        'limit' => 'Počet produktov',
+        'selected_categories' => 'Kategórie',
+        'selected_categories_help' => 'Prázdne = hlavné kategórie.',
+    ],
 ];

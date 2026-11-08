@@ -182,4 +182,5 @@ return [
     'download' => 'Stiahnuť',
     'downloads_left' => 'zostáva :count',
     'download_valid_until' => 'platné do :date',
+    'video' => 'Video',
 ];

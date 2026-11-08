@@ -34,7 +34,7 @@ class Category extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'slug', 'description', 'meta_title', 'meta_description'];
+    public array $translatable = ['name', 'slug', 'description', 'meta_title', 'meta_description', 'blocks'];
 
     protected $attributes = [
         'position' => 0,

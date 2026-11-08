@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Core\Blocks\BlockTypes;
+use App\Core\Blocks\CoreBlocks;
 use App\Core\Content\AlternateUrls;
 use App\Core\Content\ContentLocale;
 use App\Core\Content\LocalizedUrls;
@@ -85,6 +87,12 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->scoped(ThemeOptions::class);
         $this->app->singleton(ThemePackages::class, fn ($app) => new ThemePackages($app->make(ThemeManager::class), (string) config('eshop.paths.themes')));
         $this->app->singleton(MenuLinkTypes::class);
+        $this->app->singleton(BlockTypes::class, function () {
+            $types = new BlockTypes;
+            CoreBlocks::register($types);
+
+            return $types;
+        });
         $this->app->scoped(Menus::class);
 
         // Preklady šablóny sa skladajú z celého reťazca šablón (odvodená šablóna prepíše rodiča).

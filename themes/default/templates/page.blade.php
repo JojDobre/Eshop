@@ -22,4 +22,9 @@
             <div class="prose prose-zinc mt-8 max-w-none">{!! $page->content !!}</div>
         @endisset
     </article>
+
+    {{-- Bloky stránky (Obsah → Stránky → Bloky) pod textom. --}}
+    @if (! isset($version) && ! empty($page->blocks))
+        {!! render_blocks($page->blocks) !!}
+    @endif
 @endsection

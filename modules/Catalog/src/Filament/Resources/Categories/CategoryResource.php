@@ -3,6 +3,7 @@
 namespace Modules\Catalog\Filament\Resources\Categories;
 
 use App\Filament\AdminGroup;
+use App\Filament\Forms\BlockBuilder;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
@@ -77,6 +78,7 @@ class CategoryResource extends Resource
                         ->toolbarButtons([['bold', 'italic', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList'], ['undo', 'redo']]),
                 ]),
                 CustomFieldsSection::make(CustomField::CATEGORY),
+                BlockBuilder::section(__('admin.blocks.category_help')),
                 Section::make(__('catalog::admin.seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label(__('catalog::admin.meta_title'))->maxLength(70),
                     Textarea::make('meta_description')->label(__('catalog::admin.meta_description'))->rows(2)->maxLength(170),

@@ -3,6 +3,7 @@
 namespace Modules\Pages\Filament\Resources\Pages;
 
 use App\Filament\AdminGroup;
+use App\Filament\Forms\BlockBuilder;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
@@ -84,6 +85,7 @@ class PageResource extends Resource
                     RichEditor::make('content')->label($t('content'))
                         ->toolbarButtons([['bold', 'italic', 'underline', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'blockquote', 'table'], ['undo', 'redo']]),
                 ]),
+                BlockBuilder::section(__('admin.blocks.page_help')),
                 Section::make($t('seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label($t('meta_title'))->maxLength(70),
                     Textarea::make('meta_description')->label($t('meta_description'))->rows(2)->maxLength(170),

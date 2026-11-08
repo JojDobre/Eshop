@@ -61,6 +61,8 @@
         @yield('content')
     </main>
 
+    {!! block_area('before_footer') !!}
+
     @include('theme::partials.footer')
 
     @include('theme::partials.cookie-bar')

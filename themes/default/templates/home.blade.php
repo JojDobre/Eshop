@@ -1,6 +1,10 @@
 @extends('theme::layouts.app')
 
 @section('content')
+    {{-- Úvodná stránka zložená z blokov (Obsah → Úvodná stránka), inak predvolený obsah šablóny. --}}
+    @if ($homeBlocks = \App\Models\BlockLayout::blocksFor(\App\Models\BlockLayout::HOME))
+        {!! render_blocks($homeBlocks) !!}
+    @else
     <section class="border-b border-zinc-100 bg-gradient-to-b from-zinc-50 to-white">
         <div class="container-shop py-20 sm:py-28">
             <div class="max-w-2xl">
@@ -48,5 +52,6 @@
                 {{ __('theme::shop.coming_soon') }}
             </div>
         </section>
+    @endif
     @endif
 @endsection

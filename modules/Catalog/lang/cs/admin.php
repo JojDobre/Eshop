@@ -349,4 +349,19 @@ return [
         'name' => 'Název pro zákazníka',
         'name_help' => 'Výchozí je původní název souboru.',
     ],
+    'blocks' => [
+        'products' => 'Produkty',
+        'categories' => 'Kategorie',
+        'source' => 'Které produkty',
+        'sources' => [
+            'latest' => 'Novinky',
+            'sale' => 'V akci',
+            'category' => 'Z kategorie',
+            'selected' => 'Vybrané ručně',
+        ],
+        'selected_products' => 'Produkty',
+        'limit' => 'Počet produktů',
+        'selected_categories' => 'Kategorie',
+        'selected_categories_help' => 'Prázdné = hlavní kategorie.',
+    ],
 ];

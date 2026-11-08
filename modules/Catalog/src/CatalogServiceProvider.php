@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog;
 
+use App\Core\Blocks\BlockTypes;
 use App\Core\Content\TranslatableModels;
 use App\Core\Events\EshopInstalled;
 use App\Core\Features\FeatureToggles;
@@ -30,6 +31,8 @@ class CatalogServiceProvider extends ModuleServiceProvider
         parent::boot();
 
         CatalogFeatures::register($this->app->make(FeatureToggles::class));
+
+        CatalogBlocks::register($this->app->make(BlockTypes::class));
 
         // Kategórie a produkty ako cieľ položky ponuky (menu).
         $links = $this->app->make(MenuLinkTypes::class);

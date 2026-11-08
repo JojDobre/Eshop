@@ -151,5 +151,12 @@
             "cs": "Nabídka v patičce",
             "en": "Footer menu"
         }
+    },
+    "areas": {
+        "before_footer": {
+            "sk": "Nad pätou (na všetkých stránkach)",
+            "cs": "Nad patičkou (na všech stránkách)",
+            "en": "Above the footer (on all pages)"
+        }
     }
 }

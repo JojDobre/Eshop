@@ -26,6 +26,13 @@
             </ul>
         @endif
 
+        {{-- Bloky kategórie (Katalóg → Kategórie → Bloky) nad zoznamom produktov, na celú šírku. --}}
+        @if (! empty($category->blocks))
+            </div>
+            {!! render_blocks($category->blocks) !!}
+            <div class="container-shop pb-8">
+        @endif
+
         <div @class(['mt-10', 'lg:grid lg:grid-cols-4 lg:gap-10' => ! empty($filters)])>
             @if (! empty($filters))
                 <aside class="mb-8 lg:mb-0" x-data="{ open: false }">

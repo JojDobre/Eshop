@@ -332,6 +332,28 @@ return [
         'currencies' => 'Více měn',
         'currencies_help' => 'Zákazník si vybere měnu. Ceny zadáte ručně v každé měně, nebo se přepočítají kurzem.',
         'currencies_choose' => 'Nejprve vyberte měny a kurzy v Nastavení → Měny.',
+        'size' => [
+            'label' => 'Velikost obchodu',
+            'current' => 'Velikost obchodu: :size.',
+            'change' => 'Změnit velikost obchodu',
+            'help' => 'Velikost je jen výchozí výběr funkcí. Každou funkci pak můžete zapnout nebo vypnout samostatně. Vypnutím se nic nemaže.',
+            'apply' => 'Použít',
+            'applied' => 'Velikost obchodu byla změněna.',
+            'no_changes' => 'Nic se nezmění.',
+            'will_enable' => 'Zapne se:',
+            'will_disable' => 'Vypne se:',
+            'sizes' => [
+                'small' => 'Malý',
+                'medium' => 'Střední',
+                'large' => 'Velký',
+                'custom' => 'Vlastní',
+            ],
+            'descriptions' => [
+                'small' => 'Desítky produktů, jeden prodejce. Jen to nejdůležitější.',
+                'medium' => 'Stovky produktů, více typů zboží, doplňky a balíčky.',
+                'large' => 'Tisíce produktů, více skladů, předobjednávky.',
+            ],
+        ],
         'groups' => [
             'international' => 'Jazyky a měny',
             'storefront' => 'Obchod',

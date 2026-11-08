@@ -4,6 +4,7 @@ namespace Tests\Feature\Installer;
 
 use App\Core\Installer\Installation;
 use App\Core\Installer\Installer;
+use App\Settings\CatalogSettings;
 use App\Settings\GeneralSettings;
 use Dotenv\Dotenv;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -100,6 +101,19 @@ class InstallerTest extends TestCase
         $this->assertArrayHasKey('cs', $product->getTranslations('name'));
         $this->assertNotNull($product->priceIn('CZK'));
         $this->assertSame(11900, ShippingMethod::query()->where('price', '>', 0)->value('price'));
+    }
+
+    public function test_installer_applies_chosen_shop_size(): void
+    {
+        $this->app->make(Installer::class)->install(
+            shop: ['shop_name' => 'Obchod', 'contact_email' => 'info@obchod.sk', 'url' => 'https://obchod.sk', 'locale' => 'sk', 'currency' => 'EUR', 'country' => 'SK', 'size' => 'large'],
+            admin: ['name' => 'Admin', 'email' => 'admin@obchod.sk', 'password' => 'Heslo12345'],
+        );
+
+        $settings = app(CatalogSettings::class)->refresh();
+        $this->assertSame('large', app(GeneralSettings::class)->refresh()->shop_size);
+        $this->assertTrue($settings->feature_warehouses);
+        $this->assertTrue($settings->feature_bundles);
     }
 
     public function test_full_web_installation_and_completion_page(): void

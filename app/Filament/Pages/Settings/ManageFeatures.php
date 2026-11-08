@@ -3,14 +3,18 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Core\Features\FeatureToggles;
+use App\Core\Features\ShopSize;
 use App\Core\Modules\ModuleManager;
 use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Text;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
@@ -55,7 +59,56 @@ class ManageFeatures extends Page implements HasSchemas
 
     public function getSubheading(): ?string
     {
-        return __('admin.features.intro');
+        return __('admin.features.intro').' '.__('admin.features.size.current', ['size' => __('admin.features.size.sizes.'.app(ShopSize::class)->current())]);
+    }
+
+    /**
+     * Zmena veľkosti obchodu: najprv prehľad, čo sa zapne a vypne, potom uloženie.
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('changeSize')
+                ->label(__('admin.features.size.change'))
+                ->icon(Heroicon::OutlinedSquare3Stack3d)
+                ->modalDescription(__('admin.features.size.help'))
+                ->modalSubmitActionLabel(__('admin.features.size.apply'))
+                ->fillForm(fn () => ['size' => app(ShopSize::class)->stored() ?? 'small'])
+                ->schema([
+                    Select::make('size')->label(__('admin.features.size.label'))
+                        ->options(collect(ShopSize::SIZES)->mapWithKeys(fn ($size) => [$size => __('admin.features.size.sizes.'.$size)])->all())
+                        ->required()->selectablePlaceholder(false)->native(false)->live(),
+                    Text::make(fn (Get $get) => self::changesSummary((string) $get('size'))),
+                ])
+                ->action(function (array $data): void {
+                    $errors = app(ShopSize::class)->apply($data['size']);
+
+                    foreach ($errors as $error) {
+                        Notification::make()->warning()->title(__('admin.features.error'))->body($error)->persistent()->send();
+                    }
+
+                    Notification::make()->success()->title(__('admin.features.size.applied'))->send();
+                    $this->redirect(static::getUrl());
+                }),
+        ];
+    }
+
+    private static function changesSummary(string $size): HtmlString
+    {
+        if (! in_array($size, ShopSize::SIZES, true)) {
+            return new HtmlString('');
+        }
+
+        $changes = app(ShopSize::class)->changes($size);
+
+        if ($changes['enable'] === [] && $changes['disable'] === []) {
+            return new HtmlString(e(__('admin.features.size.no_changes')));
+        }
+
+        $list = fn (string $title, array $items) => $items === [] ? '' : '<p style="margin-top: .5rem;"><strong>'.e($title).'</strong></p><ul style="list-style: disc; padding-left: 1.25rem;">'
+            .implode('', array_map(fn ($item) => '<li>'.e($item).'</li>', $items)).'</ul>';
+
+        return new HtmlString($list(__('admin.features.size.will_enable'), $changes['enable']).$list(__('admin.features.size.will_disable'), $changes['disable']));
     }
 
     public static function canAccess(): bool

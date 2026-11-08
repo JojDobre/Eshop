@@ -5,6 +5,7 @@ namespace App\Core\Installer;
 use App\Core\Content\ContentLocale;
 use App\Core\Eshop;
 use App\Core\Events\EshopInstalled;
+use App\Core\Features\ShopSize;
 use App\Core\Support\CurrencyContext;
 use App\Models\User;
 use App\Settings\CompanySettings;
@@ -29,7 +30,7 @@ class Installer
     ) {}
 
     /**
-     * @param  array{shop_name: string, contact_email: string, locale: string, currency: string, country: string, url: string}  $shop
+     * @param  array{shop_name: string, contact_email: string, locale: string, currency: string, country: string, url: string, size?: string}  $shop
      * @param  array{name: string, email: string, password: string}  $admin
      * @param  bool  $withDemoData  Nahrať ukážkové kategórie a produkty.
      */
@@ -62,6 +63,13 @@ class Installer
             return $user;
         });
 
+        // Veľkosť obchodu zapne zodpovedajúce funkcie (chyba jednej funkcie inštaláciu nezastaví).
+        try {
+            app(ShopSize::class)->apply($shop['size'] ?? 'small');
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
         $this->environment->set([
             'APP_NAME' => $shop['shop_name'],
             'APP_URL' => rtrim($shop['url'], '/'),
@@ -80,7 +88,7 @@ class Installer
     }
 
     /**
-     * @param  array{shop_name: string, contact_email: string, locale: string, currency: string, country: string, url: string}  $shop
+     * @param  array{shop_name: string, contact_email: string, locale: string, currency: string, country: string, url: string, size?: string}  $shop
      */
     private function saveSettings(array $shop): void
     {

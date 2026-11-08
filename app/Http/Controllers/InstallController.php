@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Features\ShopSize;
 use App\Core\Installer\DatabaseChecker;
 use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installer;
@@ -147,6 +148,7 @@ class InstallController extends Controller
             'admin_email' => ['required', 'email', 'max:255'],
             'admin_password' => ['required', 'confirmed', Password::min(10)->letters()->numbers()],
             'demo_data' => ['nullable', 'boolean'],
+            'size' => ['nullable', Rule::in(ShopSize::SIZES)],
         ]);
 
         try {
@@ -158,6 +160,7 @@ class InstallController extends Controller
                     'locale' => $data['locale'],
                     'currency' => $data['currency'],
                     'country' => $data['country'],
+                    'size' => $data['size'] ?? 'small',
                 ],
                 admin: [
                     'name' => $data['admin_name'],

@@ -332,6 +332,28 @@ return [
         'currencies' => 'Viac mien',
         'currencies_help' => 'Zákazník si vyberie menu. Ceny zadáte ručne v každej mene, alebo sa prepočítajú kurzom.',
         'currencies_choose' => 'Najprv vyberte meny a kurzy v Nastavenia → Meny.',
+        'size' => [
+            'label' => 'Veľkosť obchodu',
+            'current' => 'Veľkosť obchodu: :size.',
+            'change' => 'Zmeniť veľkosť obchodu',
+            'help' => 'Veľkosť je iba predvolený výber funkcií. Každú funkciu môžete potom zapnúť alebo vypnúť samostatne. Vypnutím sa nič nemaže.',
+            'apply' => 'Použiť',
+            'applied' => 'Veľkosť obchodu bola zmenená.',
+            'no_changes' => 'Nič sa nezmení.',
+            'will_enable' => 'Zapne sa:',
+            'will_disable' => 'Vypne sa:',
+            'sizes' => [
+                'small' => 'Malý',
+                'medium' => 'Stredný',
+                'large' => 'Veľký',
+                'custom' => 'Vlastný',
+            ],
+            'descriptions' => [
+                'small' => 'Desiatky produktov, jeden predajca. Iba to najdôležitejšie.',
+                'medium' => 'Stovky produktov, viac typov tovaru, doplnky a balíčky.',
+                'large' => 'Tisíce produktov, viac skladov, predobjednávky.',
+            ],
+        ],
         'groups' => [
             'international' => 'Jazyky a meny',
             'storefront' => 'Obchod',

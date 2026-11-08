@@ -72,6 +72,7 @@ return [
         'admin_password' => 'Heslo',
         'admin_password_help' => 'Aspoň 10 znakov, písmená aj čísla.',
         'admin_password_confirmation' => 'Heslo znova',
+        'size_help' => 'Podľa veľkosti sa zapnú vhodné funkcie. Neskôr to zmeníte v Nastavenia → Funkcie obchodu.',
         'demo_data' => 'Nahrať ukážkové produkty',
         'demo_data_help' => 'Niekoľko kategórií a produktov na vyskúšanie obchodu. Neskôr ich môžete zmazať.',
         'submit' => 'Nainštalovať e-shop',

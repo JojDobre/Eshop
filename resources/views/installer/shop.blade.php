@@ -48,6 +48,22 @@
             </div>
         </fieldset>
 
+        <fieldset class="space-y-3">
+            <legend class="text-sm font-semibold text-zinc-900">{{ __('admin.features.size.label') }}</legend>
+            <p class="text-sm text-zinc-500">{{ __('installer.shop.size_help') }}</p>
+            <div class="grid gap-3 sm:grid-cols-3">
+                @foreach (\App\Core\Features\ShopSize::SIZES as $size)
+                    <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-zinc-200 p-4 text-sm has-[:checked]:border-zinc-900">
+                        <input type="radio" name="size" value="{{ $size }}" @checked(old('size', 'small') === $size) class="mt-0.5 size-4">
+                        <span>
+                            <span class="font-medium text-zinc-900">{{ __('admin.features.size.sizes.'.$size) }}</span>
+                            <span class="mt-1 block text-zinc-500">{{ __('admin.features.size.descriptions.'.$size) }}</span>
+                        </span>
+                    </label>
+                @endforeach
+            </div>
+        </fieldset>
+
         <label class="flex items-start gap-3 rounded-lg border border-zinc-200 p-4 text-sm">
             <input type="checkbox" name="demo_data" value="1" @checked(old('demo_data')) class="mt-0.5 size-4 rounded border-zinc-300">
             <span>

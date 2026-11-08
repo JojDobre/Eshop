@@ -39,6 +39,9 @@ class GeneralSettings extends Settings
     /** Názov aktívnej šablóny vzhľadu (adresár v themes/). */
     public string $theme;
 
+    /** Veľkosť obchodu: small, medium, large alebo custom (vlastný výber funkcií). */
+    public string $shop_size;
+
     public static function group(): string
     {
         return 'general';

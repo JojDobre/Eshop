@@ -3,9 +3,11 @@
 namespace Tests\Feature;
 
 use App\Core\Content\ShopLocales;
+use App\Core\Features\ShopSize;
 use App\Core\Modules\ModuleManager;
 use App\Core\Support\Currencies;
 use App\Filament\Pages\Settings\ManageFeatures;
+use App\Settings\CatalogSettings;
 use App\Settings\CurrencySettings;
 use App\Settings\GeneralSettings;
 use App\Settings\TaxSettings;
@@ -74,5 +76,43 @@ class FeaturesTest extends InstalledTestCase
             ->assertRedirect();
 
         $this->assertFalse(app(ModuleManager::class)->isEnabled('returns'));
+    }
+
+    public function test_shop_size_shows_changes_applies_presets_and_detects_custom(): void
+    {
+        $size = app(ShopSize::class);
+        $this->assertSame('small', $size->current());
+
+        $changes = $size->changes('large');
+        $this->assertContains('Viac skladov', $changes['enable']);
+        $this->assertContains('Balíčky', $changes['enable']);
+        $this->assertSame([], $changes['disable']);
+
+        $this->actingAs($this->superAdmin());
+        $this->get('/admin/settings/features')->assertOk()->assertSee('Veľkosť obchodu: Malý');
+
+        Livewire::test(ManageFeatures::class)
+            ->mountAction('changeSize')
+            ->setActionData(['size' => 'large'])
+            ->assertSee('Viac skladov')
+            ->callMountedAction()
+            ->assertHasNoActionErrors();
+
+        $catalog = app(CatalogSettings::class)->refresh();
+        $this->assertTrue($catalog->feature_warehouses);
+        $this->assertTrue($catalog->feature_preorders);
+        $this->assertSame('large', app(ShopSize::class)->current());
+
+        // Ručná zmena funkcie = vlastný výber.
+        $catalog->feature_warehouses = false;
+        $catalog->save();
+        $this->assertSame('custom', app(ShopSize::class)->current());
+
+        // Návrat na malý obchod vypne sklady, voliteľné funkcie (napr. balíčky) ostanú.
+        $this->assertSame([], app(ShopSize::class)->apply('small'));
+        $catalog->refresh();
+        $this->assertFalse($catalog->feature_warehouses);
+        $this->assertTrue($catalog->feature_bundles);
+        $this->assertSame('small', app(ShopSize::class)->current());
     }
 }

@@ -15,6 +15,7 @@ final class Module
      * @param  array<string, string>  $description  Popis podľa jazyka.
      * @param  array<string, string>  $requiredModules  Závislosti: názov modulu => verzia (semver obmedzenie).
      * @param  list<string>  $permissions  Oprávnenia, ktoré modul registruje.
+     * @param  array<string, bool>  $sizes  Predvoľba podľa veľkosti obchodu (small/medium/large).
      */
     public function __construct(
         public readonly string $name,
@@ -29,6 +30,7 @@ final class Module
         public readonly array $requiredModules = [],
         public readonly array $permissions = [],
         public readonly ?string $namespace = null,
+        public readonly array $sizes = [],
     ) {}
 
     public static function fromFile(string $manifestPath): self
@@ -82,6 +84,7 @@ final class Module
             requiredModules: self::stringMap($requires['modules'] ?? []),
             permissions: array_values(array_filter($data['permissions'] ?? [], 'is_string')),
             namespace: self::namespaceFor($data, $path),
+            sizes: array_map('boolval', array_intersect_key(is_array($data['sizes'] ?? null) ? $data['sizes'] : [], array_flip(['small', 'medium', 'large']))),
         );
     }
 

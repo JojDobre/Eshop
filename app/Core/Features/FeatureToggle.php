@@ -15,6 +15,8 @@ final class FeatureToggle
      * @param  Closure(): bool  $isEnabled
      * @param  Closure(bool): void  $set  Zapne/vypne funkciu (môže vyhodiť výnimku s vysvetlením).
      * @param  (Closure(): ?string)|null  $settingsUrl  Odkaz na podrobné nastavenia.
+     * @param  array<string, bool>  $sizes  Predvoľba podľa veľkosti obchodu (small/medium/large).
+     *                                      Chýbajúca veľkosť = funkcia je voliteľná, veľkosť ju nemení.
      */
     public function __construct(
         public readonly string $key,
@@ -24,5 +26,6 @@ final class FeatureToggle
         public readonly Closure $isEnabled,
         public readonly Closure $set,
         public readonly ?Closure $settingsUrl = null,
+        public readonly array $sizes = [],
     ) {}
 }

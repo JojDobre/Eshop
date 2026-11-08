@@ -72,6 +72,7 @@ return [
         'admin_password' => 'Password',
         'admin_password_help' => 'At least 10 characters, letters and numbers.',
         'admin_password_confirmation' => 'Confirm password',
+        'size_help' => 'Suitable features are enabled based on the size. You can change it later in Settings → Shop features.',
         'demo_data' => 'Load demo products',
         'demo_data_help' => 'A few categories and products to try out the shop. You can delete them later.',
         'submit' => 'Install the e-shop',

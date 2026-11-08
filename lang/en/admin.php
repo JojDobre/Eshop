@@ -332,6 +332,28 @@ return [
         'currencies' => 'Multiple currencies',
         'currencies_help' => 'Customers choose a currency. Enter prices manually in each currency or let them be converted by the rate.',
         'currencies_choose' => 'First choose currencies and rates in Settings → Currencies.',
+        'size' => [
+            'label' => 'Shop size',
+            'current' => 'Shop size: :size.',
+            'change' => 'Change shop size',
+            'help' => 'The size is only a default selection of features. You can then switch each feature on or off individually. Nothing is deleted.',
+            'apply' => 'Apply',
+            'applied' => 'The shop size was changed.',
+            'no_changes' => 'Nothing will change.',
+            'will_enable' => 'Will be enabled:',
+            'will_disable' => 'Will be disabled:',
+            'sizes' => [
+                'small' => 'Small',
+                'medium' => 'Medium',
+                'large' => 'Large',
+                'custom' => 'Custom',
+            ],
+            'descriptions' => [
+                'small' => 'Dozens of products, one seller. Only the essentials.',
+                'medium' => 'Hundreds of products, more product types, add-ons and bundles.',
+                'large' => 'Thousands of products, multiple warehouses, pre-orders.',
+            ],
+        ],
         'groups' => [
             'international' => 'Languages and currencies',
             'storefront' => 'Shop',

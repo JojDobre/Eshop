@@ -5,6 +5,7 @@ namespace App\Core\Modules;
 use App\Core\Modules\Exceptions\InvalidModuleException;
 use App\Core\Modules\Exceptions\ModuleException;
 use Composer\Semver\Semver;
+use Illuminate\Support\Facades\Artisan;
 use Throwable;
 use UnexpectedValueException;
 
@@ -200,6 +201,27 @@ class ModuleManager
 
         $this->state->set($name, true);
         $this->bootOrder = null;
+
+        $this->migrate($module);
+    }
+
+    /**
+     * Spustí migrácie modulu (tabuľky a nastavenia). Moduly vypnuté pri inštalácii ich ešte nemajú;
+     * už spustené migrácie sa preskočia.
+     */
+    public function migrate(Module $module): void
+    {
+        $path = $module->path.'/database/migrations';
+
+        if (! is_dir($path) || ! function_exists('app') || ! app()->bound('migrator')) {
+            return;
+        }
+
+        $exitCode = Artisan::call('migrate', ['--path' => $path, '--realpath' => true, '--force' => true]);
+
+        if ($exitCode !== 0) {
+            throw new \RuntimeException(trim(Artisan::output()) ?: 'Module migration failed: '.$module->name);
+        }
     }
 
     /**

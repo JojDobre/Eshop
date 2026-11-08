@@ -3,14 +3,19 @@
 namespace Tests\Feature;
 
 use App\Core\Content\ShopLocales;
+use App\Core\Eshop;
 use App\Core\Features\ShopSize;
 use App\Core\Modules\ModuleManager;
+use App\Core\Modules\ModuleStateStore;
 use App\Core\Support\Currencies;
 use App\Filament\Pages\Settings\ManageFeatures;
 use App\Settings\CatalogSettings;
 use App\Settings\CurrencySettings;
 use App\Settings\GeneralSettings;
 use App\Settings\TaxSettings;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Livewire;
 
 class FeaturesTest extends InstalledTestCase
@@ -114,5 +119,39 @@ class FeaturesTest extends InstalledTestCase
         $this->assertFalse($catalog->feature_warehouses);
         $this->assertTrue($catalog->feature_bundles);
         $this->assertSame('small', app(ShopSize::class)->current());
+    }
+
+    public function test_enabling_a_module_runs_its_migrations(): void
+    {
+        // V MySQL/MariaDB vytvorenie tabuľky ukončí transakciu testu, preto sa test spúšťa iba na SQLite.
+        if (DB::connection()->getDriverName() !== 'sqlite') {
+            $this->markTestSkipped('DDL v transakcii testu podporuje iba SQLite.');
+        }
+
+        $path = $this->tempPath.'/modules';
+        File::ensureDirectoryExists($path.'/Sample/database/migrations');
+        file_put_contents($path.'/Sample/module.json', json_encode(['name' => 'sample', 'version' => '1.0.0', 'core' => false, 'enabled' => false]));
+        file_put_contents($path.'/Sample/database/migrations/2030_01_01_000000_create_sample_items.php', <<<'PHP'
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('sample_items', fn (Blueprint $table) => $table->id());
+    }
+};
+PHP);
+
+        $manager = new ModuleManager([$path], new ModuleStateStore($this->tempPath.'/sample-state.json'), Eshop::VERSION);
+        $this->assertFalse(Schema::hasTable('sample_items'));
+
+        $manager->enable('sample');
+
+        $this->assertTrue(Schema::hasTable('sample_items'));
     }
 }

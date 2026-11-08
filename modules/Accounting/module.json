@@ -12,7 +12,7 @@
     "enabled": true,
     "sizes": { "large": true },
     "requires": {
-        "eshop": "^0.10",
+        "eshop": "^0.11",
         "modules": { "invoices": "^0.4", "orders": "^0.8" }
     },
     "permissions": ["accounting.export"]

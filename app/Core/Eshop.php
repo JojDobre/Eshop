@@ -10,7 +10,7 @@ namespace App\Core;
  */
 final class Eshop
 {
-    public const VERSION = '0.10.0';
+    public const VERSION = '0.11.0';
 
     public const MIN_PHP_VERSION = '8.3.0';
 

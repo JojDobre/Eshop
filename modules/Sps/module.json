@@ -12,7 +12,7 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.10",
+        "eshop": "^0.11",
         "modules": { "shipping": "^0.5" }
     },
     "permissions": ["settings.manage"]

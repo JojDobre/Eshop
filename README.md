@@ -3,12 +3,22 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4e – predaj a marketing (0.10.0). Obchod predáva vo viacerých jazykoch a menách, posiela
-> zásielky cez desiatky kuriérov, má B2B ceny, poukážky, hodnotenia, porovnávač, newsletter, XML feedy
-> a pokročilé SEO. Funkcie sa zapínajú podľa veľkosti obchodu.
+> **Stav:** krok 4f – rezervácie, dáta a doklady (0.11.0). Obchod predáva vo viacerých jazykoch a menách,
+> posiela zásielky cez desiatky kuriérov, má B2B ceny, poukážky, hodnotenia, newsletter, XML feedy, rezervácie
+> služieb, import a export dát, exporty do Pohody a Money S3 a reklamácie s protokolmi. Funkcie sa zapínajú
+> podľa veľkosti obchodu. Ďalší krok: produkčná verzia 1.0.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Rezervácie, dáta a doklady (krok 4f)**
+
+- **Rezervácie** služieb (zamestnanci, miestnosti, rozvrhy, kapacita, platba vopred, pripomienky, iCal)
+  a rezervácia jedinečných kusov, administrácia s kalendárom.
+- **Import a export** produktov, zákazníkov, objednávok, skladu a dokladov (CSV, XLSX, JSON, XML),
+  plánované exporty e-mailom.
+- **Účtovné exporty** pre Pohodu a Money S3.
+- **Reklamácie a odstúpenie 2.0:** výsledok vybavenia, PDF protokol, dobropis, upozornenie pred lehotou.
 
 **Predaj a marketing (krok 4e)**
 

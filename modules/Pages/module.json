@@ -9,7 +9,7 @@
     },
     "provider": "Modules\\Pages\\PagesServiceProvider",
     "requires": {
-        "eshop": "^0.10",
+        "eshop": "^0.11",
         "modules": { "storefront": "^0.4" }
     },
     "permissions": ["pages.manage"]

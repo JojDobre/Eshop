@@ -14,7 +14,7 @@
     "author": "E-shop",
     "parent": "default",
     "requires": {
-        "eshop": "^0.10"
+        "eshop": "^0.11"
     },
     "stylesheets": [
         "custom.css"

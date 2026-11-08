@@ -253,6 +253,20 @@ Testy štartujú so stavom modulov z `tests/fixtures/state` (zapnutý aj predvol
 - **SEO:** presmerovania `App\Models\Redirect` (obsluha v 404), automaticky pri zmene slugu (`HasLocalizedSlug`
   + `SlugRedirects`), šablóny titulkov `App\Settings\SeoSettings::render()`.
 
+## Rezervácie, dáta a doklady
+
+- **Rezervácie:** modul `Reservations`. Voľné termíny počíta `Availability::slots()` z týždenného rozvrhu zdroja
+  (`booking_resources.schedule`), výnimiek (`booking_closures`) a existujúcich rezervácií vrátane prestávky po
+  termíne a kapacity. `Bookings::bookService()` overí termín znova v transakcii so zámkom na službe.
+  Rezervácia jedinečného kusu blokuje nákup cez `Product::addAvailabilityCheck()`. Pripomienky posiela webový
+  cron, kalendár pre obchod je tajná adresa iCal (`ICalendar`).
+- **Import a export:** modul `Transfer`. Exporty sú `ExportDefinition` registrované v `Exports` (aj z iných
+  modulov), importy sú `Importer` v `Importers`; `ImportRunner` spracúva súbor po častiach v časovom limite
+  požiadavky a pokračuje v ďalšej (bez procesov na pozadí). XLSX číta a zapisuje OpenSpout.
+- **Účtovné exporty:** modul `Accounting`, rozhranie `AccountingExporter` (Pohoda, Money S3) v `AccountingExporters`.
+- **Reklamácie:** modul `Returns` – výsledok vybavenia, protokol v PDF (`ReturnProtocol`), dobropis cez
+  `IssueInvoice::creditNote()`, upozornenie pred lehotou (`ReturnDeadlines`).
+
 ## Veľkosť obchodu
 
 `App\Core\Features\ShopSize`: predvoľby funkcií pre malý, stredný a veľký obchod. Každý `FeatureToggle`

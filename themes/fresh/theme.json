@@ -15,7 +15,7 @@
     "parent": "default",
     "screenshot": "screenshot.jpg",
     "requires": {
-        "eshop": "^0.10"
+        "eshop": "^0.11"
     },
     "vite": [
         "themes/fresh/assets/css/theme.css",

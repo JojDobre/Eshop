@@ -10,7 +10,7 @@
     "provider": "Modules\\Payments\\PaymentsServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.10",
+        "eshop": "^0.11",
         "modules": { "shipping": "^0.5" }
     },
     "permissions": ["payments.manage"]

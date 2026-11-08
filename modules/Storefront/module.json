@@ -14,7 +14,7 @@
     "provider": "Modules\\Storefront\\StorefrontServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.10"
+        "eshop": "^0.11"
     },
     "permissions": []
 }

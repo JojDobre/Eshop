@@ -12,8 +12,8 @@
     "enabled": false,
     "sizes": {},
     "requires": {
-        "eshop": "^0.10",
-        "modules": { "catalog": "^0.8", "storefront": "^0.4" }
+        "eshop": "^0.11",
+        "modules": { "catalog": "^0.9", "storefront": "^0.4" }
     },
     "permissions": ["reservations.manage"]
 }

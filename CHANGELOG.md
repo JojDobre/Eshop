@@ -1,6 +1,6 @@
 # Prehľad zmien
 
-## 0.11.0 – Rezervácie, dáta a doklady (krok 4f, v príprave)
+## 0.11.0 – Rezervácie, dáta a doklady (krok 4f)
 
 - **Reklamácie a odstúpenie:** výsledok vybavenia (oprava, výmena, zľava, vrátenie peňazí, zamietnutie) a vrátená
   suma, reklamačný protokol v PDF, dobropis jedným klikom, upozornenie e-mailom pred uplynutím lehoty, export
@@ -20,6 +20,8 @@
   kalendára (.ics) a kalendárový odber pre obchod (iCal). Administrácia so zoznamom, kalendárom (deň, týždeň,
   mesiac) a ručnou rezerváciou. Rezervácia jedinečného kusu (napr. zviera) na nastavený počet dní – počas nej
   sa nedá kúpiť.
+- Pre vývojárov: `Product::addAvailabilityCheck()` – moduly môžu obmedziť dostupnosť produktu. Verzie: jadro 0.11.0,
+  catalog 0.9.0, returns 0.3.0, šablóna default 0.8.0, nové moduly accounting, transfer a reservations 0.1.0.
 
 ## 0.10.0 – Predaj a marketing (krok 4e)
 

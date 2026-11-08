@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "small": true, "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.10",
-        "modules": { "catalog": "^0.8", "orders": "^0.8", "customers": "^0.5" }
+        "eshop": "^0.11",
+        "modules": { "catalog": "^0.9", "orders": "^0.8", "customers": "^0.5" }
     },
     "permissions": ["transfer.manage"]
 }

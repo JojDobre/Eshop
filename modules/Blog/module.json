@@ -12,8 +12,8 @@
     "enabled": false,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.10",
-        "modules": { "storefront": "^0.4", "catalog": "^0.8" }
+        "eshop": "^0.11",
+        "modules": { "storefront": "^0.4", "catalog": "^0.9" }
     },
     "permissions": ["blog.manage"]
 }

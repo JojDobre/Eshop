@@ -9,6 +9,6 @@
     },
     "provider": "Modules\\Shipping\\ShippingServiceProvider",
     "core": true,
-    "requires": { "eshop": "^0.10" },
+    "requires": { "eshop": "^0.11" },
     "permissions": ["shipping.manage"]
 }

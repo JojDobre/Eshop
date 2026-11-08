@@ -1,7 +1,7 @@
 # Univerzálny e-shop – plán projektu
 
 > **Repozitár:** `JojDobre/Eshop`
-> **Stav:** plán schválený (verzia 5, november 2026). Hotové: kroky 0–3 (0.5.0 – pilotná verzia), 4a (0.6.0 – jazyky, meny, DPH v EÚ), 4b (0.7.0 – rozšírený katalóg a sklad) 4c (0.8.0 – veľkosť obchodu a šablóny) 4d (0.9.0 – doprava a obsah) a 4e (0.10.0 – predaj a marketing), ďalej krok 4f.
+> **Stav:** plán schválený (verzia 5, november 2026). Hotové: kroky 0–3 (0.5.0 – pilotná verzia), 4a (0.6.0 – jazyky, meny, DPH v EÚ), 4b (0.7.0 – rozšírený katalóg a sklad) 4c (0.8.0 – veľkosť obchodu a šablóny) 4d (0.9.0 – doprava a obsah) 4e (0.10.0 – predaj a marketing) a 4f (0.11.0 – rezervácie, dáta a doklady), ďalej krok 5 – produkčná verzia 1.0.
 
 Univerzálny e-shop, ktorý sa dá ponúknuť rôznym predajcom: oblečenie, nábytok, tovar, služby, zvieratá, potraviny, digitálne produkty. **Jedna inštalácia = jeden e-shop** s vlastným názvom, logom, farbami a šablónou. Musí bežať na **lacnom webhostingu**, bez vlastného servera.
 

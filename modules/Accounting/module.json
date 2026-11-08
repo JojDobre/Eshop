@@ -1,0 +1,19 @@
+{
+    "name": "accounting",
+    "version": "0.1.0",
+    "title": { "sk": "Účtovné exporty", "cs": "Účetní exporty", "en": "Accounting exports" },
+    "description": {
+        "sk": "XML export faktúr, dobropisov a objednávok za obdobie pre Pohodu a Money S3.",
+        "cs": "XML export faktur, dobropisů a objednávek za období pro Pohodu a Money S3.",
+        "en": "XML export of invoices, credit notes and orders for a period for Pohoda and Money S3."
+    },
+    "provider": "Modules\\Accounting\\AccountingServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "large": true },
+    "requires": {
+        "eshop": "^0.10",
+        "modules": { "invoices": "^0.4", "orders": "^0.8" }
+    },
+    "permissions": ["accounting.export"]
+}

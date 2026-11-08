@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ApplyThemePreview;
 use App\Http\Middleware\EnsureInstalled;
 use App\Http\Middleware\ResolveLocalePrefix;
 use Illuminate\Foundation\Application;
@@ -17,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         // Pred inštaláciou presmeruje všetko na inštalátor, po inštalácii inštalátor vypne.
-        $middleware->web(append: [EnsureInstalled::class]);
+        $middleware->web(append: [EnsureInstalled::class, ApplyThemePreview::class]);
         // Predpona jazyka (/en/…) sa spracuje ešte pred výberom trasy.
         $middleware->prepend(ResolveLocalePrefix::class);
         // Voľbu cookies nastavuje lišta v prehliadači (JavaScript), preto nie je šifrovaná.

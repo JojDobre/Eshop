@@ -22,6 +22,7 @@ use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
+use App\Core\Themes\ThemePackages;
 use App\Core\Themes\ThemeTranslationLoader;
 use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
@@ -82,6 +83,7 @@ class EshopServiceProvider extends ServiceProvider
         ));
 
         $this->app->scoped(ThemeOptions::class);
+        $this->app->singleton(ThemePackages::class, fn ($app) => new ThemePackages($app->make(ThemeManager::class), (string) config('eshop.paths.themes')));
         $this->app->singleton(MenuLinkTypes::class);
         $this->app->scoped(Menus::class);
 

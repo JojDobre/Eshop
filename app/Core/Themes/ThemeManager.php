@@ -18,6 +18,9 @@ class ThemeManager
     /** @var list<Theme>|null */
     private ?array $chain = null;
 
+    /** Šablóna v náhľade (iba pre administrátora, pred aktiváciou). */
+    private ?string $preview = null;
+
     /**
      * @param  Closure(): ?string  $activeResolver  Vráti názov aktívnej šablóny (z nastavení obchodu).
      */
@@ -72,7 +75,7 @@ class ThemeManager
             return $this->chain;
         }
 
-        $name = ($this->activeResolver)() ?? $this->defaultTheme;
+        $name = $this->preview ?? ($this->activeResolver)() ?? $this->defaultTheme;
         $theme = $this->find($name) ?? $this->find($this->defaultTheme);
 
         $chain = [];
@@ -220,6 +223,28 @@ class ThemeManager
     public function langPaths(): array
     {
         return array_values(array_filter(array_map(fn (Theme $theme) => $theme->path.'/lang', array_reverse($this->chain())), 'is_dir'));
+    }
+
+    /**
+     * Zobrazí inú šablónu namiesto aktívnej (náhľad pre administrátora).
+     */
+    public function usePreview(?string $name): void
+    {
+        $this->preview = $name !== null && $this->find($name) !== null ? $name : null;
+        $this->chain = null;
+    }
+
+    public function previewing(): ?string
+    {
+        return $this->preview;
+    }
+
+    /** Názov uloženej aktívnej šablóny (bez náhľadu). */
+    public function activeName(): string
+    {
+        $name = ($this->activeResolver)() ?? $this->defaultTheme;
+
+        return $this->find($name) ? $name : $this->defaultTheme;
     }
 
     /**

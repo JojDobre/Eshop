@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CronController;
 use App\Http\Controllers\InstallController;
+use App\Http\Controllers\ThemeAssetController;
 use App\Http\Middleware\SetInstallerLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,9 @@ Route::get('/cron/{token}', CronController::class)
     ->name('cron.web')
     ->where('token', '[a-f0-9]{32}')
     ->middleware('throttle:6,1');
+
+// Súbory šablón vzhľadu (bez kompilácie a symbolických odkazov, pozri theme_asset()).
+Route::get('/theme-assets/{theme}/{path}', [ThemeAssetController::class, 'asset'])
+    ->where(['theme' => '[a-z][a-z0-9-]*', 'path' => '[A-Za-z0-9_\-./]+'])->name('theme.asset');
+Route::get('/theme-screenshot/{theme}', [ThemeAssetController::class, 'screenshot'])
+    ->where('theme', '[a-z][a-z0-9-]*')->name('theme.screenshot');

@@ -3,7 +3,6 @@
 namespace App\Filament\Pages\Settings;
 
 use App\Core\Content\ShopLocales;
-use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeManager;
 use App\Settings\GeneralSettings;
 use BackedEnum;
@@ -93,14 +92,6 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->columnSpanFull()
                         ->visible(fn (Get $get) => (bool) $get('locales_enabled'))
                         ->dehydrateStateUsing(fn (?array $state, Get $get) => array_values(array_diff($state ?? [], [$get('default_locale')]))),
-                ]),
-            Section::make(__('admin.settings.general.section_theme'))
-                ->schema([
-                    Select::make('theme')
-                        ->label(__('admin.settings.general.theme'))
-                        ->options(fn () => collect(app(ThemeManager::class)->all())->map(fn (Theme $theme) => $theme->title()))
-                        ->required()
-                        ->native(false),
                 ]),
         ]);
     }

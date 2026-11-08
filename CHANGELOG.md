@@ -14,6 +14,9 @@
   schvaľovanie, odpoveď obchodu, režim „iba overené nákupy“, ochrana proti spamu, priemer a rozdelenie
   hviezdičiek, hviezdičky vo výpise produktov, štruktúrované dáta pre Google, informácia o overovaní
   (Omnibus) a žiadosť o hodnotenie e-mailom po dokončení objednávky (odkaz bez prihlásenia).
+- **Porovnávač produktov 2.0:** produkty vedľa seba (na mobile 2 s posúvaním), zvýraznenie rozdielov
+  a „iba rozdiely“, výber vlastností podľa skupín, zvýraznenie najlepšej hodnoty (nastavuje sa pri vlastnom
+  poli), lepkavá hlavička s cenou a tlačidlom do košíka, skupiny podľa typu produktu, zdieľanie odkazom a tlač.
 - **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
   dobierka, štítky, sledovanie.
 - **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.

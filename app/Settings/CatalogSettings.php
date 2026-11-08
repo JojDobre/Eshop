@@ -36,6 +36,8 @@ class CatalogSettings extends Settings
     /** Digitálne produkty na stiahnutie. */
     public bool $feature_digital;
 
+    public bool $feature_comparison;
+
     /** Koľko dní pred expiráciou upozorniť. */
     public int $expiration_warning_days;
 

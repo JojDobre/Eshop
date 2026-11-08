@@ -267,6 +267,10 @@
                     </form>
                 @endif
 
+                @if (! empty($compareEnabled))
+                    @include('theme::partials.compare-button', ['product' => $product])
+                @endif
+
                 @if ($product->description)
                     <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{!! $product->description !!}</div>
                 @endif

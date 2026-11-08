@@ -97,6 +97,11 @@ class CustomFieldResource extends Resource
             TextInput::make('unit')->label($t('unit'))->helperText($t('unit_help'))->maxLength(32)
                 ->visible(fn (Get $get) => in_array($type($get), [CustomFieldType::Number, CustomFieldType::Text, CustomFieldType::Select], true)),
             TextInput::make('help')->label($t('help'))->maxLength(200),
+            TextInput::make('group')->label($t('group'))->helperText($t('group_help'))->maxLength(60)
+                ->visible(fn (Get $get) => in_array($get('entity') ?? CustomField::PRODUCT, [CustomField::PRODUCT], true)),
+            Select::make('compare_best')->label($t('compare_best'))->helperText($t('compare_best_help'))
+                ->options(['max' => $t('compare_best_max'), 'min' => $t('compare_best_min')])->placeholder($t('compare_best_none'))
+                ->visible(fn (Get $get) => $type($get) === CustomFieldType::Number && CatalogFeatures::enabled('comparison')),
             Repeater::make('options')->label($t('options'))
                 ->schema([
                     TextInput::make('label')->label($t('option_label'))->required()->maxLength(80),

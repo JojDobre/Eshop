@@ -45,7 +45,7 @@ class CustomField extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'help'];
+    public array $translatable = ['name', 'help', 'group'];
 
     protected $attributes = [
         'entity' => self::PRODUCT,

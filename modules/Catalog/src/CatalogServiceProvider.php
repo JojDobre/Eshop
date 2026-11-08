@@ -11,6 +11,7 @@ use App\Core\Menus\MenuLinkTypes;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
+use Modules\Catalog\Comparison\Comparison;
 use Modules\Catalog\Events\StockLow;
 use Modules\Catalog\Listeners\NotifyAboutLowStock;
 use Modules\Catalog\Listeners\SeedDemoCatalog;
@@ -64,7 +65,15 @@ class CatalogServiceProvider extends ModuleServiceProvider
         Event::listen(EshopInstalled::class, SeedDemoCatalog::class);
         Event::listen(StockLow::class, NotifyAboutLowStock::class);
 
+        // Porovnávač: počet a produkty v ňom (hlavička, tlačidlá „Porovnať“).
+        View::composer('theme::*', function (\Illuminate\View\View $view): void {
+            $enabled = Comparison::enabled();
+            $ids = $enabled ? app(Comparison::class)->ids() : [];
+            $view->with(['compareEnabled' => $enabled, 'compareIds' => $ids, 'compareCount' => count($ids)]);
+        });
+
         // Kategórie v hlavičke obchodu.
+
         View::composer('theme::partials.header', function (\Illuminate\View\View $view): void {
             $view->with('navigationCategories', Category::query()->visible()->roots()->limit(8)->get());
         });

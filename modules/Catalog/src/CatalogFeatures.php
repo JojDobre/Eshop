@@ -13,7 +13,7 @@ use Throwable;
  */
 final class CatalogFeatures
 {
-    public const ALL = ['product_types', 'extra_custom_fields', 'addons', 'bundles', 'warehouses', 'batches', 'expiration', 'preorders', 'digital'];
+    public const ALL = ['product_types', 'extra_custom_fields', 'addons', 'bundles', 'warehouses', 'batches', 'expiration', 'preorders', 'digital', 'comparison'];
 
     /**
      * Predvoľby podľa veľkosti obchodu (PLAN.md, kapitola 4). Funkcia bez veľkosti je pri nej voliteľná.
@@ -25,6 +25,7 @@ final class CatalogFeatures
         'bundles' => ['medium' => true, 'large' => true],
         'warehouses' => ['small' => false, 'medium' => false, 'large' => true],
         'preorders' => ['large' => true],
+        'comparison' => ['small' => false, 'large' => true],
     ];
 
     /** Funkcie s ďalšími nastaveniami (odkaz z prehľadu funkcií). */

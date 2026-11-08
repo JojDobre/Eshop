@@ -202,6 +202,13 @@ return [
         'options' => 'Možnosti',
         'option_label' => 'Možnost',
         'add_option' => 'Přidat možnost',
+        'group' => 'Skupina',
+        'group_help' => 'Např. „Rozměry“ nebo „Výkon“. Vlastnosti se v porovnávači seskupí.',
+        'compare_best' => 'Nejlepší hodnota v porovnávači',
+        'compare_best_help' => 'Zvýrazní se nejlepší hodnota mezi porovnávanými produkty.',
+        'compare_best_max' => 'Nejvyšší (např. výkon, kapacita)',
+        'compare_best_min' => 'Nejnižší (např. hmotnost, spotřeba)',
+        'compare_best_none' => 'Nezvýrazňovat',
         'is_required' => 'Povinné',
         'is_visible' => 'Zobrazit zákazníkům',
         'is_visible_help' => 'V tabulce parametrů na stránce produktu.',
@@ -231,6 +238,8 @@ return [
         'preorders_help' => 'Prodej před naskladněním s předpokládaným datem dostupnosti a automatickým uvolněním objednávek při naskladnění.',
         'digital' => 'Digitální produkty',
         'digital_help' => 'Soubor ke stažení po zaplacení s omezeným počtem stažení a platností odkazu.',
+        'comparison' => 'Porovnávač produktů',
+        'comparison_help' => 'Porovnání produktů vedle sebe se zvýrazněním rozdílů, výběrem vlastností a sdílením.',
     ],
 
     'product_type' => [

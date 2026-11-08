@@ -202,6 +202,13 @@ return [
         'options' => 'Options',
         'option_label' => 'Option',
         'add_option' => 'Add option',
+        'group' => 'Group',
+        'group_help' => 'E.g. “Dimensions” or “Performance”. Properties are grouped in the comparison.',
+        'compare_best' => 'Best value in comparison',
+        'compare_best_help' => 'The best value among compared products is highlighted.',
+        'compare_best_max' => 'Highest (e.g. power, capacity)',
+        'compare_best_min' => 'Lowest (e.g. weight, consumption)',
+        'compare_best_none' => 'Do not highlight',
         'is_required' => 'Required',
         'is_visible' => 'Show to customers',
         'is_visible_help' => 'In the specifications table on the product page.',
@@ -231,6 +238,8 @@ return [
         'preorders_help' => 'Selling before stock arrives with an expected availability date and automatic release of orders when stock arrives.',
         'digital' => 'Digital products',
         'digital_help' => 'A downloadable file after payment with a limited number of downloads and link validity.',
+        'comparison' => 'Product comparison',
+        'comparison_help' => 'Side-by-side product comparison with highlighted differences, property selection and sharing.',
     ],
 
     'product_type' => [

@@ -1,0 +1,19 @@
+{
+    "name": "slovenskaposta",
+    "version": "0.1.0",
+    "title": { "sk": "Slovenská pošta", "cs": "Slovenská pošta", "en": "Slovak Post" },
+    "description": {
+        "sk": "Balíky a Expres kuriér cez API elektronického podacieho hárku (ePH), štítky a dobierka.",
+        "cs": "Balíky a Expres kurýr přes API elektronického podacího archu (ePH), štítky a dobírka.",
+        "en": "Parcels and Express courier via the electronic posting sheet (ePH) API, labels and COD."
+    },
+    "provider": "Modules\\SlovenskaPosta\\SlovenskaPostaServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "shipping": "^0.4" }
+    },
+    "permissions": ["settings.manage"]
+}

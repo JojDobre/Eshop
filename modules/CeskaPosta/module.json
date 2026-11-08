@@ -1,0 +1,19 @@
+{
+    "name": "ceskaposta",
+    "version": "0.1.0",
+    "title": { "sk": "Česká pošta", "cs": "Česká pošta", "en": "Czech Post" },
+    "description": {
+        "sk": "Balík Do ruky a Balíkovna cez B2B API Českej pošty, štítky, sledovanie a dobierka.",
+        "cs": "Balík Do ruky a Balíkovna přes B2B API České pošty, štítky, sledování a dobírka.",
+        "en": "Parcel to the door and Balíkovna via the Czech Post B2B API, labels, tracking and COD."
+    },
+    "provider": "Modules\\CeskaPosta\\CeskaPostaServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "shipping": "^0.4" }
+    },
+    "permissions": ["settings.manage"]
+}

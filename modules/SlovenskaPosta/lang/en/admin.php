@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'carrier' => 'Slovak Post',
+    'section_keys' => 'Electronic posting sheet API access',
+    'section_keys_help' => 'Find the credentials at mojezasielky.posta.sk under Viac → Notifikácie a API → Web ePH API. The sender is taken from Settings → Company.',
+    'user_id' => 'User ID (userId)',
+    'api_key' => 'API key',
+    'section_shipments' => 'Shipments',
+    'parcel_category' => 'Shipment type',
+    'categories' => ['b' => 'Parcel', 'ek' => 'Express courier', 'zb' => 'Contract customers'],
+    'payment_type' => 'Postage payment',
+    'payments' => [
+        'h' => 'Cash at posting',
+        'up' => 'Postage credit',
+        'fa' => 'Invoice',
+        'pr' => 'Bank transfer',
+        'vsz' => 'Franking machine',
+        'ol' => 'Online',
+    ],
+    'iban' => 'IBAN for cash on delivery',
+    'iban_help' => 'Empty = IBAN from Settings → Company.',
+    'contract' => 'I have a contract with Slovak Post',
+    'insure' => 'Insure parcels for the order value',
+    'insure_help' => 'Insurance is charged according to the Slovak Post price list.',
+    'auto_register' => 'Submit the sheet to the post office immediately',
+    'auto_register_help' => 'Off: the sheet stays as a draft in Moje zásielky and you submit it yourself.',
+    'missing_credentials' => 'Slovak Post: user ID or API key is missing (Settings → Slovak Post).',
+    'missing_iban' => 'Slovak Post: IBAN for cash on delivery is missing (Settings → Company).',
+    'unauthorized' => 'Slovak Post: invalid user ID or API key.',
+    'unavailable' => 'Slovak Post: the service is not responding, try again later.',
+    'invalid_response' => 'Slovak Post: invalid server response.',
+];

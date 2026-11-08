@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Modules\Orders\Models\Shipment;
 use Modules\Orders\Shipping\CarrierHealth;
 use Modules\Shipping\Carriers\CarrierException;
+use Modules\Shipping\Carriers\SeparateLabels;
 use Throwable;
 use ZipArchive;
 
@@ -37,6 +38,14 @@ class PrintShipmentLabels
             // Jedna zásielka so štítkom uloženým pri vytvorení – netreba volať kuriéra.
             if ($group->count() === 1 && $group->first()->label_path && Storage::disk(CreateShipment::DISK)->exists($group->first()->label_path)) {
                 $files[$carrierKey] = Storage::disk(CreateShipment::DISK)->get($group->first()->label_path);
+
+                continue;
+            }
+
+            if ($carrier instanceof SeparateLabels) {
+                foreach ($group as $shipment) {
+                    $files[$carrierKey.'-'.($shipment->tracking_number ?: $shipment->id)] = $this->singleLabel($shipment, $carrierKey);
+                }
 
                 continue;
             }
@@ -77,5 +86,28 @@ class PrintShipmentLabels
         $zip->close();
 
         return ['path' => $path, 'name' => 'stitky-'.$stamp.'.zip'];
+    }
+
+    /**
+     * Štítok jednej zásielky: uložený pri vytvorení, inak od kuriéra.
+     *
+     * @throws CarrierException
+     */
+    private function singleLabel(Shipment $shipment, string $carrierKey): string
+    {
+        if ($shipment->label_path && Storage::disk(CreateShipment::DISK)->exists($shipment->label_path)) {
+            return (string) Storage::disk(CreateShipment::DISK)->get($shipment->label_path);
+        }
+
+        try {
+            $pdf = $shipment->carrierService()->labels([(string) $shipment->carrier_reference]);
+            $this->health->success($carrierKey);
+
+            return $pdf;
+        } catch (Throwable $e) {
+            $this->health->failure($carrierKey, $e);
+
+            throw $e instanceof CarrierException ? $e : new CarrierException($e->getMessage(), CarrierException::UNAVAILABLE, $e);
+        }
     }
 }

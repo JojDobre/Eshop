@@ -94,11 +94,18 @@ class ShopSize
     {
         try {
             $settings = app(GeneralSettings::class);
+            $pending = $settings->shop_size_pending;
+        } catch (Throwable) {
+            // Nastavenia ešte nie sú zmigrované (nová verzia nahratá, aktualizácia databázy čaká).
+            // Nič sa nedeje, pokus sa zopakuje pri ďalšej požiadavke.
+            return;
+        }
 
-            if (! $settings->shop_size_pending) {
-                return;
-            }
+        if (! $pending) {
+            return;
+        }
 
+        try {
             $settings->shop_size_pending = false;
             $settings->save();
             $this->apply($settings->shop_size);

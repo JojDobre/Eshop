@@ -216,7 +216,11 @@ Dodávané šablóny: **Default**, **Fresh** (odvodená, iné rozloženie hlavi�
 
 - **Kuriér** = modul s rozhraním `Modules\Shipping\Carriers\ShippingCarrier` (vytvorenie zásielky, štítky,
   sledovanie, adresa sledovania, test spojenia, výdajné miesta), registrovaný v `CarrierRegistry`.
-  Moduly: `Packeta` (REST/XML), `Gls` (MyGLS JSON), `Dpd` (sledovacie číslo), v jadre `ManualCarrier`.
+  Moduly: `Packeta` (REST/XML), `Gls` (MyGLS JSON), `Dpd` (sledovacie číslo), `CeskaPosta` (B2B ZSKService,
+  podpis HMAC-SHA256, pobočky Balíkovny z verejného XML čítaného po riadkoch), `SlovenskaPosta` (REST API ePH;
+  každá zásielka má vlastný podací hárok, referencia `idHárku/idZásielky`), v jadre `ManualCarrier`.
+  Kuriér, ktorý vie vrátiť štítok iba pre jednu zásielku, označí rozhranie `SeparateLabels` – hromadná tlač
+  potom pribalí štítky do ZIP samostatne.
 - **Výdajné miesta:** typ dopravy `PickupPoint`. Kuriér určí výber cez `pickupSelector()`: vlastné okno
   (JavaScript `window.eshopPickupWidgets[nazov]`, napr. mapa Packeta) alebo vyhľadávanie v tabuľke
   `pickup_points` (GLS, denná aktualizácia `SyncPickupPoints`). Zvolené miesto je v `orders.pickup_point`.

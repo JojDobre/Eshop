@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'carrier' => 'Slovenská pošta',
+    'section_keys' => 'Prístup k API elektronického podacieho hárku',
+    'section_keys_help' => 'Údaje získate na mojezasielky.posta.sk v časti Viac → Notifikácie a API → Web ePH API. Odosielateľ sa vyplní z Nastavenia → Firma.',
+    'user_id' => 'ID používateľa (userId)',
+    'api_key' => 'API kľúč',
+    'section_shipments' => 'Zásielky',
+    'parcel_category' => 'Druh zásielky',
+    'categories' => ['b' => 'Balík', 'ek' => 'Expres kuriér', 'zb' => 'Zmluvní zákazníci'],
+    'payment_type' => 'Úhrada poštovného',
+    'payments' => [
+        'h' => 'V hotovosti pri podaní',
+        'up' => 'Úver poštovného',
+        'fa' => 'Faktúra',
+        'pr' => 'Prevodom',
+        'vsz' => 'Výplatný stroj',
+        'ol' => 'Online',
+    ],
+    'iban' => 'IBAN pre dobierky',
+    'iban_help' => 'Prázdne = IBAN z Nastavenia → Firma.',
+    'contract' => 'Mám zmluvu so Slovenskou poštou',
+    'insure' => 'Poistiť zásielky na hodnotu objednávky',
+    'insure_help' => 'Poistenie je spoplatnené podľa cenníka pošty.',
+    'auto_register' => 'Hárok hneď odoslať pošte',
+    'auto_register_help' => 'Vypnuté: hárok zostane v Moje zásielky ako koncept a odošlete ho sami.',
+    'missing_credentials' => 'Slovenská pošta: chýba ID používateľa alebo API kľúč (Nastavenia → Slovenská pošta).',
+    'missing_iban' => 'Slovenská pošta: pre dobierku chýba IBAN (Nastavenia → Firma).',
+    'unauthorized' => 'Slovenská pošta: nesprávne ID používateľa alebo API kľúč.',
+    'unavailable' => 'Slovenská pošta: služba momentálne neodpovedá, skúste to neskôr.',
+    'invalid_response' => 'Slovenská pošta: neplatná odpoveď servera.',
+];

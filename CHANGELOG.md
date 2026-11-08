@@ -9,6 +9,10 @@
 - **Packeta:** výdajné miesta a Z-BOXy s mapou Packeta, doručenie domov, dobierka, štítky, sledovanie.
 - **GLS** (MyGLS): ParcelShopy a GLS boxy (zoznam sa aktualizuje každý deň), doručenie domov s upozornením
   príjemcu, dobierka, štítky, sledovanie, testovacie prostredie.
+- **Česká pošta** (B2B API): Balík Do ruky a Balíkovna (pošty, partnerské pobočky a BOXy, zoznam sa
+  aktualizuje každý deň), dobierka, štítky aj hromadne, sledovanie stavu, testovacie prostredie.
+- **Slovenská pošta** (API ePH): balík alebo Expres kuriér na adresu, dobierka na účet, poistenie, štítok,
+  automatické odoslanie podacieho hárku a odkaz na sledovanie zásielky.
 - **DPD:** sledovacie číslo z portálu DPD a odkaz na sledovanie (API DPD nie je verejne dokumentované).
 - **Vlastný kuriér** bez napojenia so sledovacím číslom a vzorom adresy sledovania (SPS, pošta, vlastný rozvoz).
 - **Doprava:** nový typ „výdajné miesto alebo box“, skutočné náklady na dopravu, vlastný rozvoz podľa PSČ,

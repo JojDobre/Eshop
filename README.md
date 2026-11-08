@@ -4,7 +4,7 @@ Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, slu
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
 > **Stav:** krok 4d – doprava a obsah (0.9.0). Obchod predáva vo viacerých jazykoch a menách, posiela
-> zásielky cez Packetu a GLS so štítkami a sledovaním, má blog prepojený s produktmi a vzhľad skladaný
+> zásielky cez Packetu, GLS a poštu so štítkami a sledovaním, má blog prepojený s produktmi a vzhľad skladaný
 > z blokov a šablón. Funkcie sa zapínajú podľa veľkosti obchodu.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -12,7 +12,7 @@ Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablón
 
 **Doprava a obsah (krok 4d)**
 
-- **Kuriéri Packeta a GLS:** výdajné miesta a boxy v pokladni, zásielky a štítky (aj hromadne), sledovanie,
+- **Kuriéri Packeta, GLS, Česká pošta a Slovenská pošta:** výdajné miesta a boxy v pokladni, zásielky a štítky (aj hromadne), sledovanie,
   dobierka; **DPD** a vlastný kuriér so sledovacím číslom.
 - **Doprava:** vlastný rozvoz podľa PSČ, náklady na dopravu, doprava len pre vybrané typy produktov.
 - **Blog** s blokovým editorom, plánovaním, komentármi, RSS a prepojením na produkty.

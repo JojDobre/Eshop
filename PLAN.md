@@ -298,7 +298,7 @@ Vývoj je rozdelený do piatich krokov. Po každom kroku existuje funkčný celo
 | **4a – Jazyky a meny** | SK, CZ, EN a ďalšie, preklady všetkého obsahu, **preklady cez externé API**, meny s ručnou cenou na produkte, kurzy, DPH podľa krajín, OSS |
 | **4b – Typy produktov a sklad** | Typy produktov, vlastné polia aj pre zákazníkov, objednávky a ďalšie objekty, **predobjednávky**, **šarže**, **expirácia**, viac skladov, balíčky, doplnkové voľby |
 | **4c – Moduly a šablóny** | Veľkosť obchodu a zapínanie funkcií, kompletný systém šablón (odvodené šablóny, prispôsobenie so živým náhľadom, bloky, nahratie ZIP), druhá šablóna a šablóna „starter" |
-| **4d – Doprava a obsah** | Kuriéri Packeta, GLS a DPD, blog s prepojením na produkty |
+| **4d – Doprava a obsah** | Kuriéri Packeta, GLS, DPD, Česká a Slovenská pošta, blog s prepojením na produkty |
 | **4e – Predaj a marketing** | Zákaznícke skupiny a B2B ceny, poukážky, hodnotenia, porovnávač 2.0, newsletter, opustené košíky, XML feedy, meracie kódy, pokročilé SEO |
 | **4f – Rezervácie, dáta a doklady** | Rezervácie, import a export, Pohoda a Money S3, vrátenie tovaru a reklamácie s protokolmi |
 
@@ -641,6 +641,8 @@ Každý kuriér je modul s rozhraním `ShippingCarrier`. V administrácii stač�
 |---|---|
 | **Packeta** | Mapa výdajných miest a Z-BOXov, doručenie domov, vytvorenie zásielky, štítky v PDF, sledovanie zásielky, dobierka |
 | **GLS** (MyGLS API) | Doručenie domov, ParcelShopy a GLS boxy, štítky, sledovanie, dobierka |
+| **Česká pošta** (B2B API) | Balík Do ruky, Balíkovna (pošty, partneri, BOXy), štítky, sledovanie, dobierka |
+| **Slovenská pošta** (API ePH) | Balík a Expres kuriér na adresu, štítky, odkaz na sledovanie, dobierka |
 | **DPD** | Doručenie domov, Pickup body a boxy, štítky, sledovanie, dobierka |
 | **Vlastná doprava** | Osobný odber (viac predajní s otváracími hodinami), vlastný rozvoz (podľa PSČ), kuriér bez napojenia |
 
@@ -651,7 +653,7 @@ Každý kuriér je modul s rozhraním `ShippingCarrier`. V administrácii stač�
 - **Hromadné vytvorenie zásielok a tlač štítkov** naraz
 - Sledovacie číslo sa automaticky pošle zákazníkovi. Stav zásielky sa pravidelne kontroluje a objednávka sa sama označí ako doručená.
 - Pri výpadku API kuriéra sa postupuje podľa kapitoly 2.6
-- Ďalší kuriéri (SPS, Slovenská pošta, Česká pošta, PPL, …) sa dajú doplniť ako nové moduly
+- Ďalší kuriéri (SPS, PPL, …) sa dajú doplniť ako nové moduly
 
 ---
 

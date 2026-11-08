@@ -13,6 +13,9 @@ final class Theme
      * @param  array<string, array<string, mixed>>  $settings  Nastavenia šablóny: kľúč => {type, label, default, options}.
      * @param  array<string, array<string, string>>  $menus  Miesta na ponuky: kľúč => názov podľa jazyka.
      * @param  array<string, array<string, string>>  $areas  Oblasti na bloky: kľúč => názov podľa jazyka.
+     * @param  list<string>  $vite  Vstupy Vite (iba šablóny dodávané s obchodom, skompilované pri vydaní).
+     * @param  list<string>  $stylesheets  Hotové CSS súbory v assets/ (pre nahraté šablóny, bez kompilácie).
+     * @param  list<string>  $scripts  Hotové JS súbory v assets/.
      */
     public function __construct(
         public readonly string $name,
@@ -27,6 +30,9 @@ final class Theme
         public readonly array $settings = [],
         public readonly array $menus = [],
         public readonly array $areas = [],
+        public readonly array $vite = [],
+        public readonly array $stylesheets = [],
+        public readonly array $scripts = [],
     ) {}
 
     public static function fromFile(string $manifestPath): ?self
@@ -53,6 +59,9 @@ final class Theme
             settings: self::settings($data['settings'] ?? []),
             menus: self::labels($data['menus'] ?? []),
             areas: self::labels($data['areas'] ?? []),
+            vite: self::paths($data['vite'] ?? []),
+            stylesheets: self::paths($data['stylesheets'] ?? []),
+            scripts: self::paths($data['scripts'] ?? []),
         );
     }
 
@@ -108,6 +117,14 @@ final class Theme
         }
 
         return $settings;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private static function paths(mixed $value): array
+    {
+        return array_values(array_filter(is_array($value) ? $value : [], fn ($path) => is_string($path) && $path !== '' && ! str_contains($path, '..')));
     }
 
     /**

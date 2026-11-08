@@ -36,7 +36,14 @@
     @php($themeRadius = ['pill' => '9999px', 'square' => '0', 'rounded' => '0.5rem'][$themeOptions->get('button_style', 'rounded')] ?? '0.5rem')
     @php($themeFont = ['system' => "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif", 'serif' => "Georgia, 'Times New Roman', serif"][$themeOptions->get('font', 'inter')] ?? null)
     <style>:root { --brand-primary: {{ $branding->primaryColor() }}; --brand-primary-foreground: {{ $branding->primaryForegroundColor() }}; --theme-button-radius: {{ $themeRadius }};@if ($themeFont) --theme-font: {!! $themeFont !!};@endif }</style>
-    @vite(['themes/default/assets/css/theme.css', 'themes/default/assets/js/theme.js'])
+    {{-- Štýly šablóny: skompilované (Vite) pre dodávané šablóny, hotové súbory pre nahraté šablóny. --}}
+    @vite(app(\App\Core\Themes\ThemeManager::class)->viteEntries() ?: ['themes/default/assets/css/theme.css', 'themes/default/assets/js/theme.js'])
+    @foreach (app(\App\Core\Themes\ThemeManager::class)->assetUrls()['styles'] as $themeStylesheet)
+        <link rel="stylesheet" href="{{ $themeStylesheet }}">
+    @endforeach
+    @foreach (app(\App\Core\Themes\ThemeManager::class)->assetUrls()['scripts'] as $themeScript)
+        <script src="{{ $themeScript }}" defer></script>
+    @endforeach
     @stack('head')
     @isset($cookieConsent)
         {{-- Kódy analytiky a marketingu iba so súhlasom zákazníka (vkladá ich obchodník v administrácii). --}}

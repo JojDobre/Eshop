@@ -35,6 +35,10 @@
                         <x-filament::link :href="url('/').'?theme_preview='.$theme->name" target="_blank" size="sm">{{ __('admin.themes.preview') }}</x-filament::link>
                     @endunless
                     <x-filament::link :href="\App\Filament\Pages\CustomizeTheme::getUrl(['theme' => $theme->name])" size="sm">{{ __('admin.themes.customize') }}</x-filament::link>
+                    @if (\App\Filament\Pages\ThemeEditor::canAccess() && app(\App\Core\Themes\ThemeFiles::class)->canEdit($theme))
+                        <x-filament::link :href="\App\Filament\Pages\ThemeEditor::getUrl(['theme' => $theme->name])" size="sm">{{ __('admin.themes.edit_files') }}</x-filament::link>
+                    @endif
+                    {{ ($this->checkAction)(['theme' => $theme->name]) }}
                     {{ ($this->exportAction)(['theme' => $theme->name]) }}
                     @if ($item['deletable'])
                         {{ ($this->deleteAction)(['theme' => $theme->name]) }}

@@ -39,6 +39,9 @@ return [
 
     'default_theme' => 'default',
 
+    // Editor súborov šablóny v administrácii. Hodnota false ho vypne úplne (nedá sa zapnúť ani v nastaveniach).
+    'theme_editor' => (bool) env('ESHOP_THEME_EDITOR', true),
+
     /*
     |--------------------------------------------------------------------------
     | Jazyky, meny a krajiny

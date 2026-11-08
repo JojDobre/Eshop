@@ -3,6 +3,8 @@
 namespace App\Filament\Pages;
 
 use App\Core\Themes\Theme;
+use App\Core\Themes\ThemeChecker;
+use App\Core\Themes\ThemeFiles;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemePackages;
 use App\Filament\AdminGroup;
@@ -11,6 +13,8 @@ use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -77,6 +81,27 @@ class Themes extends Page
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('createChild')
+                ->label(__('admin.themes.create_child'))
+                ->icon(Heroicon::OutlinedDocumentDuplicate)
+                ->color('gray')
+                ->modalDescription(__('admin.themes.create_child_help'))
+                ->schema([
+                    Select::make('parent')->label(__('admin.themes.parent'))
+                        ->options(fn () => collect(app(ThemeManager::class)->all())->map(fn (Theme $theme) => $theme->title())->all())
+                        ->default(fn () => app(ThemeManager::class)->activeName())->required()->selectablePlaceholder(false),
+                    TextInput::make('title')->label(__('admin.themes.child_title'))->required()->maxLength(80),
+                    TextInput::make('name')->label(__('admin.themes.child_name'))->helperText(__('admin.themes.child_name_help'))
+                        ->required()->maxLength(40)->rule('regex:/^[a-z][a-z0-9-]*$/'),
+                ])
+                ->action(function (array $data): void {
+                    try {
+                        $theme = app(ThemeFiles::class)->createChild(app(ThemeManager::class)->find($data['parent']) ?? abort(404), $data['name'], $data['title']);
+                        Notification::make()->success()->title(__('admin.themes.child_created', ['theme' => $theme->title()]))->send();
+                    } catch (Throwable $e) {
+                        Notification::make()->danger()->title($e->getMessage())->send();
+                    }
+                }),
             Action::make('upload')
                 ->label(__('admin.themes.upload'))
                 ->icon(Heroicon::OutlinedArrowUpTray)
@@ -131,6 +156,19 @@ class Themes extends Page
 
                 Notification::make()->success()->title(__('admin.themes.activated', ['theme' => $theme->title()]))->send();
             });
+    }
+
+    public function checkAction(): Action
+    {
+        return Action::make('check')
+            ->label(__('admin.themes.check'))
+            ->link()->size('sm')
+            ->modalHeading(fn (array $arguments) => __('admin.themes.check_title', ['theme' => app(ThemeManager::class)->find($arguments['theme'] ?? '')?->title()]))
+            ->modalContent(fn (array $arguments) => view('filament.pages.theme-check', [
+                'results' => ($theme = app(ThemeManager::class)->find($arguments['theme'] ?? '')) ? app(ThemeChecker::class)->check($theme) : [],
+            ]))
+            ->modalSubmitAction(false)
+            ->modalCancelActionLabel(__('admin.themes.close'));
     }
 
     public function exportAction(): Action

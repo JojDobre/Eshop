@@ -22,6 +22,7 @@ use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
+use App\Core\Themes\ThemeFiles;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Core\Themes\ThemePackages;
@@ -85,6 +86,7 @@ class EshopServiceProvider extends ServiceProvider
         ));
 
         $this->app->scoped(ThemeOptions::class);
+        $this->app->singleton(ThemeFiles::class, fn ($app) => new ThemeFiles($app->make(ThemeManager::class), storage_path('app/private/theme-backups')));
         $this->app->singleton(ThemePackages::class, fn ($app) => new ThemePackages($app->make(ThemeManager::class), (string) config('eshop.paths.themes')));
         $this->app->singleton(MenuLinkTypes::class);
         $this->app->singleton(BlockTypes::class, function () {

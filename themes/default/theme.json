@@ -158,5 +158,9 @@
             "cs": "Nad patičkou (na všech stránkách)",
             "en": "Above the footer (on all pages)"
         }
-    }
+    },
+    "vite": [
+        "themes/default/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ]
 }

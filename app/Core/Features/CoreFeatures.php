@@ -70,5 +70,23 @@ final class CoreFeatures
             },
             settingsUrl: fn () => url('/admin/settings/currencies'),
         ));
+
+        $toggles->group('appearance', fn () => __('admin.features.groups.appearance'));
+        $toggles->register(new FeatureToggle(
+            key: 'core.theme_editor',
+            group: 'appearance',
+            label: fn () => __('admin.theme_editor.feature'),
+            description: fn () => __('admin.theme_editor.feature_help'),
+            isEnabled: fn () => config('eshop.theme_editor') && app(GeneralSettings::class)->theme_editor_enabled,
+            set: function (bool $enabled): void {
+                if ($enabled && ! config('eshop.theme_editor')) {
+                    throw new RuntimeException(__('admin.theme_editor.disabled_by_config'));
+                }
+
+                $settings = app(GeneralSettings::class);
+                $settings->theme_editor_enabled = $enabled;
+                $settings->save();
+            },
+        ));
     }
 }

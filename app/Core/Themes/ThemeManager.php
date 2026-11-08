@@ -215,6 +215,44 @@ class ThemeManager
     }
 
     /**
+     * Vstupy Vite pre aktívnu šablónu (prvá šablóna v reťazci, ktorá ich má).
+     *
+     * @return list<string>
+     */
+    public function viteEntries(): array
+    {
+        foreach ($this->chain() as $theme) {
+            if ($theme->vite !== []) {
+                return $theme->vite;
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * Hotové CSS a JS súbory všetkých šablón v reťazci (od rodiča), ako adresy.
+     *
+     * @return array{styles: list<string>, scripts: list<string>}
+     */
+    public function assetUrls(): array
+    {
+        $urls = ['styles' => [], 'scripts' => []];
+
+        foreach (array_reverse($this->chain()) as $theme) {
+            foreach ($theme->stylesheets as $path) {
+                $urls['styles'][] = theme_asset($path, $theme->name);
+            }
+
+            foreach ($theme->scripts as $path) {
+                $urls['scripts'][] = theme_asset($path, $theme->name);
+            }
+        }
+
+        return $urls;
+    }
+
+    /**
      * Adresáre s prekladmi šablóny od najvzdialenejšieho rodiča po aktívnu šablónu
      * (preklady odvodenej šablóny prepíšu preklady rodiča).
      *

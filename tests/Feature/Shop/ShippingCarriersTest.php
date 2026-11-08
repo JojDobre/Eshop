@@ -89,7 +89,12 @@ class ShippingCarriersTest extends ShopTestCase
         $this->checkout($method, ['pickup_point' => ['code' => '4321', 'name' => 'Z-BOX Námestie', 'city' => 'Nitra', 'country' => 'sk', 'carrier_code' => 'ZB-1']]);
 
         $order = Order::query()->sole();
-        $this->assertSame(['code' => '4321', 'name' => 'Z-BOX Námestie', 'city' => 'Nitra', 'country' => 'SK', 'carrier_code' => 'ZB-1'], $order->pickup_point);
+        // MySQL ukladá kľúče JSON v inom poradí, porovnávajú sa iba hodnoty.
+        $expected = ['code' => '4321', 'name' => 'Z-BOX Námestie', 'city' => 'Nitra', 'country' => 'SK', 'carrier_code' => 'ZB-1'];
+        $actual = $order->pickup_point;
+        ksort($expected);
+        ksort($actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function test_shipping_restrictions_by_product_type_and_zip(): void

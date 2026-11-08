@@ -14,10 +14,10 @@
     "provider": "Modules\\Orders\\OrdersServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.7",
+        "eshop": "^0.8",
         "modules": {
             "storefront": "^0.3",
-            "catalog": "^0.5",
+            "catalog": "^0.6",
             "cart": "^0.3",
             "shipping": "^0.3",
             "payments": "^0.4",

@@ -3,12 +3,19 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4b – rozšírený katalóg a sklad (0.7.0). Obchod predáva vo viacerých jazykoch a menách,
-> s DPH podľa krajín EÚ, a zvládne aj potraviny so šaržami a expiráciou, balíčky, predobjednávky
-> či digitálne produkty – každá z týchto funkcií sa zapína v nastaveniach.
+> **Stav:** krok 4c – veľkosť obchodu a šablóny (0.8.0). Obchod predáva vo viacerých jazykoch a menách,
+> zvládne šarže, balíčky, predobjednávky či digitálne produkty a vzhľad sa skladá z blokov a šablón
+> s prispôsobením v živom náhľade. Funkcie sa zapínajú podľa veľkosti obchodu.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Veľkosť obchodu a šablóny (krok 4c)**
+
+- **Veľkosť obchodu** (malý, stredný, veľký, vlastný) zapne vhodné funkcie.
+- **Šablóny:** náhľad pred aktiváciou, nahratie a export ZIP, odvodené šablóny, kontrola, editor súborov.
+- **Prispôsobenie so živým náhľadom**, **bloky** na úvodnej stránke, stránkach a v kategóriách, **ponuky**.
+- Šablóny **Default**, **Fresh** a **Starter** (pre vývojárov).
 
 **Rozšírený katalóg a sklad (krok 4b)** – zapína sa v Nastavenia → Funkcie obchodu
 

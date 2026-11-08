@@ -176,25 +176,47 @@ modules/Storefront/
 
 ```
 themes/default/
-  theme.json        názov, verzia, rodič (parent), kompatibilita
+  theme.json        názov, verzia, rodič (parent), kompatibilita, settings, menus, areas, vite/stylesheets
+  screenshot.png    náhľad v administrácii
   layouts/          view('theme::layouts.app')
   templates/        view('theme::templates.home')
   partials/
-  blocks/
-  assets/           CSS a JS (zostavuje Vite pri vytváraní balíka)
+  blocks/           vzhľad blokov: view('theme::blocks.banner')
+  assets/           CSS a JS (dodávané šablóny zostavuje Vite, nahraté majú hotové súbory)
   lang/             __('theme::shop.…')
   modules/{modul}/  prepísanie šablón modulu, napr. modules/storefront/…
 ```
 
-- Aktívna šablóna sa vyberá v administrácii (Nastavenia → Obchod).
-- Súbory sa hľadajú v poradí: aktívna šablóna → jej rodič → … → `default`.
-  **Odvodená šablóna** tak stačí, keď obsahuje iba zmenené súbory: `"parent": "default"` v `theme.json`.
-- Šablóny dostávajú premenné `$shop` (GeneralSettings), `$branding` (BrandingSettings) a `$company`
-  (CompanySettings).
-- Hlavná farba obchodu je v CSS premennej `--brand-primary` (Tailwind: `bg-primary`, `text-primary`)
-  a čitateľná farba textu na nej je v `--brand-primary-foreground`.
-- Rozšírenie šablóny bez vlastného systému hákov: Blade `@stack` / `@push` (napr. `head`, `scripts`,
-  `header-actions`), komponenty a view composers.
+Dodávané šablóny: **Default**, **Fresh** (odvodená, iné rozloženie hlavičky, karty a úvodu) a **Starter**
+(kostra odvodenej šablóny s dokumentáciou v `themes/starter/README.md`).
+
+- **Správa** (Obsah → Vzhľad, `App\Filament\Pages\Themes`): aktivácia, náhľad pred aktiváciou iba pre
+  administrátora (`?theme_preview=nazov`, middleware `ApplyThemePreview`), nahratie ZIP s kontrolou
+  (`ThemePackages`), export ZIP, odstránenie, vytvorenie odvodenej šablóny, kontrola (`ThemeChecker`).
+- **Reťazec šablón:** aktívna → rodič → … → `default`. Pohľady (`theme::`) aj preklady (`ThemeTranslationLoader`)
+  sa hľadajú v celom reťazci, odvodená šablóna obsahuje iba zmenené súbory.
+- **Nastavenia šablóny** (`ThemeOptions`): definície v `theme.json` (`color`, `select`, `toggle`, `text`,
+  `number`, `image`), hodnoty v tabuľke `theme_settings` pre každú šablónu; v šablóne `$themeOptions->get()`.
+  Prispôsobenie so živým náhľadom (`CustomizeTheme`) ukladá neuložené hodnoty iba do relácie administrátora.
+- **Výber šablóny podľa obsahu:** `ThemeManager::template('product', ['product-{adresa}', 'product-type-{id}'])`.
+- **Ponuky** (`App\Core\Menus`): miesta určuje `theme.json` (`menus`), položky v `menu_items`, typy odkazov
+  (stránka, kategória, produkt) registrujú moduly cez `MenuLinkTypes`; v šablóne `$menus->items('header')`.
+- **Bloky** (`App\Core\Blocks\BlockTypes`): typy registrujú jadro (`CoreBlocks`) a moduly (`CatalogBlocks`),
+  vzhľad určuje šablóna (`blocks/{typ}.blade.php`). Úvodná stránka a oblasti šablóny (`areas`) v `block_layouts`,
+  stránky a kategórie v stĺpci `blocks`; všetko v každom jazyku. Vykreslenie `render_blocks()`, `block_area()`.
+- **Súbory šablóny** bez kompilácie a symbolických odkazov: `theme_asset('custom.css')` (trasa `/theme-assets`).
+- **Editor súborov** (`ThemeEditor`, `ThemeFiles`): iba hlavný administrátor, predvolene vypnutý,
+  `ESHOP_THEME_EDITOR=false` ho vypne úplne; záloha pred každou zmenou, kontrola syntaxe, predvolená šablóna
+  sa neupravuje.
+- Šablóny dostávajú premenné `$shop`, `$branding`, `$company`, `$themeOptions` a `$menus`.
+- Hlavná farba obchodu je v CSS premennej `--brand-primary` (Tailwind: `bg-primary`, `text-primary`).
+- Rozšírenie šablóny bez vlastného systému hákov: Blade `@stack` / `@push`, komponenty a view composers.
+
+## Veľkosť obchodu
+
+`App\Core\Features\ShopSize`: predvoľby funkcií pre malý, stredný a veľký obchod. Každý `FeatureToggle`
+(`sizes`) a voliteľný modul (`"sizes"` v `module.json`) určí, či sa pri veľkosti zapne alebo vypne; bez
+predvoľby je funkcia voliteľná. Zmena veľkosti najprv ukáže prehľad zmien, ručná zmena funkcie = „vlastný“.
 
 ## Oprávnenia
 

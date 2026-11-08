@@ -1,5 +1,22 @@
 # Prehľad zmien
 
+## 0.8.0 – Veľkosť obchodu a šablóny (krok 4c)
+
+- **Veľkosť obchodu:** malý, stredný, veľký alebo vlastný – v inštalátore aj v Nastavenia → Funkcie obchodu,
+  s prehľadom, čo sa zapne a vypne. Každá funkcia sa dá ďalej zapnúť alebo vypnúť samostatne.
+- **Obsah → Vzhľad:** zoznam šablón s náhľadom, aktivácia, **náhľad pred aktiváciou** (vidí ho iba
+  administrátor), nahratie a export ZIP, vytvorenie **odvodenej šablóny**, kontrola šablóny (lišta cookies,
+  právne odkazy, prístupnosť).
+- **Prispôsobenie so živým náhľadom:** vľavo nastavenia šablóny, vpravo stránka, ktorá sa mení hneď pri úprave.
+- **Bloky:** úvodná stránka, stránky, kategórie a oblasti šablóny sa skladajú z blokov (banner, produkty,
+  kategórie, text, obrázok, video, výhody obchodu, vlastný HTML), v každom jazyku.
+- **Ponuky (menu)** v hlavičke a päte: vlastné odkazy, stránky, kategórie a produkty s podpoložkami.
+- **Výber šablóny podľa obsahu** (napr. vlastná šablóna pre jednu kategóriu alebo typ produktu)
+  a preklady šablóny, ktoré odvodená šablóna dedí od rodiča.
+- **Editor súborov šablóny** so zálohami (iba hlavný administrátor, predvolene vypnutý).
+- Nové šablóny **Fresh** (výrazné vyhľadávanie a lišta kategórií) a **Starter** (kostra pre vývojárov).
+- Výber šablóny sa presunul z Nastavenia → Obchod do Obsah → Vzhľad.
+
 ## 0.7.0 – Rozšírený katalóg a sklad (krok 4b)
 
 Všetky novinky sa zapínajú v **Nastavenia → Funkcie obchodu** (predvolene vypnuté) a ich parametre

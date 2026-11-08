@@ -1,0 +1,39 @@
+{
+    "name": "starter",
+    "version": "0.1.0",
+    "title": {
+        "sk": "Starter (pre vývojárov)",
+        "cs": "Starter (pro vývojáře)",
+        "en": "Starter (for developers)"
+    },
+    "description": {
+        "sk": "Minimálna kostra odvodenej šablóny s dokumentáciou. Skopírujte ju, premenujte a upravte iba to, čo potrebujete.",
+        "cs": "Minimální kostra odvozené šablony s dokumentací. Zkopírujte ji, přejmenujte a upravte jen to, co potřebujete.",
+        "en": "A minimal child theme skeleton with documentation. Copy it, rename it and change only what you need."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "requires": {
+        "eshop": "^0.8"
+    },
+    "stylesheets": [
+        "custom.css"
+    ],
+    "settings": {
+        "show_note": {
+            "type": "toggle",
+            "group": "general",
+            "label": {
+                "sk": "Ukážkové nastavenie",
+                "cs": "Ukázkové nastavení",
+                "en": "Example setting"
+            },
+            "help": {
+                "sk": "V šablóne ho čítate cez $themeOptions->get('show_note').",
+                "cs": "V šabloně ho čtete přes $themeOptions->get('show_note').",
+                "en": "Read it in templates via $themeOptions->get('show_note')."
+            },
+            "default": false
+        }
+    }
+}

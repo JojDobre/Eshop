@@ -1,6 +1,6 @@
 {
     "name": "returns",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "title": { "sk": "Vrátenie a reklamácie", "cs": "Vrácení a reklamace", "en": "Returns and complaints" },
     "description": {
         "sk": "Odstúpenie od zmluvy a reklamácie online so zákonnými lehotami a potvrdením e-mailom.",
@@ -12,7 +12,7 @@
     "sizes": { "small": true, "medium": true, "large": true },
     "enabled": true,
     "requires": {
-        "eshop": "^0.7",
+        "eshop": "^0.8",
         "modules": { "orders": "^0.6" }
     },
     "permissions": ["returns.manage"]

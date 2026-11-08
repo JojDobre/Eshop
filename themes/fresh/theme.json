@@ -1,0 +1,83 @@
+{
+    "name": "fresh",
+    "version": "0.1.0",
+    "title": {
+        "sk": "Fresh",
+        "cs": "Fresh",
+        "en": "Fresh"
+    },
+    "description": {
+        "sk": "Svieža šablóna s výrazným vyhľadávaním a lištou kategórií. Hodí sa pre potraviny, drogériu a obchody s veľa kategóriami.",
+        "cs": "Svěží šablona s výrazným vyhledáváním a lištou kategorií. Hodí se pro potraviny, drogerii a obchody s mnoha kategoriemi.",
+        "en": "A fresh theme with a prominent search and a category bar. Suits groceries, drugstores and shops with many categories."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "screenshot": "screenshot.png",
+    "requires": {
+        "eshop": "^0.8"
+    },
+    "vite": [
+        "themes/fresh/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ],
+    "settings": {
+        "accent_color": {
+            "type": "color",
+            "group": "style",
+            "label": {
+                "sk": "Farba lišty kategórií",
+                "cs": "Barva lišty kategorií",
+                "en": "Category bar colour"
+            },
+            "default": "#166534"
+        },
+        "show_contact_bar": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Kontakt v hornej lište",
+                "cs": "Kontakt v horní liště",
+                "en": "Contact in the top bar"
+            },
+            "default": true
+        },
+        "show_benefits": {
+            "type": "toggle",
+            "group": "catalog",
+            "label": {
+                "sk": "Výhody obchodu na úvodnej stránke",
+                "cs": "Výhody obchodu na úvodní stránce",
+                "en": "Shop benefits on the home page"
+            },
+            "help": {
+                "sk": "Iba ak úvodná stránka nie je poskladaná z blokov.",
+                "cs": "Jen pokud úvodní stránka není poskládaná z bloků.",
+                "en": "Only if the home page is not built from blocks."
+            },
+            "default": true
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        }
+    }
+}

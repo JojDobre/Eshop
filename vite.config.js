@@ -15,6 +15,8 @@ export default defineConfig(({ command }) => ({
                 // Predvolená šablóna obchodu
                 'themes/default/assets/css/theme.css',
                 'themes/default/assets/js/theme.js',
+                // Šablóna Fresh (odvodená od Default)
+                'themes/fresh/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

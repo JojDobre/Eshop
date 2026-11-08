@@ -10,7 +10,7 @@
     "provider": "Modules\\Invoices\\InvoicesServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.7",
+        "eshop": "^0.8",
         "modules": { "orders": "^0.6", "tax": "^0.4" }
     },
     "permissions": ["invoices.manage"]

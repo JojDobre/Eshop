@@ -1,0 +1,23 @@
+/*
+ * Šablóna Fresh: štýly Default + súbory tejto šablóny (Tailwind nájde triedy v oboch).
+ */
+@import '../../../default/assets/css/theme.css';
+
+@source '../../**/*.blade.php';
+
+:root {
+    /* Farba lišty kategórií sa nastavuje v Prispôsobení (premenná --fresh-accent). */
+    --fresh-accent: #166534;
+}
+
+@utility bg-accent {
+    background-color: var(--fresh-accent);
+}
+
+@utility text-accent {
+    color: var(--fresh-accent);
+}
+
+@utility border-accent {
+    border-color: var(--fresh-accent);
+}

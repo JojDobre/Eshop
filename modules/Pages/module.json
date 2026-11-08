@@ -1,6 +1,6 @@
 {
     "name": "pages",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": { "sk": "Stránky", "cs": "Stránky", "en": "Pages" },
     "description": {
         "sk": "Statické stránky: obchodné podmienky, ochrana osobných údajov, kontakt a ďalšie.",
@@ -9,7 +9,7 @@
     },
     "provider": "Modules\\Pages\\PagesServiceProvider",
     "requires": {
-        "eshop": "^0.7",
+        "eshop": "^0.8",
         "modules": { "storefront": "^0.3" }
     },
     "permissions": ["pages.manage"]

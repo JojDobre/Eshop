@@ -2,8 +2,10 @@
 
 namespace Modules\Catalog\Models;
 
+use App\Core\Pricing\PriceContext;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
+use App\Models\CustomerGroup;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -134,6 +136,30 @@ class ProductVariant extends Model
     public function regularPriceIn(?string $currency = null): ?int
     {
         $currency ??= app(CurrencyContext::class)->current();
+        $group = app(PriceContext::class)->group();
+
+        if ($group !== null) {
+            // Cena variantu pre skupinu; variant bez vlastnej ceny preberá cenu produktu pre skupinu.
+            if (($groupPrice = $this->groupPriceIn($group, $currency)) !== null) {
+                return $groupPrice;
+            }
+
+            if (! $this->hasOwnPrice() && ($groupPrice = $this->product->groupPriceIn($group, $currency)) !== null) {
+                return $groupPrice;
+            }
+        }
+
+        $base = $this->basePriceIn($currency);
+
+        return $group !== null && $base !== null ? $group->applyDiscount($base) : $base;
+    }
+
+    /**
+     * Bežná cena variantu pre všetkých zákazníkov (bez skupín).
+     */
+    public function basePriceIn(?string $currency = null): ?int
+    {
+        $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
 
         if ($entered !== null) {
@@ -145,10 +171,45 @@ class ProductVariant extends Model
         $default = $currencies->default();
 
         if ($currency !== $default && $this->enteredPriceIn($default) !== null && $currencies->hasRate($currency)) {
-            return $currencies->convert((int) $this->regularPriceIn($default), $default, $currency);
+            return $currencies->convert((int) $this->basePriceIn($default), $default, $currency);
         }
 
-        return $this->product->regularPriceIn($currency);
+        return $this->product->basePriceIn($currency);
+    }
+
+    /** Má variant vlastnú cenu (v predvolenej mene)? */
+    public function hasOwnPrice(): bool
+    {
+        return $this->enteredPriceIn(app(Currencies::class)->default()) !== null;
+    }
+
+    /**
+     * Vlastná cena variantu pre skupinu (s DPH).
+     */
+    public function groupPriceIn(CustomerGroup $group, string $currency): ?int
+    {
+        $prices = $this->groupPrices->where('customer_group_id', $group->id);
+        $row = $prices->firstWhere('currency', $currency);
+
+        if ($row !== null) {
+            return app(TaxCalculator::class)->grossFromEntered($row->amount, $this->product->vatRate());
+        }
+
+        $currencies = app(Currencies::class);
+        $default = $currencies->default();
+        $defaultRow = $prices->firstWhere('currency', $default);
+
+        return $currency !== $default && $defaultRow !== null && $currencies->hasRate($currency)
+            ? $currencies->convert(app(TaxCalculator::class)->grossFromEntered($defaultRow->amount, $this->product->vatRate()), $default, $currency)
+            : null;
+    }
+
+    /**
+     * @return HasMany<ProductGroupPrice, $this>
+     */
+    public function groupPrices(): HasMany
+    {
+        return $this->hasMany(ProductGroupPrice::class);
     }
 
     public function setPrice(string $currency, ?int $amount): void

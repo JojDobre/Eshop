@@ -1,7 +1,7 @@
 {{-- Karta produktu Fresh: rámček, výrazná cena a štítok zľavy. --}}
-@php($cardPrice = $product->priceFrom())
+@php($cardPrice = $product->displayPrice($product->priceFrom()))
 @php($cardFrom = $product->hasVaryingPrices())
-@php($cardCompareAt = $product->compareAtPriceIn())
+@php($cardCompareAt = $product->displayPrice($product->compareAtPriceIn()))
 <article class="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition hover:shadow-md">
     <div class="relative aspect-square overflow-hidden bg-zinc-50">
         @if ($cardCompareAt)
@@ -14,14 +14,14 @@
             <a href="{{ $product->url() }}" class="after:absolute after:inset-0">{{ $product->name }}</a>
         </h3>
         @if ($cardUnitPrice = $product->unitPriceIn())
-            <p class="mt-1 text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($cardUnitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</p>
+            <p class="mt-1 text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($product->displayPrice($cardUnitPrice)), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</p>
         @endif
         <div class="mt-auto flex items-end justify-between gap-2 pt-3">
             <span>
                 @if ($cardCompareAt)
                     <del class="block text-xs text-zinc-500">{{ format_price($cardCompareAt) }}</del>
                 @endif
-                <span @class(['text-lg font-bold', 'text-red-600' => $cardCompareAt, 'text-zinc-900' => ! $cardCompareAt])>{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}</span>
+                <span @class(['text-lg font-bold', 'text-red-600' => $cardCompareAt, 'text-zinc-900' => ! $cardCompareAt])>{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}@if ($cardPrice !== null && $product::showsNetPrices()) <span class="text-xs font-normal text-zinc-500">{{ __('theme::shop.excl_vat') }}</span>@endif</span>
             </span>
             @if (! $product->isAvailable())
                 <span class="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-500">{{ __('theme::shop.sold_out') }}</span>

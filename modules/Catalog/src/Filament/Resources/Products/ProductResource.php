@@ -327,6 +327,8 @@ class ProductResource extends Resource
         return [
             OptionsRelationManager::class,
             VariantsRelationManager::class,
+            RelationManagers\GroupPricesRelationManager::class,
+            RelationManagers\QuantityDiscountsRelationManager::class,
             RelationManagers\StockLotsRelationManager::class,
             StockMovementsRelationManager::class,
             ...ProductRelations::all(),

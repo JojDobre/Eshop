@@ -5,8 +5,10 @@ namespace Modules\Catalog\Models;
 use App\Core\Content\HasContentTranslations;
 use App\Core\Content\HasLocalizedSlug;
 use App\Core\Content\LocalizedUrls;
+use App\Core\Pricing\PriceContext;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
+use App\Models\CustomerGroup;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -287,9 +289,39 @@ class Product extends Model
     }
 
     /**
-     * Cena bez automatickej zľavy pri blížiacej sa expirácii.
+     * Cena bez automatickej zľavy pri blížiacej sa expirácii, pre zákaznícku skupinu zákazníka
+     * (vlastná cena skupiny, inak bežná cena so zľavou skupiny).
      */
     public function regularPriceIn(?string $currency = null): ?int
+    {
+        $currency ??= app(CurrencyContext::class)->current();
+        $group = app(PriceContext::class)->group();
+
+        if ($group !== null && ($groupPrice = $this->groupPriceIn($group, $currency)) !== null) {
+            return $groupPrice;
+        }
+
+        $base = $this->basePriceIn($currency);
+
+        return $group !== null && $base !== null ? $group->applyDiscount($base) : $base;
+    }
+
+    /** Zobrazujú sa ceny hlavne bez DPH (zákazník z B2B skupiny u platiteľa DPH)? */
+    public static function showsNetPrices(): bool
+    {
+        return app(PriceContext::class)->showsNetPrices() && app(TaxCalculator::class)->isVatPayer();
+    }
+
+    /** Cena na zobrazenie: s DPH, alebo bez DPH pre B2B skupinu. */
+    public function displayPrice(?int $gross): ?int
+    {
+        return $gross === null || ! self::showsNetPrices() ? $gross : TaxCalculator::netFromGross($gross, $this->vatRate());
+    }
+
+    /**
+     * Bežná cena pre všetkých zákazníkov (bez skupín a bez zľavy pri expirácii).
+     */
+    public function basePriceIn(?string $currency = null): ?int
     {
         $currency ??= app(CurrencyContext::class)->current();
         $entered = $this->enteredPriceIn($currency);
@@ -299,7 +331,73 @@ class Product extends Model
         }
 
         // Cena v mene chýba: prepočet z predvolenej meny kurzom (so zaokrúhlením meny).
-        return $this->convertedFromDefault(fn (string $default) => $this->regularPriceIn($default), $currency);
+        return $this->convertedFromDefault(fn (string $default) => $this->basePriceIn($default), $currency);
+    }
+
+    /**
+     * Vlastná cena produktu pre skupinu (s DPH); v mene bez ceny prepočet z predvolenej meny.
+     */
+    public function groupPriceIn(CustomerGroup $group, string $currency): ?int
+    {
+        $row = $this->groupPrices->first(fn (ProductGroupPrice $price) => $price->customer_group_id === $group->id && $price->currency === $currency);
+
+        if ($row !== null) {
+            return app(TaxCalculator::class)->grossFromEntered($row->amount, $this->vatRate());
+        }
+
+        return $this->convertedFromDefault(fn (string $default) => $this->groupPriceIn($group, $default), $currency);
+    }
+
+    /**
+     * @return HasMany<ProductGroupPrice, $this>
+     */
+    public function groupPrices(): HasMany
+    {
+        return $this->hasMany(ProductGroupPrice::class)->whereNull('product_variant_id');
+    }
+
+    /**
+     * Všetky ceny pre skupiny vrátane cien variantov (správa v administrácii).
+     *
+     * @return HasMany<ProductGroupPrice, $this>
+     */
+    public function allGroupPrices(): HasMany
+    {
+        return $this->hasMany(ProductGroupPrice::class);
+    }
+
+    /**
+     * @return HasMany<QuantityDiscount, $this>
+     */
+    public function quantityDiscounts(): HasMany
+    {
+        return $this->hasMany(QuantityDiscount::class)->orderBy('min_quantity');
+    }
+
+    /**
+     * Množstevné zľavy pre skupinu zákazníka (všeobecné aj pre jeho skupinu), od najmenšieho počtu.
+     *
+     * @return Collection<int, QuantityDiscount>
+     */
+    public function applicableQuantityDiscounts(): Collection
+    {
+        $groupId = app(PriceContext::class)->groupId();
+
+        return $this->quantityDiscounts
+            ->filter(fn (QuantityDiscount $discount) => $discount->customer_group_id === null || $discount->customer_group_id === $groupId)
+            ->sortBy('min_quantity')->values();
+    }
+
+    /**
+     * Cena za kus po množstevnej zľave (najvyššia zľava, na ktorú má zákazník pri danom počte nárok).
+     */
+    public function withQuantityDiscount(int $unitPrice, int $quantity): int
+    {
+        $percent = (float) $this->applicableQuantityDiscounts()
+            ->filter(fn (QuantityDiscount $discount) => $discount->min_quantity <= $quantity)
+            ->max('discount_percent');
+
+        return $percent > 0 ? (int) round($unitPrice * (100 - $percent) / 100) : $unitPrice;
     }
 
     /**

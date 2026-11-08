@@ -364,4 +364,22 @@ return [
         'selected_categories' => 'Categories',
         'selected_categories_help' => 'Empty = top-level categories.',
     ],
+    'group_prices' => [
+        'title' => 'Customer group prices',
+        'group' => 'Group',
+        'whole_product' => 'Whole product',
+        'currency' => 'Currency',
+        'price' => 'Price',
+        'duplicate' => 'A price for this group, variant and currency already exists.',
+        'help' => 'A custom price takes precedence over the group discount. A variant without its own price uses the product price.',
+    ],
+    'quantity_discounts' => [
+        'title' => 'Quantity discounts',
+        'min_quantity' => 'Quantity',
+        'from' => 'from',
+        'discount_percent' => 'Discount',
+        'group' => 'Group',
+        'everyone' => 'All customers',
+        'help' => 'The discount applies to the unit price based on the quantity in the cart. The highest discount the customer qualifies for applies.',
+    ],
 ];

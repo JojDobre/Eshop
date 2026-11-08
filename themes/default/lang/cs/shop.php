@@ -38,6 +38,10 @@ return [
     'page_of' => 'Strana :page z :total',
 
     'sku' => 'Kód',
+    'price_excludes_vat' => 'Cena bez DPH. S DPH: :price',
+    'excl_vat' => 'bez DPH',
+    'quantity_discounts' => 'Množstevní slevy',
+    'quantity_discount_row' => 'od :quantity ks: −:percent % (:price/ks)',
     'price_includes_vat' => 'Cena včetně DPH',
     'lowest_price_30_days' => 'Nejnižší cena za posledních 30 dní: :price',
     'not_vat_payer' => 'Nejsme plátci DPH.',

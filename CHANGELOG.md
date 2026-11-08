@@ -1,5 +1,13 @@
 # Prehľad zmien
 
+## 0.10.0 – Predaj a marketing (krok 4e, v príprave)
+
+- **Zákaznícke skupiny a B2B ceny:** skupiny so zľavou, vlastné ceny produktov a variantov pre skupinu
+  v každej mene, predvolená skupina pre návštevníkov, zobrazenie cien bez DPH pre firmy. Zapína sa
+  v Nastavenia → Funkcie obchodu.
+- **Množstevné zľavy** pri produkte (pre všetkých alebo pre skupinu) s tabuľkou na stránke produktu.
+- **Blokovanie zákazníkov:** zablokovaný zákazník sa neprihlási a neobjedná ani bez prihlásenia.
+
 ## 0.9.0 – Doprava a obsah (krok 4d)
 
 - **Kuriéri:** jednotné rozhranie kuriéra, zásielky a štítky priamo z objednávky, hromadné vytvorenie zásielok

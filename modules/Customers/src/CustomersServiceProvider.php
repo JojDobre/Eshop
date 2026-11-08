@@ -2,14 +2,20 @@
 
 namespace Modules\Customers;
 
+use App\Core\Features\FeatureToggle;
+use App\Core\Features\FeatureToggles;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Pricing\PriceContext;
+use App\Models\CustomerGroup;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\Validator;
 use Modules\Customers\Listeners\LinkOrderToCustomer;
 use Modules\Customers\Models\Customer;
 use Modules\Orders\Events\OrderPlaced;
+use Modules\Orders\Http\Requests\CheckoutRequest;
 use Modules\Orders\Models\Order;
 
 class CustomersServiceProvider extends ModuleServiceProvider
@@ -34,6 +40,7 @@ class CustomersServiceProvider extends ModuleServiceProvider
         ]);
 
         Order::resolveRelationUsing('customer', fn (Order $order) => $order->belongsTo(Customer::class));
+        CustomerGroup::resolveRelationUsing('customers', fn (CustomerGroup $group) => $group->hasMany(Customer::class));
     }
 
     public function boot(): void
@@ -53,6 +60,52 @@ class CustomersServiceProvider extends ModuleServiceProvider
         });
 
         $this->registerEmailTemplates();
+        $this->registerCustomerGroups();
+
+        // Blokovaný zákazník neobjedná ani bez prihlásenia.
+        CheckoutRequest::addCheck('customers.blocked', function (Validator $validator, CheckoutRequest $request): void {
+            if (Customer::isEmailBlocked($request->input('email'))) {
+                $validator->errors()->add('email', __('customers::messages.blocked'));
+            }
+        });
+    }
+
+    /**
+     * Zákaznícke skupiny: prepínač vo Funkciách obchodu a skupina pre výpočet cien.
+     */
+    private function registerCustomerGroups(): void
+    {
+        $toggles = $this->app->make(FeatureToggles::class);
+        $toggles->group('customers', fn () => __('customers::admin.features.group'));
+        $toggles->register(new FeatureToggle(
+            key: 'customers.groups',
+            group: 'customers',
+            label: fn () => __('customers::admin.features.groups'),
+            description: fn () => __('customers::admin.features.groups_help'),
+            isEnabled: fn () => CustomerSettings::groupsEnabled(),
+            set: function (bool $enabled): void {
+                $settings = app(CustomerSettings::class);
+                $settings->groups_enabled = $enabled;
+                $settings->save();
+            },
+            settingsUrl: fn () => url('/admin/customer-groups'),
+            sizes: ['small' => false, 'large' => true],
+        ));
+
+        // Prihlásený zákazník má svoju skupinu, ostatní predvolenú (ak je nastavená).
+        PriceContext::resolveUsing(function (): ?CustomerGroup {
+            if (! CustomerSettings::groupsEnabled()) {
+                return null;
+            }
+
+            $customer = auth('customer')->user();
+
+            if ($customer instanceof Customer && $customer->customer_group_id !== null) {
+                return $customer->customerGroup;
+            }
+
+            return CustomerGroup::query()->where('is_default', true)->first();
+        });
     }
 
     private function registerEmailTemplates(): void

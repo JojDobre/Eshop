@@ -43,6 +43,12 @@ class AuthController extends Controller
         }
 
         RateLimiter::clear($key);
+
+        if (auth('customer')->user()->is_blocked) {
+            auth('customer')->logout();
+
+            throw ValidationException::withMessages(['email' => __('customers::messages.blocked')]);
+        }
         $request->session()->regenerate();
         auth('customer')->user()->forceFill(['last_login_at' => now()])->save();
 

@@ -5,12 +5,15 @@ namespace Modules\Customers\Models;
 use App\Core\Content\LocalizedUrls;
 use App\Core\Content\ShopLocales;
 use App\Core\Mail\TemplateMail;
+use App\Models\CustomerGroup;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Modules\Orders\Models\Order;
 
 /**
@@ -42,7 +45,22 @@ class Customer extends Authenticatable implements CanResetPasswordContract
             'last_login_at' => 'datetime',
             'terms_accepted_at' => 'datetime',
             'legal_consents' => 'array',
+            'is_blocked' => 'boolean',
         ];
+    }
+
+    /**
+     * @return BelongsTo<CustomerGroup, $this>
+     */
+    public function customerGroup(): BelongsTo
+    {
+        return $this->belongsTo(CustomerGroup::class);
+    }
+
+    /** Je zákazník s týmto e-mailom zablokovaný? */
+    public static function isEmailBlocked(?string $email): bool
+    {
+        return filled($email) && static::query()->where('email', Str::lower(trim((string) $email)))->where('is_blocked', true)->exists();
     }
 
     /**

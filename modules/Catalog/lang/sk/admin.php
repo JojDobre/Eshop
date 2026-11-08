@@ -364,4 +364,22 @@ return [
         'selected_categories' => 'Kategórie',
         'selected_categories_help' => 'Prázdne = hlavné kategórie.',
     ],
+    'group_prices' => [
+        'title' => 'Ceny pre zákaznícke skupiny',
+        'group' => 'Skupina',
+        'whole_product' => 'Celý produkt',
+        'currency' => 'Mena',
+        'price' => 'Cena',
+        'duplicate' => 'Cena pre túto skupinu, variant a menu už existuje.',
+        'help' => 'Vlastná cena má prednosť pred zľavou skupiny. Variant bez vlastnej ceny preberá cenu produktu.',
+    ],
+    'quantity_discounts' => [
+        'title' => 'Množstevné zľavy',
+        'min_quantity' => 'Počet kusov',
+        'from' => 'od',
+        'discount_percent' => 'Zľava',
+        'group' => 'Skupina',
+        'everyone' => 'Všetci zákazníci',
+        'help' => 'Zľava sa uplatní na cenu za kus podľa počtu kusov v košíku. Platí najvyššia zľava, na ktorú má zákazník nárok.',
+    ],
 ];

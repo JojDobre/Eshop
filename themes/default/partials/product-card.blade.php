@@ -1,6 +1,6 @@
-@php($cardPrice = $product->priceFrom())
+@php($cardPrice = $product->displayPrice($product->priceFrom()))
 @php($cardFrom = $product->hasVaryingPrices())
-@php($cardCompareAt = $product->compareAtPriceIn())
+@php($cardCompareAt = $product->displayPrice($product->compareAtPriceIn()))
 <article class="group relative flex flex-col">
     <div class="relative aspect-square overflow-hidden rounded-xl bg-zinc-100">
         @if ($cardCompareAt)
@@ -14,12 +14,12 @@
         </h3>
         <div class="mt-1 flex items-baseline justify-between gap-2 text-sm">
             <span>
-                <span class="font-semibold">{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}</span>
+                <span class="font-semibold">{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}@if ($cardPrice !== null && $product::showsNetPrices()) <span class="text-xs font-normal text-zinc-500">{{ __('theme::shop.excl_vat') }}</span>@endif</span>
                 @if ($cardCompareAt)
                     <del class="ml-1 text-xs text-zinc-500">{{ format_price($cardCompareAt) }}</del>
                 @endif
                 @if ($cardUnitPrice = $product->unitPriceIn())
-                    <span class="block text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($cardUnitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
+                    <span class="block text-xs text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($product->displayPrice($cardUnitPrice)), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
                 @endif
             </span>
             @if (! $product->isAvailable())

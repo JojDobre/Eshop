@@ -28,7 +28,7 @@ trait ProductListing
      */
     private function applySort(Builder $query, string $sort): Builder
     {
-        $query->select('products.*')->with(['prices', 'taxRate', 'variants' => fn ($variants) => $variants->where('is_active', true)->with('prices')]);
+        $query->select('products.*')->with(['prices', 'groupPrices', 'taxRate', 'variants' => fn ($variants) => $variants->where('is_active', true)->with(['prices', 'groupPrices'])]);
 
         return match ($sort) {
             'price_asc', 'price_desc' => $query

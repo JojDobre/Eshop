@@ -2,8 +2,10 @@
 
 namespace Modules\Orders\Http\Requests;
 
+use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 use Modules\Orders\CheckoutFields;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\PickupPoint;
@@ -11,6 +13,19 @@ use Modules\Shipping\Models\ShippingMethod;
 
 class CheckoutRequest extends FormRequest
 {
+    /** @var array<string, Closure(Validator, self): void> Kontroly z iných modulov (napr. blokovaný zákazník). */
+    private static array $checks = [];
+
+    /**
+     * Pridá kontrolu objednávky z iného modulu.
+     *
+     * @param  Closure(Validator, self): void  $check
+     */
+    public static function addCheck(string $key, Closure $check): void
+    {
+        self::$checks[$key] = $check;
+    }
+
     public function authorize(): bool
     {
         return true;
@@ -83,6 +98,10 @@ class CheckoutRequest extends FormRequest
     {
         return [function ($validator): void {
             $shipping = $this->shippingMethod();
+
+            foreach (self::$checks as $check) {
+                $check($validator, $this);
+            }
 
             if ($shipping === null) {
                 return;

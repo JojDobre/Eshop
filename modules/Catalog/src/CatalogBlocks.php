@@ -52,7 +52,7 @@ final class CatalogBlocks
     public static function products(array $data): Collection
     {
         $limit = max(1, min(24, (int) ($data['limit'] ?? 8)));
-        $query = Product::query()->visible()->with(['prices', 'variants.prices']);
+        $query = Product::query()->visible()->with(['prices', 'groupPrices', 'variants.prices', 'variants.groupPrices']);
 
         return match ($data['source'] ?? 'latest') {
             'category' => ($category = Category::query()->find($data['category_id'] ?? 0))

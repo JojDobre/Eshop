@@ -21,6 +21,7 @@ use App\Core\Menus\MenuLinkTypes;
 use App\Core\Menus\Menus;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
+use App\Core\Pricing\PriceContext;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeFiles;
@@ -76,6 +77,7 @@ class EshopServiceProvider extends ServiceProvider
 
         // Mena zákazníka sa nastavuje pre každú požiadavku obchodu (SetStorefrontLocale).
         $this->app->scoped(CurrencyContext::class);
+        $this->app->scoped(PriceContext::class);
         $this->app->scoped(Currencies::class);
 
         $this->app->singleton(EmailTemplates::class);

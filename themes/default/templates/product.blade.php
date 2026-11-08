@@ -12,6 +12,10 @@
         : __('theme::shop.preorder');
     $compareAt = $product->compareAtPriceIn();
     $lowest30 = $compareAt ? $product->lowestPriceIn30Days() : null;
+    // B2B skupina: ceny hlavne bez DPH, cena s DPH pod nimi.
+    $netPrices = $product::showsNetPrices();
+    $show = fn (?int $gross) => $product->displayPrice($gross);
+    $quantityDiscounts = $product->applicableQuantityDiscounts();
     $manufacturer = $product->manufacturer;
     $safetyInfo = $product->safety_info ?: $manufacturer?->safety_info;
 @endphp
@@ -117,23 +121,35 @@
 
                 <div class="mt-6 flex flex-wrap items-baseline gap-3">
                     @if ($variantData && $product->hasVaryingPrices())
-                        <p class="text-3xl font-semibold">{{ __('theme::shop.price_from', ['price' => format_price($product->priceFrom())]) }}</p>
+                        <p class="text-3xl font-semibold">{{ __('theme::shop.price_from', ['price' => format_price($show($product->priceFrom()))]) }}</p>
                     @else
-                        <p class="text-3xl font-semibold">{{ $price !== null ? format_price($product->priceFrom() ?? $price) : __('theme::shop.price_unavailable') }}</p>
+                        <p class="text-3xl font-semibold">{{ $price !== null ? format_price($show($product->priceFrom() ?? $price)) : __('theme::shop.price_unavailable') }}</p>
                     @endif
                     @if ($compareAt)
-                        <del class="text-lg text-zinc-500">{{ format_price($compareAt) }}</del>
+                        <del class="text-lg text-zinc-500">{{ format_price($show($compareAt)) }}</del>
                         <span class="rounded-full bg-primary px-2.5 py-0.5 text-sm font-semibold text-primary-foreground">−{{ (int) round((1 - $price / $compareAt) * 100) }} %</span>
                     @endif
                 </div>
                 @if ($unitPrice = $product->unitPriceIn())
-                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($unitPrice), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</p>
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.unit_price', ['price' => format_price($show($unitPrice)), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</p>
                 @endif
                 @if ($lowest30)
-                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.lowest_price_30_days', ['price' => format_price($lowest30)]) }}</p>
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.lowest_price_30_days', ['price' => format_price($show($lowest30))]) }}</p>
                 @endif
-                @if ($vatPayer)
+                @if ($netPrices && $price !== null)
+                    <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_excludes_vat', ['price' => format_price($product->priceFrom() ?? $price)]) }}</p>
+                @elseif ($vatPayer)
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
+                @endif
+                @if ($quantityDiscounts->isNotEmpty() && $price !== null)
+                    <div class="mt-4 rounded-lg border border-zinc-200 p-3 text-sm">
+                        <p class="font-medium">{{ __('theme::shop.quantity_discounts') }}</p>
+                        <ul class="mt-1 space-y-0.5 text-zinc-600">
+                            @foreach ($quantityDiscounts as $discount)
+                                <li>{{ __('theme::shop.quantity_discount_row', ['quantity' => $discount->min_quantity, 'percent' => rtrim(rtrim(number_format($discount->discount_percent, 2, ',', ''), '0'), ','), 'price' => format_price($show($product->withQuantityDiscount($price, $discount->min_quantity)))]) }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
 
                 @if ($preorder)

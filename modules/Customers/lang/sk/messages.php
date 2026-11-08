@@ -11,4 +11,5 @@ return [
     'profile_saved' => 'Údaje boli uložené.',
     'password_changed' => 'Heslo bolo zmenené.',
     'deleted' => 'Účet bol zrušený.',
+    'blocked' => 'Váš účet je zablokovaný. Kontaktujte nás, prosím.',
 ];

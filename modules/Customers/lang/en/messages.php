@@ -11,4 +11,5 @@ return [
     'profile_saved' => 'Your details have been saved.',
     'password_changed' => 'Your password has been changed.',
     'deleted' => 'Your account has been deleted.',
+    'blocked' => 'Your account is blocked. Please contact us.',
 ];

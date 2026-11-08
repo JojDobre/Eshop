@@ -17,6 +17,12 @@ class AuthenticateCustomer
             return redirect()->guest(route('customer.login'));
         }
 
+        if (auth('customer')->user()->is_blocked) {
+            auth('customer')->logout();
+
+            return redirect()->route('customer.login')->withErrors(['email' => __('customers::messages.blocked')]);
+        }
+
         return $next($request);
     }
 }

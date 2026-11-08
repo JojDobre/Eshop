@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function __invoke(string $slug): View
     {
         $product = Product::query()->visible()->whereSlug($slug)
-            ->with(['prices', 'categories', 'taxRate', 'manufacturer', 'options.values', 'variants' => fn ($query) => $query->where('is_active', true)->with(['values', 'prices'])])
+            ->with(['prices', 'groupPrices', 'quantityDiscounts', 'categories', 'taxRate', 'manufacturer', 'options.values', 'variants' => fn ($query) => $query->where('is_active', true)->with(['values', 'prices', 'groupPrices'])])
             ->firstOrFail();
         $category = $product->categories->firstWhere('is_visible', true);
         app(AlternateUrls::class)->using(fn () => $product->url());
@@ -56,7 +56,7 @@ class ProductController extends Controller
                 return [
                     'id' => $variant->id,
                     'values' => $variant->values->pluck('id')->values(),
-                    'price' => $price === null ? null : format_price($price),
+                    'price' => $price === null ? null : format_price($product->displayPrice($price)),
                     'available' => $price !== null && $variant->isAvailable(),
                     'max' => $variant->maxPurchasableQuantity(),
                     'preorder' => $variant->isPreorder(),

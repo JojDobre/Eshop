@@ -38,6 +38,10 @@ return [
     'page_of' => 'Page :page of :total',
 
     'sku' => 'SKU',
+    'price_excludes_vat' => 'Price excludes VAT. With VAT: :price',
+    'excl_vat' => 'excl. VAT',
+    'quantity_discounts' => 'Quantity discounts',
+    'quantity_discount_row' => 'from :quantity pcs: −:percent % (:price/pc)',
     'price_includes_vat' => 'Price includes VAT',
     'lowest_price_30_days' => 'Lowest price in the last 30 days: :price',
     'not_vat_payer' => 'We are not registered for VAT.',

@@ -125,7 +125,7 @@ class CartManager
             return new CartSummary([], $currency);
         }
 
-        $cart->load('items.product.prices', 'items.product.taxRate', 'items.variant.prices', 'items.variant.values');
+        $cart->load('items.product.prices', 'items.product.groupPrices', 'items.product.quantityDiscounts', 'items.product.taxRate', 'items.variant.prices', 'items.variant.groupPrices', 'items.variant.values');
         $lines = [];
         $addonIds = $cart->items->flatMap(fn (CartItem $item) => array_keys((array) $item->addons))->unique()->all();
         $addonModels = $addonIds === [] ? collect() : Addon::query()->whereIn('id', $addonIds)->where('is_active', true)->get()->keyBy('id');
@@ -134,6 +134,8 @@ class CartManager
             $product = $item->product;
             $variant = $item->variant?->setRelation('product', $product);
             $unitPrice = $variant ? $variant->priceIn($currency) : $product->priceIn($currency);
+            // Množstevná zľava podľa počtu kusov v riadku košíka (bez doplnkových volieb).
+            $unitPrice = $unitPrice !== null ? $product->withQuantityDiscount($unitPrice, $item->quantity) : null;
             $addons = $this->lineAddons($item, $addonModels, $currency);
 
             if ($unitPrice !== null) {

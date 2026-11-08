@@ -73,7 +73,7 @@ class CatalogServiceProvider extends ModuleServiceProvider
         View::composer('theme::templates.home', function (\Illuminate\View\View $view): void {
             $view->with([
                 'homeCategories' => Category::query()->visible()->roots()->limit(6)->get(),
-                'latestProducts' => Product::query()->visible()->with(['prices', 'taxRate', 'variants' => fn ($variants) => $variants->where('is_active', true)->with('prices')])->latest()->limit(8)->get(),
+                'latestProducts' => Product::query()->visible()->with(['prices', 'groupPrices', 'taxRate', 'variants' => fn ($variants) => $variants->where('is_active', true)->with(['prices', 'groupPrices'])])->latest()->limit(8)->get(),
             ]);
         });
 

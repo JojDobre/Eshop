@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'heading' => 'Customer reviews',
+    'count' => '{1} :count review|[2,*] :count reviews',
+    'none' => 'No one has reviewed this product yet. Be the first.',
+    'stars' => ':rating out of 5 stars',
+    'verified' => 'Verified purchase',
+    'pros' => 'Pros',
+    'cons' => 'Cons',
+    'reply' => 'Shop reply',
+    'your_rating' => 'Your rating',
+    'name' => 'Name',
+    'email' => 'E-mail (not published)',
+    'title' => 'Title',
+    'body' => 'Your experience',
+    'submit' => 'Submit review',
+    'thanks_pending' => 'Thank you! We will publish your review after checking it.',
+    'thanks_published' => 'Thank you for your review!',
+    'cannot_review' => 'You have already reviewed this product, or only customers who bought it can review it.',
+    'only_buyers' => 'Only customers who bought the product can review it.',
+    'anonymous' => 'Customer',
+    'order_title' => 'Review your order no. :number',
+    'order_intro' => 'Your review helps other customers choose. It will be marked as a verified purchase.',
+    'already_reviewed' => 'You have already reviewed this product. Thank you!',
+    'verification_default' => 'Reviews marked “Verified purchase” come from customers who bought the product from us. Other reviews are not verified.',
+    'verification_verified_only' => 'Only customers who bought the product from us can review it – each review is verified against an order.',
+];

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'heading' => 'Hodnocení zákazníků',
+    'count' => '{1} :count hodnocení|[2,4] :count hodnocení|[5,*] :count hodnocení',
+    'none' => 'Produkt zatím nikdo nehodnotil. Buďte první.',
+    'stars' => ':rating z 5 hvězdiček',
+    'verified' => 'Ověřený nákup',
+    'pros' => 'Výhody',
+    'cons' => 'Nevýhody',
+    'reply' => 'Odpověď obchodu',
+    'your_rating' => 'Vaše hodnocení',
+    'name' => 'Jméno',
+    'email' => 'E-mail (nezveřejní se)',
+    'title' => 'Nadpis',
+    'body' => 'Vaše zkušenost',
+    'submit' => 'Odeslat hodnocení',
+    'thanks_pending' => 'Děkujeme! Hodnocení zveřejníme po kontrole.',
+    'thanks_published' => 'Děkujeme za hodnocení!',
+    'cannot_review' => 'Tento produkt jste už hodnotili nebo ho mohou hodnotit jen zákazníci, kteří ho koupili.',
+    'only_buyers' => 'Hodnotit mohou jen zákazníci, kteří produkt koupili.',
+    'anonymous' => 'Zákazník',
+    'order_title' => 'Ohodnoťte nákup č. :number',
+    'order_intro' => 'Vaše hodnocení pomůže dalším zákazníkům s výběrem. Hodnocení bude označeno jako ověřený nákup.',
+    'already_reviewed' => 'Tento produkt jste už hodnotili. Děkujeme!',
+    'verification_default' => 'Hodnocení označená „Ověřený nákup“ pocházejí od zákazníků, kteří produkt u nás koupili. Ostatní hodnocení neověřujeme.',
+    'verification_verified_only' => 'Hodnotit mohou jen zákazníci, kteří produkt u nás koupili – každé hodnocení ověřujeme podle objednávky.',
+];

@@ -73,6 +73,12 @@
         'description' => $product->short_description ?: strip_tags((string) $product->description),
         'sku' => $product->sku,
         'image' => $images ?: null,
+        // Priemerné hodnotenie (iba schválené hodnotenia z modulu Hodnotenia).
+        'aggregateRating' => ! empty($productReviews['count']) ? [
+            '@type' => 'AggregateRating',
+            'ratingValue' => number_format($productReviews['average'], 1, '.', ''),
+            'reviewCount' => $productReviews['count'],
+        ] : null,
         'offers' => $price === null ? null : [
             '@type' => 'Offer',
             'price' => \App\Core\Support\Price::toDecimal($price, app(\App\Core\Support\CurrencyContext::class)->current()),
@@ -115,6 +121,12 @@
 
             <div>
                 <h1 class="text-3xl font-semibold tracking-tight">{{ $product->name }}</h1>
+                @if (! empty($productReviews['count']))
+                    <a href="#hodnotenia" class="mt-2 inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
+                        @include('theme::partials.rating-stars', ['rating' => $productReviews['average']])
+                        <span>{{ trans_choice('reviews::shop.count', $productReviews['count'], ['count' => $productReviews['count']]) }}</span>
+                    </a>
+                @endif
                 @if ($product->sku)
                     <p class="mt-2 text-sm text-zinc-500">{{ __('theme::shop.sku') }}: {{ $product->sku }}</p>
                 @endif
@@ -315,5 +327,8 @@
             </section>
         @endif
     </div>
+    @isset($productReviews)
+        <div class="container-shop">@include('theme::partials.reviews')</div>
+    @endisset
     @include('theme::partials.related-posts', ['relatedPosts' => $relatedPosts ?? null])
 @endsection

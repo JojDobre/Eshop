@@ -12,6 +12,9 @@
         <h3 class="text-sm font-medium text-zinc-900">
             <a href="{{ $product->url() }}" class="after:absolute after:inset-0">{{ $product->name }}</a>
         </h3>
+        @if (! empty($reviewsEnabled) && $product->reviews_count > 0)
+            <p class="mt-0.5 flex items-center gap-1 text-xs text-zinc-500">@include('theme::partials.rating-stars', ['rating' => $product->rating_average, 'size' => 'text-xs']) ({{ $product->reviews_count }})</p>
+        @endif
         <div class="mt-1 flex items-baseline justify-between gap-2 text-sm">
             <span>
                 <span class="font-semibold">{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}@if ($cardPrice !== null && $product::showsNetPrices()) <span class="text-xs font-normal text-zinc-500">{{ __('theme::shop.excl_vat') }}</span>@endif</span>

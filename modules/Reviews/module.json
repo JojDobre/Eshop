@@ -1,0 +1,19 @@
+{
+    "name": "reviews",
+    "version": "0.1.0",
+    "title": { "sk": "Hodnotenia produktov", "cs": "Hodnocení produktů", "en": "Product reviews" },
+    "description": {
+        "sk": "Hodnotenia s hviezdičkami, označenie overený nákup, schvaľovanie, odpoveď obchodu a žiadosť o hodnotenie e-mailom.",
+        "cs": "Hodnocení s hvězdičkami, označení ověřený nákup, schvalování, odpověď obchodu a žádost o hodnocení e-mailem.",
+        "en": "Star ratings, verified purchase badge, moderation, shop replies and review requests by e-mail."
+    },
+    "provider": "Modules\\Reviews\\ReviewsServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "catalog": "^0.7", "orders": "^0.7", "storefront": "^0.3", "customers": "^0.4" }
+    },
+    "permissions": ["reviews.manage"]
+}

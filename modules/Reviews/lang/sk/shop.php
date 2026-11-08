@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'heading' => 'Hodnotenia zákazníkov',
+    'count' => '{1} :count hodnotenie|[2,4] :count hodnotenia|[5,*] :count hodnotení',
+    'none' => 'Produkt zatiaľ nikto nehodnotil. Buďte prvý.',
+    'stars' => ':rating z 5 hviezdičiek',
+    'verified' => 'Overený nákup',
+    'pros' => 'Výhody',
+    'cons' => 'Nevýhody',
+    'reply' => 'Odpoveď obchodu',
+    'your_rating' => 'Vaše hodnotenie',
+    'name' => 'Meno',
+    'email' => 'E-mail (nezverejní sa)',
+    'title' => 'Nadpis',
+    'body' => 'Vaša skúsenosť',
+    'submit' => 'Odoslať hodnotenie',
+    'thanks_pending' => 'Ďakujeme! Hodnotenie zverejníme po kontrole.',
+    'thanks_published' => 'Ďakujeme za hodnotenie!',
+    'cannot_review' => 'Tento produkt už ste hodnotili alebo ho môžu hodnotiť iba zákazníci, ktorí ho kúpili.',
+    'only_buyers' => 'Hodnotiť môžu iba zákazníci, ktorí produkt kúpili.',
+    'anonymous' => 'Zákazník',
+    'order_title' => 'Ohodnoťte nákup č. :number',
+    'order_intro' => 'Vaše hodnotenie pomôže ďalším zákazníkom s výberom. Hodnotenie bude označené ako overený nákup.',
+    'already_reviewed' => 'Tento produkt ste už hodnotili. Ďakujeme!',
+    'verification_default' => 'Hodnotenia označené „Overený nákup“ pochádzajú od zákazníkov, ktorí produkt u nás kúpili. Ostatné hodnotenia neoverujeme.',
+    'verification_verified_only' => 'Hodnotiť môžu iba zákazníci, ktorí produkt u nás kúpili – každé hodnotenie overujeme podľa objednávky.',
+];

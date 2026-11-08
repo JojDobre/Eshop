@@ -10,6 +10,10 @@
 - **Darčekové poukážky:** predaj ako produkt (kód príde e-mailom po zaplatení), ručné vydanie v administrácii,
   uplatnenie kódu v košíku, čerpanie po častiach, platnosť, vrátenie zostatku pri zrušení objednávky.
   Poukážka je platba (zníži sumu na úhradu vrátane QR platby, dobierky a Stripe), nie zľava.
+- **Hodnotenia produktov** (nový modul): hviezdičky, nadpis, text, výhody a nevýhody, označenie „Overený nákup“,
+  schvaľovanie, odpoveď obchodu, režim „iba overené nákupy“, ochrana proti spamu, priemer a rozdelenie
+  hviezdičiek, hviezdičky vo výpise produktov, štruktúrované dáta pre Google, informácia o overovaní
+  (Omnibus) a žiadosť o hodnotenie e-mailom po dokončení objednávky (odkaz bez prihlásenia).
 - **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
   dobierka, štítky, sledovanie.
 - **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.

@@ -1,0 +1,19 @@
+{
+    "name": "transfer",
+    "version": "0.1.0",
+    "title": { "sk": "Import a export", "cs": "Import a export", "en": "Import and export" },
+    "description": {
+        "sk": "Export objednávok, produktov, zákazníkov, dokladov a skladu do CSV, XLSX, JSON a XML; import produktov a zákazníkov po častiach.",
+        "cs": "Export objednávek, produktů, zákazníků, dokladů a skladu do CSV, XLSX, JSON a XML; import produktů a zákazníků po částech.",
+        "en": "Export orders, products, customers, documents and stock to CSV, XLSX, JSON and XML; chunked import of products and customers."
+    },
+    "provider": "Modules\\Transfer\\TransferServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "small": true, "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.10",
+        "modules": { "catalog": "^0.8", "orders": "^0.8", "customers": "^0.5" }
+    },
+    "permissions": ["transfer.manage"]
+}

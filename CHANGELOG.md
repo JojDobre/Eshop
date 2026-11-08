@@ -8,6 +8,11 @@
 - **Účtovné exporty** (nový modul): XML za obdobie pre **Pohodu** (faktúry, dobropisy, prijaté objednávky)
   a **Money S3** (faktúry a dobropisy), so sadzbami DPH, údajmi odberateľa a cudzou menou. Ďalšie formáty
   sa dajú doplniť ako exportér.
+- **Import a export** (nový modul): export objednávok, produktov (aj vlastné polia), skladu, zákazníkov a dokladov
+  do CSV (oddeľovač, UTF-8 alebo Windows-1250), XLSX, JSON a XML s výberom stĺpcov a obdobia, uložené šablóny
+  posielané e-mailom (denne, týždenne, mesačne), ZIP s PDF dokladmi za obdobie. Import produktov (varianty,
+  kategórie, ceny, sklad, vlastné polia) a zákazníkov z CSV a XLSX s priradením stĺpcov, náhľadom a kontrolou
+  chýb, spracovaný po častiach v rámci časového limitu webhostingu.
 
 ## 0.10.0 – Predaj a marketing (krok 4e)
 

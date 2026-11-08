@@ -32,7 +32,10 @@
     @if ($favicon = $branding->faviconUrl())
         <link rel="icon" href="{{ $favicon }}">
     @endif
-    <style>:root { --brand-primary: {{ $branding->primaryColor() }}; --brand-primary-foreground: {{ $branding->primaryForegroundColor() }}; }</style>
+    {{-- Nastavenia šablóny (Vzhľad → Prispôsobiť) ako premenné CSS. --}}
+    @php($themeRadius = ['pill' => '9999px', 'square' => '0', 'rounded' => '0.5rem'][$themeOptions->get('button_style', 'rounded')] ?? '0.5rem')
+    @php($themeFont = ['system' => "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif", 'serif' => "Georgia, 'Times New Roman', serif"][$themeOptions->get('font', 'inter')] ?? null)
+    <style>:root { --brand-primary: {{ $branding->primaryColor() }}; --brand-primary-foreground: {{ $branding->primaryForegroundColor() }}; --theme-button-radius: {{ $themeRadius }};@if ($themeFont) --theme-font: {!! $themeFont !!};@endif }</style>
     @vite(['themes/default/assets/css/theme.css', 'themes/default/assets/js/theme.js'])
     @stack('head')
     @isset($cookieConsent)
@@ -46,6 +49,10 @@
     <a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:shadow">
         {{ __('theme::shop.skip_to_content') }}
     </a>
+
+    @if (filled($themeOptions->get('announcement')))
+        <div class="bg-zinc-900 px-4 py-2 text-center text-sm text-white">{{ $themeOptions->get('announcement') }}</div>
+    @endif
 
     @include('theme::partials.header')
 

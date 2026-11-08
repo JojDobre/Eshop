@@ -14,11 +14,15 @@ use App\Core\Installer\EnvironmentWriter;
 use App\Core\Installer\Installation;
 use App\Core\Installer\RequirementsChecker;
 use App\Core\Mail\EmailTemplates;
+use App\Core\Menus\MenuLinkTypes;
+use App\Core\Menus\Menus;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeManager;
+use App\Core\Themes\ThemeOptions;
+use App\Core\Themes\ThemeTranslationLoader;
 use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
 use Composer\Autoload\ClassLoader;
@@ -77,6 +81,27 @@ class EshopServiceProvider extends ServiceProvider
             activeResolver: fn () => $this->activeThemeName(),
         ));
 
+        $this->app->scoped(ThemeOptions::class);
+        $this->app->singleton(MenuLinkTypes::class);
+        $this->app->scoped(Menus::class);
+
+        // Preklady šablóny sa skladajú z celého reťazca šablón (odvodená šablóna prepíše rodiča).
+        $this->app->extend('translation.loader', function ($loader, $app) {
+            $themeLoader = new ThemeTranslationLoader($app['files'], $loader->paths());
+
+            foreach ($loader->jsonPaths() as $path) {
+                $themeLoader->addJsonPath($path);
+            }
+
+            foreach ($loader->namespaces() as $namespace => $hint) {
+                $themeLoader->addNamespace($namespace, $hint);
+            }
+
+            $themeLoader->useThemePaths(fn () => $app->make(ThemeManager::class)->langPaths());
+
+            return $themeLoader;
+        });
+
         $this->registerModules();
     }
 
@@ -100,6 +125,12 @@ class EshopServiceProvider extends ServiceProvider
         if ($langPath = $themes->langPath()) {
             $this->loadTranslationsFrom($langPath, 'theme');
         }
+
+        // Nastavenia šablóny dostupné v každej šablóne ako $themeOptions.
+        View::composer('theme::*', fn ($view) => $view->with([
+            'themeOptions' => $this->app->make(ThemeOptions::class),
+            'menus' => $this->app->make(Menus::class),
+        ]));
     }
 
     /**

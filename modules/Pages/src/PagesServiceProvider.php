@@ -4,6 +4,8 @@ namespace Modules\Pages;
 
 use App\Core\Content\TranslatableModels;
 use App\Core\Events\EshopInstalled;
+use App\Core\Menus\MenuLinkType;
+use App\Core\Menus\MenuLinkTypes;
 use App\Core\Modules\ModuleServiceProvider;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
@@ -24,6 +26,18 @@ class PagesServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // Stránky ako cieľ položky ponuky (menu).
+        $this->app->make(MenuLinkTypes::class)->register(new MenuLinkType(
+            key: 'page',
+            label: fn () => __('pages::admin.label'),
+            options: fn () => Page::query()->orderBy('position')->get()->mapWithKeys(fn (Page $page) => [(string) $page->id => $page->title])->all(),
+            resolve: function (string $target): ?array {
+                $page = Page::query()->visible()->find((int) $target);
+
+                return $page ? ['url' => $page->url(), 'label' => $page->title] : null;
+            },
+        ));
 
         // Preložiteľný obsah (hromadný preklad).
         $this->app->make(TranslatableModels::class)->register(Page::class, fn () => __('pages::admin.plural'));

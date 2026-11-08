@@ -2,6 +2,9 @@
     <div class="container-shop grid gap-10 py-12 text-sm text-zinc-600 sm:grid-cols-3">
         <div>
             <p class="font-semibold text-zinc-900">{{ $company->company_name ?: $shop->shop_name }}</p>
+            @if ($themeOptions->get('show_tagline', true) && filled($shop->tagline))
+                <p class="mt-1">{{ $shop->tagline }}</p>
+            @endif
             @if ($company->hasAddress())
                 <address class="mt-2 not-italic">
                     {{ $company->street }}<br>
@@ -16,7 +19,17 @@
             @endif
         </div>
 
-        @if (! empty($footerPages) && $footerPages->isNotEmpty())
+        @php($footerItems = $menus->items('footer'))
+        @if ($footerItems !== [])
+            <nav aria-label="{{ __('theme::shop.information') }}">
+                <p class="font-semibold text-zinc-900">{{ __('theme::shop.information') }}</p>
+                <ul class="mt-2 space-y-1.5">
+                    @foreach ($footerItems as $footerItem)
+                        <li><a href="{{ $footerItem['url'] }}" class="hover:text-zinc-900" @if ($footerItem['new_window']) target="_blank" rel="noopener" @endif>{{ $footerItem['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </nav>
+        @elseif (! empty($footerPages) && $footerPages->isNotEmpty())
             <nav aria-label="{{ __('theme::shop.information') }}">
                 <p class="font-semibold text-zinc-900">{{ __('theme::shop.information') }}</p>
                 <ul class="mt-2 space-y-1.5">

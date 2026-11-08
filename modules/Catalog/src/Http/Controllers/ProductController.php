@@ -3,6 +3,8 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Core\Content\AlternateUrls;
+use App\Core\Content\ShopLocales;
+use App\Core\Themes\ThemeManager;
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
 use Modules\Catalog\Models\Product;
@@ -26,7 +28,7 @@ class ProductController extends Controller
             ->limit(4)
             ->get();
 
-        return view('theme::templates.product', [
+        return view(app(ThemeManager::class)->template('product', ['product-'.$product->slugIn(app(ShopLocales::class)->default()), $product->product_type_id ? 'product-type-'.$product->product_type_id : null]), [
             'product' => $product,
             'variantData' => $product->hasVariants() ? $this->variantData($product) : null,
             'category' => $category,

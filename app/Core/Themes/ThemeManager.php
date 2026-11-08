@@ -129,6 +129,100 @@ class ThemeManager
     }
 
     /**
+     * Prvý existujúci súbor zo zoznamu (výber šablóny podľa obsahu), napr.
+     * template('product', ['product-kava', 'product-type-4']) skúsi templates/product-kava,
+     * templates/product-type-4 a nakoniec templates/product.
+     *
+     * @param  list<string|null>  $specific
+     */
+    public function template(string $base, array $specific = []): string
+    {
+        foreach (array_filter($specific) as $name) {
+            if (preg_match('/^[a-z0-9-]+$/', (string) $name) && view()->exists('theme::templates.'.$name)) {
+                return 'theme::templates.'.$name;
+            }
+        }
+
+        return 'theme::templates.'.$base;
+    }
+
+    /**
+     * Definície nastavení šablóny vrátane zdedených od rodiča (odvodená šablóna ich môže zmeniť alebo doplniť).
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    public function settingDefinitions(?Theme $theme = null): array
+    {
+        return $this->merged($theme, fn (Theme $item) => $item->settings);
+    }
+
+    /**
+     * Miesta na ponuky v šablóne (aj zdedené).
+     *
+     * @return array<string, array<string, string>>
+     */
+    public function menus(?Theme $theme = null): array
+    {
+        return $this->merged($theme, fn (Theme $item) => $item->menus);
+    }
+
+    /**
+     * Oblasti na bloky v šablóne (aj zdedené).
+     *
+     * @return array<string, array<string, string>>
+     */
+    public function areas(?Theme $theme = null): array
+    {
+        return $this->merged($theme, fn (Theme $item) => $item->areas);
+    }
+
+    /**
+     * Rodičovský reťazec ľubovoľnej šablóny (pre náhľad a nastavenia neaktívnej šablóny).
+     *
+     * @return list<Theme>
+     */
+    public function chainFor(Theme $theme): array
+    {
+        $chain = [];
+        $seen = [];
+
+        while ($theme !== null && ! isset($seen[$theme->name])) {
+            $chain[] = $theme;
+            $seen[$theme->name] = true;
+            $theme = $theme->parent !== null ? $this->find($theme->parent) : null;
+        }
+
+        return $chain;
+    }
+
+    /**
+     * @param  Closure(Theme): array<string, mixed>  $values
+     * @return array<string, mixed>
+     */
+    private function merged(?Theme $theme, Closure $values): array
+    {
+        $chain = $theme ? $this->chainFor($theme) : $this->chain();
+        $merged = [];
+
+        foreach (array_reverse($chain) as $item) {
+            $merged = [...$merged, ...$values($item)];
+        }
+
+        return $merged;
+    }
+
+    /**
+     * Adresáre s prekladmi šablóny od najvzdialenejšieho rodiča po aktívnu šablónu
+     * (preklady odvodenej šablóny prepíšu preklady rodiča).
+     *
+     * @return list<string>
+     */
+    public function langPaths(): array
+    {
+        return array_values(array_filter(array_map(fn (Theme $theme) => $theme->path.'/lang', array_reverse($this->chain())), 'is_dir'));
+    }
+
+    /**
      * Zabudne načítanú aktívnu šablónu (napr. po zmene v nastaveniach).
      */
     public function flush(): void

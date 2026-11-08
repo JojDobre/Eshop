@@ -3,6 +3,8 @@
 namespace Modules\Catalog\Http\Controllers;
 
 use App\Core\Content\AlternateUrls;
+use App\Core\Content\ShopLocales;
+use App\Core\Themes\ThemeManager;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -30,7 +32,7 @@ class CategoryController extends Controller
 
         $products = $this->applySort($filtered, $sort)->paginate(24)->withQueryString();
 
-        return view('theme::templates.category', [
+        return view(app(ThemeManager::class)->template('category', ['category-'.$category->slugIn(app(ShopLocales::class)->default())]), [
             'category' => $category,
             'subcategories' => $category->children()->visible()->get(),
             'products' => $products,

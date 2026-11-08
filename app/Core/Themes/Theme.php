@@ -10,6 +10,9 @@ final class Theme
     /**
      * @param  array<string, string>  $title
      * @param  array<string, string>  $description
+     * @param  array<string, array<string, mixed>>  $settings  Nastavenia šablóny: kľúč => {type, label, default, options}.
+     * @param  array<string, array<string, string>>  $menus  Miesta na ponuky: kľúč => názov podľa jazyka.
+     * @param  array<string, array<string, string>>  $areas  Oblasti na bloky: kľúč => názov podľa jazyka.
      */
     public function __construct(
         public readonly string $name,
@@ -21,6 +24,9 @@ final class Theme
         public readonly ?string $parent = null,
         public readonly ?string $requiredEshopVersion = null,
         public readonly ?string $screenshot = null,
+        public readonly array $settings = [],
+        public readonly array $menus = [],
+        public readonly array $areas = [],
     ) {}
 
     public static function fromFile(string $manifestPath): ?self
@@ -44,6 +50,9 @@ final class Theme
             parent: is_string($data['parent'] ?? null) ? $data['parent'] : null,
             requiredEshopVersion: is_string($data['requires']['eshop'] ?? null) ? $data['requires']['eshop'] : null,
             screenshot: $screenshot !== null && is_file($path.'/'.$screenshot) ? $screenshot : null,
+            settings: self::settings($data['settings'] ?? []),
+            menus: self::labels($data['menus'] ?? []),
+            areas: self::labels($data['areas'] ?? []),
         );
     }
 
@@ -59,6 +68,62 @@ final class Theme
         $locale ??= app()->getLocale();
 
         return $this->description[$locale] ?? $this->description['en'] ?? '';
+    }
+
+    /**
+     * Názov v jazyku (pre nastavenia, ponuky, oblasti).
+     *
+     * @param  array<string, string>  $labels
+     */
+    public static function label(array $labels, ?string $fallback = null): string
+    {
+        $locale = app()->getLocale();
+
+        return $labels[$locale] ?? $labels['en'] ?? (reset($labels) ?: (string) $fallback);
+    }
+
+    /**
+     * Platné definície nastavení: typ color, select, toggle, text, number alebo image.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    private static function settings(mixed $value): array
+    {
+        $settings = [];
+
+        foreach (is_array($value) ? $value : [] as $key => $setting) {
+            if (! is_string($key) || ! preg_match('/^[a-z][a-z0-9_]*$/', $key) || ! is_array($setting)
+                || ! in_array($setting['type'] ?? null, ['color', 'select', 'toggle', 'text', 'number', 'image'], true)) {
+                continue;
+            }
+
+            $settings[$key] = [
+                'type' => $setting['type'],
+                'label' => self::strings($setting['label'] ?? []),
+                'help' => self::strings($setting['help'] ?? []),
+                'default' => $setting['default'] ?? null,
+                'options' => array_map(fn ($labels) => is_array($labels) ? self::strings($labels) : ['en' => (string) $labels], is_array($setting['options'] ?? null) ? $setting['options'] : []),
+                'group' => is_string($setting['group'] ?? null) ? $setting['group'] : null,
+            ];
+        }
+
+        return $settings;
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    private static function labels(mixed $value): array
+    {
+        $labels = [];
+
+        foreach (is_array($value) ? $value : [] as $key => $names) {
+            if (is_string($key) && preg_match('/^[a-z][a-z0-9_-]*$/', $key)) {
+                $labels[$key] = is_array($names) ? self::strings($names) : [];
+            }
+        }
+
+        return $labels;
     }
 
     /**

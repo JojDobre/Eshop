@@ -14,5 +14,142 @@
     "author": "E-shop",
     "requires": {
         "eshop": "^0.7"
+    },
+    "settings": {
+        "header_layout": {
+            "type": "select",
+            "group": "header",
+            "label": {
+                "sk": "Rozloženie hlavičky",
+                "cs": "Rozložení hlavičky",
+                "en": "Header layout"
+            },
+            "default": "left",
+            "options": {
+                "left": {
+                    "sk": "Logo vľavo, ponuka vedľa",
+                    "cs": "Logo vlevo, nabídka vedle",
+                    "en": "Logo left, menu beside"
+                },
+                "center": {
+                    "sk": "Logo v strede, ponuka pod ním",
+                    "cs": "Logo uprostřed, nabídka pod ním",
+                    "en": "Logo centred, menu below"
+                }
+            }
+        },
+        "announcement": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Oznam nad hlavičkou",
+                "cs": "Oznámení nad hlavičkou",
+                "en": "Announcement bar"
+            },
+            "help": {
+                "sk": "Napr. „Doprava zadarmo nad 50 €“. Prázdne = nezobrazí sa.",
+                "cs": "Např. „Doprava zdarma nad 1 000 Kč“. Prázdné = nezobrazí se.",
+                "en": "E.g. “Free shipping over €50”. Empty = hidden."
+            },
+            "default": ""
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        },
+        "button_style": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Tvar tlačidiel",
+                "cs": "Tvar tlačítek",
+                "en": "Button shape"
+            },
+            "default": "rounded",
+            "options": {
+                "rounded": {
+                    "sk": "Zaoblené",
+                    "cs": "Zaoblené",
+                    "en": "Rounded"
+                },
+                "pill": {
+                    "sk": "Oblé",
+                    "cs": "Oblé",
+                    "en": "Pill"
+                },
+                "square": {
+                    "sk": "Hranaté",
+                    "cs": "Hranaté",
+                    "en": "Square"
+                }
+            }
+        },
+        "font": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Písmo",
+                "cs": "Písmo",
+                "en": "Font"
+            },
+            "default": "inter",
+            "options": {
+                "inter": {
+                    "sk": "Moderné (Inter)",
+                    "cs": "Moderní (Inter)",
+                    "en": "Modern (Inter)"
+                },
+                "system": {
+                    "sk": "Systémové",
+                    "cs": "Systémové",
+                    "en": "System"
+                },
+                "serif": {
+                    "sk": "Pätkové (klasické)",
+                    "cs": "Patkové (klasické)",
+                    "en": "Serif (classic)"
+                }
+            }
+        },
+        "show_tagline": {
+            "type": "toggle",
+            "group": "footer",
+            "label": {
+                "sk": "Zobraziť slogan v päte",
+                "cs": "Zobrazit slogan v patičce",
+                "en": "Show tagline in footer"
+            },
+            "default": true
+        }
+    },
+    "menus": {
+        "header": {
+            "sk": "Hlavná ponuka",
+            "cs": "Hlavní nabídka",
+            "en": "Main menu"
+        },
+        "footer": {
+            "sk": "Ponuka v päte",
+            "cs": "Nabídka v patičce",
+            "en": "Footer menu"
+        }
     }
 }

@@ -1,11 +1,21 @@
+@php
+    // Hlavná ponuka: položky z administrácie (Obsah → Ponuky), inak hlavné kategórie.
+    $navItems = $menus->items('header');
+
+    if ($navItems === [] && ! empty($navigationCategories)) {
+        $navItems = $navigationCategories->map(fn ($category) => ['label' => $category->name, 'url' => $category->url(), 'new_window' => false, 'active' => false, 'children' => []])->all();
+    }
+
+    $centered = $themeOptions->get('header_layout') === 'center';
+@endphp
 <header class="sticky top-0 z-40 border-b border-zinc-100 bg-white/95 backdrop-blur" x-data="{ menu: false, search: false }">
-    <div class="container-shop flex h-16 items-center gap-4">
+    <div class="container-shop relative flex h-16 items-center gap-4">
         <button type="button" class="-ml-2 rounded-md p-2 text-zinc-600 hover:bg-zinc-100 md:hidden" @click="menu = ! menu"
                 :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
         </button>
 
-        <a href="{{ route('storefront.home') }}" class="flex shrink-0 items-center gap-3 font-semibold tracking-tight">
+        <a href="{{ route('storefront.home') }}" @class(['flex shrink-0 items-center gap-3 font-semibold tracking-tight', 'md:absolute md:left-1/2 md:-translate-x-1/2' => $centered])>
             @if ($logo = $branding->logoUrl())
                 <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-8 w-auto">
             @else
@@ -13,11 +23,9 @@
             @endif
         </a>
 
-        @if (! empty($navigationCategories) && $navigationCategories->isNotEmpty())
+        @if ($navItems !== [] && ! $centered)
             <nav class="hidden flex-1 items-center gap-6 text-sm text-zinc-600 md:flex" aria-label="{{ __('theme::shop.categories') }}">
-                @foreach ($navigationCategories as $navCategory)
-                    <a href="{{ $navCategory->url() }}" class="hover:text-zinc-900">{{ $navCategory->name }}</a>
-                @endforeach
+                @include('theme::partials.nav-items', ['items' => $navItems])
             </nav>
         @else
             <div class="flex-1"></div>
@@ -64,11 +72,28 @@
         </div>
     @endif
 
-    @if (! empty($navigationCategories) && $navigationCategories->isNotEmpty())
+    @if ($navItems !== [] && $centered)
+        <nav class="hidden border-t border-zinc-100 md:block" aria-label="{{ __('theme::shop.categories') }}">
+            <div class="container-shop flex h-12 items-center justify-center gap-8 text-sm text-zinc-600">
+                @include('theme::partials.nav-items', ['items' => $navItems])
+            </div>
+        </nav>
+    @endif
+
+    @if ($navItems !== [])
         <nav id="mobile-menu" x-show="menu" x-cloak class="border-t border-zinc-100 md:hidden" aria-label="{{ __('theme::shop.categories') }}">
             <ul class="container-shop divide-y divide-zinc-100 py-2">
-                @foreach ($navigationCategories as $navCategory)
-                    <li><a href="{{ $navCategory->url() }}" class="block py-3 text-zinc-700">{{ $navCategory->name }}</a></li>
+                @foreach ($navItems as $navItem)
+                    <li>
+                        <a href="{{ $navItem['url'] }}" class="block py-3 text-zinc-700" @if ($navItem['new_window']) target="_blank" rel="noopener" @endif>{{ $navItem['label'] }}</a>
+                        @if ($navItem['children'] !== [])
+                            <ul class="pb-2 pl-4">
+                                @foreach ($navItem['children'] as $child)
+                                    <li><a href="{{ $child['url'] }}" class="block py-2 text-sm text-zinc-600" @if ($child['new_window']) target="_blank" rel="noopener" @endif>{{ $child['label'] }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </li>
                 @endforeach
             </ul>
         </nav>

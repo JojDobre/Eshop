@@ -14,7 +14,7 @@
 }
 
 @theme inline {
-    --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: var(--theme-font, 'Inter Variable', ui-sans-serif, system-ui, sans-serif);
     --color-primary: var(--brand-primary);
     --color-primary-foreground: var(--brand-primary-foreground);
 }
@@ -26,6 +26,8 @@
 @layer components {
     .btn {
         @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+        /* Tvar tlačidiel z nastavení šablóny. */
+        border-radius: var(--theme-button-radius, 0.5rem);
     }
 
     .btn-primary {

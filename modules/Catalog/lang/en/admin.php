@@ -36,6 +36,8 @@ return [
         'section_price' => 'Price',
         'price' => 'Selling price',
         'price_help' => 'Final customer price including VAT.',
+        'is_gift_voucher' => 'Gift voucher',
+        'is_gift_voucher_help' => 'After the order is paid the customer receives a voucher code worth the price by e-mail. Give the voucher a product type without shipping.',
         'sku' => 'SKU',
         'section_stock' => 'Stock and shipping',
         'track_stock' => 'Track stock',

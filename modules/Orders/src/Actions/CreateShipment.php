@@ -104,7 +104,7 @@ class CreateShipment
     /** Dobierka: nezaplatená objednávka s platbou na dobierku. */
     private function codAmount(Order $order): ?int
     {
-        return $order->payment_type === PaymentType::CashOnDelivery && $order->payment_status !== PaymentStatus::Paid ? $order->total : null;
+        return $order->payment_type === PaymentType::CashOnDelivery && $order->payment_status !== PaymentStatus::Paid ? $order->amountDue() : null;
     }
 
     /** Hmotnosť z produktov (gramy), najmenej 100 g. */

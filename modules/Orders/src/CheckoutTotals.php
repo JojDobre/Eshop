@@ -5,6 +5,7 @@ namespace Modules\Orders;
 use Modules\Cart\CartSummary;
 use Modules\Catalog\Models\Product;
 use Modules\Orders\Models\Coupon;
+use Modules\Orders\Models\GiftVoucher;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Shipping\Models\ShippingMethod;
 use Modules\Tax\Models\TaxRate;
@@ -32,12 +33,14 @@ final class CheckoutTotals
         public readonly array $lines = [],
         public readonly ?float $serviceRate = null,
         public readonly ?TaxContext $tax = null,
+        public readonly int $voucher = 0,
+        public readonly ?GiftVoucher $giftVoucher = null,
     ) {}
 
     /**
      * @param  Coupon|null  $coupon  Platný kupón (overený cez Coupon::rejectionReason).
      */
-    public static function calculate(CartSummary $cart, ?ShippingMethod $shipping, ?PaymentMethod $payment, ?Coupon $coupon = null, ?TaxContext $tax = null): self
+    public static function calculate(CartSummary $cart, ?ShippingMethod $shipping, ?PaymentMethod $payment, ?Coupon $coupon = null, ?TaxContext $tax = null, ?GiftVoucher $voucher = null): self
     {
         $calculator = app(TaxCalculator::class);
         $rules = app(TaxRules::class);
@@ -65,6 +68,10 @@ final class CheckoutTotals
             $paymentFee = $rules->gross($tax, $paymentFee, $homeServiceRate, $serviceRate);
         }
 
+        // Poukážka je platba: zníži sumu na úhradu, nie základ dane.
+        $total = $subtotal - $discount + $shippingPrice + $paymentFee;
+        $voucherAmount = $voucher !== null && $voucher->currency === $cart->currency ? max(0, min($voucher->balance, $total)) : 0;
+
         return new self(
             subtotal: $subtotal,
             shipping: $shippingPrice,
@@ -75,12 +82,20 @@ final class CheckoutTotals
             lines: $lines,
             serviceRate: $serviceRate,
             tax: $tax,
+            voucher: $voucherAmount,
+            giftVoucher: $voucherAmount > 0 ? $voucher : null,
         );
     }
 
     public function total(): int
     {
         return $this->subtotal - $this->discount + $this->shipping + $this->paymentFee;
+    }
+
+    /** Suma na úhradu po odpočítaní darčekovej poukážky. */
+    public function amountDue(): int
+    {
+        return max(0, $this->total() - $this->voucher);
     }
 
     private static function taxClass(Product $product): ?TaxRate

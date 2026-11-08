@@ -7,6 +7,9 @@
   v Nastavenia → Funkcie obchodu.
 - **Množstevné zľavy** pri produkte (pre všetkých alebo pre skupinu) s tabuľkou na stránke produktu.
 - **Blokovanie zákazníkov:** zablokovaný zákazník sa neprihlási a neobjedná ani bez prihlásenia.
+- **Darčekové poukážky:** predaj ako produkt (kód príde e-mailom po zaplatení), ručné vydanie v administrácii,
+  uplatnenie kódu v košíku, čerpanie po častiach, platnosť, vrátenie zostatku pri zrušení objednávky.
+  Poukážka je platba (zníži sumu na úhradu vrátane QR platby, dobierky a Stripe), nie zľava.
 - **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
   dobierka, štítky, sledovanie.
 - **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.

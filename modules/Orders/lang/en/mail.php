@@ -29,4 +29,7 @@ return [
         'open' => 'Open in administration',
     ],
     'track_shipment' => 'Track shipment :number',
+    'voucher_paid' => 'Paid by gift voucher',
+    'amount_due' => 'Amount due',
+    'voucher_valid_until' => 'valid until :date',
 ];

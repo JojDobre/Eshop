@@ -36,6 +36,8 @@ return [
         'section_price' => 'Cena',
         'price' => 'Predajná cena',
         'price_help' => 'Konečná cena pre zákazníka vrátane DPH.',
+        'is_gift_voucher' => 'Darčeková poukážka',
+        'is_gift_voucher_help' => 'Po zaplatení objednávky dostane zákazník e-mailom kód poukážky v hodnote ceny. Poukážke nastavte typ produktu bez dopravy.',
         'sku' => 'Katalógové číslo (SKU)',
         'section_stock' => 'Sklad a doprava',
         'track_stock' => 'Sledovať stav skladu',

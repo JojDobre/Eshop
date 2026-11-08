@@ -2,6 +2,7 @@
 
 namespace Modules\Catalog\Filament\Resources\Products;
 
+use App\Core\Features\FeatureToggles;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
@@ -233,6 +234,9 @@ class ProductResource extends Resource
                         ->placeholder(fn () => ($default = TaxRate::default()) ? $t('tax_rate_default').': '.$default->label() : null)
                         ->visible(fn () => app(TaxSettings::class)->vat_payer),
                     TextInput::make('sku')->label($t('sku'))->maxLength(64)->unique(ignoreRecord: true),
+                    // Predajom vznikne darčeková poukážka (funkcia modulu objednávok).
+                    Toggle::make('is_gift_voucher')->label($t('is_gift_voucher'))->helperText($t('is_gift_voucher_help'))
+                        ->visible(fn () => (bool) (($toggle = app(FeatureToggles::class)->find('orders.gift_vouchers')) && ($toggle->isEnabled)())),
                 ]),
                 // Ceny v ďalších menách: nepovinné, inak sa prepočítajú kurzom.
                 Section::make(__('admin.currencies.other_prices'))

@@ -2,6 +2,8 @@
 
 namespace Modules\Orders;
 
+use App\Core\Features\FeatureToggle;
+use App\Core\Features\FeatureToggles;
 use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
@@ -19,7 +21,9 @@ use Modules\Orders\Events\OrderPaid;
 use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Events\OrderStatusChanged;
 use Modules\Orders\Listeners\IssueDownloadsForOrder;
+use Modules\Orders\Listeners\IssueGiftVouchers;
 use Modules\Orders\Listeners\NotifyCustomerAboutStatus;
+use Modules\Orders\Listeners\RefundGiftVoucher;
 use Modules\Orders\Listeners\SendOrderEmails;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Payments\PaymentGateways;
@@ -48,6 +52,26 @@ class OrdersServiceProvider extends ModuleServiceProvider
         Event::listen(OrderPlaced::class, SendOrderEmails::class);
         Event::listen(OrderStatusChanged::class, NotifyCustomerAboutStatus::class);
         Event::listen([OrderPlaced::class, OrderPaid::class], IssueDownloadsForOrder::class);
+        Event::listen(OrderPaid::class, IssueGiftVouchers::class);
+        Event::listen(OrderStatusChanged::class, RefundGiftVoucher::class);
+
+        // Darčekové poukážky: prepínač vo Funkciách obchodu.
+        $toggles = $this->app->make(FeatureToggles::class);
+        $toggles->group('orders', fn () => __('orders::admin.features.group'));
+        $toggles->register(new FeatureToggle(
+            key: 'orders.gift_vouchers',
+            group: 'orders',
+            label: fn () => __('orders::admin.features.gift_vouchers'),
+            description: fn () => __('orders::admin.features.gift_vouchers_help'),
+            isEnabled: fn () => GiftVoucherSettings::isEnabled(),
+            set: function (bool $enabled): void {
+                $settings = app(GiftVoucherSettings::class);
+                $settings->enabled = $enabled;
+                $settings->save();
+            },
+            settingsUrl: fn () => url('/admin/settings/gift-vouchers'),
+            sizes: ['small' => false, 'medium' => true, 'large' => true],
+        ));
 
         // Kontrola stavu zásielok u kuriérov (webový cron).
         $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
@@ -98,12 +122,15 @@ class OrdersServiceProvider extends ModuleServiceProvider
             $threshold = ShippingMethod::query()->active()->whereNotNull('free_from')->where('price', '>', 0)->get()
                 ->map(fn (ShippingMethod $method) => $method->freeFromIn($currency))->filter()->min();
             $coupon = $summary ? app(Coupons::class)->forCart($summary) : null;
+            $vouchers = app(GiftVouchers::class);
 
             $view->with([
                 'freeShippingFrom' => $threshold === null ? null : (int) $threshold,
                 'coupon' => $coupon,
                 'couponDiscount' => $coupon && $summary ? $coupon->discountFor($summary->subtotal(), $summary->currency) : 0,
                 'couponsEnabled' => true,
+                'vouchersEnabled' => $vouchers->enabled(),
+                'giftVoucher' => $summary ? $vouchers->forCart($summary) : null,
             ]);
         });
     }
@@ -124,6 +151,9 @@ class OrdersServiceProvider extends ModuleServiceProvider
         $templates->register(new EmailTemplateDefinition('orders.notification', 'orders::mail_templates.notification',
             ['order_number', 'customer_name', 'customer_email', 'customer_phone', 'order_total', 'order_items', 'shipping_method', 'payment_method', 'customer_note', 'admin_url'], sample: $sample));
 
+        $templates->register(new EmailTemplateDefinition('orders.gift_voucher', 'orders::mail_templates.gift_voucher',
+            ['customer_name', 'voucher_codes', 'shop_url', 'shop_name'],
+            sample: [...$sample, 'voucher_codes' => '- **GV7K-2M9Q-X4HT** – 50,00 €', 'shop_url' => url('/')]));
         $templates->register(new EmailTemplateDefinition('orders.downloads', 'orders::mail_templates.downloads',
             ['customer_name', 'order_number', 'download_links', 'order_url', 'shop_name'],
             sample: [...$sample, 'download_links' => '- [ebook.pdf]('.url('/').')']));

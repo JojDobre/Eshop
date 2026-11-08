@@ -73,7 +73,7 @@ class InvoicesServiceProvider extends ModuleServiceProvider
             return app(PaymentQr::class)->dataUri(new PaymentQrData(
                 iban: $supplier['iban'],
                 bic: $supplier['swift'] ?? null,
-                amount: $invoice->total,
+                amount: max(0, $invoice->total - (int) ($invoice->order?->voucher_amount ?? 0)),
                 currency: $invoice->currency,
                 variableSymbol: (string) $invoice->variable_symbol,
                 beneficiaryName: (string) ($supplier['name'] ?? ''),

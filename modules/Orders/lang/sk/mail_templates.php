@@ -70,4 +70,9 @@ MD,
         'subject' => 'Súbory k objednávke č. {order_number}',
         'body' => "Dobrý deň {customer_name},\n\nďakujeme za nákup. Zakúpené súbory si stiahnete tu:\n\n{download_links}\n\nOdkazy nájdete aj na stránke objednávky: {order_url}\n\nS pozdravom\\\n{shop_name}",
     ],
+    'gift_voucher' => [
+        'label' => 'Darčeková poukážka',
+        'subject' => 'Vaša darčeková poukážka – {shop_name}',
+        'body' => "Dobrý deň {customer_name},\n\nďakujeme za nákup darčekovej poukážky. Tu je kód:\n\n{voucher_codes}\n\nKód zadáte v košíku na {shop_url}. Poukážku môžete čerpať aj po častiach.\n\nS pozdravom\\\n{shop_name}",
+    ],
 ];

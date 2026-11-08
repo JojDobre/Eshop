@@ -70,4 +70,9 @@ MD,
         'subject' => 'Files for order no. {order_number}',
         'body' => "Hello {customer_name},\n\nthank you for your purchase. Download your files here:\n\n{download_links}\n\nYou can also find the links on the order page: {order_url}\n\nKind regards\\\n{shop_name}",
     ],
+    'gift_voucher' => [
+        'label' => 'Gift voucher',
+        'subject' => 'Your gift voucher – {shop_name}',
+        'body' => "Hello {customer_name},\n\nthank you for buying a gift voucher. Here is the code:\n\n{voucher_codes}\n\nEnter the code in the cart at {shop_url}. The voucher can be used in several orders.\n\nKind regards\\\n{shop_name}",
+    ],
 ];

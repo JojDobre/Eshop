@@ -147,10 +147,17 @@
                         @endforeach
                     </table>
                 @endif
+                @php($voucherPaid = $invoice->type === \Modules\Invoices\InvoiceType::Invoice ? (int) ($invoice->order?->voucher_amount ?? 0) : 0)
                 <table class="grid" style="margin-top: 10px; border-top: 1px solid #d4d4d8">
+                    @if ($voucherPaid > 0)
+                        <tr>
+                            <td style="padding-top: 8px">{{ __('invoices::invoices.voucher_paid') }}</td>
+                            <td class="r" style="padding-top: 8px">−{{ $money($voucherPaid) }}</td>
+                        </tr>
+                    @endif
                     <tr>
                         <td style="padding-top: 8px">{{ $invoice->type === \Modules\Invoices\InvoiceType::CreditNote ? __('invoices::invoices.to_refund') : ($invoice->order?->isPaid() && $invoice->type === \Modules\Invoices\InvoiceType::Invoice ? __('invoices::invoices.paid') : __('invoices::invoices.to_pay')) }}</td>
-                        <td class="r total" style="padding-top: 8px">{{ $money($invoice->type === \Modules\Invoices\InvoiceType::Invoice && $invoice->order?->isPaid() ? $invoice->total : abs($invoice->total)) }}</td>
+                        <td class="r total" style="padding-top: 8px">{{ $money($invoice->type === \Modules\Invoices\InvoiceType::Invoice && $invoice->order?->isPaid() ? $invoice->total : max(0, abs($invoice->total) - $voucherPaid)) }}</td>
                     </tr>
                 </table>
             </td>

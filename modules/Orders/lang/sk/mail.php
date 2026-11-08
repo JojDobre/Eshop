@@ -29,4 +29,7 @@ return [
         'open' => 'Otvoriť v administrácii',
     ],
     'track_shipment' => 'Sledovať zásielku :number',
+    'voucher_paid' => 'Uhradené darčekovou poukážkou',
+    'amount_due' => 'Zostáva uhradiť',
+    'voucher_valid_until' => 'platí do :date',
 ];

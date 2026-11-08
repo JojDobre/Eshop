@@ -15,6 +15,7 @@ use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Models\Coupon;
+use Modules\Orders\Models\GiftVoucher;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderHistoryEntry;
 use Modules\Orders\NumberSequence;
@@ -48,6 +49,7 @@ class PlaceOrder
         string $locale,
         ?string $ipAddress = null,
         ?Coupon $coupon = null,
+        ?GiftVoucher $voucher = null,
     ): Order {
         if (! $cart->canCheckout()) {
             throw new CheckoutException(__('orders::messages.cart_changed'));
@@ -57,7 +59,7 @@ class PlaceOrder
             throw new CheckoutException(__('orders::messages.payment_not_available'));
         }
 
-        $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress, $coupon): Order {
+        $order = DB::transaction(function () use ($cart, $shipping, $payment, $customer, $locale, $ipAddress, $coupon, $voucher): Order {
             $number = $this->numbers->nextOrderNumber();
             $allocations = $this->reserveStock($cart, $number);
             $coupon = $this->claimCoupon($coupon, $cart);
@@ -69,7 +71,8 @@ class PlaceOrder
                 filled($customer['billing_company'] ?? null),
                 $customer['billing_vat_id'] ?? null,
             );
-            $totals = CheckoutTotals::calculate($cart, $shipping, $payment, $coupon, $taxContext);
+            $voucher = $this->lockVoucher($voucher, $cart);
+            $totals = CheckoutTotals::calculate($cart, $shipping, $payment, $coupon, $taxContext, $voucher);
             $serviceRate = (float) $totals->serviceRate;
 
             $order = Order::query()->create([
@@ -108,6 +111,8 @@ class PlaceOrder
                 'discount' => $totals->discount,
                 'subtotal' => $totals->subtotal,
                 'total' => $totals->total(),
+                'voucher_code' => $totals->giftVoucher?->code,
+                'voucher_amount' => $totals->voucher,
                 'terms_accepted_at' => now(),
                 'legal_consents' => app(LegalPages::class)->consentRecords(),
                 'ip_address' => $ipAddress,
@@ -130,15 +135,43 @@ class PlaceOrder
                 ]);
             }
 
+            if ($totals->giftVoucher !== null) {
+                $totals->giftVoucher->decrement('balance', $totals->voucher);
+                $totals->giftVoucher->usages()->create(['order_id' => $order->id, 'amount' => $totals->voucher]);
+            }
+
             $order->history()->create(['type' => OrderHistoryEntry::CREATED]);
 
             return $order;
         });
 
+        // Objednávka celá uhradená poukážkou je zaplatená (ešte pred potvrdzujúcim e-mailom).
+        if ($order->voucher_amount > 0 && $order->amountDue() === 0) {
+            app(SetPaymentStatus::class)->handle($order, PaymentStatus::Paid);
+        }
+
         // E-maily a ďalšie reakcie až po úspešnom uložení objednávky.
         OrderPlaced::dispatch($order);
 
         return $order;
+    }
+
+    /**
+     * Poukážka zamknutá na čas objednávky (aby sa jej zostatok nečerpal dvakrát naraz).
+     */
+    private function lockVoucher(?GiftVoucher $voucher, CartSummary $cart): ?GiftVoucher
+    {
+        if ($voucher === null) {
+            return null;
+        }
+
+        $locked = GiftVoucher::query()->whereKey($voucher->id)->lockForUpdate()->first();
+
+        if ($locked === null || ($reason = $locked->rejectionReason($cart->currency)) !== null) {
+            throw new CheckoutException($reason ?? __('orders::messages.voucher_invalid'));
+        }
+
+        return $locked;
     }
 
     /**

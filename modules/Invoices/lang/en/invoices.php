@@ -34,4 +34,5 @@ return [
     'pay_by_qr' => 'Pay with QR code',
     'discount' => 'Discount (:code)',
     'reverse_charge' => 'Reverse charge – intra-Community supply of goods exempt from VAT (Article 138 of Directive 2006/112/EC).',
+    'voucher_paid' => 'Paid by gift voucher',
 ];

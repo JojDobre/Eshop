@@ -18,4 +18,10 @@ return [
     'shipping_not_available' => 'This shipping method is not available for your order. Choose another one.',
     'zip_not_served' => 'This shipping method does not deliver to this postcode. Choose another one.',
     'pickup_point_invalid' => 'Choose a pickup point from the list.',
+    'voucher_invalid' => 'No gift voucher with this code exists.',
+    'voucher_expired' => 'The gift voucher has expired.',
+    'voucher_used' => 'The gift voucher has been used up.',
+    'voucher_currency' => 'The voucher can only be used when paying in :currency.',
+    'voucher_applied' => 'The gift voucher has been applied. Balance: :balance.',
+    'voucher_removed' => 'The gift voucher has been removed.',
 ];

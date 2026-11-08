@@ -86,6 +86,7 @@ class Order extends Model
             'discount' => 'integer',
             'subtotal' => 'integer',
             'total' => 'integer',
+            'voucher_amount' => 'integer',
             'terms_accepted_at' => 'datetime',
             'paid_at' => 'datetime',
             'pickup_point' => 'array',
@@ -197,6 +198,12 @@ class Order extends Model
     /**
      * Údaje pre QR kód na platbu prevodom (null, ak obchod nemá zadaný účet).
      */
+    /** Suma na úhradu: celková suma mínus časť uhradená darčekovou poukážkou. */
+    public function amountDue(): int
+    {
+        return max(0, (int) $this->total - (int) $this->voucher_amount);
+    }
+
     public function paymentQrData(): ?PaymentQrData
     {
         $company = app(CompanySettings::class);
@@ -208,7 +215,7 @@ class Order extends Model
         return new PaymentQrData(
             iban: $company->iban,
             bic: $company->swift,
-            amount: $this->total,
+            amount: $this->amountDue(),
             currency: $this->currency,
             variableSymbol: $this->variableSymbol(),
             beneficiaryName: $company->company_name ?: app(GeneralSettings::class)->shop_name,

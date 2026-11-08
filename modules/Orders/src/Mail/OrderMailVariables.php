@@ -78,6 +78,11 @@ class OrderMailVariables
 
         $rows[] = '| **'.__('orders::mail.total').'** | | **'.$money($order->total).'** |';
 
+        if ($order->voucher_amount > 0) {
+            $rows[] = '| '.__('orders::mail.voucher_paid').' | | −'.$money($order->voucher_amount).' |';
+            $rows[] = '| **'.__('orders::mail.amount_due').'** | | **'.$money($order->amountDue()).'** |';
+        }
+
         return "<x-mail::table>\n".implode("\n", $rows)."\n</x-mail::table>";
     }
 
@@ -94,7 +99,7 @@ class OrderMailVariables
             }
 
             $lines[] = __('orders::mail.bank.variable_symbol').': **'.$order->variableSymbol().'**';
-            $lines[] = __('orders::mail.bank.amount').': **'.$money($order->total).'**';
+            $lines[] = __('orders::mail.bank.amount').': **'.$money($order->amountDue()).'**';
         }
 
         if (app(PaymentGateways::class)->forPayableOrder($order) !== null) {

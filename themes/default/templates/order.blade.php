@@ -28,7 +28,7 @@
 
         @if ($canPayOnline ?? false)
             <section class="mt-8 flex flex-col gap-4 rounded-2xl border border-zinc-200 p-6 sm:flex-row sm:items-center sm:justify-between">
-                <p class="text-sm text-zinc-700">{{ __('theme::shop.payment_waiting') }} <strong>{{ $money($order->total) }}</strong></p>
+                <p class="text-sm text-zinc-700">{{ __('theme::shop.payment_waiting') }} <strong>{{ $money($order->amountDue()) }}</strong></p>
                 <a href="{{ route('orders.pay', $order->token) }}" class="btn btn-primary px-6 py-3">{{ __('theme::shop.pay_online') }}</a>
             </section>
         @endif
@@ -46,7 +46,7 @@
                         <div><dt class="text-zinc-500">SWIFT / BIC</dt><dd class="font-mono font-medium">{{ $company->swift }}</dd></div>
                     @endif
                     <div><dt class="text-zinc-500">{{ __('theme::shop.variable_symbol') }}</dt><dd class="font-mono font-medium">{{ $order->variableSymbol() }}</dd></div>
-                    <div><dt class="text-zinc-500">{{ __('theme::shop.amount') }}</dt><dd class="font-medium">{{ $money($order->total) }}</dd></div>
+                    <div><dt class="text-zinc-500">{{ __('theme::shop.amount') }}</dt><dd class="font-medium">{{ $money($order->amountDue()) }}</dd></div>
                 </dl>
                 </div>
                 @if ($paymentQr ?? null)
@@ -134,6 +134,10 @@
                     <div class="flex justify-between"><dt>{{ $order->payment_method_name }}</dt><dd>{{ $money($order->payment_fee) }}</dd></div>
                 @endif
                 <div class="flex justify-between border-t border-zinc-200 pt-3 text-base font-semibold"><dt>{{ __('theme::shop.total') }}</dt><dd>{{ $money($order->total) }}</dd></div>
+                @if ($order->voucher_amount > 0)
+                    <div class="flex justify-between text-emerald-700"><dt>{{ __('theme::shop.gift_voucher_paid') }}</dt><dd>−{{ $money($order->voucher_amount) }}</dd></div>
+                    <div class="flex justify-between font-semibold"><dt>{{ __('theme::shop.amount_due') }}</dt><dd>{{ $money($order->amountDue()) }}</dd></div>
+                @endif
             </dl>
         </section>
 

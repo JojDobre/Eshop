@@ -105,6 +105,25 @@
                         </div>
                     @endif
 
+                    @if (! empty($vouchersEnabled))
+                        <div class="mt-4 border-t border-zinc-200 pt-4">
+                            @if (! empty($giftVoucher))
+                                <form method="POST" action="{{ route('voucher.remove') }}" class="flex items-center justify-between gap-2 text-sm">
+                                    @csrf @method('DELETE')
+                                    <span>{{ __('theme::shop.gift_voucher_applied', ['code' => $giftVoucher->formattedCode(), 'balance' => format_price($giftVoucher->balance, $giftVoucher->currency)]) }}</span>
+                                    <button type="submit" class="text-zinc-600 underline underline-offset-2 hover:text-zinc-900">{{ __('theme::shop.remove_coupon') }}</button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('voucher.apply') }}" class="flex gap-2">
+                                    @csrf
+                                    <label for="voucher-code" class="sr-only">{{ __('theme::shop.gift_voucher') }}</label>
+                                    <input id="voucher-code" name="code" placeholder="{{ __('theme::shop.gift_voucher') }}" class="input py-1.5" autocomplete="off">
+                                    <button type="submit" class="btn btn-secondary py-1.5">{{ __('theme::shop.apply') }}</button>
+                                </form>
+                            @endif
+                        </div>
+                    @endif
+
                     @if ($summary->canCheckout())
                         <a href="{{ route('checkout.show') }}" class="btn btn-primary mt-6 w-full">{{ __('theme::shop.checkout') }}</a>
                     @else

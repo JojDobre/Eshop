@@ -34,4 +34,5 @@ return [
     'pay_by_qr' => 'Zaplaťte cez QR kód',
     'discount' => 'Zľava (:code)',
     'reverse_charge' => 'Prenesenie daňovej povinnosti – dodanie tovaru do iného členského štátu oslobodené od dane (čl. 138 smernice 2006/112/ES).',
+    'voucher_paid' => 'Uhradené darčekovou poukážkou',
 ];

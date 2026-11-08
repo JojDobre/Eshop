@@ -36,7 +36,7 @@ class StripeGateway implements PaymentGateway
                 'quantity' => 1,
                 'price_data' => [
                     'currency' => strtolower($order->currency),
-                    'unit_amount' => $order->total,
+                    'unit_amount' => $order->amountDue(),
                     'product_data' => ['name' => __('stripe::messages.line_item', ['number' => $order->number], $order->locale)],
                 ],
             ]],
@@ -52,7 +52,7 @@ class StripeGateway implements PaymentGateway
         StripePayment::query()->create([
             'order_id' => $order->id,
             'session_id' => $session['id'],
-            'amount' => $order->total,
+            'amount' => $order->amountDue(),
             'currency' => $order->currency,
         ]);
 

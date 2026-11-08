@@ -18,4 +18,10 @@ return [
     'shipping_not_available' => 'Tento způsob dopravy nelze pro vaši objednávku použít. Vyberte jinou dopravu.',
     'zip_not_served' => 'Na toto PSČ tento způsob dopravy nedoručuje. Vyberte jinou dopravu.',
     'pickup_point_invalid' => 'Vyberte výdejní místo ze seznamu.',
+    'voucher_invalid' => 'Dárkový poukaz s tímto kódem neexistuje.',
+    'voucher_expired' => 'Platnost dárkového poukazu skončila.',
+    'voucher_used' => 'Dárkový poukaz je už vyčerpaný.',
+    'voucher_currency' => 'Poukaz můžete použít jen při platbě v měně :currency.',
+    'voucher_applied' => 'Dárkový poukaz byl uplatněn. Zůstatek: :balance.',
+    'voucher_removed' => 'Dárkový poukaz byl odebrán.',
 ];

@@ -16,6 +16,7 @@ use Modules\Orders\CheckoutException;
 use Modules\Orders\CheckoutFields;
 use Modules\Orders\CheckoutTotals;
 use Modules\Orders\Coupons;
+use Modules\Orders\GiftVouchers;
 use Modules\Orders\Http\Requests\CheckoutRequest;
 use Modules\Orders\Models\Coupon;
 use Modules\Orders\Payments\PaymentGateways;
@@ -37,6 +38,7 @@ class CheckoutController extends Controller
         }
 
         $coupon = app(Coupons::class)->forCart($summary);
+        $voucher = app(GiftVouchers::class)->forCart($summary);
         $weight = $summary->weight();
         $shippingMethods = self::availableShipping($summary);
         $gateways = app(PaymentGateways::class);
@@ -57,6 +59,7 @@ class CheckoutController extends Controller
             ]),
             'totals' => CheckoutTotals::calculate($summary, null, null, $coupon),
             'coupon' => $coupon,
+            'giftVoucher' => $voucher,
             'countries' => config('eshop.countries'),
             'legalPages' => app(LegalPages::class),
             'checkoutFields' => CheckoutFields::fields(),
@@ -86,6 +89,7 @@ class CheckoutController extends Controller
                 locale: app(ContentLocale::class)->current(),
                 ipAddress: $request->ip(),
                 coupon: Coupon::findByCode($this->cart->couponCode()),
+                voucher: app(GiftVouchers::class)->forCart($summary),
             );
         } catch (CheckoutException $e) {
             return redirect()->route('cart.show')->with('error', $e->getMessage());
@@ -97,6 +101,7 @@ class CheckoutController extends Controller
         }
 
         $this->cart->clear();
+        app(GiftVouchers::class)->remove();
         session()->flash('order_placed', true);
 
         // Platba kartou: hneď na platobnú bránu (stránka objednávky ostane ako návrat aj pri zrušení platby).

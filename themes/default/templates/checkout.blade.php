@@ -12,6 +12,7 @@
         'isCompany' => (bool) old('is_company', $prefill['is_company'] ?? false),
         'different' => (bool) old('ship_to_different_address', $prefill['ship_to_different_address'] ?? false),
         'subtotal' => $summary->subtotal(),
+        'voucherBalance' => $giftVoucher?->balance ?? 0,
         'discount' => $totals->discount,
         'availability' => $paymentAvailability,
         'shippingPrices' => $shippingPrices,
@@ -168,6 +169,13 @@
                         <dt>{{ __('theme::shop.total') }}</dt>
                         <dd x-text="money(total())">{{ format_price($totals->total()) }}</dd>
                     </div>
+                    @if (! empty($giftVoucher))
+                        <div class="flex justify-between text-emerald-700">
+                            <dt>{{ __('theme::shop.gift_voucher_paid') }} ({{ $giftVoucher->formattedCode() }})</dt>
+                            <dd x-text="'−' + money(voucherUsed())"></dd>
+                        </div>
+                        <div class="flex justify-between font-semibold"><dt>{{ __('theme::shop.amount_due') }}</dt><dd x-text="money(total() - voucherUsed())"></dd></div>
+                    @endif
                 </dl>
                 <p class="text-xs text-zinc-500">{{ $vatPayer ? __('theme::shop.price_includes_vat') : __('theme::shop.not_vat_payer') }}</p>
 
@@ -236,6 +244,9 @@
                 },
                 total() {
                     return this.subtotal - this.discount + (this.shippingPrices[this.shipping] || 0) + (this.fees[this.payment] || 0);
+                },
+                voucherUsed() {
+                    return Math.min(this.voucherBalance, this.total());
                 },
                 money(minor) {
                     return new Intl.NumberFormat(this.locale, { style: 'currency', currency: this.currency }).format(minor / 100);

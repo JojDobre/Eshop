@@ -67,6 +67,7 @@ class Product extends Model
     protected function casts(): array
     {
         return [
+            'is_gift_voucher' => 'boolean',
             'images' => 'array',
             'track_stock' => 'boolean',
             'stock_quantity' => 'integer',

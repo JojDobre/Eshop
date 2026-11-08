@@ -84,6 +84,7 @@ class ShippingMethodResource extends Resource
                 Select::make('type')->label($t('type'))->options(ShippingType::class)->required()->live()->native(false),
                 Textarea::make('description')->label($t('description'))->helperText($t('description_help'))
                     ->rows(2)->maxLength(300)->columnSpanFull(),
+                TextInput::make('delivery_time')->label($t('delivery_time'))->helperText($t('delivery_time_help'))->maxLength(80),
                 Textarea::make('pickup_details')->label($t('pickup_details'))->helperText($t('pickup_details_help'))
                     ->rows(3)->maxLength(500)->columnSpanFull()
                     ->visible(fn (Get $get) => $get('type') === ShippingType::Pickup || $get('type') === ShippingType::Pickup->value),
@@ -122,6 +123,12 @@ class ShippingMethodResource extends Resource
             ])->visible(fn (Get $get) => self::type($get) !== ShippingType::None),
             Section::make($t('restrictions.section'))->collapsed()->columns(2)->schema([
                 MoneyInput::make('cost')->label($t('restrictions.cost'))->helperText($t('restrictions.cost_help')),
+                Select::make('countries')->label($t('restrictions.countries'))->helperText($t('restrictions.countries_help'))
+                    ->multiple()->searchable()
+                    ->options(fn () => collect(config('eshop.countries'))->mapWithKeys(fn (string $code) => [$code => __('countries.'.$code)])->all())
+                    ->visible(fn (Get $get) => self::type($get) === ShippingType::Delivery),
+                MoneyInput::make('min_order')->label($t('restrictions.min_order'))->helperText($t('restrictions.min_order_help')),
+                MoneyInput::make('max_order')->label($t('restrictions.max_order')),
                 TagsInput::make('zip_prefixes')->label($t('restrictions.zip_prefixes'))->helperText($t('restrictions.zip_prefixes_help'))
                     ->visible(fn (Get $get) => self::type($get) === ShippingType::Delivery),
                 Select::make('excluded_product_type_ids')->label($t('restrictions.excluded_types'))->helperText($t('restrictions.excluded_types_help'))

@@ -124,7 +124,7 @@ class CouponsAndShippingTest extends ShopTestCase
         $this->post(route('cart.add'), ['product_id' => $heavy->id, 'quantity' => 3]);
         // 1 kg + 12 kg = 13 kg > 10 kg → kuriér sa neponúkne, osobný odber áno.
         $this->get(route('checkout.show'))->assertDontSee('Kuriér na adresu')->assertSee('Osobný odber');
-        $this->post(route('checkout.store'), $this->checkoutData())->assertSessionHasErrors('payment_method_id');
+        $this->post(route('checkout.store'), $this->checkoutData())->assertSessionHasErrors('shipping_method_id');
     }
 
     public function test_coupons_are_managed_in_admin(): void

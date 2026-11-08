@@ -10,6 +10,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Event;
 use Modules\Shipping\Carriers\CarrierRegistry;
 use Modules\Shipping\Carriers\ManualCarrier;
+use Modules\Shipping\Carriers\OwnPointsCarrier;
 use Modules\Shipping\Listeners\CreateDefaultShippingMethods;
 use Modules\Shipping\Models\ShippingMethod;
 
@@ -27,6 +28,7 @@ class ShippingServiceProvider extends ModuleServiceProvider
         $this->app->singleton(CarrierRegistry::class, function (): CarrierRegistry {
             $registry = new CarrierRegistry;
             $registry->register(new ManualCarrier);
+            $registry->register(new OwnPointsCarrier);
 
             return $registry;
         });

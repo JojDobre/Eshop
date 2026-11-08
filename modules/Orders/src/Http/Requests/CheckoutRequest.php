@@ -109,6 +109,12 @@ class CheckoutRequest extends FormRequest
 
             $zip = $this->boolean('ship_to_different_address') ? $this->input('shipping_zip') : $this->input('billing_zip');
 
+            $country = $this->boolean('ship_to_different_address') ? $this->input('shipping_country') : $this->input('billing_country');
+
+            if ($shipping->type->requiresShippingAddress() && ! $shipping->deliversToCountry(is_string($country) ? $country : null)) {
+                $validator->errors()->add('shipping_method_id', __('orders::messages.country_not_served'));
+            }
+
             if ($shipping->type->requiresShippingAddress() && ! $shipping->deliversToZip(is_string($zip) ? $zip : null)) {
                 $validator->errors()->add('shipping_method_id', __('orders::messages.zip_not_served'));
             }
@@ -138,7 +144,10 @@ class CheckoutRequest extends FormRequest
         $selector = $shipping->carrierService()?->pickupSelector($shipping);
 
         if (! empty($selector['list'])) {
-            $point = PickupPoint::query()->where('carrier', $shipping->carrier)->where('code', $code)->where('is_active', true)->first();
+            $codes = array_filter((array) ($shipping->carrier_options['point_codes'] ?? []));
+            $point = $codes !== [] && ! in_array($code, $codes, true)
+                ? null
+                : PickupPoint::query()->where('carrier', $shipping->carrier)->where('code', $code)->where('is_active', true)->first();
 
             return $point?->toOrderData();
         }

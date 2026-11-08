@@ -69,8 +69,11 @@ class CheckoutController extends Controller
         $shipping = $request->shippingMethod();
         $payment = $request->paymentMethod();
 
-        if ($shipping === null || $payment === null || ! app(PaymentGateways::class)->supports($payment->type) || ! $payment->isAvailableFor($shipping)
-            || ! self::availableShipping($summary)->contains('id', $shipping->id)) {
+        if ($shipping !== null && ! self::availableShipping($summary)->contains('id', $shipping->id)) {
+            return back()->withInput()->withErrors(['shipping_method_id' => __('orders::messages.shipping_not_available')]);
+        }
+
+        if ($shipping === null || $payment === null || ! app(PaymentGateways::class)->supports($payment->type) || ! $payment->isAvailableFor($shipping)) {
             return back()->withInput()->withErrors(['payment_method_id' => __('orders::messages.payment_not_available')]);
         }
 
@@ -116,8 +119,10 @@ class CheckoutController extends Controller
         // Typy a kategórie produktov v košíku (doprava môže niektoré vylúčiť, napr. zvieratá iba osobne).
         $typeIds = collect($summary->lines)->map(fn ($line) => $line->product->product_type_id)->unique()->values()->all();
         $categoryIds = collect($summary->lines)->flatMap(fn ($line) => $line->product->categories->pluck('id'))->unique()->values()->all();
+        $subtotal = $summary->subtotal();
         $methods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight)
-            && $method->allowsProducts($typeIds, $categoryIds));
+            && $method->allowsProducts($typeIds, $categoryIds)
+            && $method->allowsOrderValue($subtotal, $summary->currency));
         $none = $methods->filter(fn (ShippingMethod $method) => $method->type === ShippingType::None);
         $regular = $methods->reject(fn (ShippingMethod $method) => $method->type === ShippingType::None);
 

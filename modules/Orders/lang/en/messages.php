@@ -14,6 +14,8 @@ return [
     'coupon_removed' => 'The discount code has been removed.',
     'preorder' => 'pre-order',
     'download_unavailable' => 'The file can no longer be downloaded (validity or download count has expired).',
+    'country_not_served' => 'This shipping method does not deliver to this country. Choose another one.',
+    'shipping_not_available' => 'This shipping method is not available for your order. Choose another one.',
     'zip_not_served' => 'This shipping method does not deliver to this postcode. Choose another one.',
     'pickup_point_invalid' => 'Choose a pickup point from the list.',
 ];

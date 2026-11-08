@@ -14,6 +14,8 @@ return [
     'coupon_removed' => 'Slevový kód byl odstraněn.',
     'preorder' => 'předobjednávka',
     'download_unavailable' => 'Soubor již nelze stáhnout (platnost nebo počet stažení vypršel).',
+    'country_not_served' => 'Do této země tento způsob dopravy nedoručuje. Vyberte jinou dopravu.',
+    'shipping_not_available' => 'Tento způsob dopravy nelze pro vaši objednávku použít. Vyberte jinou dopravu.',
     'zip_not_served' => 'Na toto PSČ tento způsob dopravy nedoručuje. Vyberte jinou dopravu.',
     'pickup_point_invalid' => 'Vyberte výdejní místo ze seznamu.',
 ];

@@ -16,6 +16,10 @@
         'availability' => $paymentAvailability,
         'shippingPrices' => $shippingPrices,
         'needsAddress' => $shippingMethods->mapWithKeys(fn ($method) => [$method->id => $method->type->requiresShippingAddress()]),
+        // Krajiny doručenia (prázdne = všade); doprava do inej krajiny sa skryje.
+        'shippingCountries' => $shippingMethods->mapWithKeys(fn ($method) => [$method->id => $method->type->requiresShippingAddress() ? array_values(array_map('strtoupper', array_filter($method->countries ?? []))) : []]),
+        'shippingOrder' => $shippingMethods->pluck('id')->values(),
+        'country' => '',
         'fees' => $paymentMethods->mapWithKeys(fn ($method) => [$method->id => $method->feeIn($summary->currency)]),
         'locale' => str_replace('_', '-', app()->getLocale()),
         'currency' => $summary->currency,
@@ -74,13 +78,16 @@
                 <fieldset class="space-y-3">
                     <legend class="text-lg font-semibold">{{ __('theme::shop.shipping_method') }}</legend>
                     @foreach ($shippingMethods as $method)
-                        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-zinc-200 p-4 has-[:checked]:border-primary has-[:checked]:ring-1 has-[:checked]:ring-primary">
+                        <label class="flex cursor-pointer items-start gap-3 rounded-xl border border-zinc-200 p-4 has-[:checked]:border-primary has-[:checked]:ring-1 has-[:checked]:ring-primary" x-show="isShippingAllowed({{ $method->id }})">
                             <input type="radio" name="shipping_method_id" value="{{ $method->id }}" x-model.number="shipping" class="mt-1 accent-[var(--brand-primary)]">
                             <span class="flex-1">
                                 <span class="flex justify-between gap-4 font-medium">
                                     <span>{{ $method->name }}</span>
                                     <span>{{ $shippingPrices[$method->id] > 0 ? format_price($shippingPrices[$method->id]) : __('theme::shop.free') }}</span>
                                 </span>
+                                @if ($method->delivery_time)
+                                    <span class="mt-0.5 block text-sm font-medium text-emerald-700">{{ $method->delivery_time }}</span>
+                                @endif
                                 @if ($method->description)
                                     <span class="mt-0.5 block text-sm text-zinc-500">{{ $method->description }}</span>
                                 @endif
@@ -195,6 +202,29 @@
                 init() {
                     this.$watch('shipping', () => this.ensurePayment());
                     this.ensurePayment();
+                    // Krajina doručenia: fakturačná, alebo dodacia pri inej adrese doručenia.
+                    const syncCountry = () => this.$nextTick(() => { this.country = this.currentCountry(); this.ensureShipping(); });
+                    this.$el.addEventListener('change', (event) => {
+                        if (['billing_country', 'shipping_country'].includes(event.target.name)) syncCountry();
+                    });
+                    this.$watch('different', syncCountry);
+                    syncCountry();
+                },
+                currentCountry() {
+                    const select = this.$el.querySelector(this.different ? '[name=shipping_country]' : '[name=billing_country]');
+
+                    return select ? select.value : '';
+                },
+                isShippingAllowed(id) {
+                    const countries = this.shippingCountries[id] || [];
+
+                    return countries.length === 0 || countries.includes(this.country);
+                },
+                ensureShipping() {
+                    if (! this.isShippingAllowed(this.shipping)) {
+                        const first = this.shippingOrder.find((id) => this.isShippingAllowed(id));
+                        if (first) this.shipping = first;
+                    }
                 },
                 isPaymentAllowed(id) {
                     return (this.availability[this.shipping] || []).includes(id);

@@ -76,7 +76,7 @@ class ProductTypesTest extends ShopTestCase
         $this->post(route('cart.add'), ['product_id' => $service->id]);
         $this->get(route('checkout.show'))->assertOk()->assertSee('Bez dopravy')->assertDontSee('Kuriér na adresu');
 
-        $this->post(route('checkout.store'), $this->checkoutData(['shipping_method_id' => $this->courier()->id]))->assertSessionHasErrors('payment_method_id');
+        $this->post(route('checkout.store'), $this->checkoutData(['shipping_method_id' => $this->courier()->id]))->assertSessionHasErrors('shipping_method_id');
         $this->post(route('checkout.store'), $this->checkoutData(['shipping_method_id' => $none->id, 'payment_method_id' => $this->payment(PaymentType::BankTransfer)->id]));
 
         $order = Order::query()->firstOrFail();

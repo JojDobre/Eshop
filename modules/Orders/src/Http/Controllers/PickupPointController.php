@@ -30,6 +30,7 @@ class PickupPointController extends Controller
             ->where('is_active', true)
             ->when($country, fn ($query) => $query->where('country', strtoupper((string) $country)))
             ->when($types !== [], fn ($query) => $query->whereIn('type', $types))
+            ->when(($codes = array_filter((array) ($method->carrier_options['point_codes'] ?? []))) !== [], fn ($query) => $query->whereIn('code', $codes))
             ->search($term)
             ->orderBy('city')->orderBy('name')
             ->limit(30)

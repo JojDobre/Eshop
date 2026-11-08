@@ -29,6 +29,10 @@ use Modules\Shipping\ShippingType;
  * @property list<string>|null $zip_prefixes
  * @property list<int>|null $excluded_product_type_ids
  * @property list<int>|null $excluded_category_ids
+ * @property list<string>|null $countries
+ * @property string|null $delivery_time
+ * @property int|null $min_order
+ * @property int|null $max_order
  */
 class ShippingMethod extends Model
 {
@@ -37,7 +41,7 @@ class ShippingMethod extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'description', 'pickup_details'];
+    public array $translatable = ['name', 'description', 'pickup_details', 'delivery_time'];
 
     protected $attributes = [
         'price' => 0,
@@ -67,6 +71,9 @@ class ShippingMethod extends Model
             'zip_prefixes' => 'array',
             'excluded_product_type_ids' => 'array',
             'excluded_category_ids' => 'array',
+            'countries' => 'array',
+            'min_order' => 'integer',
+            'max_order' => 'integer',
         ];
     }
 
@@ -165,6 +172,30 @@ class ShippingMethod extends Model
     public function carrierService(): ?ShippingCarrier
     {
         return app(CarrierRegistry::class)->find($this->carrier);
+    }
+
+    /**
+     * Doručuje sa do tejto krajiny? (prázdny zoznam = všade)
+     */
+    public function deliversToCountry(?string $country): bool
+    {
+        $countries = array_map('strtoupper', array_filter($this->countries ?? []));
+
+        return $countries === [] || in_array(strtoupper((string) $country), $countries, true);
+    }
+
+    /**
+     * Dá sa doprava použiť pre objednávku s touto sumou tovaru (v mene objednávky)?
+     */
+    public function allowsOrderValue(int $subtotal, ?string $currency = null): bool
+    {
+        $currency ??= app(CurrencyContext::class)->current();
+
+        if ($this->min_order !== null && $subtotal < $this->amountIn('min_order', $this->min_order, $currency)) {
+            return false;
+        }
+
+        return $this->max_order === null || $subtotal <= $this->amountIn('max_order', $this->max_order, $currency);
     }
 
     /**

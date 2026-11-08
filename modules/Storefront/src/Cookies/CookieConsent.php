@@ -55,11 +55,32 @@ class CookieConsent
     public function allowedCodes(): array
     {
         $settings = $this->settings();
-
-        return array_values(array_filter([
+        $codes = [
             $this->allows(self::ANALYTICS) ? $settings?->analytics_code : null,
             $this->allows(self::MARKETING) ? $settings?->marketing_code : null,
-        ]));
+        ];
+
+        // Kódy z modulov (napr. Google Analytics 4, Meta Pixel z modulu Marketing).
+        foreach (self::$providers as [$category, $provider]) {
+            if ($this->allows($category)) {
+                $codes[] = $provider();
+            }
+        }
+
+        return array_values(array_filter($codes, fn ($code) => is_string($code) && trim($code) !== ''));
+    }
+
+    /** @var array<string, array{0: string, 1: \Closure(): ?string}> */
+    private static array $providers = [];
+
+    /**
+     * Pridá kód, ktorý sa vloží do stránky iba so súhlasom pre danú kategóriu (analytics / marketing).
+     *
+     * @param  \Closure(): ?string  $provider
+     */
+    public static function addCode(string $key, string $category, \Closure $provider): void
+    {
+        self::$providers[$key] = [$category, $provider];
     }
 
     /**

@@ -38,6 +38,8 @@ return [
         'price_help' => 'Final customer price including VAT.',
         'is_gift_voucher' => 'Gift voucher',
         'is_gift_voucher_help' => 'After the order is paid the customer receives a voucher code worth the price by e-mail. Give the voucher a product type without shipping.',
+        'ean' => 'EAN (barcode)',
+        'ean_help' => '8 to 14 digits. Used in feeds for Google and Heureka.',
         'sku' => 'SKU',
         'section_stock' => 'Stock and shipping',
         'track_stock' => 'Track stock',

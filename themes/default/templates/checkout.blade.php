@@ -46,7 +46,10 @@
                         <p class="text-sm text-zinc-600">{{ __('theme::account.checkout_have_account') }} <a href="{{ route('customer.login') }}" class="font-medium text-zinc-900 underline underline-offset-2">{{ __('theme::account.login') }}</a></p>
                     @endif
                     <div class="grid gap-4 sm:grid-cols-2">
-                        @include('theme::partials.field', ['name' => 'email', 'type' => 'email', 'label' => __('theme::shop.email'), 'autocomplete' => 'email'])
+                        <div @if (! empty($abandonedCartEmailUrl)) @focusout="if ($event.target.name === 'email' && $event.target.checkValidity() && $event.target.value) fetch(@js($abandonedCartEmailUrl), { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': @js(csrf_token()), 'Accept': 'application/json' }, body: JSON.stringify({ email: $event.target.value }) })" @endif>
+                            @include('theme::partials.field', ['name' => 'email', 'type' => 'email', 'label' => __('theme::shop.email'), 'autocomplete' => 'email'])
+                            @if (! empty($abandonedCartEmailUrl))<p class="mt-1 text-xs text-zinc-500">{{ __('marketing::shop.abandoned_notice') }}</p>@endif
+                        </div>
                         @include('theme::partials.field', ['name' => 'phone', 'type' => 'tel', 'label' => __('theme::shop.phone'), 'autocomplete' => 'tel'])
                     </div>
                 </fieldset>
@@ -191,6 +194,12 @@
                         </span>
                     </label>
                     @error('terms') <p class="field-error">{{ $message }}</p> @enderror
+                    @if (! empty($newsletterCheckout))
+                        <label class="mt-3 flex items-start gap-3 text-sm">
+                            <input type="checkbox" name="newsletter" value="1" @checked(old('newsletter')) class="mt-0.5 size-4 rounded border-zinc-300 accent-[var(--brand-primary)]">
+                            <span>{{ __('marketing::shop.newsletter_checkout') }}</span>
+                        </label>
+                    @endif
                     @if ($privacyUrl = $legalPages->url(\Modules\Storefront\Pages\LegalPages::PRIVACY))
                         <p class="mt-2 text-xs text-zinc-500">{!! __('theme::shop.privacy_notice', ['url' => e($privacyUrl)]) !!}</p>
                     @endif

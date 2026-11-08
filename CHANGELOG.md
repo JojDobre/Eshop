@@ -17,6 +17,13 @@
 - **Porovnávač produktov 2.0:** produkty vedľa seba (na mobile 2 s posúvaním), zvýraznenie rozdielov
   a „iba rozdiely“, výber vlastností podľa skupín, zvýraznenie najlepšej hodnoty (nastavuje sa pri vlastnom
   poli), lepkavá hlavička s cenou a tlačidlom do košíka, skupiny podľa typu produktu, zdieľanie odkazom a tlač.
+- **Newsletter** (nový modul Marketing): prihlásenie v päte a v pokladni s potvrdením e-mailom (double opt-in),
+  dôkaz súhlasu, odhlásenie odkazom, export CSV, synchronizácia s Mailchimp alebo Ecomail.
+- **Opustené košíky:** e-mail zadaný v pokladni sa uloží ku košíku, po nastavenom čase príde jedna pripomienka
+  s odkazom, ktorý obnoví košík aj v inom zariadení.
+- **XML feedy** pre Heureku, Google Merchant a Facebook/Instagram katalóg (varianty, parametre, EAN, kategórie,
+  akciové ceny, jazyk a mena v parametroch, obnova raz za hodinu). Nové pole **EAN** pri produkte.
+- **Meracie kódy** Google Analytics 4, Google Ads a Meta Pixel až po súhlase s cookies, vrátane konverzie nákupu.
 - **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
   dobierka, štítky, sledovanie.
 - **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.

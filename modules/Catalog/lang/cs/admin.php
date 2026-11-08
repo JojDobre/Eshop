@@ -38,6 +38,8 @@ return [
         'price_help' => 'Konečná cena pro zákazníka včetně DPH.',
         'is_gift_voucher' => 'Dárkový poukaz',
         'is_gift_voucher_help' => 'Po zaplacení objednávky dostane zákazník e-mailem kód poukazu v hodnotě ceny. Poukazu nastavte typ produktu bez dopravy.',
+        'ean' => 'EAN (čárový kód)',
+        'ean_help' => '8 až 14 číslic. Použije se ve feedech pro Google a Heureku.',
         'sku' => 'Katalogové číslo (SKU)',
         'section_stock' => 'Sklad a doprava',
         'track_stock' => 'Sledovat stav skladu',

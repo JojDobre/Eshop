@@ -1,0 +1,19 @@
+{
+    "name": "marketing",
+    "version": "0.1.0",
+    "title": { "sk": "Marketing", "cs": "Marketing", "en": "Marketing" },
+    "description": {
+        "sk": "Newsletter s potvrdením odberu (Mailchimp, Ecomail), pripomienky opustených košíkov, XML feedy a meracie kódy.",
+        "cs": "Newsletter s potvrzením odběru (Mailchimp, Ecomail), připomínky opuštěných košíků, XML feedy a měřicí kódy.",
+        "en": "Newsletter with double opt-in (Mailchimp, Ecomail), abandoned cart reminders, XML feeds and tracking codes."
+    },
+    "provider": "Modules\\Marketing\\MarketingServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "catalog": "^0.7", "cart": "^0.3", "orders": "^0.7", "storefront": "^0.3" }
+    },
+    "permissions": ["marketing.manage"]
+}

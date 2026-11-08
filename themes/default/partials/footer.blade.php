@@ -46,6 +46,9 @@
             @if ($shop->contact_phone)
                 <p class="mt-1"><a href="tel:{{ preg_replace('/\s+/', '', $shop->contact_phone) }}" class="hover:text-zinc-900">{{ $shop->contact_phone }}</a></p>
             @endif
+            @if (! empty($newsletterEnabled))
+                <div class="mt-6">@include('marketing::newsletter-form')</div>
+            @endif
         </div>
     </div>
     <div class="border-t border-zinc-200/60 py-4 text-center text-xs text-zinc-400">

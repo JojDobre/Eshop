@@ -234,6 +234,7 @@ class ProductResource extends Resource
                         ->placeholder(fn () => ($default = TaxRate::default()) ? $t('tax_rate_default').': '.$default->label() : null)
                         ->visible(fn () => app(TaxSettings::class)->vat_payer),
                     TextInput::make('sku')->label($t('sku'))->maxLength(64)->unique(ignoreRecord: true),
+                    TextInput::make('ean')->label($t('ean'))->helperText($t('ean_help'))->rule('regex:/^\d{8,14}$/')->maxLength(14),
                     // Predajom vznikne darčeková poukážka (funkcia modulu objednávok).
                     Toggle::make('is_gift_voucher')->label($t('is_gift_voucher'))->helperText($t('is_gift_voucher_help'))
                         ->visible(fn () => (bool) (($toggle = app(FeatureToggles::class)->find('orders.gift_vouchers')) && ($toggle->isEnabled)())),

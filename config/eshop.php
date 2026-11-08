@@ -115,4 +115,20 @@ return [
         'hsts' => (bool) env('ESHOP_HSTS', true),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Aktualizácie
+    |--------------------------------------------------------------------------
+    |
+    | public_key – ďalší dôveryhodný verejný kľúč (Ed25519, base64) na overenie podpisu
+    |              aktualizačných balíkov, napr. pri vlastnej distribúcii e-shopu.
+    | feed_url   – adresa JSON s informáciou o najnovšej verzii (version, notes, url).
+    |
+    */
+
+    'updates' => [
+        'public_key' => env('ESHOP_UPDATE_PUBLIC_KEY'),
+        'feed_url' => env('ESHOP_UPDATE_FEED'),
+    ],
+
 ];

@@ -66,6 +66,16 @@ class BackupManager
             }
 
             $zip->setArchiveComment('E-shop backup '.now()->toIso8601String());
+
+            // Šifrovanie heslom (AES-256): bez hesla sa záloha nedá otvoriť ani obnoviť.
+            if (filled($password = app(SystemSettings::class)->backups_password)) {
+                $zip->setPassword($password);
+
+                for ($i = 0; $i < $zip->numFiles; $i++) {
+                    $zip->setEncryptionIndex($i, ZipArchive::EM_AES_256, $password);
+                }
+            }
+
             $zip->close();
         } catch (Throwable $e) {
             File::delete($this->directory().'/'.$name);
@@ -95,6 +105,24 @@ class BackupManager
             ->sortByDesc('name')
             ->values()
             ->all();
+    }
+
+    /**
+     * Otvorí zálohu na čítanie (aj zašifrovanú heslom z nastavení).
+     */
+    public function open(string $name, ?string $password = null): ZipArchive
+    {
+        $zip = new ZipArchive;
+
+        if ($zip->open($this->path($name), ZipArchive::RDONLY) !== true) {
+            throw new RuntimeException(__('admin.backups.unreadable'));
+        }
+
+        if (filled($password ??= app(SystemSettings::class)->backups_password)) {
+            $zip->setPassword($password);
+        }
+
+        return $zip;
     }
 
     public function path(string $name): string

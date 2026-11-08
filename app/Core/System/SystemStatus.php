@@ -94,6 +94,10 @@ class SystemStatus
             ['label' => $t('backup'), 'value' => $lastBackup ? $lastBackup['created_at']->diffForHumans() : $t('backup_never'),
                 'status' => ($settings?->backups_enabled ?? true) && $backupOld ? self::WARNING : self::OK,
                 'help' => $backupOld ? $t('backup_help') : null],
+            ...(($check = $settings?->backups_last_check) ? [[
+                'label' => $t('backup_check'), 'value' => $check['message'],
+                'status' => $check['ok'] ? self::OK : self::ERROR,
+            ]] : []),
         ];
     }
 

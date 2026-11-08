@@ -7,6 +7,16 @@
   karty produktov s pridaním do košíka jedným klikom a stavom skladu, baner, pruh s tipom, sekcia o obchode
   s výhodami, hodnotenia zákazníkov a časté otázky (aj ako štruktúrované dáta). Všetko sa nastavuje
   v Vzhľad → Prispôsobiť, písmo Nunito je uložené na hostingu.
+- **Bezpečnosť:** bezpečnostné hlavičky a HSTS, čistenie obsahu z editora (bez skriptov), prísnejšie
+  nahrávanie súborov, nahratie šablóny iba pre hlavného správcu, test oprávnení všetkých sekcií administrácie
+  (prehľad v `docs/SECURITY.md`).
+- **Zálohy:** obnova zo zálohy v administrácii (aj nahratej z iného hostingu, s prevzatím kľúča aplikácie),
+  automatický test obnovy po každej zálohe, šifrovanie heslom (AES-256), kópia na externé úložisko (FTP, SFTP,
+  S3-kompatibilné), denné alebo týždenné zálohy, príkazy `eshop:backup` a `eshop:restore`.
+- **Aktualizácie:** podpísané balíky (Ed25519, SHA-256), kontrola kompatibility, režim údržby, záloha,
+  automatické vrátenie pri chybe, ručné vrátenie jedným klikom a záchranný skript `public/rescue.php`.
+  Prechody databázy zo všetkých vydaných verzií sa overujú v CI (`scripts/test-upgrades.sh`).
+- Oprava: záloha na zdieľanom hostingu zlyhala, ak mal používateľ databázy prístup aj k iným databázam.
 - Oprava: farba značky z nastavení sa v šablónach Default a Fresh neprejavila, lebo ju prepísali predvolené štýly.
 
 ## 0.11.0 – Rezervácie, dáta a doklady (krok 4f)

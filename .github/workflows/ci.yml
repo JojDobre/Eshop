@@ -58,6 +58,35 @@ jobs:
           DB_PASSWORD: root
         run: php artisan test
 
+  # Prechod databázy zo všetkých vydaných verzií na aktuálnu.
+  upgrades:
+    name: Prechody z vydaných verzií · MySQL 8.0
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports: ['3306:3306']
+        options: --health-cmd="mysqladmin ping -proot" --health-interval=5s --health-timeout=5s --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql, mbstring, intl, zip, bcmath, sodium, gd
+          coverage: none
+      - name: Composer
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Prechody
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: scripts/test-upgrades.sh
+
   # Denne a ručne: rovnaké testy na ďalších databázach.
   databases:
     name: PHP 8.4 · ${{ matrix.db.name }}

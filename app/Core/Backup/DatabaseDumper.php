@@ -45,11 +45,19 @@ class DatabaseDumper
      *
      * @return list<string>
      */
+    /**
+     * Iba tabuľky databázy obchodu – na zdieľanom hostingu môže mať používateľ prístup aj k iným databázam.
+     */
+    public static function schema(Connection $connection): ?string
+    {
+        return in_array($connection->getDriverName(), ['mysql', 'mariadb'], true) ? $connection->getDatabaseName() : null;
+    }
+
     private function tables(Connection $connection): array
     {
         $prefix = $connection->getTablePrefix();
 
-        return collect($connection->getSchemaBuilder()->getTables())
+        return collect($connection->getSchemaBuilder()->getTables(self::schema($connection)))
             ->pluck('name')
             ->filter(fn (string $name) => ($prefix === '' || str_starts_with($name, $prefix)) && ! str_starts_with($name, 'sqlite_'))
             ->sort()

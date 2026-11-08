@@ -26,7 +26,7 @@ git -C "$ROOT" archive HEAD | tar -x -C "$TARGET"
 cd "$TARGET"
 
 # 2. PHP knižnice bez vývojových nástrojov.
-COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader --no-interaction --no-progress --quiet
+COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress --quiet
 
 # Vyčistenie knižníc: história gitu, testy a dokumentácia na webhostingu nie sú potrebné.
 find vendor -type d \( -name .git -o -name .github -o -name tests -o -name Tests -o -name docs \) -prune -exec rm -rf {} +
@@ -55,3 +55,6 @@ rm -f "$ZIP"
 (cd "$STAGE" && zip -qr -9 "$ZIP" eshop)
 
 echo "✓ Hotovo: $ZIP ($(du -h "$ZIP" | cut -f1))"
+
+# 8. Aktualizačný balík (podpísaný, ak je nastavený ESHOP_SIGNING_KEY).
+php "$ROOT/scripts/make-update-package.php" "$ZIP"

@@ -67,11 +67,14 @@
             <p class="mt-6 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">{{ $order->payment_instructions }}</p>
         @endif
 
-        @if ($order->shipping_details)
+        @php($trackedShipments = $order->shipments()->whereNotNull('tracking_number')->get())
+        @if ($order->shipping_details || $trackedShipments->isNotEmpty())
             <section class="mt-6 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
                 <h2 class="font-medium text-zinc-900">{{ $order->shipping_method_name }}</h2>
-                <p class="mt-1">{!! nl2br(e($order->shipping_details)) !!}</p>
-                @foreach ($order->shipments()->whereNotNull('tracking_number')->get() as $shipment)
+                @if ($order->shipping_details)
+                    <p class="mt-1">{!! nl2br(e($order->shipping_details)) !!}</p>
+                @endif
+                @foreach ($trackedShipments as $shipment)
                     @php($trackingUrl = $shipment->trackingUrl())
                     <p class="mt-2">
                         @if ($trackingUrl)

@@ -173,6 +173,8 @@ class ShippingCarriersTest extends ShopTestCase
 
         $shipment = $order->shipments()->sole();
         $this->assertSame('https://posta.example/sledovanie?n=RR123456789SK', $shipment->trackingUrl());
+        // Doručenie kuriérom nemá údaje o odbere, sledovanie sa aj tak zobrazí.
+        $this->get($order->publicUrl())->assertSee('https://posta.example/sledovanie?n=RR123456789SK', false);
         $this->get('/admin/orders/'.$order->id)->assertOk()->assertSee('RR123456789SK');
         $this->get(ShippingMethodResource::getUrl('edit', ['record' => $courier]))->assertOk();
     }

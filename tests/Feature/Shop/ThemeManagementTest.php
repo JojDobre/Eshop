@@ -58,7 +58,7 @@ class ThemeManagementTest extends ShopTestCase
     private function childZip(): string
     {
         return $this->zip([
-            'mobile/theme.json' => json_encode(['name' => 'mobile', 'version' => '1.0.0', 'parent' => 'default', 'title' => ['sk' => 'Mobilná'], 'requires' => ['eshop' => '^0.8']]),
+            'mobile/theme.json' => json_encode(['name' => 'mobile', 'version' => '1.0.0', 'parent' => 'default', 'title' => ['sk' => 'Mobilná'], 'requires' => ['eshop' => '^0.9']]),
             'mobile/partials/cookie-bar.blade.php' => '<div id="mobile-theme"></div>',
             'mobile/assets/style.css' => 'body { color: red; }',
         ]);

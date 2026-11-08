@@ -1,5 +1,23 @@
 # Prehľad zmien
 
+## 0.9.0 – Doprava a obsah (krok 4d)
+
+- **Kuriéri:** jednotné rozhranie kuriéra, zásielky a štítky priamo z objednávky, hromadné vytvorenie zásielok
+  a tlač štítkov pre vybrané objednávky, sledovacie číslo v e-maile a na stránke objednávky, pravidelná kontrola
+  stavu cez webový cron a automatické vybavenie objednávky po doručení. Pri výpadkoch API kuriéra sa chyba
+  zapíše do logu a kuriér sa po opakovaných výpadkoch dočasne neskúša.
+- **Packeta:** výdajné miesta a Z-BOXy s mapou Packeta, doručenie domov, dobierka, štítky, sledovanie.
+- **GLS** (MyGLS): ParcelShopy a GLS boxy (zoznam sa aktualizuje každý deň), doručenie domov s upozornením
+  príjemcu, dobierka, štítky, sledovanie, testovacie prostredie.
+- **DPD:** sledovacie číslo z portálu DPD a odkaz na sledovanie (API DPD nie je verejne dokumentované).
+- **Vlastný kuriér** bez napojenia so sledovacím číslom a vzorom adresy sledovania (SPS, pošta, vlastný rozvoz).
+- **Doprava:** nový typ „výdajné miesto alebo box“, skutočné náklady na dopravu, vlastný rozvoz podľa PSČ,
+  vylúčenie typov produktov a kategórií (napr. zvieratá iba osobne).
+- **Blog:** články z blokov v každom jazyku, kategórie, štítky, čas čítania, obsah článku, koncepty,
+  plánované zverejnenie, náhľad, história verzií, komentáre so schvaľovaním a ochranou proti spamu, RSS.
+  Prepojenie s produktmi oboma smermi a s kategóriami katalógu, blok „Články blogu“.
+- Nové bloky **Citát**, **Galéria** a **Výzva s tlačidlom**.
+
 ## 0.8.0 – Veľkosť obchodu a šablóny (krok 4c)
 
 - **Veľkosť obchodu:** malý, stredný, veľký alebo vlastný – v inštalátore aj v Nastavenia → Funkcie obchodu,

@@ -1,6 +1,6 @@
 {
     "name": "starter",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "title": {
         "sk": "Starter (pre vývojárov)",
         "cs": "Starter (pro vývojáře)",
@@ -14,7 +14,7 @@
     "author": "E-shop",
     "parent": "default",
     "requires": {
-        "eshop": "^0.8"
+        "eshop": "^0.9"
     },
     "stylesheets": [
         "custom.css"

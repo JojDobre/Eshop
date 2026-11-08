@@ -1,6 +1,6 @@
 {
     "name": "shipping",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": { "sk": "Doprava", "cs": "Doprava", "en": "Shipping" },
     "description": {
         "sk": "Spôsoby doručenia: osobný odber a doprava s pevnou cenou.",
@@ -9,6 +9,6 @@
     },
     "provider": "Modules\\Shipping\\ShippingServiceProvider",
     "core": true,
-    "requires": { "eshop": "^0.8" },
+    "requires": { "eshop": "^0.9" },
     "permissions": ["shipping.manage"]
 }

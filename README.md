@@ -3,12 +3,19 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4c – veľkosť obchodu a šablóny (0.8.0). Obchod predáva vo viacerých jazykoch a menách,
-> zvládne šarže, balíčky, predobjednávky či digitálne produkty a vzhľad sa skladá z blokov a šablón
-> s prispôsobením v živom náhľade. Funkcie sa zapínajú podľa veľkosti obchodu.
+> **Stav:** krok 4d – doprava a obsah (0.9.0). Obchod predáva vo viacerých jazykoch a menách, posiela
+> zásielky cez Packetu a GLS so štítkami a sledovaním, má blog prepojený s produktmi a vzhľad skladaný
+> z blokov a šablón. Funkcie sa zapínajú podľa veľkosti obchodu.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Doprava a obsah (krok 4d)**
+
+- **Kuriéri Packeta a GLS:** výdajné miesta a boxy v pokladni, zásielky a štítky (aj hromadne), sledovanie,
+  dobierka; **DPD** a vlastný kuriér so sledovacím číslom.
+- **Doprava:** vlastný rozvoz podľa PSČ, náklady na dopravu, doprava len pre vybrané typy produktov.
+- **Blog** s blokovým editorom, plánovaním, komentármi, RSS a prepojením na produkty.
 
 **Veľkosť obchodu a šablóny (krok 4c)**
 

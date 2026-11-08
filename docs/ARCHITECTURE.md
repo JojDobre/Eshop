@@ -212,6 +212,25 @@ Dodávané šablóny: **Default**, **Fresh** (odvodená, iné rozloženie hlavi�
 - Hlavná farba obchodu je v CSS premennej `--brand-primary` (Tailwind: `bg-primary`, `text-primary`).
 - Rozšírenie šablóny bez vlastného systému hákov: Blade `@stack` / `@push`, komponenty a view composers.
 
+## Doprava a kuriéri
+
+- **Kuriér** = modul s rozhraním `Modules\Shipping\Carriers\ShippingCarrier` (vytvorenie zásielky, štítky,
+  sledovanie, adresa sledovania, test spojenia, výdajné miesta), registrovaný v `CarrierRegistry`.
+  Moduly: `Packeta` (REST/XML), `Gls` (MyGLS JSON), `Dpd` (sledovacie číslo), v jadre `ManualCarrier`.
+- **Výdajné miesta:** typ dopravy `PickupPoint`. Kuriér určí výber cez `pickupSelector()`: vlastné okno
+  (JavaScript `window.eshopPickupWidgets[nazov]`, napr. mapa Packeta) alebo vyhľadávanie v tabuľke
+  `pickup_points` (GLS, denná aktualizácia `SyncPickupPoints`). Zvolené miesto je v `orders.pickup_point`.
+- **Zásielky** (`shipments`, modul Objednávky): `CreateShipment`, `PrintShipmentLabels` (jeden kuriér = PDF,
+  viac = ZIP), `TrackShipments` (webový cron každých 30 minút). Výpadky API sleduje `CarrierHealth`.
+- Chyby kuriérov sú `CarrierException` s typom: nastavenie, nedostupná služba, neplatné údaje (kapitola 2.6).
+
+## Blog
+
+Modul `Blog`: `Post` (bloky v každom jazyku, verzie `blog_post_versions`, `preview_token`), kategórie, štítky,
+komentáre. Prepojenie s produktmi (`blog_post_product`) a kategóriami katalógu sa zobrazuje cez view composer
+v šablónach produktu a kategórie (`$relatedPosts`); záložka pri produkte cez `Modules\Catalog\Filament\ProductRelations`.
+Testy štartujú so stavom modulov z `tests/fixtures/state` (zapnutý aj predvolene vypnutý blog).
+
 ## Veľkosť obchodu
 
 `App\Core\Features\ShopSize`: predvoľby funkcií pre malý, stredný a veľký obchod. Každý `FeatureToggle`

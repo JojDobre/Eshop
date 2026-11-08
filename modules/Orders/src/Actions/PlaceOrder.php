@@ -93,7 +93,11 @@ class PlaceOrder
                 'shipping_method_id' => $shipping->id,
                 'shipping_method_name' => $shipping->name,
                 'shipping_type' => $shipping->type,
-                'shipping_details' => $shipping->pickup_details,
+                // Výdajné miesto kuriéra, inak údaje o osobnom odbere zo spôsobu dopravy.
+                'shipping_details' => ! empty($customer['pickup_point'])
+                    ? trim(($customer['pickup_point']['name'] ?? '')."\n".implode(', ', array_filter([$customer['pickup_point']['street'] ?? null, trim(($customer['pickup_point']['zip'] ?? '').' '.($customer['pickup_point']['city'] ?? ''))])))
+                    : $shipping->pickup_details,
+                'shipping_cost' => $shipping->cost === null ? null : app(Currencies::class)->convert($shipping->cost, $shipping->currency, $cart->currency),
                 'shipping_price' => $totals->shipping,
                 'payment_method_id' => $payment->id,
                 'payment_method_name' => $payment->name,

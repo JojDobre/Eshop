@@ -7,6 +7,8 @@ use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Shipping\Carriers\CarrierRegistry;
+use Modules\Shipping\Carriers\ShippingCarrier;
 use Modules\Shipping\ShippingType;
 
 /**
@@ -21,6 +23,12 @@ use Modules\Shipping\ShippingType;
  * @property string|null $pickup_details
  * @property int $position
  * @property bool $is_active
+ * @property string|null $carrier
+ * @property array<string, mixed>|null $carrier_options
+ * @property int|null $cost
+ * @property list<string>|null $zip_prefixes
+ * @property list<int>|null $excluded_product_type_ids
+ * @property list<int>|null $excluded_category_ids
  */
 class ShippingMethod extends Model
 {
@@ -54,6 +62,11 @@ class ShippingMethod extends Model
             'weight_rates' => 'array',
             'position' => 'integer',
             'is_active' => 'boolean',
+            'carrier_options' => 'array',
+            'cost' => 'integer',
+            'zip_prefixes' => 'array',
+            'excluded_product_type_ids' => 'array',
+            'excluded_category_ids' => 'array',
         ];
     }
 
@@ -146,5 +159,47 @@ class ShippingMethod extends Model
         }
 
         return max(0, $freeFrom - $subtotal);
+    }
+
+    /** Kuriér spôsobu dopravy (null = bez napojenia). */
+    public function carrierService(): ?ShippingCarrier
+    {
+        return app(CarrierRegistry::class)->find($this->carrier);
+    }
+
+    /**
+     * Doručuje sa na toto PSČ? (vlastný rozvoz iba v okolí)
+     */
+    public function deliversToZip(?string $zip): bool
+    {
+        $prefixes = array_filter(array_map(fn ($prefix) => preg_replace('/\s+/', '', (string) $prefix), $this->zip_prefixes ?? []));
+
+        if ($prefixes === []) {
+            return true;
+        }
+
+        $zip = preg_replace('/\s+/', '', (string) $zip);
+
+        foreach ($prefixes as $prefix) {
+            if ($prefix !== '' && str_starts_with($zip, $prefix)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Dá sa doprava použiť pre tieto produkty? (napr. zvieratá iba osobne)
+     *
+     * @param  list<int|null>  $productTypeIds
+     * @param  list<int>  $categoryIds
+     */
+    public function allowsProducts(array $productTypeIds, array $categoryIds): bool
+    {
+        $types = array_map('intval', $this->excluded_product_type_ids ?? []);
+        $categories = array_map('intval', $this->excluded_category_ids ?? []);
+
+        return array_intersect($types, array_filter($productTypeIds)) === [] && array_intersect($categories, $categoryIds) === [];
     }
 }

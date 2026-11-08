@@ -113,7 +113,11 @@ class CheckoutController extends Controller
     public static function availableShipping(CartSummary $summary): Collection
     {
         $weight = $summary->weight();
-        $methods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight));
+        // Typy a kategórie produktov v košíku (doprava môže niektoré vylúčiť, napr. zvieratá iba osobne).
+        $typeIds = collect($summary->lines)->map(fn ($line) => $line->product->product_type_id)->unique()->values()->all();
+        $categoryIds = collect($summary->lines)->flatMap(fn ($line) => $line->product->categories->pluck('id'))->unique()->values()->all();
+        $methods = ShippingMethod::query()->active()->get()->filter(fn (ShippingMethod $method) => $method->isAvailableForWeight($weight)
+            && $method->allowsProducts($typeIds, $categoryIds));
         $none = $methods->filter(fn (ShippingMethod $method) => $method->type === ShippingType::None);
         $regular = $methods->reject(fn (ShippingMethod $method) => $method->type === ShippingType::None);
 

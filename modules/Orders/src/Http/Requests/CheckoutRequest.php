@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Modules\Orders\CheckoutFields;
 use Modules\Payments\Models\PaymentMethod;
+use Modules\Shipping\Models\PickupPoint;
 use Modules\Shipping\Models\ShippingMethod;
 
 class CheckoutRequest extends FormRequest
@@ -51,6 +52,16 @@ class CheckoutRequest extends FormRequest
             'shipping_method_id' => ['required', Rule::exists('shipping_methods', 'id')->where('is_active', true)],
             'payment_method_id' => ['required', Rule::exists('payment_methods', 'id')->where('is_active', true)],
 
+            // Výdajné miesto (pri doprave na výdajné miesto alebo do boxu).
+            'pickup_point' => [Rule::requiredIf((bool) $shipping?->type->requiresPickupPoint()), 'nullable', 'array'],
+            'pickup_point.code' => [Rule::requiredIf((bool) $shipping?->type->requiresPickupPoint()), 'nullable', 'string', 'max:64'],
+            'pickup_point.name' => ['nullable', 'string', 'max:255'],
+            'pickup_point.street' => ['nullable', 'string', 'max:255'],
+            'pickup_point.city' => ['nullable', 'string', 'max:120'],
+            'pickup_point.zip' => ['nullable', 'string', 'max:16'],
+            'pickup_point.country' => ['nullable', 'string', 'size:2'],
+            'pickup_point.carrier_code' => ['nullable', 'string', 'max:64'],
+
             'customer_note' => ['nullable', 'string', 'max:1000'],
             'terms' => ['accepted'],
             ...CheckoutFields::rules(),
@@ -63,6 +74,67 @@ class CheckoutRequest extends FormRequest
     public function attributes(): array
     {
         return trans('orders::checkout.attributes');
+    }
+
+    /**
+     * Doplnkové kontroly: PSČ pre vlastný rozvoz a platnosť výdajného miesta.
+     */
+    public function after(): array
+    {
+        return [function ($validator): void {
+            $shipping = $this->shippingMethod();
+
+            if ($shipping === null) {
+                return;
+            }
+
+            $zip = $this->boolean('ship_to_different_address') ? $this->input('shipping_zip') : $this->input('billing_zip');
+
+            if ($shipping->type->requiresShippingAddress() && ! $shipping->deliversToZip(is_string($zip) ? $zip : null)) {
+                $validator->errors()->add('shipping_method_id', __('orders::messages.zip_not_served'));
+            }
+
+            if ($shipping->type->requiresPickupPoint() && filled($this->input('pickup_point.code')) && $this->pickupPoint() === null) {
+                $validator->errors()->add('pickup_point', __('orders::messages.pickup_point_invalid'));
+            }
+        }];
+    }
+
+    /**
+     * Zvolené výdajné miesto pripravené na uloženie. Pri kuriéroch so zoznamom v obchode sa údaje
+     * vezmú zo zoznamu (nie od prehliadača), pri vlastnom okne kuriéra z jeho výberu.
+     *
+     * @return array<string, string|null>|null
+     */
+    public function pickupPoint(): ?array
+    {
+        $shipping = $this->shippingMethod();
+        $input = (array) $this->input('pickup_point', []);
+        $code = trim((string) ($input['code'] ?? ''));
+
+        if ($shipping === null || ! $shipping->type->requiresPickupPoint() || $code === '') {
+            return null;
+        }
+
+        $selector = $shipping->carrierService()?->pickupSelector($shipping);
+
+        if (! empty($selector['list'])) {
+            $point = PickupPoint::query()->where('carrier', $shipping->carrier)->where('code', $code)->where('is_active', true)->first();
+
+            return $point?->toOrderData();
+        }
+
+        $clean = fn (string $key, int $max) => filled($input[$key] ?? null) ? mb_substr(trim(strip_tags((string) $input[$key])), 0, $max) : null;
+
+        return array_filter([
+            'code' => mb_substr($code, 0, 64),
+            'name' => $clean('name', 255) ?? $code,
+            'street' => $clean('street', 255),
+            'city' => $clean('city', 120),
+            'zip' => $clean('zip', 16),
+            'country' => ($country = $clean('country', 2)) ? strtoupper($country) : null,
+            'carrier_code' => $clean('carrier_code', 64),
+        ], fn ($value) => $value !== null);
     }
 
     public function shippingMethod(): ?ShippingMethod
@@ -104,6 +176,7 @@ class CheckoutRequest extends FormRequest
             'shipping_zip' => $different ? trim((string) $data['shipping_zip']) : trim($data['billing_zip']),
             'shipping_country' => $different ? $data['shipping_country'] : $data['billing_country'],
             'customer_note' => trim((string) ($data['customer_note'] ?? '')) ?: null,
+            'pickup_point' => $this->pickupPoint(),
         ];
     }
 }

@@ -17,6 +17,7 @@ use Modules\Orders\Actions\IssueDownloads;
 use Modules\Orders\Actions\SetPaymentStatus;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
+use Modules\Orders\Filament\ShipmentActions;
 use Modules\Orders\Models\Order;
 use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
@@ -35,6 +36,8 @@ class ViewOrder extends ViewRecord
         $t = fn (string $key) => __('orders::admin.actions.'.$key);
 
         return [
+            ShipmentActions::create(fn () => $this->order()),
+            ShipmentActions::labels(fn () => $this->order()),
             Action::make('sendDownloads')
                 ->label(__('orders::admin.downloads.send'))
                 ->icon(Heroicon::OutlinedArrowDownTray)

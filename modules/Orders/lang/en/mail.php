@@ -28,4 +28,5 @@ return [
         'shipping_payment' => 'Shipping: :shipping, payment: :payment.',
         'open' => 'Open in administration',
     ],
+    'track_shipment' => 'Track shipment :number',
 ];

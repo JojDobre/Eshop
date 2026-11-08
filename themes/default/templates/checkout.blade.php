@@ -90,6 +90,8 @@
                     @error('shipping_method_id') <p class="field-error">{{ $message }}</p> @enderror
                 </fieldset>
 
+                @include('theme::partials.pickup-point-selector')
+
                 <div x-show="needsAddress[shipping]" x-cloak class="space-y-4">
                     <label class="flex items-center gap-3 text-sm">
                         <input type="checkbox" name="ship_to_different_address" value="1" x-model="different" class="size-4 rounded border-zinc-300 accent-[var(--brand-primary)]">

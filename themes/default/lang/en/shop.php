@@ -183,4 +183,10 @@ return [
     'downloads_left' => ':count left',
     'download_valid_until' => 'valid until :date',
     'video' => 'Video',
+    'track_shipment' => 'Track shipment :number',
+    'pickup_point' => 'Pickup point',
+    'pickup_point_choose' => 'Choose a pickup point',
+    'pickup_point_change' => 'Change pickup point',
+    'pickup_point_search' => 'Search by city, postcode or street',
+    'pickup_point_none' => 'No pickup point found.',
 ];

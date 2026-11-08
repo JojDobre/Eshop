@@ -11,11 +11,13 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Fieldset;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -23,6 +25,10 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
+use Modules\Catalog\Models\Category;
+use Modules\Catalog\Models\ProductType;
+use Modules\Shipping\Carriers\CarrierRegistry;
+use Modules\Shipping\Carriers\ShippingCarrier;
 use Modules\Shipping\Filament\Resources\ShippingMethods\Pages\CreateShippingMethod;
 use Modules\Shipping\Filament\Resources\ShippingMethods\Pages\EditShippingMethod;
 use Modules\Shipping\Filament\Resources\ShippingMethods\Pages\ListShippingMethods;
@@ -103,7 +109,36 @@ class ShippingMethodResource extends Resource
                 TextInput::make('position')->label($t('position'))->integer()->default(0)->minValue(0),
                 Toggle::make('is_active')->label($t('is_active'))->default(true)->inline(false),
             ]),
+            // Kuriér: vytváranie zásielok, štítky, sledovanie a výdajné miesta.
+            Section::make($t('carriers.section'))->description($t('carriers.section_help'))->columns(2)->schema([
+                Select::make('carrier')->label($t('carriers.carrier'))->placeholder($t('carriers.none'))
+                    ->options(fn (Get $get) => collect(app(CarrierRegistry::class)->all())
+                        ->filter(fn (ShippingCarrier $carrier) => ($type = self::type($get)) === null || $carrier->supports($type))
+                        ->map(fn (ShippingCarrier $carrier) => $carrier->label())->all())
+                    ->live()->native(false)
+                    ->required(fn (Get $get) => self::type($get) === ShippingType::PickupPoint),
+                Group::make(fn (Get $get) => app(CarrierRegistry::class)->find($get('carrier'))?->methodFields() ?? [])
+                    ->statePath('carrier_options')->columns(2)->columnSpanFull(),
+            ])->visible(fn (Get $get) => self::type($get) !== ShippingType::None),
+            Section::make($t('restrictions.section'))->collapsed()->columns(2)->schema([
+                MoneyInput::make('cost')->label($t('restrictions.cost'))->helperText($t('restrictions.cost_help')),
+                TagsInput::make('zip_prefixes')->label($t('restrictions.zip_prefixes'))->helperText($t('restrictions.zip_prefixes_help'))
+                    ->visible(fn (Get $get) => self::type($get) === ShippingType::Delivery),
+                Select::make('excluded_product_type_ids')->label($t('restrictions.excluded_types'))->helperText($t('restrictions.excluded_types_help'))
+                    ->multiple()->options(fn () => class_exists(ProductType::class)
+                        ? ProductType::query()->orderBy('position')->get()->mapWithKeys(fn ($type) => [$type->id => $type->name])->all() : []),
+                Select::make('excluded_category_ids')->label($t('restrictions.excluded_categories'))->helperText($t('restrictions.excluded_categories_help'))
+                    ->multiple()->searchable()->options(fn () => class_exists(Category::class)
+                        ? Category::query()->with('parent.parent')->get()->mapWithKeys(fn ($category) => [$category->id => $category->pathName()])->sort()->all() : []),
+            ]),
         ]);
+    }
+
+    private static function type(Get $get): ?ShippingType
+    {
+        $type = $get('type');
+
+        return $type instanceof ShippingType ? $type : ShippingType::tryFrom((string) $type);
     }
 
     public static function table(Table $table): Table
@@ -114,6 +149,8 @@ class ShippingMethodResource extends Resource
             ->columns([
                 TextColumn::make('name')->label($t('name'))->description(fn (ShippingMethod $record) => $record->description),
                 TextColumn::make('type')->label($t('type'))->badge()->color('gray'),
+                TextColumn::make('carrier')->label($t('carriers.carrier'))->placeholder('—')
+                    ->formatStateUsing(fn (?string $state) => app(CarrierRegistry::class)->find($state)?->label() ?? $state),
                 TextColumn::make('price')->label($t('price'))
                     ->formatStateUsing(fn (ShippingMethod $record) => Price::format($record->price, $record->currency)),
                 TextColumn::make('free_from')->label($t('free_from'))->placeholder('—')

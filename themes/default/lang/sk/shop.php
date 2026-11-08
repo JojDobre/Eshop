@@ -183,4 +183,10 @@ return [
     'downloads_left' => 'zostáva :count',
     'download_valid_until' => 'platné do :date',
     'video' => 'Video',
+    'track_shipment' => 'Sledovať zásielku :number',
+    'pickup_point' => 'Výdajné miesto',
+    'pickup_point_choose' => 'Vybrať výdajné miesto',
+    'pickup_point_change' => 'Zmeniť výdajné miesto',
+    'pickup_point_search' => 'Hľadať podľa mesta, PSČ alebo ulice',
+    'pickup_point_none' => 'Nenašli sme žiadne výdajné miesto.',
 ];

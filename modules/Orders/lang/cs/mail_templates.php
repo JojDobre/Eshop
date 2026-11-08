@@ -53,7 +53,7 @@ MD,
     'status_shipped' => [
         'label' => 'Objednávka byla odeslána',
         'subject' => 'Objednávka č. {order_number} byla odeslána',
-        'body' => "Dobrý den {customer_name},\n\nvaši objednávku č. **{order_number}** jsme předali k doručení.\n\n{shipping_details}\n\n[Zobrazit objednávku]({order_url})\n\nS pozdravem\\\n{shop_name}",
+        'body' => "Dobrý den {customer_name},\n\nvaši objednávku č. **{order_number}** jsme předali k doručení.\n\n{shipping_details}\n\n{tracking}\n\n[Zobrazit objednávku]({order_url})\n\nS pozdravem\\\n{shop_name}",
     ],
     'status_completed' => [
         'label' => 'Objednávka je vyřízena',

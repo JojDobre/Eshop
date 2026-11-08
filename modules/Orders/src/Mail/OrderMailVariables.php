@@ -14,7 +14,7 @@ use Modules\Payments\PaymentType;
 class OrderMailVariables
 {
     /** Premenné, ktorých hodnota je hotový Markdown (tabuľky, odkazy). */
-    public const RAW = ['order_items', 'payment_details', 'shipping_details', 'order_url', 'admin_url'];
+    public const RAW = ['order_items', 'payment_details', 'shipping_details', 'order_url', 'admin_url', 'tracking'];
 
     /**
      * @return array<string, string>
@@ -37,9 +37,25 @@ class OrderMailVariables
             'order_items' => self::itemsTable($order, $money),
             'payment_details' => self::paymentDetails($order, $money),
             'shipping_details' => $order->shipping_details ? '**'.e($order->shipping_method_name)."**  \n".nl2br(e($order->shipping_details)) : '',
+            'tracking' => self::tracking($order),
             'order_url' => $order->publicUrl(),
             'admin_url' => url('/admin/orders/'.$order->id),
         ];
+    }
+
+    /**
+     * Sledovanie zásielok: „Sledovať zásielku 1234 (odkaz)“ pre každú zásielku so sledovacím číslom.
+     */
+    private static function tracking(Order $order): string
+    {
+        return $order->shipments()->whereNotNull('tracking_number')->get()
+            ->map(function ($shipment) {
+                $url = $shipment->trackingUrl();
+                $label = __('orders::mail.track_shipment', ['number' => $shipment->tracking_number]);
+
+                return $url ? '['.str_replace(['[', ']'], '', $label).']('.$url.')' : $label;
+            })
+            ->implode("  \n");
     }
 
     private static function itemsTable(Order $order, \Closure $money): string

@@ -12,6 +12,9 @@ enum ShippingType: string implements HasLabel
     /** Doručenie na adresu zákazníka. */
     case Delivery = 'delivery';
 
+    /** Výdajné miesto alebo box kuriéra (zákazník ho vyberie v pokladni). */
+    case PickupPoint = 'pickup_point';
+
     /** Bez dopravy (služby, digitálne produkty) – ponúkne sa iba košíku bez tovaru na doručenie. */
     case None = 'none';
 
@@ -23,5 +26,10 @@ enum ShippingType: string implements HasLabel
     public function requiresShippingAddress(): bool
     {
         return $this === self::Delivery;
+    }
+
+    public function requiresPickupPoint(): bool
+    {
+        return $this === self::PickupPoint;
     }
 }

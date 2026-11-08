@@ -2,16 +2,19 @@
 
 namespace Modules\Orders;
 
+use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
 use App\Core\Support\CurrencyContext;
 use App\Settings\GeneralSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Mail\Attachment;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Modules\Orders\Actions\TrackShipments;
 use Modules\Orders\Events\OrderPaid;
 use Modules\Orders\Events\OrderPlaced;
 use Modules\Orders\Events\OrderStatusChanged;
@@ -45,6 +48,15 @@ class OrdersServiceProvider extends ModuleServiceProvider
         Event::listen(OrderPlaced::class, SendOrderEmails::class);
         Event::listen(OrderStatusChanged::class, NotifyCustomerAboutStatus::class);
         Event::listen([OrderPlaced::class, OrderPaid::class], IssueDownloadsForOrder::class);
+
+        // Kontrola stavu zásielok u kuriérov (webový cron).
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            $schedule->call(fn () => app(TrackShipments::class)->handle())
+                ->name('orders:track-shipments')
+                ->everyThirtyMinutes()
+                ->withoutOverlapping(20)
+                ->when(fn () => app(Installation::class)->isInstalled());
+        });
 
         $this->registerEmailTemplates();
 
@@ -105,7 +117,7 @@ class OrdersServiceProvider extends ModuleServiceProvider
             'order_number' => now()->format('Y').'00042', 'order_total' => '42,90 €', 'order_status' => OrderStatus::Shipped->getLabel(),
             'shipping_method' => 'Kuriér', 'payment_method' => 'Bankový prevod', 'customer_note' => '',
             'order_items' => "<x-mail::table>\n| Produkt | Ks | Cena |\n|:--|:-:|--:|\n| Ukážkový produkt | 2 | 38,00 € |\n| Kuriér | | 4,90 € |\n| **Spolu** | | **42,90 €** |\n</x-mail::table>",
-            'payment_details' => '', 'shipping_details' => '', 'order_url' => url('/'), 'admin_url' => url('/admin'),
+            'payment_details' => '', 'shipping_details' => '', 'tracking' => '[Sledovať zásielku Z 123 4567 890](https://tracking.packeta.com/)', 'order_url' => url('/'), 'admin_url' => url('/admin'),
         ];
 
         $templates->register(new EmailTemplateDefinition('orders.confirmation', 'orders::mail_templates.confirmation', $order, sample: $sample));
@@ -120,7 +132,7 @@ class OrdersServiceProvider extends ModuleServiceProvider
             $templates->register(new EmailTemplateDefinition(
                 'orders.status.'.$status->value,
                 'orders::mail_templates.status_'.$status->value,
-                ['customer_name', 'order_number', 'order_status', 'shipping_details', 'order_url', 'shop_name'],
+                ['customer_name', 'order_number', 'order_status', 'shipping_details', 'tracking', 'order_url', 'shop_name'],
                 canBeDisabled: true,
                 sample: $sample,
             ));

@@ -8,12 +8,14 @@ use App\Settings\GeneralSettings;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 use Modules\Payments\PaymentType;
 use Modules\Payments\Qr\PaymentQrData;
+use Modules\Shipping\Models\ShippingMethod;
 use Modules\Shipping\ShippingType;
 use Modules\Tax\TaxCalculator;
 use Modules\Tax\TaxContext;
@@ -86,7 +88,25 @@ class Order extends Model
             'total' => 'integer',
             'terms_accepted_at' => 'datetime',
             'paid_at' => 'datetime',
+            'pickup_point' => 'array',
+            'shipping_cost' => 'integer',
         ];
+    }
+
+    /**
+     * @return BelongsTo<ShippingMethod, $this>
+     */
+    public function shippingMethod(): BelongsTo
+    {
+        return $this->belongsTo(ShippingMethod::class);
+    }
+
+    /**
+     * @return HasMany<Shipment, $this>
+     */
+    public function shipments(): HasMany
+    {
+        return $this->hasMany(Shipment::class)->orderBy('id');
     }
 
     /**

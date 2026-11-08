@@ -53,7 +53,7 @@ MD,
     'status_shipped' => [
         'label' => 'Order has been shipped',
         'subject' => 'Order no. {order_number} has been shipped',
-        'body' => "Hello {customer_name},\n\nyour order no. **{order_number}** has been handed over for delivery.\n\n{shipping_details}\n\n[View order]({order_url})\n\nKind regards\\\n{shop_name}",
+        'body' => "Hello {customer_name},\n\nyour order no. **{order_number}** has been handed over for delivery.\n\n{shipping_details}\n\n{tracking}\n\n[View order]({order_url})\n\nKind regards\\\n{shop_name}",
     ],
     'status_completed' => [
         'label' => 'Order is completed',

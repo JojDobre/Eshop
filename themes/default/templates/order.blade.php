@@ -71,6 +71,16 @@
             <section class="mt-6 rounded-xl bg-zinc-50 p-4 text-sm text-zinc-700">
                 <h2 class="font-medium text-zinc-900">{{ $order->shipping_method_name }}</h2>
                 <p class="mt-1">{!! nl2br(e($order->shipping_details)) !!}</p>
+                @foreach ($order->shipments()->whereNotNull('tracking_number')->get() as $shipment)
+                    @php($trackingUrl = $shipment->trackingUrl())
+                    <p class="mt-2">
+                        @if ($trackingUrl)
+                            <a href="{{ $trackingUrl }}" target="_blank" rel="noopener" class="font-medium underline underline-offset-2">{{ __('theme::shop.track_shipment', ['number' => $shipment->tracking_number]) }}</a>
+                        @else
+                            {{ __('theme::shop.track_shipment', ['number' => $shipment->tracking_number]) }}
+                        @endif
+                    </p>
+                @endforeach
             </section>
         @endif
 

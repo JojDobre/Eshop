@@ -2,6 +2,8 @@
 
 return [
     'attributes' => [
+        'pickup_point' => 'výdajné miesto',
+        'pickup_point.code' => 'výdajné miesto',
         'email' => 'e-mail',
         'phone' => 'telefón',
         'billing_name' => 'meno a priezvisko',

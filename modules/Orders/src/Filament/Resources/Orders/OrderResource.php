@@ -5,6 +5,7 @@ namespace Modules\Orders\Filament\Resources\Orders;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\ViewAction;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\RepeatableEntry\TableColumn;
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Modules\Orders\CheckoutFields;
 use Modules\Orders\Filament\Resources\Orders\Pages\ListOrders;
 use Modules\Orders\Filament\Resources\Orders\Pages\ViewOrder;
+use Modules\Orders\Filament\ShipmentActions;
 use Modules\Orders\Models\DownloadLink;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderHistoryEntry;
@@ -104,7 +106,8 @@ class OrderResource extends Resource
                 SelectFilter::make('payment_status')->label($t('payment_status'))->options(PaymentStatus::class),
             ])
             ->recordUrl(fn (Order $record) => static::getUrl('view', ['record' => $record]))
-            ->recordActions([ViewAction::make()]);
+            ->recordActions([ViewAction::make()])
+            ->toolbarActions([BulkActionGroup::make([ShipmentActions::bulk()])]);
     }
 
     public static function infolist(Schema $schema): Schema
@@ -114,6 +117,23 @@ class OrderResource extends Resource
 
         return $schema->columns(3)->components([
             Group::make()->columnSpan(2)->schema([
+                Section::make(__('orders::admin.shipments.title'))
+                    ->visible(fn (Order $record) => $record->shipments()->exists())
+                    ->schema([
+                        RepeatableEntry::make('shipments')->hiddenLabel()
+                            ->table([
+                                TableColumn::make(__('orders::admin.shipments.carrier')),
+                                TableColumn::make(__('orders::admin.shipments.tracking_number')),
+                                TableColumn::make(__('orders::admin.shipments.status')),
+                            ])
+                            ->schema([
+                                TextEntry::make('carrier')->formatStateUsing(fn ($state, $record) => $record->carrierService()?->label() ?? $state),
+                                TextEntry::make('tracking_number')->placeholder('—')
+                                    ->url(fn ($record) => $record->trackingUrl(), shouldOpenInNewTab: true),
+                                TextEntry::make('status')->badge()
+                                    ->helperText(fn ($record) => $record->status_text),
+                            ]),
+                    ]),
                 Section::make(__('orders::admin.downloads.title'))
                     ->visible(fn (Order $record) => DownloadLink::query()->where('order_id', $record->id)->exists())
                     ->schema([

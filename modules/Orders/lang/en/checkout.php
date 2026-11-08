@@ -2,6 +2,8 @@
 
 return [
     'attributes' => [
+        'pickup_point' => 'pickup point',
+        'pickup_point.code' => 'pickup point',
         'email' => 'e-mail',
         'phone' => 'phone',
         'billing_name' => 'full name',

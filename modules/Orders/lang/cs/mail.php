@@ -28,4 +28,5 @@ return [
         'shipping_payment' => 'Doprava: :shipping, platba: :payment.',
         'open' => 'Otevřít v administraci',
     ],
+    'track_shipment' => 'Sledovat zásilku :number',
 ];

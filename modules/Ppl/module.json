@@ -1,0 +1,19 @@
+{
+    "name": "ppl",
+    "version": "0.1.0",
+    "title": { "sk": "PPL", "cs": "PPL", "en": "PPL" },
+    "description": {
+        "sk": "PPL Parcel na adresu, ParcelShopy a ParcelBoxy cez oficiálne API myAPI2, štítky, sledovanie a dobierka.",
+        "cs": "PPL Parcel na adresu, ParcelShopy a ParcelBoxy přes oficiální API myAPI2, štítky, sledování a dobírka.",
+        "en": "PPL Parcel to the door, ParcelShops and ParcelBoxes via the official myAPI2, labels, tracking and COD."
+    },
+    "provider": "Modules\\Ppl\\PplServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "shipping": "^0.4" }
+    },
+    "permissions": ["settings.manage"]
+}

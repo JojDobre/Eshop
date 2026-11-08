@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'section_keys' => 'myAPI2 access',
+    'section_keys_help' => 'PPL issues the Client ID and Client secret with your contract (ask your sales rep or ithelp@ppl.cz). The sender is taken from Settings → Company.',
+    'client_id' => 'Client ID',
+    'client_secret' => 'Client secret',
+    'section_shipments' => 'Shipments',
+    'business' => 'Business shipments (PPL Parcel Business)',
+    'business_help' => 'Off: PPL Parcel Private for consumers. Shipments abroad always use PPL Parcel Connect.',
+    'label_page' => 'Label format',
+    'label_a4' => 'A4 (4 per page)',
+    'label_single' => 'Single label',
+    'cod_iban' => 'IBAN for cash on delivery',
+    'cod_iban_help' => 'Empty = IBAN from Settings → Company (or the account from your PPL contract).',
+    'pickup_points' => 'Stored ParcelShops and ParcelBoxes: :count. Updated daily.',
+    'country' => 'Pickup point country',
+    'point_types' => 'Offer',
+    'types' => ['parcelshop' => 'ParcelShops', 'parcelbox' => 'ParcelBoxes'],
+    'missing_credentials' => 'PPL: Client ID or Client secret is missing (Settings → PPL).',
+    'unauthorized' => 'PPL: invalid Client ID or Client secret.',
+    'unavailable' => 'PPL: the service is not responding, try again later.',
+    'invalid_response' => 'PPL: invalid server response.',
+    'label_not_ready' => 'PPL: the label is not ready yet, try again shortly.',
+];

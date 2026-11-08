@@ -7,6 +7,11 @@
   v Nastavenia → Funkcie obchodu.
 - **Množstevné zľavy** pri produkte (pre všetkých alebo pre skupinu) s tabuľkou na stránke produktu.
 - **Blokovanie zákazníkov:** zablokovaný zákazník sa neprihlási a neobjedná ani bez prihlásenia.
+- **PPL** (oficiálne API myAPI2): PPL Parcel na adresu (aj Business a Connect do EÚ), ParcelShopy a ParcelBoxy,
+  dobierka, štítky, sledovanie.
+- **SPS** (WebShip API): kuriér na adresu, dobierka, avízo príjemcovi, štítok, sledovanie podľa čísla objednávky.
+- **Balíkobot:** jedno napojenie na ďalších kuriérov (DPD, Geis, Toptrans, WE|DO, 123kuriér, Gebrüder Weiss…)
+  s výberom kuriéra a služby pri spôsobe dopravy, výdajnými miestami, štítkami a sledovaním.
 
 ## 0.9.0 – Doprava a obsah (krok 4d)
 

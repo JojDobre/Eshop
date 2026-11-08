@@ -1,0 +1,19 @@
+{
+    "name": "sps",
+    "version": "0.1.0",
+    "title": { "sk": "SPS (Slovak Parcel Service)", "cs": "SPS (Slovak Parcel Service)", "en": "SPS (Slovak Parcel Service)" },
+    "description": {
+        "sk": "Kuriér SPS na adresu cez WebShip API, štítky, dobierka, avízo príjemcovi a sledovanie.",
+        "cs": "Kurýr SPS na adresu přes WebShip API, štítky, dobírka, avízo příjemci a sledování.",
+        "en": "SPS courier to the door via the WebShip API, labels, COD, recipient notification and tracking."
+    },
+    "provider": "Modules\\Sps\\SpsServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.9",
+        "modules": { "shipping": "^0.4" }
+    },
+    "permissions": ["settings.manage"]
+}

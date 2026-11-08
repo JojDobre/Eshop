@@ -219,6 +219,8 @@ Dodávané šablóny: **Default**, **Fresh** (odvodená, iné rozloženie hlavi�
   Moduly: `Packeta` (REST/XML), `Gls` (MyGLS JSON), `Dpd` (sledovacie číslo), `CeskaPosta` (B2B ZSKService,
   podpis HMAC-SHA256, pobočky Balíkovny z verejného XML čítaného po riadkoch), `SlovenskaPosta` (REST API ePH;
   každá zásielka má vlastný podací hárok, referencia `idHárku/idZásielky`), v jadre `ManualCarrier`.
+  `Ppl` (myAPI2, OAuth2, asynchrónne dávky – referencia je ID dávky), `Sps` (WebShip SOAP skladané ako XML
+  bez rozšírenia soap), `Balikobot` (agregátor; kuriér a služba v `carrier_options`, referencia `kuriér:package_id`).
   Kuriér, ktorý vie vrátiť štítok iba pre jednu zásielku, označí rozhranie `SeparateLabels` – hromadná tlač
   potom pribalí štítky do ZIP samostatne.
 - **Výdajné miesta:** typ dopravy `PickupPoint`. Kuriér určí výber cez `pickupSelector()`: vlastné okno

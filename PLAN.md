@@ -643,6 +643,9 @@ Každý kuriér je modul s rozhraním `ShippingCarrier`. V administrácii stač�
 | **GLS** (MyGLS API) | Doručenie domov, ParcelShopy a GLS boxy, štítky, sledovanie, dobierka |
 | **Česká pošta** (B2B API) | Balík Do ruky, Balíkovna (pošty, partneri, BOXy), štítky, sledovanie, dobierka |
 | **Slovenská pošta** (API ePH) | Balík a Expres kuriér na adresu, štítky, odkaz na sledovanie, dobierka |
+| **PPL** (myAPI2) | PPL Parcel na adresu, ParcelShopy a ParcelBoxy, štítky, sledovanie, dobierka |
+| **SPS** (WebShip) | Kuriér na adresu, štítky, sledovanie, dobierka |
+| **Balíkobot** | DPD, Geis, Toptrans, WE\|DO, 123kuriér a ďalší cez jedno napojenie |
 | **DPD** | Doručenie domov, Pickup body a boxy, štítky, sledovanie, dobierka |
 | **Vlastná doprava** | Osobný odber (viac predajní s otváracími hodinami), vlastný rozvoz (podľa PSČ), kuriér bez napojenia |
 
@@ -653,7 +656,7 @@ Každý kuriér je modul s rozhraním `ShippingCarrier`. V administrácii stač�
 - **Hromadné vytvorenie zásielok a tlač štítkov** naraz
 - Sledovacie číslo sa automaticky pošle zákazníkovi. Stav zásielky sa pravidelne kontroluje a objednávka sa sama označí ako doručená.
 - Pri výpadku API kuriéra sa postupuje podľa kapitoly 2.6
-- Ďalší kuriéri (SPS, PPL, …) sa dajú doplniť ako nové moduly
+- Ďalší kuriéri sa dajú doplniť ako nové moduly
 
 ---
 

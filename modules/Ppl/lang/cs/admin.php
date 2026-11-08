@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'section_keys' => 'Přístup k API myAPI2',
+    'section_keys_help' => 'Client ID a Client secret vám přidělí PPL ke smlouvě (žádost přes obchodníka nebo ithelp@ppl.cz). Odesílatel se vyplní z Nastavení → Firma.',
+    'client_id' => 'Client ID',
+    'client_secret' => 'Client secret',
+    'section_shipments' => 'Zásilky',
+    'business' => 'Firemní zásilky (PPL Parcel Business)',
+    'business_help' => 'Vypnuto: PPL Parcel Private pro soukromé osoby. Do zahraničí se vždy posílá PPL Parcel Connect.',
+    'label_page' => 'Formát štítků',
+    'label_a4' => 'A4 (4 na stranu)',
+    'label_single' => 'Samostatný štítek',
+    'cod_iban' => 'IBAN pro dobírky',
+    'cod_iban_help' => 'Prázdné = IBAN z Nastavení → Firma (nebo účet ze smlouvy s PPL).',
+    'pickup_points' => 'Uložené ParcelShopy a ParcelBoxy: :count. Aktualizují se každý den.',
+    'country' => 'Země výdejních míst',
+    'point_types' => 'Nabízet',
+    'types' => ['parcelshop' => 'ParcelShopy', 'parcelbox' => 'ParcelBoxy'],
+    'missing_credentials' => 'PPL: chybí Client ID nebo Client secret (Nastavení → PPL).',
+    'unauthorized' => 'PPL: nesprávné Client ID nebo Client secret.',
+    'unavailable' => 'PPL: služba momentálně neodpovídá, zkuste to později.',
+    'invalid_response' => 'PPL: neplatná odpověď serveru.',
+    'label_not_ready' => 'PPL: štítek ještě není připravený, zkuste to za chvíli.',
+];

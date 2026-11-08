@@ -12,7 +12,7 @@ Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablón
 
 **Doprava a obsah (krok 4d)**
 
-- **Kuriéri Packeta, GLS, Česká pošta a Slovenská pošta:** výdajné miesta a boxy v pokladni, zásielky a štítky (aj hromadne), sledovanie,
+- **Kuriéri Packeta, GLS, PPL, SPS, Česká pošta, Slovenská pošta a ďalší cez Balíkobot:** výdajné miesta a boxy v pokladni, zásielky a štítky (aj hromadne), sledovanie,
   dobierka; **DPD** a vlastný kuriér so sledovacím číslom.
 - **Doprava:** vlastný rozvoz podľa PSČ, náklady na dopravu, doprava len pre vybrané typy produktov.
 - **Blog** s blokovým editorom, plánovaním, komentármi, RSS a prepojením na produkty.

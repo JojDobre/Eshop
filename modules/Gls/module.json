@@ -1,0 +1,19 @@
+{
+    "name": "gls",
+    "version": "0.1.0",
+    "title": { "sk": "GLS", "cs": "GLS", "en": "GLS" },
+    "description": {
+        "sk": "Doručenie domov, ParcelShopy a GLS boxy cez MyGLS API, štítky, sledovanie a dobierka.",
+        "cs": "Doručení domů, ParcelShopy a GLS boxy přes MyGLS API, štítky, sledování a dobírka.",
+        "en": "Home delivery, ParcelShops and GLS lockers via the MyGLS API, labels, tracking and COD."
+    },
+    "provider": "Modules\\Gls\\GlsServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.8",
+        "modules": { "shipping": "^0.3" }
+    },
+    "permissions": ["settings.manage"]
+}

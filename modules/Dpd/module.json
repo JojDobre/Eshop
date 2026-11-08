@@ -1,0 +1,19 @@
+{
+    "name": "dpd",
+    "version": "0.1.0",
+    "title": { "sk": "DPD", "cs": "DPD", "en": "DPD" },
+    "description": {
+        "sk": "Doručenie DPD so sledovacím číslom a odkazom na sledovanie zásielky. Zásielky podávate cez portál DPD.",
+        "cs": "Doručení DPD se sledovacím číslem a odkazem na sledování zásilky. Zásilky podáváte přes portál DPD.",
+        "en": "DPD delivery with a tracking number and tracking link. Shipments are created in the DPD portal."
+    },
+    "provider": "Modules\\Dpd\\DpdServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.8",
+        "modules": { "shipping": "^0.3" }
+    },
+    "permissions": ["settings.manage"]
+}

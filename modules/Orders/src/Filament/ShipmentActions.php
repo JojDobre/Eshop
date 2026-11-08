@@ -14,6 +14,7 @@ use Modules\Orders\Models\Order;
 use Modules\Orders\Models\Shipment;
 use Modules\Orders\OrderStatus;
 use Modules\Shipping\Carriers\CarrierException;
+use Modules\Shipping\Carriers\ManualCarrier;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 
@@ -42,10 +43,10 @@ final class ShipmentActions
             ->schema(fn () => [
                 TextInput::make('tracking_number')->label(self::t('tracking_number'))->maxLength(64)
                     ->helperText(self::t('tracking_number_help'))
-                    ->visible($order()->shippingMethod?->carrier === 'manual'),
+                    ->visible(self::isManual($order())),
                 TextInput::make('weight')->label(self::t('weight'))->numeric()->minValue(0.01)->suffix('kg')
                     ->helperText(self::t('weight_help'))
-                    ->visible($order()->shippingMethod?->carrier !== 'manual'),
+                    ->visible(! self::isManual($order())),
             ])
             ->action(function (array $data, CreateShipment $create) use ($order): void {
                 try {
@@ -73,8 +74,8 @@ final class ShipmentActions
             ->label(self::t('labels'))
             ->icon('heroicon-o-printer')
             ->color('gray')
-            ->visible(fn () => $order()->shipments()->where('carrier', '!=', 'manual')->exists())
-            ->action(fn (PrintShipmentLabels $print) => self::download($print, $order()->shipments()->where('carrier', '!=', 'manual')->get()));
+            ->visible(fn () => $order()->shipments()->get()->contains(fn (Shipment $shipment) => ! $shipment->carrierService() instanceof ManualCarrier))
+            ->action(fn (PrintShipmentLabels $print) => self::download($print, $order()->shipments()->get()->reject(fn (Shipment $shipment) => $shipment->carrierService() instanceof ManualCarrier)));
     }
 
     /**
@@ -93,7 +94,7 @@ final class ShipmentActions
 
                 foreach ($records as $order) {
                     /** @var Order $order */
-                    if ($order->shippingMethod?->carrier === null || $order->shippingMethod->carrier === 'manual' || $order->status === OrderStatus::Cancelled) {
+                    if ($order->shippingMethod?->carrier === null || self::isManual($order) || $order->status === OrderStatus::Cancelled) {
                         continue;
                     }
 
@@ -133,6 +134,12 @@ final class ShipmentActions
 
             return null;
         }
+    }
+
+    /** Kuriér bez napojenia: sledovacie číslo zadá obchodník, štítky netlačí. */
+    private static function isManual(Order $order): bool
+    {
+        return $order->shippingMethod?->carrierService() instanceof ManualCarrier;
     }
 
     private static function user(): ?User

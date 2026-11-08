@@ -23,11 +23,13 @@ class PickupPointController extends Controller
         }
 
         $country = $method->carrier_options['country'] ?? null;
+        $types = array_filter((array) ($method->carrier_options['point_types'] ?? []));
 
         $points = PickupPoint::query()
             ->where('carrier', $method->carrier)
             ->where('is_active', true)
             ->when($country, fn ($query) => $query->where('country', strtoupper((string) $country)))
+            ->when($types !== [], fn ($query) => $query->whereIn('type', $types))
             ->search($term)
             ->orderBy('city')->orderBy('name')
             ->limit(30)

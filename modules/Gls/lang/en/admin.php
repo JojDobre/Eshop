@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'section_keys' => 'MyGLS credentials',
+    'section_keys_help' => 'GLS provides your MyGLS login and client number. The sender is filled in from Settings → Company.',
+    'account_country' => 'Account country',
+    'client_number' => 'Client number',
+    'username' => 'User (e-mail)',
+    'password' => 'Password',
+    'test_mode' => 'Test environment',
+    'test_mode_help' => 'Requests go to api.test.mygls.*, no real shipments are created.',
+    'section_shipments' => 'Shipments',
+    'printer' => 'Label format',
+    'thermo' => 'Thermal printer',
+    'notify_recipient' => 'Notify recipient by e-mail (FDS)',
+    'notify_recipient_help' => 'GLS e-mails the recipient with an option to change the delivery.',
+    'pickup_points' => 'Stored GLS pickup points: :count. Updated daily.',
+    'country' => 'Pickup point country',
+    'point_types' => 'Offer',
+    'types' => ['parcelshop' => 'ParcelShops', 'locker' => 'GLS lockers'],
+    'missing_credentials' => 'GLS: credentials are missing (Settings → GLS).',
+    'unauthorized' => 'GLS: wrong credentials.',
+    'unavailable' => 'GLS: the service is not responding, try again later.',
+    'invalid_response' => 'GLS: invalid server response.',
+];

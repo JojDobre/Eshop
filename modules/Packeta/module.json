@@ -1,0 +1,19 @@
+{
+    "name": "packeta",
+    "version": "0.1.0",
+    "title": { "sk": "Packeta (Zásielkovňa)", "cs": "Packeta (Zásilkovna)", "en": "Packeta" },
+    "description": {
+        "sk": "Výdajné miesta a Z-BOXy s mapou, doručenie domov, štítky, sledovanie a dobierka.",
+        "cs": "Výdejní místa a Z-BOXy s mapou, doručení domů, štítky, sledování a dobírka.",
+        "en": "Pickup points and Z-BOX lockers with a map, home delivery, labels, tracking and COD."
+    },
+    "provider": "Modules\\Packeta\\PacketaServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.8",
+        "modules": { "shipping": "^0.3" }
+    },
+    "permissions": ["settings.manage"]
+}

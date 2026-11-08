@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'section_keys' => 'Prístupové údaje MyGLS',
+    'section_keys_help' => 'Prihlasovacie údaje do MyGLS a zákaznícke číslo vám poskytne GLS. Odosielateľ sa vyplní z Nastavenia → Firma.',
+    'account_country' => 'Krajina účtu',
+    'client_number' => 'Zákaznícke číslo (ClientNumber)',
+    'username' => 'Používateľ (e-mail)',
+    'password' => 'Heslo',
+    'test_mode' => 'Testovacie prostredie',
+    'test_mode_help' => 'Zásielky sa posielajú na api.test.mygls.*, nevznikajú skutočné zásielky.',
+    'section_shipments' => 'Zásielky',
+    'printer' => 'Formát štítkov',
+    'thermo' => 'Termotlačiareň',
+    'notify_recipient' => 'Upozorniť príjemcu e-mailom (FDS)',
+    'notify_recipient_help' => 'GLS pošle príjemcovi e-mail s možnosťou zmeniť doručenie.',
+    'pickup_points' => 'Uložené výdajné miesta GLS: :count. Aktualizujú sa každý deň.',
+    'country' => 'Krajina výdajných miest',
+    'point_types' => 'Ponúkať',
+    'types' => ['parcelshop' => 'ParcelShopy', 'locker' => 'GLS boxy'],
+    'missing_credentials' => 'GLS: chýbajú prihlasovacie údaje (Nastavenia → GLS).',
+    'unauthorized' => 'GLS: nesprávne prihlasovacie údaje.',
+    'unavailable' => 'GLS: služba momentálne neodpovedá, skúste to neskôr.',
+    'invalid_response' => 'GLS: neplatná odpoveď servera.',
+];

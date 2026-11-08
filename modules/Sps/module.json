@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "shipping": "^0.4" }
+        "eshop": "^0.10",
+        "modules": { "shipping": "^0.5" }
     },
     "permissions": ["settings.manage"]
 }

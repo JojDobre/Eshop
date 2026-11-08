@@ -9,8 +9,8 @@
     },
     "provider": "Modules\\Pages\\PagesServiceProvider",
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "storefront": "^0.3" }
+        "eshop": "^0.10",
+        "modules": { "storefront": "^0.4" }
     },
     "permissions": ["pages.manage"]
 }

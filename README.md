@@ -3,12 +3,20 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4d – doprava a obsah (0.9.0). Obchod predáva vo viacerých jazykoch a menách, posiela
-> zásielky cez Packetu, GLS a poštu so štítkami a sledovaním, má blog prepojený s produktmi a vzhľad skladaný
-> z blokov a šablón. Funkcie sa zapínajú podľa veľkosti obchodu.
+> **Stav:** krok 4e – predaj a marketing (0.10.0). Obchod predáva vo viacerých jazykoch a menách, posiela
+> zásielky cez desiatky kuriérov, má B2B ceny, poukážky, hodnotenia, porovnávač, newsletter, XML feedy
+> a pokročilé SEO. Funkcie sa zapínajú podľa veľkosti obchodu.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Predaj a marketing (krok 4e)**
+
+- **Zákaznícke skupiny a B2B ceny:** ceny pre skupiny, zľava skupiny, ceny bez DPH pre firmy, množstevné zľavy.
+- **Darčekové poukážky** s čerpaním po častiach, **hodnotenia produktov** s overeným nákupom, **porovnávač 2.0**.
+- **Newsletter** (Mailchimp, Ecomail), **opustené košíky**, **XML feedy** (Heureka, Google, Facebook),
+  **meracie kódy** (GA4, Google Ads, Meta Pixel) so súhlasom s cookies.
+- **SEO:** presmerovania 301, šablóny titulkov, štruktúrované dáta, noindex filtrov.
 
 **Doprava a obsah (krok 4d)**
 

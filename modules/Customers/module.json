@@ -1,6 +1,6 @@
 {
     "name": "customers",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "title": { "sk": "Zákaznícke účty", "cs": "Zákaznické účty", "en": "Customer accounts" },
     "description": {
         "sk": "Registrácia a prihlásenie zákazníkov, prehľad objednávok, uložené adresy a správa zákazníkov.",
@@ -12,8 +12,8 @@
     "sizes": { "small": true, "medium": true, "large": true },
     "enabled": true,
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "storefront": "^0.3", "orders": "^0.7" }
+        "eshop": "^0.10",
+        "modules": { "storefront": "^0.4", "orders": "^0.8" }
     },
     "permissions": ["customers.manage"]
 }

@@ -9,6 +9,6 @@
     },
     "provider": "Modules\\Tax\\TaxServiceProvider",
     "core": true,
-    "requires": { "eshop": "^0.9" },
+    "requires": { "eshop": "^0.10" },
     "permissions": ["tax.manage"]
 }

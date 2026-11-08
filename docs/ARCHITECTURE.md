@@ -237,6 +237,22 @@ komentáre. Prepojenie s produktmi (`blog_post_product`) a kategóriami katalóg
 v šablónach produktu a kategórie (`$relatedPosts`); záložka pri produkte cez `Modules\Catalog\Filament\ProductRelations`.
 Testy štartujú so stavom modulov z `tests/fixtures/state` (zapnutý aj predvolene vypnutý blog).
 
+## Predaj a marketing
+
+- **Ceny pre skupiny:** `App\Core\Pricing\PriceContext` (scoped) určí skupinu zákazníka cez resolver z modulu
+  zákazníkov. `Product::regularPriceIn()` použije cenu pre skupinu (`product_group_prices`), inak zľavu skupiny;
+  `basePriceIn()` je bežná cena. Množstevné zľavy (`product_quantity_discounts`) uplatní `CartManager`.
+- **Kontroly pokladne z iných modulov:** `CheckoutRequest::addCheck($kľúč, fn ($validator, $request) => …)`.
+- **Darčekové poukážky** (`Modules\Orders\GiftVouchers`): poukážka je platba – `orders.voucher_amount`,
+  suma na úhradu `Order::amountDue()` (QR, dobierka, Stripe, faktúra). Vydanie po `OrderPaid`, vrátenie pri zrušení.
+- **Hodnotenia:** modul `Reviews`, súhrn v `products.reviews_count` a `rating_average` (`ReviewStats`), žiadosť
+  o hodnotenie plánuje `ScheduleReviewRequest` a posiela `SendReviewRequests` (webový cron, podpísaný odkaz).
+- **Marketing:** modul `Marketing` – newsletter (double opt-in, `NewsletterProvider` pre Mailchimp/Ecomail),
+  opustené košíky (`carts.email`, `AbandonedCarts`), XML feedy (`ProductFeed`, súbor v `storage/app/private/feeds`
+  obnovený raz za hodinu), meracie kódy cez `CookieConsent::addCode()` iba so súhlasom.
+- **SEO:** presmerovania `App\Models\Redirect` (obsluha v 404), automaticky pri zmene slugu (`HasLocalizedSlug`
+  + `SlugRedirects`), šablóny titulkov `App\Settings\SeoSettings::render()`.
+
 ## Veľkosť obchodu
 
 `App\Core\Features\ShopSize`: predvoľby funkcií pre malý, stredný a veľký obchod. Každý `FeatureToggle`

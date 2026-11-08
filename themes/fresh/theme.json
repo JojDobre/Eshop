@@ -1,6 +1,6 @@
 {
     "name": "fresh",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "title": {
         "sk": "Fresh",
         "cs": "Fresh",
@@ -15,7 +15,7 @@
     "parent": "default",
     "screenshot": "screenshot.jpg",
     "requires": {
-        "eshop": "^0.9"
+        "eshop": "^0.10"
     },
     "vite": [
         "themes/fresh/assets/css/theme.css",

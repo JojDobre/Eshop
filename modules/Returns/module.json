@@ -12,8 +12,8 @@
     "sizes": { "small": true, "medium": true, "large": true },
     "enabled": true,
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "orders": "^0.7" }
+        "eshop": "^0.10",
+        "modules": { "orders": "^0.8" }
     },
     "permissions": ["returns.manage"]
 }

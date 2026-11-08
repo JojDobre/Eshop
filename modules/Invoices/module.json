@@ -1,6 +1,6 @@
 {
     "name": "invoices",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "title": { "sk": "Doklady", "cs": "Doklady", "en": "Invoices" },
     "description": {
         "sk": "Zálohové faktúry, faktúry a dobropisy v PDF s číselnými radmi, odosielané e-mailom.",
@@ -10,8 +10,8 @@
     "provider": "Modules\\Invoices\\InvoicesServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "orders": "^0.7", "tax": "^0.4" }
+        "eshop": "^0.10",
+        "modules": { "orders": "^0.8", "tax": "^0.4" }
     },
     "permissions": ["invoices.manage"]
 }

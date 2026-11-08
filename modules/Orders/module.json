@@ -1,6 +1,6 @@
 {
     "name": "orders",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "title": {
         "sk": "Objednávky",
         "cs": "Objednávky",
@@ -14,12 +14,12 @@
     "provider": "Modules\\Orders\\OrdersServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.9",
+        "eshop": "^0.10",
         "modules": {
-            "storefront": "^0.3",
-            "catalog": "^0.7",
-            "cart": "^0.3",
-            "shipping": "^0.4",
+            "storefront": "^0.4",
+            "catalog": "^0.8",
+            "cart": "^0.4",
+            "shipping": "^0.5",
             "payments": "^0.4",
             "tax": "^0.4"
         }

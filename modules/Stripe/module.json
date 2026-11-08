@@ -1,6 +1,6 @@
 {
     "name": "stripe",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "title": { "sk": "Stripe (platba kartou)", "cs": "Stripe (platba kartou)", "en": "Stripe (card payments)" },
     "description": {
         "sk": "Platba kartou, Apple Pay a Google Pay cez Stripe Checkout. Stačí zadať kľúče.",
@@ -11,8 +11,8 @@
     "core": false,
     "enabled": true,
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "orders": "^0.7", "payments": "^0.4" }
+        "eshop": "^0.10",
+        "modules": { "orders": "^0.8", "payments": "^0.4" }
     },
     "permissions": ["payments.manage"]
 }

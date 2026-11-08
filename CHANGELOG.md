@@ -1,6 +1,6 @@
 # Prehľad zmien
 
-## 0.10.0 – Predaj a marketing (krok 4e, v príprave)
+## 0.10.0 – Predaj a marketing (krok 4e)
 
 - **Zákaznícke skupiny a B2B ceny:** skupiny so zľavou, vlastné ceny produktov a variantov pre skupinu
   v každej mene, predvolená skupina pre návštevníkov, zobrazenie cien bez DPH pre firmy. Zapína sa

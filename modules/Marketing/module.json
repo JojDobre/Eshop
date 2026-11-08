@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.9",
-        "modules": { "catalog": "^0.7", "cart": "^0.3", "orders": "^0.7", "storefront": "^0.3" }
+        "eshop": "^0.10",
+        "modules": { "catalog": "^0.8", "cart": "^0.4", "orders": "^0.8", "storefront": "^0.4" }
     },
     "permissions": ["marketing.manage"]
 }

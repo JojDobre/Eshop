@@ -53,10 +53,6 @@
         {{-- Tri stĺpce: vyhľadávanie je vždy v strede stránky bez ohľadu na šírku loga a ikon. --}}
         <div class="container-shop grid h-16 grid-cols-[1fr_auto] items-center gap-3 sm:h-20 md:grid-cols-[1fr_minmax(0,28rem)_1fr] md:gap-6">
             <div @class(['flex min-w-0 items-center gap-3', 'md:order-2 md:justify-center' => $centered])>
-                <button type="button" class="-ml-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
-                        :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
-                    <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
-                </button>
 
                 <a href="{{ route('storefront.home') }}" @class(['flex min-w-0 items-center gap-3 text-lg font-extrabold tracking-tight text-[#4a6573] sm:text-2xl', 'md:flex-col md:gap-1 md:text-center' => $centered])>
                     @if ($logo = $branding->logoUrl())
@@ -104,15 +100,21 @@
                     <a href="{{ route('cart.show') }}" class="flex items-center gap-2 rounded-full bg-soft px-3.5 py-2.5 text-sm font-black text-accent hover:brightness-95">
                         <span class="sr-only">{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}</span>
                         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linejoin="round" d="M5 8h14l-1 12H6z" /><path stroke-linecap="round" d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
-                        <span class="grid size-5 place-items-center rounded-full bg-primary text-[11px] text-primary-foreground" aria-hidden="true">{{ $cartCount ?? 0 }}</span>
+                        <span class="grid size-5 place-items-center rounded-full bg-primary text-[11px] text-primary-foreground" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
                     </a>
                 @endif
+
+                <button type="button" class="-mr-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
+                        :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
+                    <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+                </button>
             </div>
         </div>
     </div>
 
     @if ($navItems !== [] || filled($themeOptions->get('header_note')))
-        <div class="border-b border-line">
+        {{-- Na mobile sú kategórie v ponuke pod tlačidlom menu. --}}
+        <div class="hidden border-b border-line md:block">
             <div @class(['container-shop flex h-12 items-center gap-6', 'justify-between' => ! $centered, 'justify-center' => $centered])>
                 <nav class="farma-nav flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-bold text-zinc-600 [&_a:hover]:text-accent [&_[aria-current]]:text-accent [&_.absolute_a]:font-semibold" aria-label="{{ __('theme::shop.categories') }}">
                     @include('theme::partials.nav-items', ['items' => $navItems])

@@ -58,9 +58,7 @@
             @if (Route::has('cart.show'))
                 <a href="{{ route('cart.show') }}" class="relative rounded-md p-2 text-zinc-700 hover:bg-zinc-100" aria-label="{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}">
                     <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
-                    @if (($cartCount ?? 0) > 0)
-                        <span class="absolute -right-0.5 -top-0.5 flex min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold leading-5 text-primary-foreground">{{ $cartCount }}</span>
-                    @endif
+                    <span @class(['absolute -right-0.5 -top-0.5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold leading-5 text-primary-foreground', 'flex' => ($cartCount ?? 0) > 0, 'hidden' => ($cartCount ?? 0) === 0]) data-cart-count="flex">{{ $cartCount ?? 0 }}</span>
                 </a>
             @endif
         </div>

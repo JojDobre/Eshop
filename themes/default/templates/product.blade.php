@@ -229,7 +229,7 @@
                 @endif
 
                 @if ($variantData && Route::has('cart.add'))
-                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-6" x-data="variantPicker(@js($variantData))">
+                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-6" data-ajax-cart x-data="variantPicker(@js($variantData))">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="hidden" name="variant_id" :value="variant ? variant.id : ''">
@@ -276,7 +276,7 @@
                         </div>
                     </form>
                 @elseif ($available && Route::has('cart.add'))
-                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-4">
+                    <form method="POST" action="{{ route('cart.add') }}" class="mt-8 space-y-4" data-ajax-cart>
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         @include('theme::partials.product-addons')

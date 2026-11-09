@@ -3,6 +3,7 @@
 namespace Modules\Cart\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -20,7 +21,11 @@ class CartController extends Controller
         return view('theme::templates.cart', ['summary' => $this->cart->summary()]);
     }
 
-    public function add(Request $request): RedirectResponse
+    /**
+     * Pridanie do košíka. Pri požiadavke z JavaScriptu (bez obnovenia stránky) vráti JSON s počtom kusov
+     * v košíku a textom upozornenia, inak presmeruje späť.
+     */
+    public function add(Request $request): RedirectResponse|JsonResponse
     {
         $data = $request->validate([
             'product_id' => ['required', 'integer'],
@@ -38,7 +43,7 @@ class CartController extends Controller
         $product = Product::query()->with(['prices', 'variants'])->find($data['product_id']);
 
         if ($product === null) {
-            return back()->with('error', __('cart::messages.item_not_found'));
+            return $this->addFailed($request, __('cart::messages.item_not_found'));
         }
 
         try {
@@ -52,10 +57,28 @@ class CartController extends Controller
 
             $this->cart->add($product, (int) ($data['quantity'] ?? 1), $variant, $addons);
         } catch (CartException $e) {
-            return back()->with('error', $e->getMessage());
+            return $this->addFailed($request, $e->getMessage());
         }
 
-        return back()->with('cart_added', isset($variant) && $variant ? $product->name.' ('.$variant->name().')' : $product->name);
+        $name = isset($variant) && $variant ? $product->name.' ('.$variant->name().')' : $product->name;
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => __('theme::shop.added_to_cart', ['product' => $name]),
+                'count' => $this->cart->itemCount(),
+                'cart_url' => route('cart.show'),
+                'cart_label' => __('theme::shop.go_to_cart'),
+            ]);
+        }
+
+        return back()->with('cart_added', $name);
+    }
+
+    private function addFailed(Request $request, string $message): RedirectResponse|JsonResponse
+    {
+        return $request->expectsJson()
+            ? response()->json(['message' => $message], 422)
+            : back()->with('error', $message);
     }
 
     public function update(Request $request, int $item): RedirectResponse

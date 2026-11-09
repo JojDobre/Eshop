@@ -84,4 +84,20 @@ class CartTest extends ShopTestCase
 
         $this->get('/')->assertSee('Košík, 3 kusy');
     }
+
+    public function test_product_can_be_added_without_page_reload(): void
+    {
+        $product = $this->product('Med', stock: 5);
+
+        $this->postJson(route('cart.add'), ['product_id' => $product->id, 'quantity' => 2])
+            ->assertOk()
+            ->assertJson(['count' => 2, 'cart_url' => route('cart.show')])
+            ->assertJsonPath('message', __('theme::shop.added_to_cart', ['product' => 'Med']));
+
+        $this->postJson(route('cart.add'), ['product_id' => 999999])->assertStatus(422)->assertJsonStructure(['message']);
+
+        // Plávajúce upozornenie po bežnom odoslaní (bez JavaScriptu) a počet v hlavičke.
+        $this->post(route('cart.add'), ['product_id' => $product->id]);
+        $this->get('/')->assertSee('shopToasts(', false)->assertSee('data-cart-count', false);
+    }
 }

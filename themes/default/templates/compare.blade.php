@@ -74,7 +74,7 @@
                                         <span class="mt-1 block font-semibold">{{ ($price = $product->priceFrom()) !== null ? format_price($product->displayPrice($price)) : __('theme::shop.price_unavailable') }}</span>
                                         <div class="compare-actions mt-2 flex flex-wrap items-center gap-2">
                                             @if (Route::has('cart.add') && $product->isAvailable() && ! $product->hasVariants())
-                                                <form method="POST" action="{{ route('cart.add') }}">@csrf<input type="hidden" name="product_id" value="{{ $product->id }}"><button type="submit" class="btn btn-primary py-1 text-xs">{{ __('theme::shop.add_to_cart') }}</button></form>
+                                                <form method="POST" action="{{ route('cart.add') }}" data-ajax-cart>@csrf<input type="hidden" name="product_id" value="{{ $product->id }}"><button type="submit" class="btn btn-primary py-1 text-xs">{{ __('theme::shop.add_to_cart') }}</button></form>
                                             @else
                                                 <a href="{{ $product->url() }}" class="btn btn-secondary py-1 text-xs">{{ __('catalog::shop.compare_detail') }}</a>
                                             @endif

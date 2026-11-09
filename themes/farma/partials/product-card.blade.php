@@ -21,11 +21,12 @@
         @include('theme::partials.product-image', ['url' => $product->mainImageUrl(), 'alt' => $product->name, 'class' => 'transition duration-300 group-hover:scale-[1.04]'.($cardAvailable ? '' : ' opacity-60')])
 
         @if ($cardQuickAdd)
-            <form method="POST" action="{{ route('cart.add') }}" class="absolute bottom-3 right-3 z-20">
+            <form method="POST" action="{{ route('cart.add') }}" class="absolute bottom-3 right-3 z-20" data-ajax-cart>
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <button type="submit" class="grid size-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition hover:scale-105" aria-label="{{ __('theme::farma.add_to_cart', ['name' => $product->name]) }}">
-                    <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14" /></svg>
+                <button type="submit" class="farma-quick-add grid size-11 place-items-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition hover:scale-105" aria-label="{{ __('theme::farma.add_to_cart', ['name' => $product->name]) }}">
+                    <svg class="cart-icon-default size-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14" /></svg>
+                    <svg class="cart-icon-done size-5" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7" /></svg>
                 </button>
             </form>
         @else

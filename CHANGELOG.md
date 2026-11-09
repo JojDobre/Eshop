@@ -1,5 +1,12 @@
 # Prehľad zmien
 
+## 1.2.2 – Košík bez obnovenia stránky
+
+- Pridanie do košíka (tlačidlo „+“ na karte produktu, detail produktu, porovnanie) prebehne bez obnovenia stránky:
+  tlačidlo ukáže potvrdenie, počet v košíku v hlavičke sa hneď zmení. Bez JavaScriptu funguje ako doteraz.
+- Upozornenia obchodu (pridanie do košíka, chyby, potvrdenia) sú plávajúce okná vpravo dole, na mobile dole.
+- Šablóna Farma na mobile: bez riadku s kategóriami pod hlavičkou (sú v menu), tlačidlo menu je vpravo.
+
 ## 1.2.1 – Oprava aktualizácie
 
 - Oprava: aktualizácia nespustila migrácie modulu, ktorý v nej pribudol (napr. Kontaktné formuláre vo verzii 1.2.0),

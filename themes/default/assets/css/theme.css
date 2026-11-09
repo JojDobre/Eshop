@@ -143,3 +143,49 @@ select:not([multiple]):not([size]) {
     background-size: 1rem;
     padding-right: 2.5rem;
 }
+
+/* Pridanie do košíka bez obnovenia stránky: čakanie, potvrdenie a „poskočenie“ počtu v košíku. */
+[data-ajax-cart] [type='submit'].is-loading {
+    opacity: 0.75;
+    pointer-events: none;
+    animation: cart-pulse 0.8s ease-in-out infinite;
+}
+
+[data-ajax-cart] [type='submit'].is-added {
+    animation: cart-pop 0.45s ease-out;
+}
+
+.cart-icon-done {
+    display: none;
+}
+
+.is-added .cart-icon-done {
+    display: block;
+}
+
+.is-added .cart-icon-default {
+    display: none;
+}
+
+.cart-bump {
+    animation: cart-pop 0.45s ease-out;
+}
+
+@keyframes cart-pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    70% { transform: scale(0.94); }
+    100% { transform: scale(1); }
+}
+
+@keyframes cart-pulse {
+    50% { transform: scale(0.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-ajax-cart] [type='submit'].is-loading,
+    [data-ajax-cart] [type='submit'].is-added,
+    .cart-bump {
+        animation: none;
+    }
+}

@@ -5,11 +5,14 @@ namespace App\Filament\Pages;
 use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
+use App\Filament\Forms\RichText;
 use App\Http\Middleware\ApplyThemePreview;
 use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
@@ -102,6 +105,20 @@ class CustomizeTheme extends Page implements HasSchemas
             'select' => Select::make($key)->options(collect($definition['options'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all())->selectablePlaceholder(false)->native(false)->live(),
             'toggle' => Toggle::make($key)->live(),
             'number' => TextInput::make($key)->numeric()->live(debounce: 600),
+            'textarea' => Textarea::make($key)->rows(3)->maxLength(5000)->live(debounce: 600),
+            'richtext' => RichText::make($key, 'theme')->live(debounce: 1000),
+            'sections' => Repeater::make($key)
+                ->schema([
+                    Select::make('section')->hiddenLabel()->required()->selectablePlaceholder(false)
+                        ->options(collect($definition['options'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all()),
+                    Select::make('layout')->hiddenLabel()->selectablePlaceholder(false)
+                        ->options(collect($definition['layouts'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all())
+                        ->default(array_key_first($definition['layouts']))
+                        ->visible($definition['layouts'] !== []),
+                ])
+                ->columns(2)->reorderable()->reorderableWithButtons()->defaultItems(0)
+                ->addActionLabel(__('admin.themes.add_section'))
+                ->live(),
             'image' => FileUpload::make($key)->disk('public')->directory('theme')->visibility('public')->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])->maxSize(4096)->live(),
             default => TextInput::make($key)->maxLength(500)->live(debounce: 600),
         };

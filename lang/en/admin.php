@@ -558,6 +558,7 @@ return [
         'saved' => 'Theme settings were saved.',
         'no_settings' => 'This theme has no settings.',
         'preview_page' => 'Page in preview',
+        'add_section' => 'Add section',
         'groups' => [
             'general' => 'General',
             'header' => 'Header',
@@ -566,6 +567,9 @@ return [
             'footer' => 'Footer',
             'home' => 'Home page',
             'colors' => 'Colours',
+            'layout' => 'Home page layout',
+            'about' => 'About and benefits',
+            'faq' => 'FAQ',
         ],
         'errors' => [
             'not_zip' => 'The file is not a valid ZIP.',

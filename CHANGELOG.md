@@ -9,6 +9,17 @@
   zaškrtávacie políčko, dátum, číslo), blok „Formulár“ na ľubovoľnú stránku, správy v administrácii (Obsah → Správy)
   s počtom neprečítaných, upozornenie e-mailom s možnosťou odpovedať. Predvolený formulár „Kontakt“ sa pridá
   na stránku Kontakt automaticky.
+- **Šablóna Farma:**
+  - sekcie úvodnej stránky (baner, kategórie, produkty, baner s textom, pruh s tipom, O nás, hodnotenia, časté
+    otázky a bloky z Obsah → Úvodná stránka a bloky) sa dajú ľubovoľne zoradiť, odstrániť aj zopakovať a každá
+    má rozloženie: predvolené, obrátené (obrázok na druhej strane), užšie alebo na celú šírku,
+  - formátovaný text v sekcii O nás, v baneri a v odpovediach na časté otázky,
+  - baner iba s obrázkom (bez nadpisu a textu), upraviteľné výhody v sekcii O nás (ikona, nadpis, text),
+  - text vedľa loga a voliteľne názov obchodu pri logu, funkčné rozloženie hlavičky „logo v strede“,
+    vyhľadávanie vycentrované na stred stránky,
+  - animácie odkazov, tlačidiel a obrázkov pri prejdení myšou, tlačidlo Kontakt pri častých otázkach vedie
+    na stránku Kontakt.
+- Prispôsobenie šablón: nové typy nastavení – viacriadkový text, formátovaný text a zoradenie sekcií.
 
 ## 1.1.0 – Úpravy podľa testovania (časť 1)
 

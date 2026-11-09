@@ -1,5 +1,6 @@
 {{--
     Hlavička Farmy: oznam v hornom pruhu, logo s vyhľadávaním a košíkom, pod nimi ponuka a krátka informácia.
+    Rozloženie „Logo v strede“ (header_layout = center): vyhľadávanie vľavo, logo v strede, ponuka zarovnaná na stred.
 --}}
 @php
     $navItems = $menus->items('header');
@@ -16,6 +17,8 @@
     }
 
     $noticeKey = 'farma-notice-'.substr(md5($noticeText), 0, 8);
+    $centered = $themeOptions->get('header_layout') === 'center';
+    $logoText = trim((string) $themeOptions->get('logo_text'));
 @endphp
 <style>:root { --farma-footer: {{ $themeOptions->get('footer_color', '#44702f') }}; }</style>
 
@@ -35,7 +38,7 @@
                 @endif
             </p>
             @if (filled($themeOptions->get('notice_link')))
-                <a href="{{ $themeOptions->get('notice_link') }}" class="hidden shrink-0 font-extrabold text-accent hover:underline sm:inline">{{ __('theme::farma.notice_more') }} →</a>
+                <a href="{{ $themeOptions->get('notice_link') }}" class="farma-arrow hidden shrink-0 font-extrabold text-accent hover:underline sm:inline">{{ __('theme::farma.notice_more') }} <span aria-hidden="true">→</span></a>
             @endif
             <button type="button" class="absolute right-2 rounded-full p-1.5 text-zinc-400 hover:text-zinc-700 sm:right-4" aria-label="{{ __('theme::farma.close') }}"
                     @click="hidden = true; try { localStorage.setItem('{{ $noticeKey }}', '1') } catch (e) {}">
@@ -47,34 +50,43 @@
 
 <header class="sticky top-0 z-40 bg-white" x-data="{ menu: false }">
     <div class="border-b border-line">
-        <div class="container-shop flex h-16 items-center gap-4 sm:h-20 sm:gap-6">
-            <button type="button" class="-ml-1 grid size-10 place-items-center rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
-                    :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
-                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
-            </button>
+        {{-- Tri stĺpce: vyhľadávanie je vždy v strede stránky bez ohľadu na šírku loga a ikon. --}}
+        <div class="container-shop grid h-16 grid-cols-[1fr_auto] items-center gap-3 sm:h-20 md:grid-cols-[1fr_minmax(0,28rem)_1fr] md:gap-6">
+            <div @class(['flex min-w-0 items-center gap-3', 'md:order-2 md:justify-center' => $centered])>
+                <button type="button" class="-ml-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
+                        :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
+                    <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+                </button>
 
-            <a href="{{ route('storefront.home') }}" class="flex shrink-0 items-center gap-2.5 text-lg font-extrabold tracking-tight text-[#4a6573] sm:text-2xl">
-                @if ($logo = $branding->logoUrl())
-                    <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-9 w-auto sm:h-11">
-                @else
-                    {{ $shop->shop_name }}
-                @endif
-            </a>
+                <a href="{{ route('storefront.home') }}" @class(['flex min-w-0 items-center gap-3 text-lg font-extrabold tracking-tight text-[#4a6573] sm:text-2xl', 'md:flex-col md:gap-1 md:text-center' => $centered])>
+                    @if ($logo = $branding->logoUrl())
+                        <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-9 w-auto shrink-0 sm:h-11">
+                        @if ($themeOptions->get('show_shop_name'))
+                            <span class="truncate">{{ $shop->shop_name }}</span>
+                        @endif
+                    @else
+                        <span class="truncate">{{ $shop->shop_name }}</span>
+                    @endif
+                    @if ($logoText !== '')
+                        <span @class(['hidden max-w-56 whitespace-pre-line border-line text-xs font-bold leading-snug tracking-normal text-muted lg:block', 'border-l pl-3' => ! $centered])>{{ $logoText }}</span>
+                    @endif
+                </a>
+            </div>
 
             @if (Route::has('catalog.search'))
-                <form action="{{ route('catalog.search') }}" method="GET" role="search" class="mx-auto hidden w-full max-w-md md:block">
+                <form action="{{ route('catalog.search') }}" method="GET" role="search" @class(['hidden w-full md:block', 'md:order-1' => $centered])>
                     <label for="header-search" class="sr-only">{{ __('theme::shop.search') }}</label>
                     <div class="relative">
                         <svg class="pointer-events-none absolute left-4 top-1/2 size-4.5 -translate-y-1/2 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="m20 20-3.5-3.5" /></svg>
                         <input id="header-search" type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('theme::shop.search_placeholder') }}"
-                               class="w-full rounded-full border-0 bg-[#f5f3ef] py-3 pl-11 pr-4 text-sm font-semibold outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-primary/30">
+                               class="w-full rounded-full border-0 bg-[#f5f3ef] py-3 pl-11 pr-4 text-sm font-semibold outline-none transition placeholder:text-zinc-400 focus:bg-white focus:ring-2 focus:ring-primary/30">
                     </div>
                 </form>
             @else
-                <div class="flex-1"></div>
+                <div class="hidden md:block"></div>
             @endif
 
-            <div class="ml-auto flex items-center gap-2">
+            <div class="flex items-center justify-end gap-2 md:order-3">
                 @include('theme::partials.language-switcher')
                 @include('theme::partials.currency-switcher')
 
@@ -101,11 +113,11 @@
 
     @if ($navItems !== [] || filled($themeOptions->get('header_note')))
         <div class="border-b border-line">
-            <div class="container-shop flex h-12 items-center justify-between gap-6">
-                <nav class="flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-bold text-zinc-600 [&_a:hover]:text-accent [&_[aria-current]]:text-accent [&_.absolute_a]:font-semibold" aria-label="{{ __('theme::shop.categories') }}">
+            <div @class(['container-shop flex h-12 items-center gap-6', 'justify-between' => ! $centered, 'justify-center' => $centered])>
+                <nav class="farma-nav flex gap-6 overflow-x-auto whitespace-nowrap text-sm font-bold text-zinc-600 [&_a:hover]:text-accent [&_[aria-current]]:text-accent [&_.absolute_a]:font-semibold" aria-label="{{ __('theme::shop.categories') }}">
                     @include('theme::partials.nav-items', ['items' => $navItems])
                 </nav>
-                @if (filled($themeOptions->get('header_note')))
+                @if (filled($themeOptions->get('header_note')) && ! $centered)
                     <p class="hidden shrink-0 items-center gap-1.5 text-sm font-bold text-muted lg:flex">
                         <svg class="size-4.5 text-[var(--farma-footer)]" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linejoin="round" d="M3 6h11v10H3zM14 10h4l3 3v3h-7" /><circle cx="7" cy="18" r="2" /><circle cx="17" cy="18" r="2" /></svg>
                         {{ $themeOptions->get('header_note') }}

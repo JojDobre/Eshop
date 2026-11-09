@@ -2,6 +2,7 @@
 
 namespace App\Core\Themes;
 
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -53,6 +54,14 @@ class ThemeOptions
     public function get(string $key, mixed $default = null): mixed
     {
         return $this->values()[$key] ?? $default;
+    }
+
+    /** Či má nastavenie uloženú (alebo v náhľade zmenenú) hodnotu, teda nie predvolenú zo šablóny. */
+    public function isCustomized(string $key): bool
+    {
+        $theme = $this->themes->active();
+
+        return $theme !== null && (array_key_exists($key, $this->stored($theme->name)) || array_key_exists($key, $this->preview ?? []));
     }
 
     /**
@@ -136,7 +145,37 @@ class ThemeOptions
             'toggle' => (bool) $value,
             'number' => is_numeric($value) ? $value + 0 : $default,
             'image' => is_string($value) && $value !== '' && ! str_contains($value, '..') ? $value : null,
+            'textarea' => is_scalar($value) ? mb_substr((string) $value, 0, 5000) : $default,
+            // Formátovaný text sa pri výpise čistí funkciou safe_html().
+            'richtext' => mb_substr(is_array($value) ? rescue(fn () => RichContentRenderer::make($value)->toUnsafeHtml(), '', false) : (is_scalar($value) ? (string) $value : (string) $default), 0, 20000),
+            'sections' => $this->normalizeSections($definition, $value),
             default => is_scalar($value) ? mb_substr((string) $value, 0, 500) : $default,
         };
+    }
+
+    /**
+     * Zoznam sekcií v poradí: [{section, layout}]. Neznáme sekcie a rozloženia sa vynechajú.
+     *
+     * @param  array<string, mixed>  $definition
+     * @return list<array{section: string, layout: string}>
+     */
+    private function normalizeSections(array $definition, mixed $value): array
+    {
+        $layouts = array_keys($definition['layouts'] ?? []);
+        $items = [];
+
+        foreach (is_array($value) ? $value : (array) $definition['default'] as $item) {
+            $item = is_string($item) ? ['section' => $item] : (is_array($item) ? $item : []);
+            $section = $item['section'] ?? null;
+
+            if (! is_string($section) || ! array_key_exists($section, $definition['options'])) {
+                continue;
+            }
+
+            $layout = $item['layout'] ?? null;
+            $items[] = ['section' => $section, 'layout' => is_string($layout) && in_array($layout, $layouts, true) ? $layout : ($layouts[0] ?? 'default')];
+        }
+
+        return $items;
     }
 }

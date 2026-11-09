@@ -14,6 +14,9 @@ class LegalPages
 
     public const PRIVACY = 'privacy';
 
+    /** Stránka Kontakt (napr. tlačidlo „Kontaktujte nás“ v šablóne). */
+    public const CONTACT = 'contact';
+
     /** @var array<string, Closure(): ?string> */
     private array $resolvers = [];
 

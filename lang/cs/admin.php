@@ -558,6 +558,7 @@ return [
         'saved' => 'Nastavení šablony byla uložena.',
         'no_settings' => 'Tato šablona nemá žádná nastavení.',
         'preview_page' => 'Stránka v náhledu',
+        'add_section' => 'Přidat sekci',
         'groups' => [
             'general' => 'Obecné',
             'header' => 'Hlavička',
@@ -566,6 +567,9 @@ return [
             'footer' => 'Patička',
             'home' => 'Úvodní stránka',
             'colors' => 'Barvy',
+            'layout' => 'Rozložení úvodní stránky',
+            'about' => 'O nás a výhody',
+            'faq' => 'Časté dotazy',
         ],
         'errors' => [
             'not_zip' => 'Soubor není platný ZIP.',

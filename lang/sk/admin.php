@@ -558,6 +558,7 @@ return [
         'saved' => 'Nastavenia šablóny boli uložené.',
         'no_settings' => 'Táto šablóna nemá žiadne nastavenia.',
         'preview_page' => 'Stránka v náhľade',
+        'add_section' => 'Pridať sekciu',
         'groups' => [
             'general' => 'Všeobecné',
             'header' => 'Hlavička',
@@ -566,6 +567,9 @@ return [
             'footer' => 'Päta',
             'home' => 'Úvodná stránka',
             'colors' => 'Farby',
+            'layout' => 'Rozloženie úvodnej stránky',
+            'about' => 'O nás a výhody',
+            'faq' => 'Časté otázky',
         ],
         'errors' => [
             'not_zip' => 'Súbor nie je platný ZIP.',

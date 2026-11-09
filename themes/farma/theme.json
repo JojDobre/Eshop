@@ -1,6 +1,6 @@
 {
     "name": "farma",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "title": {
         "sk": "Farma",
         "cs": "Farma",
@@ -22,6 +22,100 @@
         "themes/default/assets/js/theme.js"
     ],
     "settings": {
+        "home_sections": {
+            "type": "sections",
+            "group": "layout",
+            "label": {
+                "sk": "Sekcie úvodnej stránky",
+                "cs": "Sekce úvodní stránky",
+                "en": "Home page sections"
+            },
+            "help": {
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite krížikom. „Bloky“ sú bloky z Obsah → Úvodná stránka a bloky (napr. formulár, video, text). Rozloženie „Obrátené“ prehodí stranu obrázka.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte křížkem. „Bloky“ jsou bloky z Obsah → Úvodní stránka a bloky (např. formulář, video, text). Rozložení „Obrácené“ prohodí stranu obrázku.",
+                "en": "Reorder with the arrows, remove a section with the cross. “Blocks” are the blocks from Content → Home page and blocks (e.g. form, video, text). The “Reversed” layout swaps the image side."
+            },
+            "default": [
+                "hero",
+                "categories",
+                "products",
+                "banner",
+                "strip",
+                "about",
+                "reviews",
+                "faq",
+                "blocks"
+            ],
+            "options": {
+                "hero": {
+                    "sk": "Úvodný baner",
+                    "cs": "Úvodní banner",
+                    "en": "Hero banner"
+                },
+                "categories": {
+                    "sk": "Kategórie v dlaždiciach",
+                    "cs": "Kategorie v dlaždicích",
+                    "en": "Category tiles"
+                },
+                "products": {
+                    "sk": "Produkty",
+                    "cs": "Produkty",
+                    "en": "Products"
+                },
+                "banner": {
+                    "sk": "Baner",
+                    "cs": "Banner",
+                    "en": "Banner"
+                },
+                "strip": {
+                    "sk": "Pruh s tipom",
+                    "cs": "Pruh s tipem",
+                    "en": "Tip strip"
+                },
+                "about": {
+                    "sk": "O nás a výhody",
+                    "cs": "O nás a výhody",
+                    "en": "About and benefits"
+                },
+                "reviews": {
+                    "sk": "Hodnotenia zákazníkov",
+                    "cs": "Hodnocení zákazníků",
+                    "en": "Customer reviews"
+                },
+                "faq": {
+                    "sk": "Časté otázky",
+                    "cs": "Časté dotazy",
+                    "en": "FAQ"
+                },
+                "blocks": {
+                    "sk": "Bloky (Obsah → Úvodná stránka a bloky)",
+                    "cs": "Bloky (Obsah → Úvodní stránka a bloky)",
+                    "en": "Blocks (Content → Home page and blocks)"
+                }
+            },
+            "layouts": {
+                "default": {
+                    "sk": "Predvolené",
+                    "cs": "Výchozí",
+                    "en": "Default"
+                },
+                "reverse": {
+                    "sk": "Obrátené",
+                    "cs": "Obrácené",
+                    "en": "Reversed"
+                },
+                "narrow": {
+                    "sk": "Užšie",
+                    "cs": "Užší",
+                    "en": "Narrow"
+                },
+                "full": {
+                    "sk": "Na celú šírku",
+                    "cs": "Na celou šířku",
+                    "en": "Full width"
+                }
+            }
+        },
         "notice_text": {
             "type": "text",
             "group": "header",
@@ -97,6 +191,31 @@
                 "en": "E.g. Free shipping over €50."
             }
         },
+        "logo_text": {
+            "type": "textarea",
+            "group": "header",
+            "label": {
+                "sk": "Text vedľa loga",
+                "cs": "Text vedle loga",
+                "en": "Text next to the logo"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. Rodinná farma od roku 2017. Prázdne = bez textu.",
+                "cs": "Např. Rodinná farma od roku 2017. Prázdné = bez textu.",
+                "en": "E.g. Family farm since 2017. Empty = no text."
+            }
+        },
+        "show_shop_name": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Názov obchodu vedľa loga",
+                "cs": "Název obchodu vedle loga",
+                "en": "Shop name next to the logo"
+            },
+            "default": false
+        },
         "footer_color": {
             "type": "color",
             "group": "style",
@@ -147,6 +266,21 @@
                 "en": "Empty = New arrivals."
             }
         },
+        "products_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Odkaz „Zobraziť všetko“",
+                "cs": "Odkaz „Zobrazit vše“",
+                "en": "“Show all” link"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = prvá kategória.",
+                "cs": "Prázdné = první kategorie.",
+                "en": "Empty = first category."
+            }
+        },
         "banner_image": {
             "type": "image",
             "group": "home",
@@ -165,10 +299,15 @@
                 "cs": "Banner – nadpis",
                 "en": "Banner – heading"
             },
-            "default": ""
+            "default": "",
+            "help": {
+                "sk": "Prázdny nadpis aj text = zobrazí sa iba obrázok.",
+                "cs": "Prázdný nadpis i text = zobrazí se jen obrázek.",
+                "en": "Empty heading and text = image only."
+            }
         },
         "banner_text": {
-            "type": "text",
+            "type": "richtext",
             "group": "home",
             "label": {
                 "sk": "Baner – text",
@@ -223,7 +362,7 @@
             }
         },
         "strip_text": {
-            "type": "text",
+            "type": "textarea",
             "group": "home",
             "label": {
                 "sk": "Pruh s tipom – text",
@@ -254,7 +393,7 @@
         },
         "about_image": {
             "type": "image",
-            "group": "home",
+            "group": "about",
             "label": {
                 "sk": "O nás – obrázok",
                 "cs": "O nás – obrázek",
@@ -264,7 +403,7 @@
         },
         "about_title": {
             "type": "text",
-            "group": "home",
+            "group": "about",
             "label": {
                 "sk": "O nás – nadpis",
                 "cs": "O nás – nadpis",
@@ -278,8 +417,8 @@
             }
         },
         "about_text": {
-            "type": "text",
-            "group": "home",
+            "type": "richtext",
+            "group": "about",
             "label": {
                 "sk": "O nás – text",
                 "cs": "O nás – text",
@@ -289,7 +428,7 @@
         },
         "about_link": {
             "type": "text",
-            "group": "home",
+            "group": "about",
             "label": {
                 "sk": "O nás – odkaz",
                 "cs": "O nás – odkaz",
@@ -299,13 +438,349 @@
         },
         "show_benefits": {
             "type": "toggle",
-            "group": "home",
+            "group": "about",
             "label": {
                 "sk": "Výhody obchodu v sekcii O nás",
                 "cs": "Výhody obchodu v sekci O nás",
                 "en": "Shop benefits in the About section"
             },
             "default": true
+        },
+        "benefit_1_icon": {
+            "type": "select",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 1 – ikona",
+                "cs": "Výhoda 1 – ikona",
+                "en": "Benefit 1 – icon"
+            },
+            "default": "box",
+            "options": {
+                "box": {
+                    "sk": "Balík",
+                    "cs": "Balík",
+                    "en": "Box"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                },
+                "chat": {
+                    "sk": "Bublina",
+                    "cs": "Bublina",
+                    "en": "Chat"
+                },
+                "home": {
+                    "sk": "Dom",
+                    "cs": "Dům",
+                    "en": "Home"
+                },
+                "truck": {
+                    "sk": "Auto",
+                    "cs": "Auto",
+                    "en": "Truck"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "shield": {
+                    "sk": "Štít",
+                    "cs": "Štít",
+                    "en": "Shield"
+                },
+                "clock": {
+                    "sk": "Hodiny",
+                    "cs": "Hodiny",
+                    "en": "Clock"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                }
+            }
+        },
+        "benefit_1_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 1 – nadpis",
+                "cs": "Výhoda 1 – nadpis",
+                "en": "Benefit 1 – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny. Pomlčka (-) = výhodu skryť.",
+                "cs": "Prázdné = výchozí text šablony. Pomlčka (-) = výhodu skrýt.",
+                "en": "Empty = theme default text. Dash (-) = hide the benefit."
+            }
+        },
+        "benefit_1_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 1 – text",
+                "cs": "Výhoda 1 – text",
+                "en": "Benefit 1 – text"
+            },
+            "default": ""
+        },
+        "benefit_2_icon": {
+            "type": "select",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 2 – ikona",
+                "cs": "Výhoda 2 – ikona",
+                "en": "Benefit 2 – icon"
+            },
+            "default": "leaf",
+            "options": {
+                "box": {
+                    "sk": "Balík",
+                    "cs": "Balík",
+                    "en": "Box"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                },
+                "chat": {
+                    "sk": "Bublina",
+                    "cs": "Bublina",
+                    "en": "Chat"
+                },
+                "home": {
+                    "sk": "Dom",
+                    "cs": "Dům",
+                    "en": "Home"
+                },
+                "truck": {
+                    "sk": "Auto",
+                    "cs": "Auto",
+                    "en": "Truck"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "shield": {
+                    "sk": "Štít",
+                    "cs": "Štít",
+                    "en": "Shield"
+                },
+                "clock": {
+                    "sk": "Hodiny",
+                    "cs": "Hodiny",
+                    "en": "Clock"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                }
+            }
+        },
+        "benefit_2_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 2 – nadpis",
+                "cs": "Výhoda 2 – nadpis",
+                "en": "Benefit 2 – title"
+            },
+            "default": "",
+            "help": {}
+        },
+        "benefit_2_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 2 – text",
+                "cs": "Výhoda 2 – text",
+                "en": "Benefit 2 – text"
+            },
+            "default": ""
+        },
+        "benefit_3_icon": {
+            "type": "select",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 3 – ikona",
+                "cs": "Výhoda 3 – ikona",
+                "en": "Benefit 3 – icon"
+            },
+            "default": "chat",
+            "options": {
+                "box": {
+                    "sk": "Balík",
+                    "cs": "Balík",
+                    "en": "Box"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                },
+                "chat": {
+                    "sk": "Bublina",
+                    "cs": "Bublina",
+                    "en": "Chat"
+                },
+                "home": {
+                    "sk": "Dom",
+                    "cs": "Dům",
+                    "en": "Home"
+                },
+                "truck": {
+                    "sk": "Auto",
+                    "cs": "Auto",
+                    "en": "Truck"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "shield": {
+                    "sk": "Štít",
+                    "cs": "Štít",
+                    "en": "Shield"
+                },
+                "clock": {
+                    "sk": "Hodiny",
+                    "cs": "Hodiny",
+                    "en": "Clock"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                }
+            }
+        },
+        "benefit_3_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 3 – nadpis",
+                "cs": "Výhoda 3 – nadpis",
+                "en": "Benefit 3 – title"
+            },
+            "default": "",
+            "help": {}
+        },
+        "benefit_3_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 3 – text",
+                "cs": "Výhoda 3 – text",
+                "en": "Benefit 3 – text"
+            },
+            "default": ""
+        },
+        "benefit_4_icon": {
+            "type": "select",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 4 – ikona",
+                "cs": "Výhoda 4 – ikona",
+                "en": "Benefit 4 – icon"
+            },
+            "default": "home",
+            "options": {
+                "box": {
+                    "sk": "Balík",
+                    "cs": "Balík",
+                    "en": "Box"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                },
+                "chat": {
+                    "sk": "Bublina",
+                    "cs": "Bublina",
+                    "en": "Chat"
+                },
+                "home": {
+                    "sk": "Dom",
+                    "cs": "Dům",
+                    "en": "Home"
+                },
+                "truck": {
+                    "sk": "Auto",
+                    "cs": "Auto",
+                    "en": "Truck"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "shield": {
+                    "sk": "Štít",
+                    "cs": "Štít",
+                    "en": "Shield"
+                },
+                "clock": {
+                    "sk": "Hodiny",
+                    "cs": "Hodiny",
+                    "en": "Clock"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                }
+            }
+        },
+        "benefit_4_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 4 – nadpis",
+                "cs": "Výhoda 4 – nadpis",
+                "en": "Benefit 4 – title"
+            },
+            "default": "",
+            "help": {}
+        },
+        "benefit_4_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Výhoda 4 – text",
+                "cs": "Výhoda 4 – text",
+                "en": "Benefit 4 – text"
+            },
+            "default": ""
         },
         "show_reviews": {
             "type": "toggle",
@@ -319,7 +794,7 @@
         },
         "faq_1_q": {
             "type": "text",
-            "group": "home",
+            "group": "faq",
             "label": {
                 "sk": "Častá otázka 1",
                 "cs": "Častý dotaz 1",
@@ -328,8 +803,8 @@
             "default": ""
         },
         "faq_1_a": {
-            "type": "text",
-            "group": "home",
+            "type": "richtext",
+            "group": "faq",
             "label": {
                 "sk": "Odpoveď 1",
                 "cs": "Odpověď 1",
@@ -339,7 +814,7 @@
         },
         "faq_2_q": {
             "type": "text",
-            "group": "home",
+            "group": "faq",
             "label": {
                 "sk": "Častá otázka 2",
                 "cs": "Častý dotaz 2",
@@ -348,8 +823,8 @@
             "default": ""
         },
         "faq_2_a": {
-            "type": "text",
-            "group": "home",
+            "type": "richtext",
+            "group": "faq",
             "label": {
                 "sk": "Odpoveď 2",
                 "cs": "Odpověď 2",
@@ -359,7 +834,7 @@
         },
         "faq_3_q": {
             "type": "text",
-            "group": "home",
+            "group": "faq",
             "label": {
                 "sk": "Častá otázka 3",
                 "cs": "Častý dotaz 3",
@@ -368,8 +843,8 @@
             "default": ""
         },
         "faq_3_a": {
-            "type": "text",
-            "group": "home",
+            "type": "richtext",
+            "group": "faq",
             "label": {
                 "sk": "Odpoveď 3",
                 "cs": "Odpověď 3",
@@ -379,7 +854,7 @@
         },
         "faq_4_q": {
             "type": "text",
-            "group": "home",
+            "group": "faq",
             "label": {
                 "sk": "Častá otázka 4",
                 "cs": "Častý dotaz 4",
@@ -388,8 +863,8 @@
             "default": ""
         },
         "faq_4_a": {
-            "type": "text",
-            "group": "home",
+            "type": "richtext",
+            "group": "faq",
             "label": {
                 "sk": "Odpoveď 4",
                 "cs": "Odpověď 4",

@@ -5,6 +5,7 @@ namespace Tests\Feature\Shop;
 use App\Core\Themes\ThemeChecker;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
+use App\Models\BlockLayout;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\View;
 use Modules\Pages\Models\Page;
@@ -84,6 +85,42 @@ class BundledThemesTest extends ShopTestCase
         // Po dátume platnosti sa oznam skryje.
         $this->travel(3)->days();
         $this->get('/')->assertDontSee('JAR10');
+    }
+
+    public function test_farma_home_sections_order_layouts_and_header_options(): void
+    {
+        $this->product('Japonská nosná', '0.40', category: $this->category('Vajcia'));
+        $this->activate('farma');
+        BlockLayout::query()->updateOrCreate(['key' => BlockLayout::HOME], ['blocks' => ['sk' => [['type' => 'text', 'data' => ['title' => 'Blok z obsahu', 'content' => '<p>Text bloku</p>']]]]]);
+
+        // Bez nastaveného poradia a s vlastnými blokmi sa zobrazia iba bloky (ako doteraz).
+        $this->get('/')->assertOk()->assertSee('Blok z obsahu')->assertDontSee('Japonská nosná');
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('farma'), [
+            'home_sections' => [['section' => 'about', 'layout' => 'reverse'], ['section' => 'blocks'], ['section' => 'products'], ['section' => 'neznáma']],
+            'about_title' => 'Rodinná farma', 'about_text' => '<p><strong>Od roku 2017</strong></p><script>alert(1)</script>',
+            'benefit_1_title' => 'Vlastný chov', 'benefit_1_icon' => 'heart', 'benefit_2_title' => '-',
+            'banner_image' => 'theme/banner.jpg',
+            'header_layout' => 'center', 'logo_text' => 'Rodinná farma od roku 2017',
+        ]);
+
+        $html = $this->get('/')->assertOk()
+            ->assertSee('<strong>Od roku 2017</strong>', false)
+            ->assertDontSee('<script>alert(1)</script>', false)
+            ->assertSee('Vlastný chov')
+            ->assertDontSee(__('theme::farma.benefit_fresh'))
+            ->assertSee(__('theme::farma.benefit_advice'))
+            ->assertSee('Rodinná farma od roku 2017')
+            ->assertSee('md:order-2 md:justify-center', false)
+            ->assertDontSee('theme/banner.jpg', false)
+            ->getContent();
+
+        // Poradie: O nás → bloky → produkty.
+        $this->assertTrue(strpos($html, 'Rodinná farma</h2>') < strpos($html, 'Blok z obsahu') && strpos($html, 'Blok z obsahu') < strpos($html, 'Japonská nosná'));
+
+        // Baner iba s obrázkom (bez nadpisu a textu).
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('farma'), ['home_sections' => ['banner'], 'banner_image' => 'theme/banner.jpg', 'banner_link' => '/akcia']);
+        $this->get('/')->assertOk()->assertSee('uploads/theme/banner.jpg', false)->assertSee('href="/akcia"', false);
     }
 
     public function test_starter_theme_loads_plain_stylesheet_and_page_template(): void

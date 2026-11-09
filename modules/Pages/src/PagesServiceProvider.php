@@ -47,6 +47,7 @@ class PagesServiceProvider extends ModuleServiceProvider
         $legal = $this->app->make(LegalPages::class);
         $legal->register(LegalPages::TERMS, fn () => $this->urlForRole(Page::ROLE_TERMS));
         $legal->register(LegalPages::PRIVACY, fn () => $this->urlForRole(Page::ROLE_PRIVACY));
+        $legal->register(LegalPages::CONTACT, fn () => $this->urlForRole(Page::ROLE_CONTACT));
         $legal->registerDocument(LegalPages::TERMS, fn () => $this->documentForRole(LegalPages::TERMS, Page::ROLE_TERMS));
         $legal->registerDocument(LegalPages::PRIVACY, fn () => $this->documentForRole(LegalPages::PRIVACY, Page::ROLE_PRIVACY));
 

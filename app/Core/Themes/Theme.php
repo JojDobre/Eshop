@@ -91,8 +91,11 @@ final class Theme
         return $labels[$locale] ?? $labels['en'] ?? (reset($labels) ?: (string) $fallback);
     }
 
+    public const SETTING_TYPES = ['color', 'select', 'toggle', 'text', 'textarea', 'richtext', 'number', 'image', 'sections'];
+
     /**
-     * Platné definície nastavení: typ color, select, toggle, text, number alebo image.
+     * Platné definície nastavení: typ color, select, toggle, text, textarea, richtext, number, image alebo sections
+     * (zoradenie sekcií stránky s rozložením; možnosti v „options“, rozloženia v „layouts“).
      *
      * @return array<string, array<string, mixed>>
      */
@@ -102,7 +105,7 @@ final class Theme
 
         foreach (is_array($value) ? $value : [] as $key => $setting) {
             if (! is_string($key) || ! preg_match('/^[a-z][a-z0-9_]*$/', $key) || ! is_array($setting)
-                || ! in_array($setting['type'] ?? null, ['color', 'select', 'toggle', 'text', 'number', 'image'], true)) {
+                || ! in_array($setting['type'] ?? null, self::SETTING_TYPES, true)) {
                 continue;
             }
 
@@ -113,6 +116,7 @@ final class Theme
                 'default' => $setting['default'] ?? null,
                 'options' => array_map(fn ($labels) => is_array($labels) ? self::strings($labels) : ['en' => (string) $labels], is_array($setting['options'] ?? null) ? $setting['options'] : []),
                 'group' => is_string($setting['group'] ?? null) ? $setting['group'] : null,
+                'layouts' => array_map(fn ($labels) => is_array($labels) ? self::strings($labels) : ['en' => (string) $labels], is_array($setting['layouts'] ?? null) ? $setting['layouts'] : []),
             ];
         }
 

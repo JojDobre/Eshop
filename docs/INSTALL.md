@@ -111,6 +111,10 @@ V **Systém → Aktualizácie** nahrajte balík `eshop-update-<verzia>.zip`. Pre
 a kompatibilita, vytvorí sa záloha a pri chybe sa všetko vráti automaticky. Poslednú aktualizáciu viete
 vrátiť aj ručne tlačidlom **Vrátiť aktualizáciu**.
 
+Balík má okolo 30 MB, server preto musí prijať taký veľký súbor: v PHP `upload_max_filesize` a `post_max_size`
+aspoň 64M, na serveri s nginx aj `client_max_body_size 64M;`. Na VPS sa dá aktualizovať aj z príkazového riadka:
+`php artisan eshop:update cesta/k/eshop-update-<verzia>.zip` (nepodpísaný balík s voľbou `--allow-unsigned`).
+
 ## Riešenie problémov
 
 | Problém | Riešenie |

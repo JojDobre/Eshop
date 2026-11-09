@@ -1,5 +1,10 @@
 # Prehľad zmien
 
+## 1.2.3 – Oprava nahrávania veľkých súborov
+
+- Oprava: aktualizačný balík (vyše 30 MB) ani väčšiu zálohu sa nedalo nahrať v administrácii – knižnica Livewire
+  predvolene prijme najviac 12 MB. Limit je teraz daný poľom (aktualizácia 500 MB, záloha 2 GB) a nastavením PHP.
+
 ## 1.2.2 – Košík bez obnovenia stránky
 
 - Pridanie do košíka (tlačidlo „+“ na karte produktu, detail produktu, porovnanie) prebehne bez obnovenia stránky:

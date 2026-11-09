@@ -15,9 +15,14 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /** Najväčší nahrávaný súbor v administrácii (kB): aktualizačný balík, záloha. */
+    public const MAX_UPLOAD_KB = 2_000_000;
+
     public function register(): void
     {
-        //
+        // Livewire predvolene prijme súbor najviac 12 MB, aktualizačný balík má vyše 30 MB. Konkrétny limit
+        // určuje každé pole (maxSize), skutočný strop servera upload_max_filesize a post_max_size v PHP.
+        config(['livewire.temporary_file_upload.rules' => ['required', 'file', 'max:'.self::MAX_UPLOAD_KB]]);
     }
 
     public function boot(): void

@@ -8,9 +8,13 @@ use App\Core\Updates\UpdateException;
 use App\Core\Updates\UpdatePackage;
 use App\Core\Updates\Updater;
 use App\Models\User;
+use App\Providers\AppServiceProvider;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 use Modules\Forms\Models\Form;
 use ZipArchive;
 
@@ -141,5 +145,18 @@ class UpdaterTest extends InstalledTestCase
 
         $this->assertTrue(Schema::hasTable('form_submissions'));
         $this->assertSame(1, Form::query()->count());
+    }
+
+    public function test_large_update_package_can_be_uploaded_in_admin(): void
+    {
+        // Livewire predvolene prijme najviac 12 MB, aktualizačný balík má vyše 30 MB.
+        $rules = FileUploadConfiguration::rules();
+        $this->assertContains('max:'.AppServiceProvider::MAX_UPLOAD_KB, $rules);
+
+        $validator = Validator::make(
+            ['files' => [UploadedFile::fake()->create('eshop-update-9.9.9.zip', 40 * 1024, 'application/zip')]],
+            ['files.*' => $rules],
+        );
+        $this->assertTrue($validator->passes());
     }
 }

@@ -172,6 +172,7 @@ class Updater
         foreach ($info['new_files'] as $file) {
             if (! $this->isProtected($file) && ! str_contains($file, '..')) {
                 File::delete($this->root.'/'.$file);
+                $this->removeEmptyParents(dirname($this->root.'/'.$file));
             }
         }
 
@@ -241,6 +242,15 @@ class Updater
             }
         } finally {
             $source->close();
+        }
+    }
+
+    /** Po zmazaní nových súborov odstráni aj prázdne adresáre (napr. celý nový modul). */
+    private function removeEmptyParents(string $directory): void
+    {
+        while (str_starts_with($directory, $this->root.'/') && is_dir($directory) && count(scandir($directory) ?: []) === 2) {
+            rmdir($directory);
+            $directory = dirname($directory);
         }
     }
 

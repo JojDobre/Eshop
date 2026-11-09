@@ -45,6 +45,7 @@ class UpdaterTest extends InstalledTestCase
         $zip->open($inner, ZipArchive::CREATE | ZipArchive::OVERWRITE);
         $zip->addFromString('eshop/app/Old.php', 'new');
         $zip->addFromString('eshop/app/Added.php', 'added');
+        $zip->addFromString('eshop/modules/Novy/module.json', '{}');
         $zip->addFromString('eshop/.env', 'APP_KEY=attacker');
         $zip->addFromString('eshop/storage/app/x.txt', 'x');
         $zip->close();
@@ -84,6 +85,7 @@ class UpdaterTest extends InstalledTestCase
 
         $this->assertSame('old', File::get($this->root.'/app/Old.php'));
         $this->assertFileDoesNotExist($this->root.'/app/Added.php');
+        $this->assertDirectoryDoesNotExist($this->root.'/modules');
         $this->assertNull($this->updater()->lastUpdate());
     }
 

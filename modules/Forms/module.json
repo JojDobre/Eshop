@@ -1,0 +1,18 @@
+{
+    "name": "forms",
+    "version": "1.0.0",
+    "title": { "sk": "Kontaktné formuláre", "cs": "Kontaktní formuláře", "en": "Contact forms" },
+    "description": {
+        "sk": "Vlastné formuláre (kontakt, dopyt, objednávka služby) ako blok na ľubovoľnej stránke, správy v administrácii a upozornenie e-mailom.",
+        "cs": "Vlastní formuláře (kontakt, poptávka, objednávka služby) jako blok na libovolné stránce, zprávy v administraci a upozornění e-mailem.",
+        "en": "Custom forms (contact, enquiry, service request) as a block on any page, messages in the administration and e-mail notifications."
+    },
+    "provider": "Modules\\Forms\\FormsServiceProvider",
+    "core": false,
+    "enabled": true,
+    "requires": {
+        "eshop": "^1.0",
+        "modules": { "storefront": "^1.0" }
+    },
+    "permissions": ["forms.manage"]
+}

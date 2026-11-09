@@ -5,6 +5,10 @@
 - **Knižnica médií:** obrázky nahraté pri produktoch, variantoch, kategóriách, blogu, blokoch, v šablóne a v editore
   obsahu sa automaticky zaradia do knižnice (staršie sa doplnia pri jej otvorení). Pri každom poli s obrázkom je
   tlačidlo „Vybrať z knižnice“. Obrázok, ktorý sa niekde používa, sa nedá zmazať.
+- **Kontaktné formuláre (nový modul):** vlastné formuláre s poľami (text, e-mail, telefón, dlhý text, výber,
+  zaškrtávacie políčko, dátum, číslo), blok „Formulár“ na ľubovoľnú stránku, správy v administrácii (Obsah → Správy)
+  s počtom neprečítaných, upozornenie e-mailom s možnosťou odpovedať. Predvolený formulár „Kontakt“ sa pridá
+  na stránku Kontakt automaticky.
 
 ## 1.1.0 – Úpravy podľa testovania (časť 1)
 

@@ -1,6 +1,6 @@
 {
     "name": "reviews",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Hodnotenia produktov", "cs": "Hodnocení produktů", "en": "Product reviews" },
     "description": {
         "sk": "Hodnotenia s hviezdičkami, označenie overený nákup, schvaľovanie, odpoveď obchodu a žiadosť o hodnotenie e-mailom.",
@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "catalog": "^0.9", "orders": "^0.8", "storefront": "^0.4", "customers": "^0.5" }
+        "eshop": "^1.0",
+        "modules": { "catalog": "^1.0", "orders": "^1.0", "storefront": "^1.0", "customers": "^1.0" }
     },
     "permissions": ["reviews.manage"]
 }

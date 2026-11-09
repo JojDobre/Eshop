@@ -87,16 +87,29 @@ V administrácii (`/admin`) nastavte:
 
 ## Zálohy a obnova
 
-Záloha (ZIP) obsahuje `database.sql`, nahrané súbory (`uploads/`), nastavenia modulov (`eshop/`)
-a `env.txt` – kópiu súboru `.env` s kľúčom `APP_KEY`, bez ktorého sa po obnove nedajú prečítať
-uložené heslá (SMTP, Stripe). Zálohu preto uchovávajte na bezpečnom mieste.
+Zálohy spravujete v **Systém → Zálohy**: denné alebo týždenné automatické zálohy, šifrovanie heslom,
+kópia na externé úložisko (FTP, SFTP, S3) a automatický test obnovy po každej zálohe. Záloha (ZIP)
+obsahuje `database.sql`, nahrané súbory (`uploads/`), nastavenia modulov (`eshop/`) a `env.txt` s kľúčom
+`APP_KEY`, bez ktorého sa po obnove nedajú prečítať uložené heslá. Zálohu uchovávajte na bezpečnom mieste.
 
-Obnova na novom hostingu:
+**Obnova v tom istom obchode:** pri zálohe kliknite na **Obnoviť**. Pred obnovou sa vytvorí záloha
+aktuálneho stavu.
 
-1. Nahrajte inštalačný balík rovnakej alebo novšej verzie (bez spustenia inštalátora).
-2. Súbor `env.txt` premenujte na `.env` a upravte v ňom údaje k databáze (`DB_*`) a `APP_URL`.
-3. V administrácii hostingu (phpMyAdmin) importujte `database.sql` do prázdnej databázy.
-4. Obsah `uploads/` nahrajte do `public/uploads/` a obsah `eshop/` do `storage/app/eshop/`.
+**Obnova na novom hostingu:**
+
+1. Nainštalujte e-shop rovnakej alebo novšej verzie bežným postupom.
+2. V **Systém → Zálohy** kliknite na **Nahrať zálohu** a potom pri nej na **Obnoviť**.
+   Kľúč aplikácie sa prevezme zo zálohy, preto sa po obnove prihlásite znova pôvodným heslom.
+
+**Keď nefunguje ani administrácia:** do `.env` doplňte `ESHOP_RESCUE_KEY=<aspoň 24 náhodných znakov>`
+a otvorte `https://vas-obchod.sk/rescue.php`. Záchranný skript vie vrátiť poslednú aktualizáciu,
+vypnúť režim údržby, vymazať vyrovnávacie pamäte a obnoviť databázu zo zálohy. Potom riadok zmažte.
+
+## Aktualizácie
+
+V **Systém → Aktualizácie** nahrajte balík `eshop-update-<verzia>.zip`. Pred inštaláciou sa overí podpis
+a kompatibilita, vytvorí sa záloha a pri chybe sa všetko vráti automaticky. Poslednú aktualizáciu viete
+vrátiť aj ručne tlačidlom **Vrátiť aktualizáciu**.
 
 ## Riešenie problémov
 

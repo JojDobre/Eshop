@@ -1,6 +1,6 @@
 {
     "name": "payments",
-    "version": "0.4.0",
+    "version": "1.0.0",
     "title": { "sk": "Platby", "cs": "Platby", "en": "Payments" },
     "description": {
         "sk": "Spôsoby platby: bankový prevod s QR kódom, dobierka, hotovosť pri osobnom odbere a karta cez platobnú bránu.",
@@ -10,8 +10,8 @@
     "provider": "Modules\\Payments\\PaymentsServiceProvider",
     "core": true,
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "shipping": "^0.5" }
+        "eshop": "^1.0",
+        "modules": { "shipping": "^1.0" }
     },
     "permissions": ["payments.manage"]
 }

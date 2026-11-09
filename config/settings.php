@@ -68,7 +68,8 @@ return [
      * additional prefix.
      */
     'cache' => [
-        'enabled' => (bool) env('SETTINGS_CACHE_ENABLED', false),
+        // Nastavenia sa čítajú z cache (na stránke sú desiatky čítaní), uloženie cache obnoví.
+        'enabled' => (bool) env('SETTINGS_CACHE_ENABLED', true),
         'store' => null,
         'prefix' => null,
         'ttl' => null,
@@ -77,7 +78,7 @@ return [
          * When enabled, uses Laravel's memoized cache driver (requires Laravel 12.9+)
          * to keep resolved values in memory during a single request.
          */
-        'memo' => env('SETTINGS_CACHE_MEMO', false),
+        'memo' => env('SETTINGS_CACHE_MEMO', true),
     ],
 
     /*

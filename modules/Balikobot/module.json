@@ -1,6 +1,6 @@
 {
     "name": "balikobot",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Balíkobot", "cs": "Balíkobot", "en": "Balíkobot" },
     "description": {
         "sk": "Jedno napojenie na desiatky kuriérov cez Balíkobot (DPD, Geis, Toptrans, WE|DO, 123kuriér…): zásielky, štítky, výdajné miesta a sledovanie.",
@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "shipping": "^0.5" }
+        "eshop": "^1.0",
+        "modules": { "shipping": "^1.0" }
     },
     "permissions": ["settings.manage"]
 }

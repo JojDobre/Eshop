@@ -1,6 +1,6 @@
 {
     "name": "blog",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Blog", "cs": "Blog", "en": "Blog" },
     "description": {
         "sk": "Články z blokov, kategórie, štítky, plánované publikovanie, komentáre, RSS a prepojenie s produktmi.",
@@ -12,8 +12,8 @@
     "enabled": false,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "storefront": "^0.4", "catalog": "^0.9" }
+        "eshop": "^1.0",
+        "modules": { "storefront": "^1.0", "catalog": "^1.0" }
     },
     "permissions": ["blog.manage"]
 }

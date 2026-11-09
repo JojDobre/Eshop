@@ -1,6 +1,6 @@
 {
     "name": "reservations",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Rezervácie", "cs": "Rezervace", "en": "Reservations" },
     "description": {
         "sk": "Rezervácie služieb s voľnými termínmi, zamestnancami a miestnosťami, rezervácia jedinečných kusov, platba vopred alebo na mieste, pripomienky a export do kalendára.",
@@ -12,8 +12,8 @@
     "enabled": false,
     "sizes": {},
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "catalog": "^0.9", "storefront": "^0.4" }
+        "eshop": "^1.0",
+        "modules": { "catalog": "^1.0", "storefront": "^1.0" }
     },
     "permissions": ["reservations.manage"]
 }

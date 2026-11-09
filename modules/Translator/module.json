@@ -1,6 +1,6 @@
 {
     "name": "translator",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Strojový preklad", "cs": "Strojový překlad", "en": "Machine translation" },
     "description": {
         "sk": "Preklad obsahu cez DeepL alebo Google Translate: tlačidlo Preložiť, hromadný preklad, slovník pojmov a mesačný limit.",
@@ -11,7 +11,7 @@
     "core": false,
     "enabled": true,
     "requires": {
-        "eshop": "^0.11"
+        "eshop": "^1.0"
     },
     "permissions": ["translations.manage"]
 }

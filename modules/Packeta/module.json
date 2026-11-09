@@ -1,6 +1,6 @@
 {
     "name": "packeta",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Packeta (Zásielkovňa)", "cs": "Packeta (Zásilkovna)", "en": "Packeta" },
     "description": {
         "sk": "Výdajné miesta a Z-BOXy s mapou, doručenie domov, štítky, sledovanie a dobierka.",
@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "shipping": "^0.5" }
+        "eshop": "^1.0",
+        "modules": { "shipping": "^1.0" }
     },
     "permissions": ["settings.manage"]
 }

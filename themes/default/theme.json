@@ -1,6 +1,6 @@
 {
     "name": "default",
-    "version": "0.8.0",
+    "version": "1.0.0",
     "title": {
         "sk": "Predvolená",
         "cs": "Výchozí",
@@ -13,7 +13,7 @@
     },
     "author": "E-shop",
     "requires": {
-        "eshop": "^0.11"
+        "eshop": "^1.0"
     },
     "settings": {
         "header_layout": {

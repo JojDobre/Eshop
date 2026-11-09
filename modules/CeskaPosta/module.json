@@ -1,6 +1,6 @@
 {
     "name": "ceskaposta",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Česká pošta", "cs": "Česká pošta", "en": "Czech Post" },
     "description": {
         "sk": "Balík Do ruky a Balíkovna cez B2B API Českej pošty, štítky, sledovanie a dobierka.",
@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "shipping": "^0.5" }
+        "eshop": "^1.0",
+        "modules": { "shipping": "^1.0" }
     },
     "permissions": ["settings.manage"]
 }

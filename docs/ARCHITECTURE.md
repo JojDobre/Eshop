@@ -284,8 +284,19 @@ predvoľby je funkcia voliteľná. Zmena veľkosti najprv ukáže prehľad zmien
 
 ## Prevádzka
 
-- **Zálohy** (`App\Core\Backup`): export databázy v PHP cez PDO (bez `mysqldump`), ZIP s nahranými súbormi
-  a nastaveniami do `storage/app/backups`, automaticky denne cez plánovač.
+- **Zálohy** (`App\Core\Backup`): export databázy v PHP cez PDO (bez `mysqldump`, iba tabuľky databázy obchodu),
+  ZIP s nahranými súbormi a nastaveniami do `storage/app/backups`, voliteľne šifrovaný AES-256. `BackupRunner`
+  po vytvorení spustí test obnovy (`BackupVerifier`) a kópiu na externé úložisko (`RemoteBackups`, Laravel
+  Filesystem: FTP, SFTP, S3). `BackupRestorer` načíta SQL príkaz po príkaze (`SqlImporter`), obnoví súbory
+  a prevezme `APP_KEY`.
+- **Aktualizácie** (`App\Core\Updates`): balík `package.zip` + `manifest.json` s SHA-256 a podpisom Ed25519
+  (verejný kľúč `Eshop::UPDATE_PUBLIC_KEY` alebo `ESHOP_UPDATE_PUBLIC_KEY`). `Updater` uloží pôvodné súbory
+  do `storage/app/updates/rollback.zip`, nahradí súbory (okrem `.env`, `storage/`, `public/uploads/`),
+  spustí migrácie a kontrolu `/up`; pri chybe vráti súbory aj databázu. `public/rescue.php` funguje bez Laravelu.
+- **Ochrana údajov** (`App\Core\Privacy\DataRetention`): pravidlá `RetentionPolicy` z jadra a modulov,
+  lehoty v `PrivacySettings`, denne cez plánovač.
+- **Nastavenia modulov** (`src/*Settings.php`) zaregistruje `ModuleServiceProvider` ako jednu inštanciu
+  na požiadavku s cache (rovnako ako nastavenia jadra).
 - **Plánovač:** `routes/console.php`; cron `schedule:run` alebo webový cron `/cron/{kľúč}` (kľúč odvodený od `APP_KEY`).
 - **Logy a stav systému:** Systém → Logy, Systém → Stav systému (`App\Core\System`).
 

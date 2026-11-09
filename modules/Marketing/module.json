@@ -1,6 +1,6 @@
 {
     "name": "marketing",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "title": { "sk": "Marketing", "cs": "Marketing", "en": "Marketing" },
     "description": {
         "sk": "Newsletter s potvrdením odberu (Mailchimp, Ecomail), pripomienky opustených košíkov, XML feedy a meracie kódy.",
@@ -12,8 +12,8 @@
     "enabled": true,
     "sizes": { "medium": true, "large": true },
     "requires": {
-        "eshop": "^0.11",
-        "modules": { "catalog": "^0.9", "cart": "^0.4", "orders": "^0.8", "storefront": "^0.4" }
+        "eshop": "^1.0",
+        "modules": { "catalog": "^1.0", "cart": "^1.0", "orders": "^1.0", "storefront": "^1.0" }
     },
     "permissions": ["marketing.manage"]
 }

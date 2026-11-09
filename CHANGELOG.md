@@ -1,6 +1,6 @@
 # Prehľad zmien
 
-## 1.0.0 – Produkčná verzia (krok 5, v príprave)
+## 1.0.0 – Produkčná verzia (krok 5)
 
 - **Šablóna Farma** pre malé obchody s domácimi produktmi: oznam v hornom pruhu (štítok, zľavový kód, odkaz,
   dátum platnosti, dá sa zavrieť), hlavička s vyhľadávaním a košíkom, úvodný baner, kategórie v dlaždiciach,
@@ -23,6 +23,11 @@
   za obdobie v kg a export CSV pre organizáciu zodpovednosti výrobcov.
 - **Prístupnosť:** vyhlásenie o prístupnosti ako predvolená právna stránka (Akt o prístupnosti), opravy
   kontrastu a popisov v šablónach Default a Farma, kontrola WCAG 2.1 AA skriptom `scripts/a11y-check.cjs`.
+- **Testovanie a výkon:** E2E testy v prehliadači na čistej inštalácii z balíka (inštalátor, nákup bez
+  registrácie, s účtom, firemný nákup, administrácia), záťažový test s 10 000 produktmi a 50 000 objednávkami
+  (`docs/PERFORMANCE.md`). Nastavenia sa načítavajú z cache – stránka kategórie zo 150 na 25 dotazov.
+- **Dokumentácia:** príručka pre obchodníkov, pre vývojárov, požiadavky na hosting (Apache, nginx, cron).
+- **Verzie:** jadro, všetky moduly a šablóny 1.0.0, závislosti `^1.0`.
 - Oprava: záloha na zdieľanom hostingu zlyhala, ak mal používateľ databázy prístup aj k iným databázam.
 - Oprava: farba značky z nastavení sa v šablónach Default a Fresh neprejavila, lebo ju prepísali predvolené štýly.
 

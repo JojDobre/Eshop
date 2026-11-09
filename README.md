@@ -3,13 +3,22 @@
 Univerzálny e-shop pre bežný webhosting: oblečenie, nábytok, potraviny, služby, zvieratá aj digitálne produkty.
 Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablónou vzhľadu.
 
-> **Stav:** krok 4f – rezervácie, dáta a doklady (0.11.0). Obchod predáva vo viacerých jazykoch a menách,
-> posiela zásielky cez desiatky kuriérov, má B2B ceny, poukážky, hodnotenia, newsletter, XML feedy, rezervácie
-> služieb, import a export dát, exporty do Pohody a Money S3 a reklamácie s protokolmi. Funkcie sa zapínajú
-> podľa veľkosti obchodu. Ďalší krok: produkčná verzia 1.0.
+> **Stav:** produkčná verzia **1.0.0**. Obchod predáva vo viacerých jazykoch a menách, posiela zásielky cez
+> desiatky kuriérov, má B2B ceny, poukážky, hodnotenia, newsletter, rezervácie, import a export, účtovné exporty
+> a reklamácie. Spĺňa GDPR, EPR a prístupnosť (WCAG 2.1 AA), má podpísané aktualizácie s vrátením a zálohy
+> s testom obnovy. Funkcie sa zapínajú podľa veľkosti obchodu.
 > Plán ďalších krokov: [`PLAN.md`](PLAN.md), prehľad zmien: [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Čo je hotové
+
+**Produkčná verzia (krok 5)**
+
+- **Bezpečnosť:** audit podľa OWASP, bezpečnostné hlavičky, čistenie obsahu, test oprávnení ([`docs/SECURITY.md`](docs/SECURITY.md)).
+- **Aktualizácie** podpísané Ed25519 s automatickým aj ručným vrátením a záchranným skriptom.
+- **Zálohy** s heslom, kópiou na FTP/SFTP/S3, testom obnovy a obnovou aj na novom hostingu.
+- **GDPR** (automatické mazanie údajov), **EPR** (evidencia obalov), **prístupnosť** (WCAG 2.1 AA).
+- **Šablóna Farma** pre malé obchody s domácimi produktmi.
+- E2E testy v prehliadači, záťažové testy ([`docs/PERFORMANCE.md`](docs/PERFORMANCE.md)), test prechodov zo všetkých verzií.
 
 **Rezervácie, dáta a doklady (krok 4f)**
 
@@ -138,10 +147,12 @@ vendor/bin/pint         # štýl kódu
 scripts/build-release.sh  # inštalačný balík → dist/
 ```
 
-Architektúra, moduly a šablóny: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+Dokumentácia: [príručka pre obchodníkov](docs/MANUAL.md), [inštalácia](docs/INSTALL.md), [webhosting](docs/HOSTING.md),
+[pre vývojárov](docs/DEVELOPERS.md), [architektúra](docs/ARCHITECTURE.md), [bezpečnosť](docs/SECURITY.md),
+[výkon](docs/PERFORMANCE.md).
 
 ## Licencie tretích strán
 
 Postavené na [Laravel](https://laravel.com) a [Filament](https://filamentphp.com) (MIT). Preklady systémových
 hlášok do slovenčiny a češtiny pochádzajú z projektu [Laravel Lang](https://laravel-lang.com) (MIT).
-Písmo [Inter](https://rsms.me/inter/) (SIL Open Font License).
+Písma [Inter](https://rsms.me/inter/) a [Nunito](https://github.com/googlefonts/nunito) (SIL Open Font License).

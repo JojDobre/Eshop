@@ -1,5 +1,10 @@
 # Prehľad zmien
 
+## 1.2.1 – Oprava aktualizácie
+
+- Oprava: aktualizácia nespustila migrácie modulu, ktorý v nej pribudol (napr. Kontaktné formuláre vo verzii 1.2.0),
+  a administrácia potom hlásila chybu 500. Ak ste aktualizovali na 1.2.0, spustite raz `php artisan migrate --force`.
+
 ## 1.2.0 – Úpravy podľa testovania (časť 2)
 
 - **Knižnica médií:** obrázky nahraté pri produktoch, variantoch, kategóriách, blogu, blokoch, v šablóne a v editore

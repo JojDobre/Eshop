@@ -5,6 +5,7 @@ namespace App\Core\Updates;
 use App\Core\Backup\BackupManager;
 use App\Core\Backup\BackupRestorer;
 use App\Core\Eshop;
+use App\Core\Modules\ModuleManager;
 use Closure;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Artisan;
@@ -41,6 +42,9 @@ class Updater
             if (Artisan::call('migrate', ['--force' => true]) !== 0) {
                 throw new UpdateException(trim(Artisan::output()));
             }
+
+            // Aj migrácie modulov, ktoré pribudli v tejto aktualizácii.
+            app(ModuleManager::class)->migrateActive();
         };
         $this->healthCheck = function (): void {
             try {

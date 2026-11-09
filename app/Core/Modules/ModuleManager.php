@@ -4,6 +4,7 @@ namespace App\Core\Modules;
 
 use App\Core\Modules\Exceptions\InvalidModuleException;
 use App\Core\Modules\Exceptions\ModuleException;
+use Composer\Autoload\ClassLoader;
 use Composer\Semver\Semver;
 use Illuminate\Support\Facades\Artisan;
 use Throwable;
@@ -221,6 +222,26 @@ class ModuleManager
 
         if ($exitCode !== 0) {
             throw new \RuntimeException(trim(Artisan::output()) ?: 'Module migration failed: '.$module->name);
+        }
+    }
+
+    /**
+     * Po aktualizácii: znova načíta moduly z disku a spustí migrácie všetkých aktívnych modulov.
+     * Bežiaca požiadavka pozná iba moduly starej verzie, takže nový modul z aktualizácie by inak
+     * nemal tabuľky, kým by niekto ručne nespustil „php artisan migrate“.
+     */
+    public function migrateActive(): void
+    {
+        $this->modules = null;
+        $loader = array_values(ClassLoader::getRegisteredLoaders())[0] ?? null;
+
+        foreach ($this->active() as $module) {
+            // Triedy nového modulu (napr. použité v jeho migrácii) ešte nie sú v automatickom načítaní.
+            if ($loader !== null && $module->namespace !== null && is_dir($module->sourcePath())) {
+                $loader->addPsr4($module->namespace, $module->sourcePath());
+            }
+
+            $this->migrate($module);
         }
     }
 

@@ -3,10 +3,15 @@
 namespace Tests\Feature;
 
 use App\Core\Eshop;
+use App\Core\Modules\ModuleManager;
 use App\Core\Updates\UpdateException;
 use App\Core\Updates\UpdatePackage;
 use App\Core\Updates\Updater;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
+use Modules\Forms\Models\Form;
 use ZipArchive;
 
 class UpdaterTest extends InstalledTestCase
@@ -121,5 +126,20 @@ class UpdaterTest extends InstalledTestCase
     {
         $this->actingAs($this->superAdmin());
         $this->get('/admin/system/updates')->assertOk()->assertSee(Eshop::VERSION);
+    }
+
+    public function test_migrations_of_modules_added_by_the_update_are_run(): void
+    {
+        User::factory()->create();
+
+        // Stav po nahratí súborov: modul Kontaktné formuláre existuje, ale jeho tabuľky ešte nie.
+        Schema::drop('form_submissions');
+        Schema::drop('forms');
+        DB::table('migrations')->where('migration', 'like', '%create_forms_tables')->delete();
+
+        app(ModuleManager::class)->migrateActive();
+
+        $this->assertTrue(Schema::hasTable('form_submissions'));
+        $this->assertSame(1, Form::query()->count());
     }
 }

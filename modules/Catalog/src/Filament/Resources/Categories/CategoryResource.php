@@ -4,12 +4,12 @@ namespace Modules\Catalog\Filament\Resources\Categories;
 
 use App\Filament\AdminGroup;
 use App\Filament\Forms\BlockBuilder;
+use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -74,8 +74,7 @@ class CategoryResource extends Resource
                     TextInput::make('name')->label($t('name'))->required()->maxLength(160),
                     TextInput::make('slug')->label($t('slug'))->helperText(__('catalog::admin.slug_help'))->maxLength(180)
                         ->rule('regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'),
-                    RichEditor::make('description')->label($t('description'))
-                        ->toolbarButtons([['bold', 'italic', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList'], ['undo', 'redo']]),
+                    RichText::make('description', 'categories')->label($t('description')),
                 ]),
                 CustomFieldsSection::make(CustomField::CATEGORY),
                 BlockBuilder::section(__('admin.blocks.category_help')),

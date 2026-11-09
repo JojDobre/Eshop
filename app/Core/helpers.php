@@ -85,6 +85,21 @@ if (! function_exists('safe_html')) {
             return preg_match('/src="https:\/\/(www\.)?(youtube\.com|youtube-nocookie\.com|player\.vimeo\.com)\//i', $match[0]) ? $match[0] : '';
         }, $clean) ?? '';
 
+        // Odkaz na YouTube alebo Vimeo v samostatnom odseku sa zobrazí ako video.
+        $clean = preg_replace_callback('#<p>\s*(?:<a [^>]*href="([^"]+)"[^>]*>[^<]*</a>|(https?://[^\s<]+))\s*</p>#i', function (array $match): string {
+            $url = html_entity_decode($match[1] !== '' ? $match[1] : ($match[2] ?? ''));
+
+            if (preg_match('#(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})#', $url, $id)) {
+                $src = 'https://www.youtube-nocookie.com/embed/'.$id[1];
+            } elseif (preg_match('#vimeo\.com/(?:video/)?(\d+)#', $url, $id)) {
+                $src = 'https://player.vimeo.com/video/'.$id[1];
+            } else {
+                return $match[0];
+            }
+
+            return '<div class="video-embed"><iframe src="'.e($src).'" title="Video" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+        }, $clean) ?? $clean;
+
         return new HtmlString($clean);
     }
 }

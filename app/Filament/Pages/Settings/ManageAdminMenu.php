@@ -2,10 +2,12 @@
 
 namespace App\Filament\Pages\Settings;
 
+use App\Filament\AdminGroup;
 use App\Filament\Navigation\EshopNavigationManager;
 use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Navigation\NavigationManager;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
@@ -43,7 +45,7 @@ class ManageAdminMenu extends Page implements HasSchemas
 
     public static function getNavigationGroup(): string|UnitEnum|null
     {
-        return \App\Filament\AdminGroup::Settings;
+        return AdminGroup::Settings;
     }
 
     public static function getNavigationParentItem(): ?string
@@ -80,7 +82,7 @@ class ManageAdminMenu extends Page implements HasSchemas
      */
     private function groups(): array
     {
-        $manager = app(\Filament\Navigation\NavigationManager::class);
+        $manager = app(NavigationManager::class);
         $groups = [];
 
         foreach ($manager instanceof EshopNavigationManager ? $manager->getAllNavigationItems() : [] as $item) {
@@ -98,7 +100,7 @@ class ManageAdminMenu extends Page implements HasSchemas
         }
 
         // Skupiny v poradí ako v menu, položky abecedne.
-        $order = array_map(fn (\App\Filament\AdminGroup $group) => $group->label(), \App\Filament\AdminGroup::cases());
+        $order = array_map(fn (AdminGroup $group) => $group->label(), AdminGroup::cases());
         uksort($groups, fn ($a, $b) => (array_search($a, $order, true) === false ? 99 : array_search($a, $order, true)) <=> (array_search($b, $order, true) === false ? 99 : array_search($b, $order, true)));
 
         return array_map(function (array $options): array {

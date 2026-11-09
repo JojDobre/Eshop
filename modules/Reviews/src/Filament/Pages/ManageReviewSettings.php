@@ -3,6 +3,7 @@
 namespace Modules\Reviews\Filament\Pages;
 
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -53,6 +54,6 @@ class ManageReviewSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+        return ManageFeatures::getNavigationLabel();
     }
 }

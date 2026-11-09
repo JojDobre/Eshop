@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Text;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Modules\Payments\Filament\Resources\PaymentMethods\PaymentMethodResource;
 use Modules\Stripe\StripeApi;
 use Modules\Stripe\StripeSettings;
 use Throwable;
@@ -98,6 +99,6 @@ class ManageStripeSettings extends BaseSettingsPage
     /** V menu pod položkou „PaymentMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Payments\Filament\Resources\PaymentMethods\PaymentMethodResource::getNavigationLabel();
+        return PaymentMethodResource::getNavigationLabel();
     }
 }

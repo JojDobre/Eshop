@@ -8,6 +8,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Modules\Shipping\Filament\Pages\CarrierSettingsPage;
+use Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource;
 use Modules\Sps\SpsSettings;
 
 class ManageSpsSettings extends CarrierSettingsPage
@@ -45,6 +46,6 @@ class ManageSpsSettings extends CarrierSettingsPage
     /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+        return ShippingMethodResource::getNavigationLabel();
     }
 }

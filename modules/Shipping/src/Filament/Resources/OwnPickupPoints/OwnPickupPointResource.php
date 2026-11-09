@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Shipping\Carriers\OwnPointsCarrier;
 use Modules\Shipping\Filament\Resources\OwnPickupPoints\Pages\ManageOwnPickupPoints;
+use Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource;
 use Modules\Shipping\Models\PickupPoint;
 use UnitEnum;
 
@@ -105,6 +106,6 @@ class OwnPickupPointResource extends Resource
     /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+        return ShippingMethodResource::getNavigationLabel();
     }
 }

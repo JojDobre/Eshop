@@ -214,7 +214,7 @@ class CartManager
     {
         $price = $variant ? $variant->priceIn($this->currency->current()) : $product->priceIn($this->currency->current());
 
-        if (! $product->is_visible || $price === null) {
+        if (! $product->is_visible || $price === null || ! $product->passesAvailabilityChecks()) {
             throw new CartException(__('cart::messages.unavailable', ['product' => $product->name]));
         }
     }

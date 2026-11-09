@@ -58,7 +58,7 @@ class CatalogTest extends ShopTestCase
         $this->get($product->url())
             ->assertOk()
             ->assertSee("49,00\u{00A0}€")
-            ->assertSee('Skladom posledné kusy (3 ks)')
+            ->assertSee('Posledné 3 ks')
             ->assertSee('Do košíka')
             ->assertSee('"@type":"Product"', false);
     }

@@ -55,3 +55,91 @@
         @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
     }
 }
+
+/*
+ * Obsah z editora (popisy produktov, stránky, bloky): farba textu, stĺpce, video a ďalšie prvky.
+ */
+.prose .color {
+    color: var(--color);
+}
+
+.prose mark {
+    background-color: color-mix(in srgb, var(--brand-primary) 22%, transparent);
+    padding: 0 0.15em;
+    border-radius: 0.2em;
+}
+
+.prose .lead {
+    font-size: 1.2em;
+}
+
+.prose hr {
+    margin: 2em 0;
+}
+
+.prose img {
+    border-radius: 0.75rem;
+}
+
+.prose .grid-layout {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .prose .grid-layout {
+        grid-template-columns: var(--cols, repeat(2, minmax(0, 1fr)));
+    }
+
+    .prose .grid-layout-col {
+        grid-column: var(--col-span, span 1 / span 1);
+    }
+}
+
+.prose details {
+    border: 1px solid rgb(0 0 0 / 0.1);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+}
+
+.prose summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.prose .video-embed {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    margin: 1.5em 0;
+}
+
+.prose .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0.75rem;
+}
+
+/* Klikateľné prvky majú kurzor ruky (Tailwind ho tlačidlám predvolene nedáva). */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+summary,
+select,
+label[for],
+input[type='checkbox'],
+input[type='radio'] {
+    cursor: pointer;
+}
+
+/* Rozbaľovací zoznam s vlastnou šípkou a rovnakým odsadením ako text. */
+select:not([multiple]):not([size]) {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+}

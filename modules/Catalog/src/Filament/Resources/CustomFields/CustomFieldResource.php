@@ -115,6 +115,9 @@ class CustomFieldResource extends Resource
             Section::make()->columns(3)->columnSpanFull()->schema([
                 Toggle::make('is_required')->label($t('is_required')),
                 Toggle::make('is_visible')->label($t('is_visible'))->helperText($t('is_visible_help'))->default(true),
+                Select::make('display')->label(__('catalog::admin.cf_display.label'))->selectablePlaceholder(false)->default('parameters')
+                    ->options(['parameters' => __('catalog::admin.cf_display.parameters'), 'under_stock' => __('catalog::admin.cf_display.under_stock')])
+                    ->visible(fn ($get) => ($get('entity') ?? 'product') === 'product'),
                 Toggle::make('is_filterable')->label($t('is_filterable'))->helperText($t('is_filterable_help'))
                     ->visible(fn (Get $get) => (bool) $type($get)?->isFilterable()),
                 Toggle::make('is_translatable')->label($t('is_translatable'))->helperText($t('is_translatable_help'))

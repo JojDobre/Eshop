@@ -1,5 +1,18 @@
 # Prehľad zmien
 
+## 1.1.0 – Úpravy podľa testovania (časť 1)
+
+- **Menu administrácie:** nastavenia zoskupené pod Obchod, Doprava (s jednotlivými dopravcami), Platby, DPH,
+  E-maily a Funkcie obchodu; ľubovoľnú položku menu sa dá skryť (Nastavenia → Obchod → Menu administrácie).
+  Stránka Moduly sa zmestí na šírku okna.
+- **Produkty:** vlastné štítky s farbou, vlastné stavy dostupnosti (aj „nedá sa kúpiť“), vlastné pole zobrazené
+  pod stavom dostupnosti (napr. krajina pôvodu), nastavenia zobrazenia (text „vrátane DPH“, kód, stav a počet
+  kusov, štítok Novinka, popis pod produktom alebo vedľa fotiek).
+- **Editor obsahu:** obrázky, farba a zvýraznenie textu, zarovnanie, oddeľovač, stĺpce, rozbaľovacie časti;
+  odkaz na YouTube/Vimeo v samostatnom riadku sa zobrazí ako video.
+- Kurzor ruky na tlačidlách, rovnomerné odsadenie šípky v rozbaľovacích zoznamoch.
+- Oprava: do košíka sa dal pridať rezervovaný alebo nedostupný produkt.
+
 ## 1.0.0 – Produkčná verzia (krok 5)
 
 - **Šablóna Farma** pre malé obchody s domácimi produktmi: oznam v hornom pruhu (štítok, zľavový kód, odkaz,

@@ -3,8 +3,10 @@
 namespace Modules\Catalog\Filament\Pages;
 
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageFeatures;
 use App\Settings\CatalogSettings;
 use BackedEnum;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -34,7 +36,20 @@ class ManageCatalogSettings extends BaseSettingsPage
 
     public function form(Schema $schema): Schema
     {
+        $d = fn (string $key) => __('catalog::admin.display.'.$key);
+
         return $schema->components([
+            Section::make($d('section'))->columns(2)->schema([
+                Toggle::make('show_vat_note')->label($d('show_vat_note')),
+                Toggle::make('show_sku')->label($d('show_sku')),
+                Toggle::make('show_stock_status')->label($d('show_stock_status'))->live(),
+                Toggle::make('show_stock_quantity')->label($d('show_stock_quantity'))->helperText($d('show_stock_quantity_help'))
+                    ->visible(fn ($get) => (bool) $get('show_stock_status')),
+                Select::make('description_position')->label($d('description_position'))->selectablePlaceholder(false)
+                    ->options(['below' => $d('description_below'), 'side' => $d('description_side')]),
+                TextInput::make('new_label_days')->label($d('new_label_days'))->helperText($d('new_label_days_help'))
+                    ->integer()->minValue(0)->maxValue(365)->required(),
+            ]),
             Section::make()->schema([
                 TextInput::make('low_stock_threshold')
                     ->label(__('catalog::admin.settings.low_stock_threshold'))
@@ -76,6 +91,6 @@ class ManageCatalogSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+        return ManageFeatures::getNavigationLabel();
     }
 }

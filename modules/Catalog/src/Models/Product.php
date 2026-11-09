@@ -9,6 +9,7 @@ use App\Core\Pricing\PriceContext;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Models\CustomerGroup;
+use App\Settings\CatalogSettings;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -51,6 +52,9 @@ class Product extends Model
     use HasContentTranslations, HasLocalizedSlug;
 
     protected $guarded = [];
+
+    /** Štítky a stav dostupnosti sa zobrazujú pri každom produkte – načítajú sa naraz pre celý zoznam. */
+    protected $with = ['labels', 'availabilityStatus'];
 
     /** @var list<string> */
     public array $translatable = ['name', 'slug', 'short_description', 'description', 'safety_info', 'meta_title', 'meta_description'];
@@ -185,12 +189,13 @@ class Product extends Model
      *
      * @return array<string, string>
      */
-    public function visibleParameters(): array
+    public function visibleParameters(string $display = 'parameters'): array
     {
         $this->loadMissing('customFieldValues.field');
 
         return $this->customFieldValues
-            ->filter(fn ($value) => $value->field !== null && $value->field->is_visible)
+            // Pole sa zobrazí v parametroch, alebo zvýraznene pod stavom skladu (display = under_stock).
+            ->filter(fn ($value) => $value->field !== null && $value->field->is_visible && ($value->field->display ?? 'parameters') === $display)
             ->sortBy(fn ($value) => [$value->field->position, $value->field->id])
             ->mapWithKeys(fn ($value) => [$value->field->name => $value->field->display($value->valueIn())])
             ->filter(fn ($display) => $display !== null)
@@ -251,6 +256,85 @@ class Product extends Model
         return $this->variants->where('is_active', true)
             ->map(fn (ProductVariant $variant) => $variant->setRelation('product', $this)->priceIn($currency))
             ->unique()->count() > 1;
+    }
+
+    /**
+     * @return BelongsToMany<ProductLabel, $this>
+     */
+    public function labels(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductLabel::class, 'product_label_product')->orderBy('position')->orderBy('product_labels.id');
+    }
+
+    /**
+     * @return BelongsTo<AvailabilityStatus, $this>
+     */
+    public function availabilityStatus(): BelongsTo
+    {
+        return $this->belongsTo(AvailabilityStatus::class);
+    }
+
+    /**
+     * Štítky na zobrazenie: vlastné štítky, „Novinka“ (podľa nastavenia) a zľava v percentách.
+     *
+     * @return list<array{text: string, style: ?string, kind: string}>
+     */
+    public function displayLabels(?int $price = null, ?int $compareAt = null): array
+    {
+        $labels = [];
+
+        if ($compareAt && $price !== null && $compareAt > $price) {
+            $labels[] = ['text' => '−'.(int) round((1 - $price / $compareAt) * 100).' %', 'style' => null, 'kind' => 'sale'];
+        }
+
+        foreach ($this->relationLoaded('labels') ? $this->labels : $this->labels()->get() as $label) {
+            $labels[] = ['text' => $label->name, 'style' => $label->style(), 'kind' => 'custom'];
+        }
+
+        $newDays = (int) rescue(fn () => app(CatalogSettings::class)->new_label_days, 30, false);
+
+        if ($newDays > 0 && $this->created_at?->gt(now()->subDays($newDays))) {
+            $labels[] = ['text' => __('catalog::shop.new_label'), 'style' => null, 'kind' => 'new'];
+        }
+
+        return $labels;
+    }
+
+    /**
+     * Stav dostupnosti na zobrazenie: vlastný stav z administrácie, inak podľa skladu.
+     *
+     * @return array{text: string, color: string, available: bool}|null null = nezobrazovať
+     */
+    public function displayAvailability(): ?array
+    {
+        $settings = rescue(fn () => app(CatalogSettings::class), null, false);
+
+        if ($settings !== null && ! $settings->show_stock_status) {
+            return null;
+        }
+
+        if ($status = $this->availabilityStatus) {
+            return ['text' => $status->name, 'color' => $status->safeColor(), 'available' => $status->is_purchasable && $this->isAvailable()];
+        }
+
+        $available = $this->isAvailable();
+
+        if (! $available) {
+            return ['text' => __('catalog::shop.sold_out'), 'color' => '#a1a1aa', 'available' => false];
+        }
+
+        if ($this->isPreorder()) {
+            return ['text' => __('catalog::shop.preorder'), 'color' => '#f2a52a', 'available' => true];
+        }
+
+        $showQuantity = $settings === null || $settings->show_stock_quantity;
+        $quantity = $this->track_stock && ! $this->hasVariants() ? $this->stock_quantity : null;
+
+        if ($showQuantity && $quantity !== null && $quantity > 0 && $quantity <= 5) {
+            return ['text' => trans_choice('catalog::shop.last_pieces', $quantity, ['count' => $quantity]), 'color' => '#f2a52a', 'available' => true];
+        }
+
+        return ['text' => __('catalog::shop.in_stock'), 'color' => '#43a047', 'available' => true];
     }
 
     /**
@@ -553,16 +637,29 @@ class Product extends Model
         self::$availabilityChecks[$key] = $check;
     }
 
+    /**
+     * Podmienky dostupnosti okrem skladu: kontroly modulov (napr. rezervovaný kus) a vlastný stav,
+     * ktorý nedovoľuje nákup (napr. „Nedostupné“).
+     */
+    public function passesAvailabilityChecks(): bool
+    {
+        foreach (self::$availabilityChecks as $check) {
+            if (! $check($this)) {
+                return false;
+            }
+        }
+
+        return ! ($this->availability_status_id !== null && $this->availabilityStatus?->is_purchasable === false);
+    }
+
     public function isAvailable(int $quantity = 1): bool
     {
         if (! $this->is_visible) {
             return false;
         }
 
-        foreach (self::$availabilityChecks as $check) {
-            if (! $check($this)) {
-                return false;
-            }
+        if (! $this->passesAvailabilityChecks()) {
+            return false;
         }
 
         // Balíček je dostupný, ak sú dostupné všetky zložky v potrebnom počte.

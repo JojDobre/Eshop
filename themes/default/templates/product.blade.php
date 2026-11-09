@@ -20,6 +20,12 @@
     $safetyInfo = $product->safety_info ?: $manufacturer?->safety_info;
     // SEO šablóny (Nastavenia → SEO), ak produkt nemá vlastný titulok a popis.
     $seo = \App\Settings\SeoSettings::current();
+    // Zobrazenie produktu (Nastavenia → Funkcie obchodu → Katalóg).
+    $display = rescue(fn () => app(\App\Settings\CatalogSettings::class), null, false);
+    $descriptionBelow = ($display?->description_position ?? 'below') === 'below';
+    $availability = $product->displayAvailability();
+    $productLabels = $product->displayLabels($price, $compareAt);
+    $highlighted = $product->visibleParameters('under_stock');
     $seoVariables = ['name' => $product->name, 'category' => $category?->name ?? $product->categories->first()?->name, 'shop' => $shop->shop_name,
         'price' => $price !== null ? format_price($price) : null, 'manufacturer' => $manufacturer?->name];
 @endphp
@@ -124,6 +130,13 @@
             </div>
 
             <div>
+                @if ($productLabels !== [])
+                    <div class="mb-3 flex flex-wrap gap-1.5">
+                        @foreach ($productLabels as $productLabel)
+                            <span @class(['rounded-full px-2.5 py-0.5 text-xs font-bold', 'bg-primary text-primary-foreground' => $productLabel['style'] === null && $productLabel['kind'] === 'sale', 'bg-zinc-900 text-white' => $productLabel['style'] === null && $productLabel['kind'] === 'new']) @if ($productLabel['style']) style="{{ $productLabel['style'] }}" @endif>{{ $productLabel['text'] }}</span>
+                        @endforeach
+                    </div>
+                @endif
                 <h1 class="text-3xl font-semibold tracking-tight">{{ $product->name }}</h1>
                 @if (! empty($productReviews['count']))
                     <a href="#hodnotenia" class="mt-2 inline-flex items-center gap-2 text-sm text-zinc-600 hover:text-zinc-900">
@@ -131,7 +144,7 @@
                         <span>{{ trans_choice('reviews::shop.count', $productReviews['count'], ['count' => $productReviews['count']]) }}</span>
                     </a>
                 @endif
-                @if ($product->sku)
+                @if ($product->sku && ($display?->show_sku ?? true))
                     <p class="mt-2 text-sm text-zinc-500">{{ __('theme::shop.sku') }}: {{ $product->sku }}</p>
                 @endif
 
@@ -154,7 +167,7 @@
                 @endif
                 @if ($netPrices && $price !== null)
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_excludes_vat', ['price' => format_price($product->priceFrom() ?? $price)]) }}</p>
-                @elseif ($vatPayer)
+                @elseif ($vatPayer && ($display?->show_vat_note ?? true))
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.price_includes_vat') }}</p>
                 @endif
                 @if ($quantityDiscounts->isNotEmpty() && $price !== null)
@@ -168,16 +181,20 @@
                     </div>
                 @endif
 
-                @if ($preorder)
-                    <p class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-amber-700">
-                        <span class="size-2 rounded-full bg-amber-500" aria-hidden="true"></span>
-                        {{ $preorderText }}
+                @if ($availability)
+                    <p class="mt-4 inline-flex items-center gap-2 text-sm font-medium" style="color: color-mix(in srgb, {{ $availability['color'] }} 70%, black)" @if ($variantData) x-data x-show="false" @endif>
+                        <span class="size-2 rounded-full" style="background: {{ $availability['color'] }}" aria-hidden="true"></span>
+                        {{ $preorder && ! $product->availabilityStatus ? $preorderText : $availability['text'] }}
                     </p>
-                @else
-                    <p @class(['mt-4 inline-flex items-center gap-2 text-sm font-medium', 'text-emerald-700' => $available, 'text-zinc-500' => ! $available]) @if ($variantData) x-data x-show="false" @endif>
-                        <span @class(['size-2 rounded-full', 'bg-emerald-500' => $available, 'bg-zinc-400' => ! $available]) aria-hidden="true"></span>
-                        {{ $available ? ($maxQuantity !== null && $maxQuantity <= 5 ? __('theme::shop.in_stock_few', ['count' => $maxQuantity]) : __('theme::shop.in_stock')) : __('theme::shop.sold_out') }}
-                    </p>
+                @endif
+
+                {{-- Vlastné polia zobrazené zvýraznene pod stavom dostupnosti (napr. krajina pôvodu). --}}
+                @if ($highlighted !== [])
+                    <dl class="mt-3 space-y-1 text-sm">
+                        @foreach ($highlighted as $label => $value)
+                            <div class="flex gap-2"><dt class="text-zinc-500">{{ $label }}:</dt><dd class="font-medium text-zinc-900">{{ $value }}</dd></div>
+                        @endforeach
+                    </dl>
                 @endif
 
                 {{-- Expirácia (šarže): dátum spotreby tovaru, ktorý zákazník dostane, a zľava pri krátkej expirácii. --}}
@@ -279,6 +296,7 @@
                     @include('theme::partials.compare-button', ['product' => $product])
                 @endif
 
+                @unless ($descriptionBelow)
                 @if ($product->description)
                     <div class="prose prose-zinc mt-10 max-w-none border-t border-zinc-100 pt-8">{{ safe_html($product->description) }}</div>
                 @endif
@@ -296,6 +314,8 @@
                         </dl>
                     </section>
                 @endif
+
+                @endunless
 
                 @if ($manufacturer || $safetyInfo)
                     <details class="group mt-8 border-t border-zinc-100 pt-6 text-sm">
@@ -331,6 +351,41 @@
                 @endif
             </div>
         </div>
+
+        @if ($descriptionBelow && ($product->description || $product->visibleParameters()))
+            <div class="mt-14 grid gap-10 border-t border-zinc-100 pt-10 lg:grid-cols-[1.6fr_1fr]">
+                <div>
+                @if ($product->description)
+                    <div class="product-description prose prose-zinc max-w-none">{{ safe_html($product->description) }}</div>
+                @endif
+
+                @if ($parameters = $product->visibleParameters())
+                    <section class="lg:hidden" aria-labelledby="parameters">
+                        <h2 id="parameters" class="font-semibold">{{ __('catalog::shop.parameters') }}</h2>
+                        <dl class="mt-4 divide-y divide-zinc-100 text-sm">
+                            @foreach ($parameters as $label => $value)
+                                <div class="grid grid-cols-2 gap-4 py-2.5">
+                                    <dt class="text-zinc-500">{{ $label }}</dt>
+                                    <dd class="text-zinc-900">{{ $value }}</dd>
+                                </div>
+                            @endforeach
+                        </dl>
+                    </section>
+                @endif
+
+                </div>
+                @if ($parameters = $product->visibleParameters())
+                    <aside class="hidden lg:block" aria-label="{{ __('catalog::shop.parameters') }}">
+                        <h2 class="font-semibold">{{ __('catalog::shop.parameters') }}</h2>
+                        <dl class="mt-4 divide-y divide-zinc-100 text-sm">
+                            @foreach ($parameters as $label => $value)
+                                <div class="grid grid-cols-2 gap-4 py-2.5"><dt class="text-zinc-500">{{ $label }}</dt><dd class="text-zinc-900">{{ $value }}</dd></div>
+                            @endforeach
+                        </dl>
+                    </aside>
+                @endif
+            </div>
+        @endif
 
         @if ($relatedProducts->isNotEmpty())
             <section class="mt-20" aria-labelledby="related">

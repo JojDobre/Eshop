@@ -254,6 +254,10 @@ return [
         'upload' => 'Nahrát zálohu',
         'uploaded' => 'Záloha byla nahrána. Nyní ji můžete obnovit.',
     ],
+    'rich_text' => [
+        'brand' => 'Barva obchodu',
+        'help' => 'Obrázek vložíte tlačítkem se sponkou. Video z YouTube nebo Vimea vložíte jako odkaz na samostatném řádku.',
+    ],
     'admin_menu' => [
         'title' => 'Menu administrace',
         'intro' => 'Zaškrtnuté položky se v levém menu nezobrazí (např. Výrobci, pokud je obchod nepoužívá). Stránky zůstanou dostupné přes přímou adresu.',

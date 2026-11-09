@@ -4,6 +4,7 @@ namespace Modules\Reservations\Filament\Pages;
 
 use App\Filament\Forms\MoneyInput;
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
@@ -71,6 +72,6 @@ class ManageReservationSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+        return ManageFeatures::getNavigationLabel();
     }
 }

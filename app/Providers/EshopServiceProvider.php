@@ -31,10 +31,12 @@ use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Core\Themes\ThemePackages;
 use App\Core\Themes\ThemeTranslationLoader;
+use App\Filament\Navigation\EshopNavigationManager;
 use App\Models\Redirect;
 use App\Settings\GeneralSettings;
 use App\Settings\MailSettings;
 use Composer\Autoload\ClassLoader;
+use Filament\Navigation\NavigationManager;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -57,7 +59,7 @@ class EshopServiceProvider extends ServiceProvider
         $this->app->singleton(Installation::class, fn () => new Installation($statePath.'/installed.json'));
 
         // Menu administrácie so skrytými položkami podľa nastavení.
-        $this->app->scoped(\Filament\Navigation\NavigationManager::class, fn () => new \App\Filament\Navigation\EshopNavigationManager);
+        $this->app->scoped(NavigationManager::class, fn () => new EshopNavigationManager);
 
         // Pravidlá uchovávania osobných údajov (moduly pridávajú vlastné).
         $this->app->singleton(DataRetention::class, function (): DataRetention {

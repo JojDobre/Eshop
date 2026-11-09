@@ -254,6 +254,10 @@ return [
         'upload' => 'Upload backup',
         'uploaded' => 'The backup has been uploaded. You can restore it now.',
     ],
+    'rich_text' => [
+        'brand' => 'Shop colour',
+        'help' => 'Insert an image with the paperclip button. Paste a YouTube or Vimeo link on its own line to embed the video.',
+    ],
     'admin_menu' => [
         'title' => 'Admin menu',
         'intro' => 'Checked items are hidden from the side menu (e.g. Manufacturers if the shop does not use them). The pages remain available via their direct address.',

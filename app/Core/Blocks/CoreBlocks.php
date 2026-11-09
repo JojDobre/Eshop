@@ -2,9 +2,9 @@
 
 namespace App\Core\Blocks;
 
+use App\Filament\Forms\RichText;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -33,8 +33,7 @@ final class CoreBlocks
 
         $types->register(new BlockType('text', fn () => $t('types.text'), fn () => [
             TextInput::make('title')->label($t('title'))->maxLength(160),
-            RichEditor::make('content')->label($t('content'))->required()
-                ->toolbarButtons([['bold', 'italic', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList'], ['undo', 'redo']]),
+            RichText::make('content', 'blocks')->label($t('content'))->required(),
             self::hidden(),
         ], icon: 'heroicon-o-document-text'));
 

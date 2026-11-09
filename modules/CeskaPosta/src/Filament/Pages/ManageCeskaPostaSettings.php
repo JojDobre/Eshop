@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Text;
 use Filament\Schemas\Schema;
 use Modules\CeskaPosta\CeskaPostaSettings;
 use Modules\Shipping\Filament\Pages\CarrierSettingsPage;
+use Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource;
 
 class ManageCeskaPostaSettings extends CarrierSettingsPage
 {
@@ -58,6 +59,6 @@ class ManageCeskaPostaSettings extends CarrierSettingsPage
     /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+        return ShippingMethodResource::getNavigationLabel();
     }
 }

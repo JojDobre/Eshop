@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Filament\AdminGroup;
 use App\Filament\Pages\Modules;
+use App\Filament\Pages\Settings\ManageAdminMenu;
 use App\Filament\Pages\Settings\ManageBrandingSettings;
 use App\Filament\Pages\Settings\ManageGeneralSettings;
 use App\Filament\Resources\Users\Pages\CreateUser;
@@ -132,12 +134,12 @@ class AdminPanelTest extends InstalledTestCase
     {
         $this->actingAs($this->superAdmin());
 
-        Livewire::test(\App\Filament\Pages\Settings\ManageAdminMenu::class)
+        Livewire::test(ManageAdminMenu::class)
             ->assertSee(__('admin.users.plural'))
-            ->set('data.hidden.'.md5(\App\Filament\AdminGroup::System->label()), ['users'])
+            ->set('data.hidden.'.md5(AdminGroup::System->label()), ['users'])
             ->call('save');
 
-        $this->assertSame(['users'], app(\App\Settings\GeneralSettings::class)->admin_hidden_navigation);
+        $this->assertSame(['users'], app(GeneralSettings::class)->admin_hidden_navigation);
         $menu = $this->get('/admin/settings/general')->assertOk()->getContent();
         $this->assertStringNotContainsString('href="'.url('/admin/users').'"', $menu);
         // Skrytá stránka je dostupná priamo, podpoložky „Obchod“ sú v menu pod ním.

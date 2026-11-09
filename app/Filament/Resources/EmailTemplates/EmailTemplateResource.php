@@ -4,6 +4,7 @@ namespace App\Filament\Resources\EmailTemplates;
 
 use App\Core\Mail\EmailTemplates;
 use App\Filament\AdminGroup;
+use App\Filament\Pages\Settings\ManageMailSettings;
 use App\Filament\Resources\EmailTemplates\Pages\EditEmailTemplate;
 use App\Filament\Resources\EmailTemplates\Pages\ListEmailTemplates;
 use App\Models\EmailTemplate;
@@ -167,6 +168,6 @@ class EmailTemplateResource extends Resource
     /** V menu pod položkou „ManageMailSettings“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageMailSettings::getNavigationLabel();
+        return ManageMailSettings::getNavigationLabel();
     }
 }

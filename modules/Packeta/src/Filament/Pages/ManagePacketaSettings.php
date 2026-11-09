@@ -8,6 +8,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Modules\Packeta\PacketaSettings;
 use Modules\Shipping\Filament\Pages\CarrierSettingsPage;
+use Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource;
 
 class ManagePacketaSettings extends CarrierSettingsPage
 {
@@ -41,6 +42,6 @@ class ManagePacketaSettings extends CarrierSettingsPage
     /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+        return ShippingMethodResource::getNavigationLabel();
     }
 }

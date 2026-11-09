@@ -3,8 +3,12 @@
 @php($cardCompareAt = $product->displayPrice($product->compareAtPriceIn()))
 <article class="group relative flex flex-col">
     <div class="relative aspect-square overflow-hidden rounded-xl bg-zinc-100">
-        @if ($cardCompareAt)
-            <span class="absolute left-3 top-3 z-10 rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">−{{ (int) round((1 - $cardPrice / $cardCompareAt) * 100) }} %</span>
+        @if (($cardLabels = $product->displayLabels($cardPrice, $cardCompareAt)) !== [])
+            <div class="absolute left-3 top-3 z-10 flex flex-col items-start gap-1">
+                @foreach ($cardLabels as $cardLabel)
+                    <span @class(['rounded-full px-2 py-0.5 text-xs font-semibold', 'bg-primary text-primary-foreground' => $cardLabel['style'] === null && $cardLabel['kind'] === 'sale', 'bg-white text-zinc-900 shadow-sm' => $cardLabel['style'] === null && $cardLabel['kind'] === 'new']) @if ($cardLabel['style']) style="{{ $cardLabel['style'] }}" @endif>{{ $cardLabel['text'] }}</span>
+                @endforeach
+            </div>
         @endif
         @include('theme::partials.product-image', ['url' => $product->mainImageUrl(), 'alt' => $product->name, 'class' => 'transition duration-300 group-hover:scale-[1.03]'])
     </div>

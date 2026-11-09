@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Redirects;
 
 use App\Filament\AdminGroup;
+use App\Filament\Pages\Settings\ManageGeneralSettings;
 use App\Filament\Resources\Redirects\Pages\ManageRedirects;
 use App\Models\Redirect;
 use BackedEnum;
@@ -94,6 +95,6 @@ class RedirectResource extends Resource
     /** V menu pod položkou „ManageGeneralSettings“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageGeneralSettings::getNavigationLabel();
+        return ManageGeneralSettings::getNavigationLabel();
     }
 }

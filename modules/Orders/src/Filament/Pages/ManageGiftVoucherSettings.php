@@ -3,6 +3,7 @@
 namespace Modules\Orders\Filament\Pages;
 
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -49,6 +50,6 @@ class ManageGiftVoucherSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+        return ManageFeatures::getNavigationLabel();
     }
 }

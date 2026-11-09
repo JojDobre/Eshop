@@ -4,6 +4,7 @@ namespace Modules\Translator\Filament\Pages;
 
 use App\Core\Content\ShopLocales;
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\KeyValue;
@@ -102,6 +103,6 @@ class ManageTranslatorSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+        return ManageFeatures::getNavigationLabel();
     }
 }

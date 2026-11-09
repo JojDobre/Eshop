@@ -39,4 +39,9 @@ return [
     'compare_add' => 'Compare',
     'compare_in_list' => 'In comparison – view',
     'compare_link' => 'Compare (:count)',
+    'sold_out' => 'Sold out',
+    'preorder' => 'Pre-order',
+    'last_pieces' => 'Last piece|Last :count pieces|Last :count pieces',
+    'new_label' => 'New',
+    'price_incl_vat' => 'Price incl. VAT',
 ];

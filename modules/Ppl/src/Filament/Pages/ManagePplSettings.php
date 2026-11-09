@@ -10,6 +10,7 @@ use Filament\Schemas\Components\Text;
 use Filament\Schemas\Schema;
 use Modules\Ppl\PplSettings;
 use Modules\Shipping\Filament\Pages\CarrierSettingsPage;
+use Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource;
 
 class ManagePplSettings extends CarrierSettingsPage
 {
@@ -51,6 +52,6 @@ class ManagePplSettings extends CarrierSettingsPage
     /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+        return ShippingMethodResource::getNavigationLabel();
     }
 }

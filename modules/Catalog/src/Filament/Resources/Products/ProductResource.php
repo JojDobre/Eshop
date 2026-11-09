@@ -8,6 +8,7 @@ use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
+use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use App\Settings\TaxSettings;
 use BackedEnum;
@@ -19,7 +20,6 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -123,8 +123,7 @@ class ProductResource extends Resource
                         ->rule('regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'),
                     Textarea::make('short_description')->label($t('short_description'))->helperText($t('short_description_help'))
                         ->rows(2)->maxLength(500),
-                    RichEditor::make('description')->label($t('description'))
-                        ->toolbarButtons([['bold', 'italic', 'underline', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'table'], ['undo', 'redo']]),
+                    RichText::make('description', 'products')->label($t('description')),
                 ]),
                 Section::make(__('catalog::admin.custom_fields.plural'))
                     // Pri zapnutých typoch produktov sa zobrazia iba polia typu (typ bez polí = všetky polia).
@@ -222,6 +221,8 @@ class ProductResource extends Resource
             Group::make()->schema([
                 Section::make()->schema([
                     Toggle::make('is_visible')->label($t('is_visible'))->helperText($t('is_visible_help'))->default(true),
+                    Select::make('labels')->label(__('catalog::admin.product_extra.labels'))->helperText(__('catalog::admin.product_extra.labels_help'))
+                        ->relationship('labels', 'id')->getOptionLabelFromRecordUsing(fn ($record) => $record->name)->multiple()->preload(),
                     Select::make('product_type_id')->label(__('catalog::admin.product_type.label'))
                         ->options(fn () => ProductType::query()->ordered()->get()->mapWithKeys(fn (ProductType $type) => [$type->id => $type->name])->all())
                         ->placeholder(__('catalog::admin.product_type.none'))
@@ -267,6 +268,10 @@ class ProductResource extends Resource
                             ->rule(MoneyInput::RULE)->inputMode('decimal')->suffix($code),
                     ]))->values()->all()),
                 Section::make($t('section_stock'))->schema([
+                    Select::make('availability_status_id')->label(__('catalog::admin.product_extra.availability_status'))
+                        ->helperText(__('catalog::admin.product_extra.availability_status_help'))
+                        ->relationship('availabilityStatus', 'name')->getOptionLabelFromRecordUsing(fn ($record) => $record->name)
+                        ->placeholder(__('catalog::admin.product_extra.availability_auto'))->preload(),
                     Toggle::make('track_stock')->label($t('track_stock'))->helperText($t('track_stock_help'))->default(true)->live(),
                     TextInput::make('stock_quantity')->label($t('stock_quantity'))->integer()->default(0)
                         // Pri skladoch a šaržiach sa sklad mení príjmom a inventúrou v časti „Zásoby“.

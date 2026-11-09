@@ -5,16 +5,18 @@
     $cardCompareAt = $product->displayPrice($product->compareAtPriceIn());
     $cardAvailable = $product->isAvailable();
     $cardPreorder = $cardAvailable && $product->isPreorder();
-    $cardLow = $cardAvailable && ! $cardPreorder && $product->track_stock && $product->stock_quantity > 0 && $product->stock_quantity <= 3;
-    $cardNew = $product->created_at?->gt(now()->subDays(30));
+    $cardStatus = $product->displayAvailability();
+    $cardLabels = $product->displayLabels($cardPrice, $cardCompareAt);
     $cardQuickAdd = $cardAvailable && ! $product->hasVariants() && Route::has('cart.add');
 @endphp
 <article @class(['group relative flex flex-col', 'opacity-90' => ! $cardAvailable])>
     <div class="relative aspect-square overflow-hidden rounded-[20px] bg-cream">
-        @if ($cardCompareAt)
-            <span class="absolute left-3 top-3 z-10 rounded-full bg-primary px-2.5 py-1 text-xs font-extrabold text-primary-foreground">−{{ (int) round((1 - $cardPrice / $cardCompareAt) * 100) }} %</span>
-        @elseif ($cardNew)
-            <span class="absolute left-3 top-3 z-10 rounded-full bg-white px-2.5 py-1 text-xs font-extrabold">{{ __('theme::farma.new') }}</span>
+        @if ($cardLabels !== [])
+            <div class="absolute left-3 top-3 z-10 flex flex-col items-start gap-1">
+                @foreach ($cardLabels as $cardLabel)
+                    <span @class(['rounded-full px-2.5 py-1 text-xs font-extrabold', 'bg-primary text-primary-foreground' => $cardLabel['style'] === null && $cardLabel['kind'] === 'sale', 'bg-white' => $cardLabel['style'] === null && $cardLabel['kind'] === 'new']) @if ($cardLabel['style']) style="{{ $cardLabel['style'] }}" @endif>{{ $cardLabel['text'] }}</span>
+                @endforeach
+            </div>
         @endif
         @include('theme::partials.product-image', ['url' => $product->mainImageUrl(), 'alt' => $product->name, 'class' => 'transition duration-300 group-hover:scale-[1.04]'.($cardAvailable ? '' : ' opacity-60')])
 
@@ -52,9 +54,11 @@
                 <span class="block text-xs font-semibold text-muted">{{ __('theme::shop.unit_price', ['price' => format_price($product->displayPrice($cardUnitPrice)), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
             @endif
         </p>
-        <p class="flex items-center gap-1.5 text-xs font-bold text-muted">
-            <span @class(['size-1.5 rounded-full', 'bg-emerald-500' => $cardAvailable && ! $cardLow && ! $cardPreorder, 'bg-amber-400' => $cardLow || $cardPreorder, 'bg-zinc-300' => ! $cardAvailable])></span>
-            {{ ! $cardAvailable ? __('theme::shop.sold_out') : ($cardPreorder ? __('theme::shop.preorder') : ($cardLow ? __('theme::farma.last_pieces') : __('theme::shop.in_stock'))) }}
-        </p>
+        @if ($cardStatus)
+            <p class="flex items-center gap-1.5 text-xs font-bold text-muted">
+                <span class="size-1.5 rounded-full" style="background: {{ $cardStatus['color'] }}"></span>
+                {{ $cardStatus['text'] }}
+            </p>
+        @endif
     </div>
 </article>

@@ -39,4 +39,9 @@ return [
     'compare_add' => 'Porovnať',
     'compare_in_list' => 'V porovnaní – zobraziť',
     'compare_link' => 'Porovnanie (:count)',
+    'sold_out' => 'Vypredané',
+    'preorder' => 'Predobjednávka',
+    'last_pieces' => 'Posledný kus|Posledné :count ks|Posledných :count ks',
+    'new_label' => 'Novinka',
+    'price_incl_vat' => 'Cena s DPH',
 ];

@@ -59,6 +59,21 @@ class CatalogSettings extends Settings
     /** Poslať odkazy hneď po objednávke, nielen po zaplatení. */
     public bool $digital_deliver_unpaid;
 
+    /** Zobrazenie produktu v obchode. */
+    public bool $show_vat_note;
+
+    public bool $show_stock_status;
+
+    public bool $show_stock_quantity;
+
+    public bool $show_sku;
+
+    /** below = popis pod fotkami na celú šírku, side = vedľa fotiek. */
+    public string $description_position;
+
+    /** Štítok „Novinka“ pre produkty pridané za posledných N dní (0 = vypnuté). */
+    public int $new_label_days;
+
     public static function group(): string
     {
         return 'catalog';

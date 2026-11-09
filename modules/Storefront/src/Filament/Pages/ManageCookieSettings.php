@@ -3,6 +3,7 @@
 namespace Modules\Storefront\Filament\Pages;
 
 use App\Filament\Pages\Settings\BaseSettingsPage;
+use App\Filament\Pages\Settings\ManageGeneralSettings;
 use BackedEnum;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -51,6 +52,6 @@ class ManageCookieSettings extends BaseSettingsPage
     /** V menu pod položkou „ManageGeneralSettings“ (zobrazí sa po jej otvorení). */
     public static function getNavigationParentItem(): ?string
     {
-        return \App\Filament\Pages\Settings\ManageGeneralSettings::getNavigationLabel();
+        return ManageGeneralSettings::getNavigationLabel();
     }
 }

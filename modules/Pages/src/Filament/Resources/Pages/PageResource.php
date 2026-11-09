@@ -4,11 +4,11 @@ namespace Modules\Pages\Filament\Resources\Pages;
 
 use App\Filament\AdminGroup;
 use App\Filament\Forms\BlockBuilder;
+use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -82,8 +82,7 @@ class PageResource extends Resource
                     TextInput::make('name')->label($t('name'))->required()->maxLength(160),
                     TextInput::make('slug')->label($t('slug'))->helperText(__('catalog::admin.slug_help'))->maxLength(180)
                         ->rule('regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'),
-                    RichEditor::make('content')->label($t('content'))
-                        ->toolbarButtons([['bold', 'italic', 'underline', 'link'], ['h2', 'h3'], ['bulletList', 'orderedList', 'blockquote', 'table'], ['undo', 'redo']]),
+                    RichText::make('content', 'pages')->label($t('content')),
                 ]),
                 BlockBuilder::section(__('admin.blocks.page_help')),
                 Section::make($t('seo'))->collapsed()->schema([

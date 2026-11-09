@@ -403,6 +403,16 @@ return [
         'files' => 'Files',
         'files_help' => 'Images (JPG, PNG, WebP, GIF, SVG) and PDF, up to 10 MB per file.',
         'uploaded' => 'Uploaded files: :count',
+        'pick' => 'Choose from library',
+        'pick_help' => 'Images uploaded anywhere in the administration (products, categories, blog, blocks, theme).',
+        'use_selected' => 'Use selected',
+        'sync' => 'Load shop images',
+        'synced' => 'Added to the library: :count',
+        'in_use' => 'File is in use',
+        'in_use_help' => 'The image is used in a product, page, block or theme settings. Remove it there first.',
+        'delete_unused' => 'Delete unused',
+        'deleted' => 'Deleted files: :count',
+        'skipped_in_use' => 'Kept because they are in use: :count',
     ],
 
     'translations' => [

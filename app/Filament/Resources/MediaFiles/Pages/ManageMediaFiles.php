@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\MediaFiles\Pages;
 
+use App\Core\Content\MediaLibrary;
 use App\Filament\Resources\MediaFiles\MediaFileResource;
 use App\Models\MediaFile;
 use Filament\Actions\Action;
@@ -14,11 +15,24 @@ class ManageMediaFiles extends ManageRecords
 {
     protected static string $resource = MediaFileResource::class;
 
+    public function mount(): void
+    {
+        parent::mount();
+
+        // Doplní obrázky nahraté pri produktoch, kategóriách, blogu, blokoch a v šablóne.
+        app(MediaLibrary::class)->syncOccasionally();
+    }
+
     protected function getHeaderActions(): array
     {
         $t = fn (string $key, array $replace = []) => __('admin.media.'.$key, $replace);
 
         return [
+            Action::make('sync')
+                ->label($t('sync'))
+                ->icon(Heroicon::OutlinedArrowPath)
+                ->color('gray')
+                ->action(fn () => Notification::make()->success()->title($t('synced', ['count' => app(MediaLibrary::class)->sync()]))->send()),
             Action::make('upload')
                 ->label($t('upload'))
                 ->icon(Heroicon::OutlinedArrowUpTray)

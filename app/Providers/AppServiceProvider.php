@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Core\Installer\Installation;
+use App\Filament\Forms\MediaPicker;
 use App\Models\User;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->configureAdminFormatting();
+        MediaPicker::register();
 
         Event::listen(Login::class, function (Login $event): void {
             if ($event->user instanceof User) {

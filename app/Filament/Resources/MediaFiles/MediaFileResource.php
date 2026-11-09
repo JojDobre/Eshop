@@ -2,15 +2,17 @@
 
 namespace App\Filament\Resources\MediaFiles;
 
+use App\Core\Content\MediaLibrary;
 use App\Filament\AdminGroup;
 use App\Filament\Resources\MediaFiles\Pages\ManageMediaFiles;
 use App\Models\MediaFile;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Number;
 use UnitEnum;
 
@@ -96,9 +99,30 @@ class MediaFileResource extends Resource
                 Action::make('open')->label($t('open'))->icon(Heroicon::OutlinedArrowTopRightOnSquare)->color('gray')
                     ->url(fn (MediaFile $record) => $record->url(), shouldOpenInNewTab: true),
                 EditAction::make(),
-                DeleteAction::make(),
+                // Používaný súbor (produkt, stránka, šablóna…) sa nedá zmazať – obchod by prišiel o obrázok.
+                DeleteAction::make()
+                    ->before(function (MediaFile $record, DeleteAction $action) use ($t): void {
+                        if (app(MediaLibrary::class)->isUsed($record)) {
+                            Notification::make()->danger()->title($t('in_use'))->body($t('in_use_help'))->send();
+                            $action->cancel();
+                        }
+                    }),
             ])
-            ->toolbarActions([DeleteBulkAction::make()])
+            ->toolbarActions([
+                BulkAction::make('deleteUnused')->label($t('delete_unused'))->icon(Heroicon::OutlinedTrash)->color('danger')
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records) use ($t): void {
+                        $library = app(MediaLibrary::class);
+                        [$used, $unused] = $records->partition(fn (MediaFile $file) => $library->isUsed($file));
+                        $unused->each->delete();
+
+                        Notification::make()->success()
+                            ->title($t('deleted', ['count' => $unused->count()]))
+                            ->body($used->isNotEmpty() ? $t('skipped_in_use', ['count' => $used->count()]) : null)
+                            ->send();
+                    })
+                    ->deselectRecordsAfterCompletion(),
+            ])
             ->defaultSort('created_at', 'desc');
     }
 

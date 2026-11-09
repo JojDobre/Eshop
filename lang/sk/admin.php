@@ -403,6 +403,16 @@ return [
         'files' => 'Súbory',
         'files_help' => 'Obrázky (JPG, PNG, WebP, GIF, SVG) a PDF, najviac 10 MB na súbor.',
         'uploaded' => 'Nahraté súbory: :count',
+        'pick' => 'Vybrať z knižnice',
+        'pick_help' => 'Obrázky nahraté kdekoľvek v administrácii (produkty, kategórie, blog, bloky, šablóna).',
+        'use_selected' => 'Použiť vybrané',
+        'sync' => 'Načítať obrázky obchodu',
+        'synced' => 'Pridané do knižnice: :count',
+        'in_use' => 'Súbor sa používa',
+        'in_use_help' => 'Obrázok je použitý v produkte, stránke, bloku alebo v nastaveniach šablóny. Najprv ho tam odstráňte.',
+        'delete_unused' => 'Zmazať nepoužívané',
+        'deleted' => 'Zmazané súbory: :count',
+        'skipped_in_use' => 'Ponechané, lebo sa používajú: :count',
     ],
 
     'translations' => [

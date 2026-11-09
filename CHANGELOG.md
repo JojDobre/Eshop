@@ -1,5 +1,11 @@
 # Prehľad zmien
 
+## 1.2.0 – Úpravy podľa testovania (časť 2)
+
+- **Knižnica médií:** obrázky nahraté pri produktoch, variantoch, kategóriách, blogu, blokoch, v šablóne a v editore
+  obsahu sa automaticky zaradia do knižnice (staršie sa doplnia pri jej otvorení). Pri každom poli s obrázkom je
+  tlačidlo „Vybrať z knižnice“. Obrázok, ktorý sa niekde používa, sa nedá zmazať.
+
 ## 1.1.0 – Úpravy podľa testovania (časť 1)
 
 - **Menu administrácie:** nastavenia zoskupené pod Obchod, Doprava (s jednotlivými dopravcami), Platby, DPH,

@@ -47,7 +47,7 @@
         <p>
             <span class="text-lg font-black">{{ $cardPrice === null ? '' : ($cardFrom ? __('theme::shop.price_from', ['price' => format_price($cardPrice)]) : format_price($cardPrice)) }}</span>
             @if ($cardPrice !== null && $product::showsNetPrices())<span class="text-xs font-bold text-muted">{{ __('theme::shop.excl_vat') }}</span>@endif
-            @if ($cardCompareAt)<del class="ml-1 text-sm font-bold text-zinc-400">{{ format_price($cardCompareAt) }}</del>@endif
+            @if ($cardCompareAt)<del class="ml-1 text-sm font-bold text-muted">{{ format_price($cardCompareAt) }}</del>@endif
             @if ($cardUnitPrice = $product->unitPriceIn())
                 <span class="block text-xs font-semibold text-muted">{{ __('theme::shop.unit_price', ['price' => format_price($product->displayPrice($cardUnitPrice)), 'unit' => __('theme::shop.units.'.$product->unit())]) }}</span>
             @endif

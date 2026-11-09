@@ -3,6 +3,7 @@
 use App\Core\Backup\BackupRestorer;
 use App\Core\Backup\BackupRunner;
 use App\Core\Installer\Installation;
+use App\Core\Privacy\DataRetention;
 use App\Core\Support\EcbRates;
 use App\Core\System\CronHeartbeat;
 use App\Core\Updates\Updater;
@@ -58,6 +59,13 @@ Schedule::call(function (): void {
 
         return $settings->auto_update && $settings->enabled !== [];
     });
+
+// Mazanie a anonymizácia starých osobných údajov podľa nastavených lehôt (GDPR).
+Schedule::call(fn () => app(DataRetention::class)->run())
+    ->name('eshop:data-retention')
+    ->dailyAt('04:20')
+    ->when($installed)
+    ->withoutOverlapping(60);
 
 // Príkazy pre správcov so SSH (na webhostingu bez SSH slúži administrácia a public/rescue.php).
 Artisan::command('eshop:backup {--without-files}', function (): void {

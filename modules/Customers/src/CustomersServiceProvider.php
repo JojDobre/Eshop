@@ -8,10 +8,14 @@ use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
 use App\Core\Pricing\PriceContext;
+use App\Core\Privacy\DataRetention;
+use App\Core\Privacy\RetentionPolicy;
 use App\Models\CustomerGroup;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Validation\Validator;
+use Modules\Customers\Actions\DeleteCustomer;
 use Modules\Customers\Listeners\LinkOrderToCustomer;
 use Modules\Customers\Models\Customer;
 use Modules\Orders\Events\OrderPlaced;
@@ -46,6 +50,24 @@ class CustomersServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // GDPR: účty, do ktorých sa zákazník dlho neprihlásil a ktoré nemajú novšiu objednávku.
+        $this->callAfterResolving(DataRetention::class, fn (DataRetention $retention) => $retention->register(new RetentionPolicy(
+            'inactive_customers', fn () => __('admin.privacy.policies.inactive_customers'), fn () => __('admin.privacy.policies.inactive_customers_help'), 1095, false,
+            function (Carbon $before): int {
+                $count = 0;
+                Customer::query()
+                    ->where(fn ($query) => $query->where('last_login_at', '<', $before)->orWhere(fn ($query) => $query->whereNull('last_login_at')->where('created_at', '<', $before)))
+                    ->whereDoesntHave('orders', fn ($query) => $query->where('created_at', '>=', $before))
+                    ->eachById(function (Customer $customer) use (&$count): void {
+                        app(DeleteCustomer::class)->handle($customer);
+                        $count++;
+                    });
+
+                return $count;
+            },
+            minDays: 365,
+        )));
 
         Event::listen(OrderPlaced::class, LinkOrderToCustomer::class);
 

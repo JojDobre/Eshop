@@ -1,9 +1,9 @@
 {{-- Pätička Farmy: odber noviniek, stĺpce s obchodom, informáciami a kontaktom vo farbe z nastavení. --}}
 @php($footerItems = $menus->items('footer'))
-<footer class="mt-16 bg-footer text-white/85">
+<footer class="mt-16 bg-footer text-white">
     <div class="container-shop">
         @if (! empty($newsletterEnabled))
-            <div class="flex flex-col gap-6 border-b border-white/15 py-10 md:flex-row md:items-center md:justify-between [&_.input]:rounded-full [&_.input]:border-0 [&_label]:text-white/75 [&_p]:text-xl [&_p]:font-black [&_p]:text-white">
+            <div class="flex flex-col gap-6 border-b border-white/15 py-10 md:flex-row md:items-center md:justify-between [&_.input]:rounded-full [&_.input]:border-0 [&_label]:text-white [&_p]:text-xl [&_p]:font-black [&_p]:text-white">
                 @include('marketing::newsletter-form')
             </div>
         @endif
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="flex flex-col gap-2 border-t border-white/15 py-5 text-xs text-white/65 sm:flex-row sm:justify-between">
+        <div class="flex flex-col gap-2 border-t border-white/15 py-5 text-xs text-white/90 sm:flex-row sm:justify-between">
             <p>
                 © {{ date('Y') }} {{ $company->company_name ?: $shop->shop_name }}
                 @if ($company->company_id) · {{ __('theme::shop.company_id') }}: {{ $company->company_id }}@endif

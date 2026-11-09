@@ -25,6 +25,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
@@ -67,6 +68,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
+    /** @var array<string, \Closure(): Component> Sekcie formulára z iných modulov. */
+    private static array $extraSections = [];
+
     // Slovenčina a čeština nepíšu názvy veľkými začiatočnými písmenami každého slova.
     protected static bool $hasTitleCaseModelLabel = false;
 
@@ -94,6 +98,16 @@ class ProductResource extends Resource
     public static function canAccess(): bool
     {
         return auth()->user()?->can('catalog.manage') ?? false;
+    }
+
+    /**
+     * Sekcia formulára produktu z iného modulu (napr. obaly pre evidenciu EPR).
+     *
+     * @param  \Closure(): Component  $section
+     */
+    public static function addFormSection(string $key, \Closure $section): void
+    {
+        self::$extraSections[$key] = $section;
     }
 
     public static function form(Schema $schema): Schema
@@ -203,6 +217,7 @@ class ProductResource extends Resource
                     TextInput::make('meta_title')->label(__('catalog::admin.meta_title'))->maxLength(70),
                     Textarea::make('meta_description')->label(__('catalog::admin.meta_description'))->rows(2)->maxLength(170),
                 ]),
+                ...array_values(array_map(fn (\Closure $section) => $section(), self::$extraSections)),
             ]),
             Group::make()->schema([
                 Section::make()->schema([

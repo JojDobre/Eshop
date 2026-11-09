@@ -69,6 +69,8 @@ class Product extends Model
         return [
             'is_gift_voucher' => 'boolean',
             'images' => 'array',
+            // Obal pre evidenciu EPR (stĺpec pridáva modul EPR).
+            'packaging' => 'array',
             'track_stock' => 'boolean',
             'stock_quantity' => 'integer',
             'weight' => 'integer',

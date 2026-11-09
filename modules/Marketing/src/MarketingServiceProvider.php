@@ -8,10 +8,14 @@ use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Privacy\DataRetention;
+use App\Core\Privacy\RetentionPolicy;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Modules\Marketing\Listeners\SubscribeFromCheckout;
+use Modules\Marketing\Models\Subscriber;
 use Modules\Marketing\Newsletter\Newsletter;
 use Modules\Marketing\Tracking\TrackingCodes;
 use Modules\Orders\Events\OrderPlaced;
@@ -34,6 +38,13 @@ class MarketingServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // GDPR: nepotvrdené prihlásenia na newsletter.
+        $this->callAfterResolving(DataRetention::class, fn (DataRetention $retention) => $retention->register(new RetentionPolicy(
+            'newsletter_pending', fn () => __('admin.privacy.policies.newsletter_pending'), fn () => __('admin.privacy.policies.newsletter_pending_help'), 30, true,
+            fn (Carbon $before) => Subscriber::query()->where('status', Subscriber::PENDING)->where('created_at', '<', $before)->delete(),
+            minDays: 3,
+        )));
 
         Event::listen(OrderPlaced::class, SubscribeFromCheckout::class);
         $this->registerFeatures();

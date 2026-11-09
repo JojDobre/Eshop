@@ -8,11 +8,14 @@ use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Privacy\DataRetention;
+use App\Core\Privacy\RetentionPolicy;
 use App\Core\Support\CurrencyContext;
 use App\Settings\GeneralSettings;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Mail\Attachment;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -48,6 +51,22 @@ class OrdersServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // GDPR: po uplynutí zákonnej lehoty sa osobné údaje objednávok anonymizujú (sumy a položky ostanú).
+        $this->callAfterResolving(DataRetention::class, fn (DataRetention $retention) => $retention->register(new RetentionPolicy(
+            'orders', fn () => __('admin.privacy.policies.orders'), fn () => __('admin.privacy.policies.orders_help'), 3650, true,
+            function (Carbon $before): int {
+                $count = 0;
+                Order::query()->where('created_at', '<', $before)->where('email', 'not like', '%@anonymized.invalid')
+                    ->eachById(function (Order $order) use (&$count): void {
+                        $order->anonymize();
+                        $count++;
+                    });
+
+                return $count;
+            },
+            minDays: 365,
+        )));
 
         Event::listen(OrderPlaced::class, SendOrderEmails::class);
         Event::listen(OrderStatusChanged::class, NotifyCustomerAboutStatus::class);

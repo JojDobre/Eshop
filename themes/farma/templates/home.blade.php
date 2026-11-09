@@ -54,7 +54,7 @@
                         <a href="{{ $homeCategory->url() }}" class="group flex h-26 justify-between overflow-hidden rounded-[20px] border border-transparent bg-cream transition hover:border-[var(--farma-cream-dark)] sm:h-32">
                             <span class="flex flex-col py-3.5 pl-4 sm:py-5 sm:pl-5">
                                 <span class="font-black leading-tight sm:text-lg">{{ $homeCategory->name }}</span>
-                                <span class="mt-auto grid size-7 place-items-center rounded-full bg-white text-primary transition group-hover:translate-x-1 sm:size-8">
+                                <span class="mt-auto grid size-7 place-items-center rounded-full bg-white text-accent transition group-hover:translate-x-1 sm:size-8">
                                     <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" /></svg>
                                 </span>
                             </span>
@@ -131,7 +131,7 @@
                             <ul class="mt-7 grid gap-x-7 gap-y-4 sm:grid-cols-2">
                                 @foreach (['packing' => 'M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10', 'fresh' => 'M12 3c4 0 7 7 7 11a7 7 0 0 1-14 0c0-4 3-11 7-11z', 'advice' => 'M4 5h16v11H8l-4 4z', 'own' => 'M3 11l9-7 9 7v9H3zM9 20v-6h6v6'] as $benefit => $icon)
                                     <li class="flex gap-3">
-                                        <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-soft text-primary">
+                                        <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-soft text-accent">
                                             <svg class="size-4.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linejoin="round" d="{{ $icon }}" /></svg>
                                         </span>
                                         <span class="font-extrabold">{{ __('theme::farma.benefit_'.$benefit) }}<span class="block text-sm font-semibold text-muted">{{ __('theme::farma.benefit_'.$benefit.'_text') }}</span></span>
@@ -180,7 +180,7 @@
                         <details class="group py-5" @if ($index === 0) open @endif>
                             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-extrabold">
                                 {{ $faqItem['q'] }}
-                                <span class="text-2xl leading-none text-primary group-open:rotate-45 transition">+</span>
+                                <span class="text-2xl leading-none text-accent transition group-open:rotate-45" aria-hidden="true">+</span>
                             </summary>
                             <p class="mt-2 text-zinc-600">{{ $faqItem['a'] }}</p>
                         </details>

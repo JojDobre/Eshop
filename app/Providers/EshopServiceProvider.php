@@ -22,6 +22,8 @@ use App\Core\Menus\Menus;
 use App\Core\Modules\ModuleManager;
 use App\Core\Modules\ModuleStateStore;
 use App\Core\Pricing\PriceContext;
+use App\Core\Privacy\CorePolicies;
+use App\Core\Privacy\DataRetention;
 use App\Core\Support\Currencies;
 use App\Core\Support\CurrencyContext;
 use App\Core\Themes\ThemeFiles;
@@ -53,6 +55,14 @@ class EshopServiceProvider extends ServiceProvider
         $statePath = rtrim((string) config('eshop.paths.state'), '/');
 
         $this->app->singleton(Installation::class, fn () => new Installation($statePath.'/installed.json'));
+
+        // Pravidlá uchovávania osobných údajov (moduly pridávajú vlastné).
+        $this->app->singleton(DataRetention::class, function (): DataRetention {
+            $retention = new DataRetention;
+            CorePolicies::register($retention);
+
+            return $retention;
+        });
 
         $this->app->bind(EnvironmentWriter::class, fn ($app) => new EnvironmentWriter($app->environmentFilePath()));
 

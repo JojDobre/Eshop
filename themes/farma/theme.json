@@ -105,7 +105,7 @@
                 "cs": "Barva patičky",
                 "en": "Footer colour"
             },
-            "default": "#4f7d3a"
+            "default": "#44702f"
         },
         "hero_image": {
             "type": "image",

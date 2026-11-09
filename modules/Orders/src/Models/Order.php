@@ -199,6 +199,34 @@ class Order extends Model
      * Údaje pre QR kód na platbu prevodom (null, ak obchod nemá zadaný účet).
      */
     /** Suma na úhradu: celková suma mínus časť uhradená darčekovou poukážkou. */
+    /**
+     * Anonymizácia po uplynutí lehoty uchovávania (GDPR): zmažú sa osobné údaje, sumy a položky ostanú
+     * pre štatistiky. Doklady (faktúry) majú vlastnú kópiu údajov odberateľa.
+     */
+    public function anonymize(): void
+    {
+        $this->forceFill([
+            'email' => 'order-'.$this->id.'@anonymized.invalid',
+            'phone' => null,
+            'billing_name' => '—',
+            'billing_company' => null,
+            'billing_company_id' => null,
+            'billing_tax_id' => null,
+            'billing_vat_id' => null,
+            'billing_street' => '—',
+            'billing_city' => '—',
+            'billing_zip' => '—',
+            'shipping_name' => null,
+            'shipping_street' => null,
+            'shipping_city' => null,
+            'shipping_zip' => null,
+            'shipping_details' => null,
+            'customer_note' => null,
+            'ip_address' => null,
+            'customer_id' => null,
+        ])->saveQuietly();
+    }
+
     public function amountDue(): int
     {
         return max(0, (int) $this->total - (int) $this->voucher_amount);

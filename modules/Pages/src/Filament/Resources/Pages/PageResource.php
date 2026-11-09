@@ -67,7 +67,7 @@ class PageResource extends Resource
      */
     public static function roleOptions(): array
     {
-        return collect([Page::ROLE_TERMS, Page::ROLE_PRIVACY, Page::ROLE_SHIPPING, Page::ROLE_CONTACT])
+        return collect([Page::ROLE_TERMS, Page::ROLE_PRIVACY, Page::ROLE_SHIPPING, Page::ROLE_CONTACT, Page::ROLE_ACCESSIBILITY])
             ->mapWithKeys(fn (string $role) => [$role => __('pages::admin.roles.'.$role)])
             ->all();
     }

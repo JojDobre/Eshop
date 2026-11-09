@@ -1,0 +1,19 @@
+{
+    "name": "epr",
+    "version": "0.1.0",
+    "title": { "sk": "Evidencia obalov (EPR)", "cs": "Evidence obalů (EPR)", "en": "Packaging records (EPR)" },
+    "description": {
+        "sk": "Hmotnosť obalov podľa materiálu pri produktoch a zásielkach a výkaz za obdobie pre organizáciu zodpovednosti výrobcov.",
+        "cs": "Hmotnost obalů podle materiálu u produktů a zásilek a výkaz za období pro autorizovanou obalovou společnost.",
+        "en": "Packaging weight by material for products and shipments and a period report for the producer responsibility organisation."
+    },
+    "provider": "Modules\\Epr\\EprServiceProvider",
+    "core": false,
+    "enabled": true,
+    "sizes": { "medium": true, "large": true },
+    "requires": {
+        "eshop": "^0.11",
+        "modules": { "catalog": "^0.9", "orders": "^0.8" }
+    },
+    "permissions": ["epr.manage"]
+}

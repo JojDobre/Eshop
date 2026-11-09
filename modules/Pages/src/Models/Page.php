@@ -33,6 +33,9 @@ class Page extends Model
 
     public const ROLE_CONTACT = 'contact';
 
+    /** Vyhlásenie o prístupnosti (Akt o prístupnosti, EAA). */
+    public const ROLE_ACCESSIBILITY = 'accessibility';
+
     protected $guarded = [];
 
     /** @var list<string> */

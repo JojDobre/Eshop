@@ -18,6 +18,7 @@ return [
         'privacy' => 'Privacy policy',
         'shipping' => 'Shipping and payment',
         'contact' => 'Contact',
+        'accessibility' => 'Accessibility statement',
     ],
     'position' => 'Order',
     'updated_at' => 'Updated',

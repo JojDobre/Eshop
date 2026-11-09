@@ -12,9 +12,12 @@
     --farma-cream-dark: #f3e9da;
     --farma-soft: color-mix(in srgb, var(--brand-primary) 12%, white);
     --farma-ink: #1f1d1a;
-    --farma-muted: #8b867d;
+    /* Tlmený text s kontrastom aspoň 4,5:1 na bielom aj krémovom pozadí (WCAG AA). */
+    --farma-muted: #6b665d;
     --farma-line: #ece8e1;
-    --farma-footer: #4f7d3a;
+    --farma-footer: #44702f;
+    /* Farba značky stmavená pre text na svetlom pozadí (napr. oranžová by nemala dostatočný kontrast). */
+    --farma-accent-text: color-mix(in srgb, var(--brand-primary) 62%, black);
     --theme-font: 'Nunito Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -28,6 +31,10 @@
 
 @utility text-muted {
     color: var(--farma-muted);
+}
+
+@utility text-accent {
+    color: var(--farma-accent-text);
 }
 
 @utility border-line {

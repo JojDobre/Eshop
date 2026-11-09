@@ -16,6 +16,13 @@
 - **Aktualizácie:** podpísané balíky (Ed25519, SHA-256), kontrola kompatibility, režim údržby, záloha,
   automatické vrátenie pri chybe, ručné vrátenie jedným klikom a záchranný skript `public/rescue.php`.
   Prechody databázy zo všetkých vydaných verzií sa overujú v CI (`scripts/test-upgrades.sh`).
+- **Ochrana údajov (GDPR):** automatické mazanie a anonymizácia podľa nastaviteľných lehôt – logy, IP adresy,
+  košíky, objednávky po zákonnej lehote, neaktívne účty, nepotvrdené prihlásenia na newsletter, rezervácie,
+  exportované súbory (Nastavenia → Ochrana údajov). Moduly pridávajú vlastné pravidlá.
+- **Evidencia obalov (EPR)** (nový modul): hmotnosť obalu podľa materiálu pri produkte a pri zásielke, výkaz
+  za obdobie v kg a export CSV pre organizáciu zodpovednosti výrobcov.
+- **Prístupnosť:** vyhlásenie o prístupnosti ako predvolená právna stránka (Akt o prístupnosti), opravy
+  kontrastu a popisov v šablónach Default a Farma, kontrola WCAG 2.1 AA skriptom `scripts/a11y-check.cjs`.
 - Oprava: záloha na zdieľanom hostingu zlyhala, ak mal používateľ databázy prístup aj k iným databázam.
 - Oprava: farba značky z nastavení sa v šablónach Default a Fresh neprejavila, lebo ju prepísali predvolené štýly.
 

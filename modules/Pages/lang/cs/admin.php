@@ -18,6 +18,7 @@ return [
         'privacy' => 'Ochrana osobních údajů',
         'shipping' => 'Doprava a platba',
         'contact' => 'Kontakt',
+        'accessibility' => 'Prohlášení o přístupnosti',
     ],
     'position' => 'Pořadí',
     'updated_at' => 'Upravena',

@@ -6,7 +6,10 @@ use App\Core\Installer\Installation;
 use App\Core\Mail\EmailTemplateDefinition;
 use App\Core\Mail\EmailTemplates;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Privacy\DataRetention;
+use App\Core\Privacy\RetentionPolicy;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 use Modules\Catalog\Models\Product;
 use Modules\Reservations\Models\Booking;
@@ -23,6 +26,22 @@ class ReservationsServiceProvider extends ModuleServiceProvider
     public function boot(): void
     {
         parent::boot();
+
+        // GDPR: kontaktné údaje pri starých rezerváciách.
+        $this->callAfterResolving(DataRetention::class, fn (DataRetention $retention) => $retention->register(new RetentionPolicy(
+            'bookings', fn () => __('admin.privacy.policies.bookings'), fn () => __('admin.privacy.policies.bookings_help'), 730, true,
+            function (Carbon $before): int {
+                $count = 0;
+                Booking::query()->where('ends_at', '<', $before)->where('email', 'not like', '%@anonymized.invalid')
+                    ->eachById(function (Booking $booking) use (&$count): void {
+                        $booking->forceFill(['customer_name' => '—', 'email' => 'booking-'.$booking->id.'@anonymized.invalid', 'phone' => null, 'note' => null])->save();
+                        $count++;
+                    });
+
+                return $count;
+            },
+            minDays: 30,
+        )));
 
         // Rezervovaný jedinečný kus sa nedá kúpiť.
         Product::addAvailabilityCheck('reservations', fn (Product $product) => ! $product->isUnique() || ! Bookings::isProductReserved($product->id));

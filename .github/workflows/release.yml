@@ -1,0 +1,71 @@
+name: Vydanie
+
+# Po zmene na main (alebo ručne) zostaví inštalačný a aktualizačný balík a zverejní ich ako
+# GitHub Release v<verzia> – iba ak také vydanie ešte neexistuje. Balík sa potom dá stiahnuť
+# bez prihlásenia, napr. na VPS:
+#   wget https://github.com/<vlastník>/<repozitár>/releases/latest/download/eshop.zip
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Zverejnenie vydania
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verzia
+        id: version
+        run: |
+          VERSION="$(sed -n "s/.*const VERSION = '\(.*\)';.*/\1/p" app/Core/Eshop.php)"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if gh release view "v$VERSION" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - uses: shivammathur/setup-php@v2
+        if: steps.version.outputs.exists != 'true'
+        with:
+          php-version: '8.3'
+          extensions: pdo_mysql, mbstring, intl, zip, bcmath, sodium, gd
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        if: steps.version.outputs.exists != 'true'
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Zostavenie balíkov
+        if: steps.version.outputs.exists != 'true'
+        # Podpisový kľúč je voliteľný (tajomstvo ESHOP_SIGNING_KEY); bez neho je aktualizačný balík nepodpísaný.
+        env:
+          ESHOP_SIGNING_KEY: ${{ secrets.ESHOP_SIGNING_KEY }}
+        run: |
+          scripts/build-release.sh
+          # Stály názov pre odkaz „latest/download/eshop.zip“.
+          cp "dist/eshop-${{ steps.version.outputs.version }}.zip" dist/eshop.zip
+
+      - name: GitHub Release
+        if: steps.version.outputs.exists != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Poznámky k vydaniu: časť CHANGELOG.md pre túto verziu.
+          awk -v v="## $VERSION" 'index($0, v) == 1 { on = 1; next } /^## / && on { exit } on' CHANGELOG.md > notes.md
+          gh release create "v$VERSION" \
+            "dist/eshop-$VERSION.zip" "dist/eshop-update-$VERSION.zip" dist/eshop.zip \
+            --title "E-shop $VERSION" --notes-file notes.md --target "$GITHUB_SHA"

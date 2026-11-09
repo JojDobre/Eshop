@@ -72,4 +72,10 @@ class ManageCatalogSettings extends BaseSettingsPage
                 ]),
         ]);
     }
+
+    /** V menu pod položkou „ManageFeatures“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \App\Filament\Pages\Settings\ManageFeatures::getNavigationLabel();
+    }
 }

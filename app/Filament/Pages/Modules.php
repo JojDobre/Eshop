@@ -65,12 +65,18 @@ class Modules extends Page implements HasTable
                 TextColumn::make('title')
                     ->label(__('admin.modules.module'))
                     ->weight('medium')
-                    ->description(fn (array $record) => $record['description']),
+                    // Dlhý popis sa zalomí, aby sa tabuľka zmestila na šírku okna.
+                    ->description(fn (array $record) => $record['description'])
+                    ->wrap()
+                    ->extraAttributes(['class' => 'max-w-xl']),
                 TextColumn::make('version')
                     ->label(__('admin.modules.version')),
                 TextColumn::make('requires')
                     ->label(__('admin.modules.requires'))
-                    ->placeholder('—'),
+                    ->placeholder('—')
+                    ->wrap()
+                    ->extraAttributes(['class' => 'max-w-48'])
+                    ->visibleFrom('lg'),
                 TextColumn::make('status')
                     ->label(__('admin.modules.status'))
                     ->badge()

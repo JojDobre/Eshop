@@ -51,4 +51,10 @@ class ManageInvoiceSettings extends BaseSettingsPage
             ]),
         ]);
     }
+
+    /** V menu pod položkou „ManageTaxSettings“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \Modules\Tax\Filament\Pages\ManageTaxSettings::getNavigationLabel();
+    }
 }

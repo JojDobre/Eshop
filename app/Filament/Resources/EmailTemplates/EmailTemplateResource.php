@@ -163,4 +163,10 @@ class EmailTemplateResource extends Resource
     {
         return app(EmailTemplates::class);
     }
+
+    /** V menu pod položkou „ManageMailSettings“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \App\Filament\Pages\Settings\ManageMailSettings::getNavigationLabel();
+    }
 }

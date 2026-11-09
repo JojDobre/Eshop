@@ -39,6 +39,9 @@ class GeneralSettings extends Settings
     /** Názov aktívnej šablóny vzhľadu (adresár v themes/). */
     public string $theme;
 
+    /** Skryté položky menu administrácie (cesty bez /admin/). */
+    public array $admin_hidden_navigation = [];
+
     /** Veľkosť obchodu: small, medium, large alebo custom (vlastný výber funkcií). */
     public string $shop_size;
 

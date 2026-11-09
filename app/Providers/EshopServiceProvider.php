@@ -56,6 +56,9 @@ class EshopServiceProvider extends ServiceProvider
 
         $this->app->singleton(Installation::class, fn () => new Installation($statePath.'/installed.json'));
 
+        // Menu administrácie so skrytými položkami podľa nastavení.
+        $this->app->scoped(\Filament\Navigation\NavigationManager::class, fn () => new \App\Filament\Navigation\EshopNavigationManager);
+
         // Pravidlá uchovávania osobných údajov (moduly pridávajú vlastné).
         $this->app->singleton(DataRetention::class, function (): DataRetention {
             $retention = new DataRetention;

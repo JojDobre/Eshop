@@ -90,4 +90,10 @@ class RedirectResource extends Resource
     {
         return ['index' => ManageRedirects::route('/')];
     }
+
+    /** V menu pod položkou „ManageGeneralSettings“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \App\Filament\Pages\Settings\ManageGeneralSettings::getNavigationLabel();
+    }
 }

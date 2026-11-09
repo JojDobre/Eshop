@@ -94,4 +94,10 @@ class ManageStripeSettings extends BaseSettingsPage
                 }),
         ];
     }
+
+    /** V menu pod položkou „PaymentMethodResource“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \Modules\Payments\Filament\Resources\PaymentMethods\PaymentMethodResource::getNavigationLabel();
+    }
 }

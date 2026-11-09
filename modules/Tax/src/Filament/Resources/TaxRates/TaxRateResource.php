@@ -104,4 +104,10 @@ class TaxRateResource extends Resource
     {
         return ['index' => ManageTaxRates::route('/')];
     }
+
+    /** V menu pod položkou „ManageTaxSettings“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \Modules\Tax\Filament\Pages\ManageTaxSettings::getNavigationLabel();
+    }
 }

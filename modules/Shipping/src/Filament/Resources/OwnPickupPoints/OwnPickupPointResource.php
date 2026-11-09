@@ -101,4 +101,10 @@ class OwnPickupPointResource extends Resource
     {
         return ['index' => ManageOwnPickupPoints::route('/')];
     }
+
+    /** V menu pod položkou „ShippingMethodResource“ (zobrazí sa po jej otvorení). */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \Modules\Shipping\Filament\Resources\ShippingMethods\ShippingMethodResource::getNavigationLabel();
+    }
 }

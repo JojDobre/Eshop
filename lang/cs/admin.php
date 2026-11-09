@@ -254,6 +254,13 @@ return [
         'upload' => 'Nahrát zálohu',
         'uploaded' => 'Záloha byla nahrána. Nyní ji můžete obnovit.',
     ],
+    'admin_menu' => [
+        'title' => 'Menu administrace',
+        'intro' => 'Zaškrtnuté položky se v levém menu nezobrazí (např. Výrobci, pokud je obchod nepoužívá). Stránky zůstanou dostupné přes přímou adresu.',
+        'other' => 'Ostatní',
+        'save' => 'Uložit',
+        'saved' => 'Menu bylo upraveno.',
+    ],
     'privacy' => [
         'title' => 'Ochrana údajů',
         'intro' => 'Osobní údaje se po uplynutí lhůty automaticky smažou nebo anonymizují (každou noc přes cron). Lhůty nastavte podle zákona a svých zásad ochrany osobních údajů.',

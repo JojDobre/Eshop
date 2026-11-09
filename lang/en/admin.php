@@ -254,6 +254,13 @@ return [
         'upload' => 'Upload backup',
         'uploaded' => 'The backup has been uploaded. You can restore it now.',
     ],
+    'admin_menu' => [
+        'title' => 'Admin menu',
+        'intro' => 'Checked items are hidden from the side menu (e.g. Manufacturers if the shop does not use them). The pages remain available via their direct address.',
+        'other' => 'Other',
+        'save' => 'Save',
+        'saved' => 'The menu has been updated.',
+    ],
     'privacy' => [
         'title' => 'Data protection',
         'intro' => 'Personal data is automatically deleted or anonymised after the retention period (every night via cron). Set the periods according to the law and your privacy policy.',

@@ -16,9 +16,17 @@ class ContentLocale
 {
     private ?string $current = null;
 
+    private ?string $default = null;
+
     public function current(): string
     {
         return $this->current ??= $this->resolve();
+    }
+
+    /** Predvolený jazyk obchodu (bez ohľadu na jazyk aktuálnej stránky). */
+    public function default(): string
+    {
+        return $this->default ??= $this->resolve();
     }
 
     public function set(string $locale): void

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Settings;
 
+use App\Core\Content\ContentTranslationFiller;
 use App\Core\Content\ShopLocales;
 use App\Core\Themes\ThemeManager;
 use App\Filament\Forms\FeatureNotice;
@@ -93,9 +94,25 @@ class ManageGeneralSettings extends BaseSettingsPage
         ]);
     }
 
+    /** Predvolený jazyk pred uložením (pri zmene sa obsah doplní do nového jazyka). */
+    private ?string $previousLocale = null;
+
+    protected function beforeSave(): void
+    {
+        $this->previousLocale = app(GeneralSettings::class)->default_locale;
+    }
+
     protected function afterSave(): void
     {
         app(ThemeManager::class)->flush();
         app(ShopLocales::class)->refresh();
+
+        $locale = app(GeneralSettings::class)->default_locale;
+
+        // Zmena predvoleného jazyka: obsah napísaný v pôvodnom jazyku sa doplní aj do nového, aby produkty,
+        // stránky a ich adresy nezmizli. Preklady potom upravíte v administrácii.
+        if ($this->previousLocale !== null && $this->previousLocale !== $locale) {
+            app(ContentTranslationFiller::class)->fill($locale, $this->previousLocale);
+        }
     }
 }

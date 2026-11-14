@@ -1,5 +1,15 @@
 # Prehľad zmien
 
+## 1.3.1 – Opravy jazykov a triedenia
+
+- Oprava: po zmene predvoleného jazyka obchodu (napr. zo slovenčiny na češtinu) produkty, kategórie a stránky
+  prišli o názvy, popisy a adresy. Obsah sa teraz pri zmene jazyka doplní do nového jazyka z pôvodného (preklady
+  potom upravíte v administrácii); aktualizácia to opraví aj v obchode, kde sa jazyk už zmenil.
+- Oprava: text bez prekladu sa v ďalšom jazyku obchodu zobrazí v predvolenom jazyku (predtým zostal prázdny).
+- Oprava: triedenie podľa ceny v inej mene (napr. EUR popri CZK) radilo zle produkty, ktorých cena sa do meny
+  prepočítava kurzom. Teraz sa triedi podľa ceny, ktorú zákazník vidí. Aj triedenie podľa názvu berie
+  názov v predvolenom jazyku, keď preklad chýba.
+
 ## 1.3.0 – Nový vzhľad administrácie
 
 - **Moderný a plne responzívny vzhľad administrácie:** čisté karty, prehľadné menu, výrazné hlavné tlačidlá,

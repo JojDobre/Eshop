@@ -30,8 +30,27 @@ class BlockLayout extends Model
      *
      * @return list<array<string, mixed>>|null
      */
+    /** @var array<string, list<array<string, mixed>>> Neuložené bloky pre živý náhľad prispôsobenia (iba administrátor). */
+    private static array $preview = [];
+
+    /**
+     * @param  list<array<string, mixed>>|null  $blocks
+     */
+    public static function preview(string $key, ?array $blocks): void
+    {
+        if ($blocks === null) {
+            unset(self::$preview[$key]);
+        } else {
+            self::$preview[$key] = $blocks;
+        }
+    }
+
     public static function blocksFor(string $key): ?array
     {
+        if (array_key_exists($key, self::$preview)) {
+            return self::$preview[$key] !== [] ? array_values(self::$preview[$key]) : null;
+        }
+
         try {
             if (! Schema::hasTable('block_layouts')) {
                 return null;

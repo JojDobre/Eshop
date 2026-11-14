@@ -1,5 +1,20 @@
 # Prehľad zmien
 
+## 1.4.0 – Bloky v prispôsobení šablóny, rozloženie blogu
+
+- **Bloky úvodnej stránky priamo v Prispôsobení šablóny** (Vzhľad → Prispôsobiť → Bloky úvodnej stránky) so živým
+  náhľadom: produkty z kategórie, text, obrázok, video, formulár a ďalšie. Zobrazia sa na mieste sekcie „Bloky
+  z obsahu“. Stránka Úvodná stránka a bloky (ďalšie jazyky a oblasti šablóny) je teraz pod Vzhľadom.
+- **Bloky preberajú štýl šablóny:** nadpisy, odkazy „Zobraziť všetko“ a rozostupy blokov vyzerajú vo Farme rovnako
+  ako jej vlastné sekcie. Blok produktov jednej kategórie má odkaz na celú kategóriu.
+- **Názov obchodu v hlavičke vždy celý** (bez „…“): písmo sa podľa miesta zmenší, prípadne sa zalomí. Na mobile sú
+  prepínače meny a jazyka v menu.
+- **Rozloženie blogu v Prispôsobení šablóny (skupina Blog):** poradie sekcií zoznamu (nadpis, kategórie, zvýraznený
+  článok, články), mriežka / zoznam / veľké karty, počet stĺpcov, bočný panel s kategóriami, štítkami a najnovšími
+  článkami, perex a dátum; pri článku hlavička (klasická, obrázok cez celú šírku, obrázok vedľa nadpisu, bez obrázka),
+  šírka textu a poradie sekcií (obsah, produkty, štítky, komentáre, súvisiace články).
+- Oprava: obrázky nastavené v prispôsobení šablóny sa v živom náhľade zobrazujú aj pred uložením.
+
 ## 1.3.1 – Opravy jazykov a triedenia
 
 - Oprava: po zmene predvoleného jazyka obchodu (napr. zo slovenčiny na češtinu) produkty, kategórie a stránky

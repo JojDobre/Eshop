@@ -2,11 +2,14 @@
 
 namespace App\Filament\Pages;
 
+use App\Core\Content\ShopLocales;
 use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
+use App\Filament\Forms\BlockBuilder;
 use App\Filament\Forms\RichText;
 use App\Http\Middleware\ApplyThemePreview;
+use App\Models\BlockLayout;
 use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
@@ -42,6 +45,9 @@ class CustomizeTheme extends Page implements HasSchemas
 
     public string $theme = '';
 
+    /** Pole s blokmi úvodnej stránky (ukladajú sa do Obsah → Úvodná stránka a bloky, nie do nastavení šablóny). */
+    public const BLOCKS_FIELD = 'home_blocks_editor';
+
     /** Stránka v náhľade. */
     public string $previewPath = '/';
 
@@ -60,7 +66,20 @@ class CustomizeTheme extends Page implements HasSchemas
         $this->theme = $theme;
         $values = app(ThemeOptions::class)->values($this->themeModel());
         session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$theme, $values);
-        $this->form->fill($values);
+        $this->form->fill([...$values, self::BLOCKS_FIELD => $this->homeBlocks()]);
+    }
+
+    /**
+     * Bloky úvodnej stránky v predvolenom jazyku obchodu.
+     *
+     * @return array<int|string, mixed>
+     */
+    private function homeBlocks(): array
+    {
+        $blocks = BlockLayout::query()->where('key', BlockLayout::HOME)->first()
+            ?->getTranslation('blocks', app(ShopLocales::class)->default(), false);
+
+        return is_array($blocks) ? $blocks : [];
     }
 
     public function getTitle(): string
@@ -78,12 +97,17 @@ class CustomizeTheme extends Page implements HasSchemas
         $groups = [];
 
         foreach (app(ThemeManager::class)->settingDefinitions($this->themeModel()) as $key => $definition) {
+            // Nastavenia blogu iba pri zapnutom module Blog.
+            if (($definition['group'] ?? null) === 'blog' && ! Route::has('blog.index')) {
+                continue;
+            }
+
             $groups[$definition['group'] ?? 'general'][] = $this->field($key, $definition);
         }
 
         // Poradie skupín: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. Skupiny sa dajú zbaliť,
         // aby sa v dlhom zozname nastavení nemuselo toľko posúvať.
-        $order = array_flip(['layout', 'header', 'home', 'about', 'faq', 'catalog', 'style', 'colors', 'footer', 'general']);
+        $order = array_flip(['layout', 'header', 'home', 'about', 'faq', 'catalog', 'blog', 'style', 'colors', 'footer', 'general']);
         uksort($groups, fn ($a, $b) => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
 
         $sections = [];
@@ -97,7 +121,21 @@ class CustomizeTheme extends Page implements HasSchemas
                 ->collapsed($sections !== []);
         }
 
-        return $schema->statePath('data')->components($sections === [] ? [] : $sections);
+        // Bloky úvodnej stránky hneď za rozložením: vlastné sekcie (produkty z kategórie, text, video, formulár…).
+        array_splice($sections, min(1, count($sections)), 0, [
+            Section::make(__('admin.themes.blocks_section'))
+                ->description(__('admin.themes.blocks_section_help'))
+                ->headerActions([
+                    Action::make('refreshBlocksPreview')->label(__('admin.themes.refresh_preview'))->icon('heroicon-m-arrow-path')
+                        ->link()->action(fn () => $this->refreshPreview()),
+                ])
+                ->schema([BlockBuilder::make(self::BLOCKS_FIELD)->live()->afterStateUpdated(fn () => $this->refreshPreview())])
+                ->compact()
+                ->collapsible()
+                ->collapsed(),
+        ]);
+
+        return $schema->statePath('data')->components($sections);
     }
 
     /**
@@ -147,6 +185,17 @@ class CustomizeTheme extends Page implements HasSchemas
         $this->dispatch('theme-preview-refresh');
     }
 
+    /**
+     * @param  list<array<string, mixed>>  $blocks
+     */
+    private function saveHomeBlocks(array $blocks): void
+    {
+        $locale = app(ShopLocales::class)->default();
+        $layout = BlockLayout::query()->firstOrNew(['key' => BlockLayout::HOME]);
+        $blocks === [] ? $layout->forgetTranslation('blocks', $locale) : $layout->setTranslation('blocks', $locale, $blocks);
+        $layout->save();
+    }
+
     public function previewUrl(): string
     {
         $active = app(ThemeManager::class)->activeName() === $this->theme;
@@ -183,7 +232,11 @@ class CustomizeTheme extends Page implements HasSchemas
 
     public function save(): void
     {
-        app(ThemeOptions::class)->save($this->themeModel(), $this->form->getState());
+        $state = $this->form->getState();
+        $this->saveHomeBlocks(array_values((array) ($state[self::BLOCKS_FIELD] ?? [])));
+        unset($state[self::BLOCKS_FIELD]);
+
+        app(ThemeOptions::class)->save($this->themeModel(), $state);
         session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$this->theme, app(ThemeOptions::class)->values($this->themeModel()));
 
         Notification::make()->success()->title(__('admin.themes.saved'))->send();
@@ -198,7 +251,7 @@ class CustomizeTheme extends Page implements HasSchemas
                 ->action(function (): void {
                     app(ThemeOptions::class)->reset($this->themeModel());
                     $values = app(ThemeOptions::class)->values($this->themeModel());
-                    $this->form->fill($values);
+                    $this->form->fill([...$values, self::BLOCKS_FIELD => $this->homeBlocks()]);
                     $this->refreshPreview();
                 }),
             Action::make('save')->label(__('admin.themes.save'))->action(fn () => $this->save()),

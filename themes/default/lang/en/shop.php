@@ -63,6 +63,7 @@ return [
     'add_to_cart' => 'Add to cart',
     'show_image' => 'Show image :number',
     'added_to_cart' => '“:product” has been added to your cart.',
+    'show_all' => 'Show all',
     'close' => 'Close',
     'cart_error' => 'The product could not be added to the cart. Please try again.',
     'go_to_cart' => 'Go to cart',

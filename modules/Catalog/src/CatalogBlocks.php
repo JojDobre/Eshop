@@ -35,7 +35,12 @@ final class CatalogBlocks
             TextInput::make('limit')->label($t('limit'))->integer()->minValue(1)->maxValue(24)->default(8)
                 ->visible(fn (Get $get) => $get('source') !== 'selected'),
             CoreBlocks::hidden(),
-        ], prepare: fn (array $data) => [...$data, 'products' => self::products($data)], icon: 'heroicon-o-squares-2x2'));
+        ], prepare: fn (array $data) => [
+            ...$data,
+            'products' => self::products($data),
+            // Odkaz „Zobraziť všetko“ pri produktoch jednej kategórie.
+            'link' => ($data['source'] ?? null) === 'category' ? Category::query()->find((int) ($data['category_id'] ?? 0))?->url() : null,
+        ], icon: 'heroicon-o-squares-2x2'));
 
         $types->register(new BlockType('categories', fn () => $t('categories'), fn () => [
             TextInput::make('title')->label(__('admin.blocks.title'))->maxLength(160),

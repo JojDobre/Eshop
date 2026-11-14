@@ -1,7 +1,7 @@
 @if (! empty($block['images']))
-    <section id="{{ $blockId }}" class="container-shop py-10">
+    <section id="{{ $blockId }}" class="block-section container-shop py-10">
         @if (! empty($block['title']))
-            <h2 class="mb-6 text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
+            <h2 class="block-title mb-6 text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
         @endif
         <div @class(['grid gap-3', 'grid-cols-2' => ($block['columns'] ?? '3') === '2', 'grid-cols-2 sm:grid-cols-3' => ($block['columns'] ?? '3') === '3', 'grid-cols-2 sm:grid-cols-4' => ($block['columns'] ?? '3') === '4'])>
             @foreach ((array) $block['images'] as $galleryImage)

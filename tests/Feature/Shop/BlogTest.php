@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Shop;
 
+use App\Core\Themes\ThemeManager;
+use App\Core\Themes\ThemeOptions;
 use App\Models\BlockLayout;
 use Illuminate\Support\Facades\Crypt;
 use Livewire\Livewire;
@@ -145,5 +147,40 @@ class BlogTest extends ShopTestCase
 
         $this->get(route('blog.index'))->assertOk()->assertSee('Iba perex');
         $this->get($post->url())->assertOk();
+    }
+
+    public function test_blog_layout_is_configurable_in_theme_settings(): void
+    {
+        $category = PostCategory::query()->create(['name' => 'Návody']);
+        $first = $this->article(['name' => 'Starší článok', 'published_at' => now()->subDays(3), 'blog_category_id' => $category->id]);
+        $newest = $this->article(['name' => 'Najnovší článok', 'cover_image' => 'blog/cover.jpg']);
+
+        $theme = app(ThemeManager::class)->active();
+        app(ThemeOptions::class)->save($theme, [
+            'blog_index_sections' => [['section' => 'featured'], ['section' => 'posts'], ['section' => 'header']],
+            'blog_list_layout' => 'list',
+            'blog_sidebar' => 'right',
+            'blog_show_excerpt' => false,
+            'blog_post_layout' => 'hero',
+            'blog_post_width' => 'wide',
+            'blog_post_sections' => [['section' => 'related'], ['section' => 'content']],
+        ]);
+
+        $html = $this->get(route('blog.index'))->assertOk()
+            ->assertSee(__('theme::blog.featured'))
+            ->assertSee('blog-sidebar', false)
+            ->assertSee('sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]', false)
+            ->assertDontSee('Sprievodca pre začiatočníkov.')
+            ->getContent();
+        // Zvýraznený článok je hore, v zozname sa už neopakuje.
+        $this->assertSame(1, substr_count($html, '>Najnovší článok</a>'));
+        $this->assertLessThan(strpos($html, '>Starší článok</a>'), strpos($html, '>Najnovší článok</a>'));
+
+        $postHtml = $this->get($newest->url())->assertOk()
+            ->assertSee('uploads/blog/cover.jpg', false)
+            ->assertSee('blog-post-wide', false)
+            ->getContent();
+        // Súvisiace články pred textom článku (podľa poradia sekcií).
+        $this->assertLessThan(strpos($postHtml, 'blog-post-content'), strpos($postHtml, 'related-posts'));
     }
 }

@@ -581,6 +581,9 @@ return [
         'preview_page' => 'Page in preview',
         'section' => 'Section',
         'layout' => 'Layout',
+        'blocks_section' => 'Home page blocks',
+        'blocks_section_help' => 'Your own home page sections: products from a category, text, image, video, form and more. They appear in place of the “Content blocks” section (Home page layout). Saved for the default language; other languages and theme areas are edited in Content → Home page and blocks.',
+        'refresh_preview' => 'Refresh preview',
         'add_section' => 'Add section',
         'groups' => [
             'general' => 'General',
@@ -593,6 +596,7 @@ return [
             'layout' => 'Home page layout',
             'about' => 'About and benefits',
             'faq' => 'FAQ',
+            'blog' => 'Blog',
         ],
         'errors' => [
             'not_zip' => 'The file is not a valid ZIP.',

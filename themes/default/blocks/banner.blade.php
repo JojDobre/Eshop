@@ -16,7 +16,7 @@
         'text-center' => ($block['align'] ?? 'left') === 'center',
     ])>
         <div @class(['max-w-2xl', 'mx-auto' => ($block['align'] ?? 'left') === 'center'])>
-            <h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">{{ $block['title'] ?? '' }}</h2>
+            <h2 class="block-title text-4xl font-semibold tracking-tight sm:text-5xl">{{ $block['title'] ?? '' }}</h2>
             @if (! empty($block['text']))
                 <p @class(['mt-5 text-lg', 'text-zinc-600' => ! $bannerImage, 'text-white/90' => $bannerImage])>{{ $block['text'] }}</p>
             @endif

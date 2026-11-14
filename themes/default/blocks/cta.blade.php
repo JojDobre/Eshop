@@ -1,7 +1,7 @@
-<section id="{{ $blockId }}" class="container-shop py-10">
+<section id="{{ $blockId }}" class="block-section container-shop py-10">
     <div class="flex flex-col items-start justify-between gap-6 rounded-2xl bg-zinc-900 p-8 text-white sm:flex-row sm:items-center">
         <div>
-            <h2 class="text-2xl font-semibold tracking-tight">{{ $block['title'] ?? '' }}</h2>
+            <h2 class="block-title text-2xl font-semibold tracking-tight">{{ $block['title'] ?? '' }}</h2>
             @if (! empty($block['text']))
                 <p class="mt-2 text-white/80">{{ $block['text'] }}</p>
             @endif

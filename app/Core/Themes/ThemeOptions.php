@@ -144,7 +144,8 @@ class ThemeOptions
             'select' => is_string($value) && array_key_exists($value, $definition['options']) ? $value : $default,
             'toggle' => (bool) $value,
             'number' => is_numeric($value) ? $value + 0 : $default,
-            'image' => is_string($value) && $value !== '' && ! str_contains($value, '..') ? $value : null,
+            // Neuložený stav poľa obrázka (živý náhľad) je zoznam {uuid: cesta}.
+            'image' => is_string($value = is_array($value) ? (collect($value)->first(fn ($item) => is_string($item)) ?? '') : $value) && $value !== '' && ! str_contains($value, '..') ? $value : null,
             'textarea' => is_scalar($value) ? mb_substr((string) $value, 0, 5000) : $default,
             // Formátovaný text sa pri výpise čistí funkciou safe_html().
             'richtext' => mb_substr(is_array($value) ? rescue(fn () => RichContentRenderer::make($value)->toUnsafeHtml(), '', false) : (is_scalar($value) ? (string) $value : (string) $default), 0, 20000),

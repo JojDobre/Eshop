@@ -58,10 +58,10 @@
                     @if ($logo = $branding->logoUrl())
                         <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-9 w-auto shrink-0 sm:h-11">
                         @if ($themeOptions->get('show_shop_name'))
-                            <span class="truncate">{{ $shop->shop_name }}</span>
+                            <span class="shop-name" data-fit-text>{{ $shop->shop_name }}</span>
                         @endif
                     @else
-                        <span class="truncate">{{ $shop->shop_name }}</span>
+                        <span class="shop-name" data-fit-text>{{ $shop->shop_name }}</span>
                     @endif
                     @if ($logoText !== '')
                         <span @class(['hidden max-w-56 whitespace-pre-line border-line text-xs font-bold leading-snug tracking-normal text-muted lg:block', 'border-l pl-3' => ! $centered])>{{ $logoText }}</span>
@@ -83,8 +83,11 @@
             @endif
 
             <div class="flex items-center justify-end gap-2 md:order-3">
-                @include('theme::partials.language-switcher')
-                @include('theme::partials.currency-switcher')
+                {{-- Na mobile sú prepínače jazyka a meny v menu, aby mal názov obchodu miesto. --}}
+                <div class="hidden items-center gap-1 sm:flex">
+                    @include('theme::partials.language-switcher')
+                    @include('theme::partials.currency-switcher')
+                </div>
 
                 @if (Route::has('customer.account'))
                     <a href="{{ route('customer.account') }}" class="hidden size-10 place-items-center rounded-full border border-line text-zinc-700 hover:border-primary sm:grid" aria-label="{{ empty($customer) ? __('theme::account.login') : __('theme::account.title') }}">
@@ -130,6 +133,12 @@
     @endif
 
     <div id="mobile-menu" x-show="menu" x-cloak class="border-b border-line bg-white md:hidden">
+        @if ((isset($shopCurrencies) && $shopCurrencies->isMulticurrency()) || (! empty($alternateUrls) && count($alternateUrls) > 1))
+            <div class="container-shop flex items-center gap-2 pt-3 sm:hidden">
+                @include('theme::partials.language-switcher')
+                @include('theme::partials.currency-switcher')
+            </div>
+        @endif
         @if (Route::has('catalog.search'))
             <form action="{{ route('catalog.search') }}" method="GET" role="search" class="container-shop pt-3">
                 <label for="mobile-search" class="sr-only">{{ __('theme::shop.search') }}</label>

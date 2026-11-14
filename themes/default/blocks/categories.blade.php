@@ -1,7 +1,7 @@
 @if (! empty($block['categories']) && $block['categories']->isNotEmpty())
-    <section id="{{ $blockId }}" class="container-shop py-14">
+    <section id="{{ $blockId }}" class="block-section container-shop py-14">
         @if (! empty($block['title']))
-            <h2 class="text-xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
+            <h2 class="block-title text-xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
         @endif
         <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
             @foreach ($block['categories'] as $blockCategory)

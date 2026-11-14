@@ -197,3 +197,87 @@ main h1 {
         transition: none;
     }
 }
+
+/*
+ * Bloky (Obsah → Úvodná stránka a bloky, Prispôsobenie → Bloky) v štýle Farmy: nadpis a odkaz „Zobraziť všetko“
+ * rovnako ako vlastné sekcie šablóny. Mimo vrstiev, aby mali prednosť pred triedami Tailwindu v blokoch.
+ */
+.block-title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    color: var(--farma-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    position: relative;
+    padding-bottom: 0.125rem;
+    font-weight: 800;
+    color: var(--farma-ink);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--brand-primary), var(--brand-primary));
+    background-position: 0 100%, 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 2px, 100% 2px;
+    transition: background-size 0.35s ease, color 0.2s ease;
+}
+
+.block-link:hover {
+    color: var(--farma-accent-text);
+    text-decoration: none;
+    background-size: 100% 2px, 100% 2px;
+}
+
+.block-link::after {
+    content: '→';
+    display: inline-block;
+    margin-left: 0.3em;
+    transition: transform 0.25s ease;
+}
+
+.block-link:hover::after {
+    transform: translateX(4px);
+}
+
+/* Bloky s nadpisom (produkty, kategórie, články…) majú rovnaké rozostupy ako sekcie Farmy. */
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+@media (min-width: 40rem) {
+    .block-section:has(> .block-title, > .block-header) {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+}
+
+.block-section .rounded-xl,
+.block-section .rounded-2xl {
+    border-radius: 1.25rem;
+}
+
+/* Blog v štýle Farmy. */
+.blog-card-title,
+.blog-featured-title {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.blog-chip.is-active {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary-foreground, #fff);
+}

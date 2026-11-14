@@ -138,6 +138,274 @@
                 "en": "Show tagline in footer"
             },
             "default": true
+        },
+        "blog_index_sections": {
+            "type": "sections",
+            "group": "blog",
+            "label": {
+                "sk": "Zoznam článkov – sekcie",
+                "cs": "Seznam článků – sekce",
+                "en": "Blog list – sections"
+            },
+            "help": {
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite košom. „Zvýraznený článok“ zobrazí najnovší článok veľký.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte košem. „Zvýrazněný článek“ zobrazí nejnovější článek velký.",
+                "en": "Reorder with the arrows, remove with the bin. “Featured post” shows the newest post large."
+            },
+            "default": [
+                "header",
+                "categories",
+                "posts"
+            ],
+            "options": {
+                "header": {
+                    "sk": "Nadpis a popis",
+                    "cs": "Nadpis a popis",
+                    "en": "Heading and description"
+                },
+                "categories": {
+                    "sk": "Kategórie",
+                    "cs": "Kategorie",
+                    "en": "Categories"
+                },
+                "featured": {
+                    "sk": "Zvýraznený článok",
+                    "cs": "Zvýrazněný článek",
+                    "en": "Featured post"
+                },
+                "posts": {
+                    "sk": "Články",
+                    "cs": "Články",
+                    "en": "Posts"
+                }
+            },
+            "layouts": {
+                "default": {
+                    "sk": "Predvolené",
+                    "cs": "Výchozí",
+                    "en": "Default"
+                },
+                "reverse": {
+                    "sk": "Obrátené",
+                    "cs": "Obrácené",
+                    "en": "Reversed"
+                }
+            }
+        },
+        "blog_list_layout": {
+            "type": "select",
+            "group": "blog",
+            "label": {
+                "sk": "Rozloženie článkov",
+                "cs": "Rozložení článků",
+                "en": "Posts layout"
+            },
+            "default": "grid",
+            "options": {
+                "grid": {
+                    "sk": "Mriežka",
+                    "cs": "Mřížka",
+                    "en": "Grid"
+                },
+                "list": {
+                    "sk": "Zoznam (obrázok vedľa textu)",
+                    "cs": "Seznam (obrázek vedle textu)",
+                    "en": "List (image beside text)"
+                },
+                "cards": {
+                    "sk": "Veľké karty",
+                    "cs": "Velké karty",
+                    "en": "Large cards"
+                }
+            }
+        },
+        "blog_columns": {
+            "type": "select",
+            "group": "blog",
+            "label": {
+                "sk": "Článkov v riadku (mriežka)",
+                "cs": "Článků v řádku (mřížka)",
+                "en": "Posts per row (grid)"
+            },
+            "default": "3",
+            "options": {
+                "2": {
+                    "sk": "2",
+                    "cs": "2",
+                    "en": "2"
+                },
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        },
+        "blog_sidebar": {
+            "type": "select",
+            "group": "blog",
+            "label": {
+                "sk": "Bočný panel",
+                "cs": "Boční panel",
+                "en": "Sidebar"
+            },
+            "default": "none",
+            "help": {
+                "sk": "Kategórie, štítky a najnovšie články vedľa zoznamu.",
+                "cs": "Kategorie, štítky a nejnovější články vedle seznamu.",
+                "en": "Categories, tags and latest posts next to the list."
+            },
+            "options": {
+                "none": {
+                    "sk": "Bez panela",
+                    "cs": "Bez panelu",
+                    "en": "None"
+                },
+                "left": {
+                    "sk": "Vľavo",
+                    "cs": "Vlevo",
+                    "en": "Left"
+                },
+                "right": {
+                    "sk": "Vpravo",
+                    "cs": "Vpravo",
+                    "en": "Right"
+                }
+            }
+        },
+        "blog_show_excerpt": {
+            "type": "toggle",
+            "group": "blog",
+            "label": {
+                "sk": "Zobrazovať perex",
+                "cs": "Zobrazovat perex",
+                "en": "Show excerpt"
+            },
+            "default": true
+        },
+        "blog_show_meta": {
+            "type": "toggle",
+            "group": "blog",
+            "label": {
+                "sk": "Zobrazovať dátum a čas čítania",
+                "cs": "Zobrazovat datum a čas čtení",
+                "en": "Show date and reading time"
+            },
+            "default": true
+        },
+        "blog_post_layout": {
+            "type": "select",
+            "group": "blog",
+            "label": {
+                "sk": "Článok – hlavička",
+                "cs": "Článek – hlavička",
+                "en": "Post – header"
+            },
+            "default": "classic",
+            "options": {
+                "classic": {
+                    "sk": "Nadpis, pod ním obrázok",
+                    "cs": "Nadpis, pod ním obrázek",
+                    "en": "Title, image below"
+                },
+                "hero": {
+                    "sk": "Obrázok cez celú šírku s nadpisom",
+                    "cs": "Obrázek přes celou šířku s nadpisem",
+                    "en": "Full-width image with title"
+                },
+                "split": {
+                    "sk": "Obrázok vedľa nadpisu",
+                    "cs": "Obrázek vedle nadpisu",
+                    "en": "Image beside title"
+                },
+                "minimal": {
+                    "sk": "Bez obrázka",
+                    "cs": "Bez obrázku",
+                    "en": "No image"
+                }
+            }
+        },
+        "blog_post_width": {
+            "type": "select",
+            "group": "blog",
+            "label": {
+                "sk": "Článok – šírka textu",
+                "cs": "Článek – šířka textu",
+                "en": "Post – text width"
+            },
+            "default": "narrow",
+            "options": {
+                "narrow": {
+                    "sk": "Úzka (lepšie sa číta)",
+                    "cs": "Úzká (lépe se čte)",
+                    "en": "Narrow (easier to read)"
+                },
+                "wide": {
+                    "sk": "Široká",
+                    "cs": "Široká",
+                    "en": "Wide"
+                }
+            }
+        },
+        "blog_post_sections": {
+            "type": "sections",
+            "group": "blog",
+            "label": {
+                "sk": "Článok – sekcie",
+                "cs": "Článek – sekce",
+                "en": "Post – sections"
+            },
+            "help": {
+                "sk": "Poradie častí článku pod hlavičkou.",
+                "cs": "Pořadí částí článku pod hlavičkou.",
+                "en": "Order of the post parts below the header."
+            },
+            "default": [
+                "toc",
+                "content",
+                "products",
+                "tags",
+                "comments",
+                "related"
+            ],
+            "options": {
+                "toc": {
+                    "sk": "Obsah (kapitoly)",
+                    "cs": "Obsah (kapitoly)",
+                    "en": "Table of contents"
+                },
+                "content": {
+                    "sk": "Text článku",
+                    "cs": "Text článku",
+                    "en": "Post content"
+                },
+                "products": {
+                    "sk": "Odporúčané produkty",
+                    "cs": "Doporučené produkty",
+                    "en": "Recommended products"
+                },
+                "tags": {
+                    "sk": "Štítky",
+                    "cs": "Štítky",
+                    "en": "Tags"
+                },
+                "comments": {
+                    "sk": "Komentáre",
+                    "cs": "Komentáře",
+                    "en": "Comments"
+                },
+                "related": {
+                    "sk": "Súvisiace články",
+                    "cs": "Související články",
+                    "en": "Related posts"
+                }
+            },
+            "layouts": {}
         }
     },
     "menus": {

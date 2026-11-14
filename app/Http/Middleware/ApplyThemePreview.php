@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
+use App\Filament\Pages\CustomizeTheme;
+use App\Models\BlockLayout;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -28,6 +30,7 @@ class ApplyThemePreview
         }
 
         app(ThemeOptions::class)->preview(null);
+        BlockLayout::preview(BlockLayout::HOME, null);
         $this->usePreview(null);
         $user = $request->user();
         $allowed = $user !== null && method_exists($user, 'can') && $user->can('settings.manage');
@@ -51,6 +54,11 @@ class ApplyThemePreview
         if ($request->boolean('theme_customize')) {
             $values = $request->session()->get(self::SESSION_VALUES.'.'.$themes->active()?->name);
             app(ThemeOptions::class)->preview(is_array($values) ? $values : null);
+
+            // Neuložené bloky úvodnej stránky z prispôsobenia šablóny.
+            if (is_array($values) && is_array($values[CustomizeTheme::BLOCKS_FIELD] ?? null)) {
+                BlockLayout::preview(BlockLayout::HOME, self::previewBlocks($values[CustomizeTheme::BLOCKS_FIELD]));
+            }
         }
 
         $response = $next($request);
@@ -80,5 +88,36 @@ class ApplyThemePreview
         View::replaceNamespace('theme', $themes->viewPaths());
         View::getFinder()->flush();
         app('translator')->setLoaded([]);
+    }
+
+    /**
+     * Neuložený stav editora blokov na tvar uložených blokov: nahraté obrázky sú v ňom zoznamy
+     * {uuid: cesta}, uložený blok má cestu (alebo zoznam ciest pri galérii).
+     *
+     * @param  array<int|string, mixed>  $blocks
+     * @return list<array<string, mixed>>
+     */
+    private static function previewBlocks(array $blocks): array
+    {
+        $normalize = function (mixed $value) use (&$normalize): mixed {
+            if (! is_array($value)) {
+                return $value;
+            }
+
+            $keys = array_keys($value);
+            $isUpload = $value !== [] && collect($keys)->every(fn ($key) => is_string($key) && preg_match('/^[0-9a-f-]{36}$/', $key))
+                && collect($value)->every(fn ($item) => is_string($item));
+
+            if ($isUpload) {
+                return count($value) === 1 ? reset($value) : array_values($value);
+            }
+
+            return array_map($normalize, $value);
+        };
+
+        return array_values(array_filter(array_map(fn ($block) => is_array($block) ? [
+            'type' => $block['type'] ?? null,
+            'data' => $normalize($block['data'] ?? []),
+        ] : null, $blocks)));
     }
 }

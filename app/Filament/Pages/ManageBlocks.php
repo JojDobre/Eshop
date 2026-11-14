@@ -143,4 +143,10 @@ class ManageBlocks extends Page implements HasSchemas
             Action::make('save')->label(__('admin.themes.save'))->action(fn () => $this->save()),
         ];
     }
+
+    /** V menu pod položkou „Vzhľad (šablóny)“ – bloky úvodnej stránky sa upravujú aj v prispôsobení šablóny. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return Themes::getNavigationLabel();
+    }
 }

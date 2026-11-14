@@ -94,5 +94,38 @@ document.addEventListener('submit', async (event) => {
     }
 });
 
+/**
+ * Text vždy celý (napr. názov obchodu v hlavičke): písmo sa zmenšuje, kým sa text nezmestí do jedného riadka;
+ * ak ani pri najmenšom písme nestačí, zalomí sa na dva riadky. Žiadne „…“.
+ */
+const fitText = (element) => {
+    element.classList.remove('is-wrapped');
+    element.style.fontSize = '';
+
+    const base = parseFloat(getComputedStyle(element).fontSize);
+    const minimum = Math.max(12, base * 0.6);
+    let size = base;
+
+    while (element.scrollWidth > element.clientWidth + 1 && size > minimum) {
+        size -= 0.5;
+        element.style.fontSize = `${size}px`;
+    }
+
+    if (element.scrollWidth > element.clientWidth + 1) {
+        element.classList.add('is-wrapped');
+        element.style.fontSize = `${Math.max(minimum, base * 0.75)}px`;
+    }
+};
+
+const fitAll = () => document.querySelectorAll('[data-fit-text]').forEach(fitText);
+
+if (window.ResizeObserver) {
+    const observer = new ResizeObserver(() => requestAnimationFrame(fitAll));
+    document.addEventListener('DOMContentLoaded', () => document.querySelectorAll('[data-fit-text]').forEach((element) => observer.observe(element.parentElement ?? element)));
+}
+
+document.addEventListener('DOMContentLoaded', fitAll);
+window.addEventListener('load', fitAll);
+
 window.Alpine = Alpine;
 Alpine.start();

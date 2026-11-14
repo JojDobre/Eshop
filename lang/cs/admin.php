@@ -581,6 +581,9 @@ return [
         'preview_page' => 'Stránka v náhledu',
         'section' => 'Sekce',
         'layout' => 'Rozložení',
+        'blocks_section' => 'Bloky úvodní stránky',
+        'blocks_section_help' => 'Vlastní sekce úvodní stránky: produkty z kategorie, text, obrázek, video, formulář a další. Na stránce se zobrazí na místě sekce „Bloky z obsahu“ (Rozložení úvodní stránky). Ukládají se pro výchozí jazyk; další jazyky a oblasti šablony upravíte v Obsah → Úvodní stránka a bloky.',
+        'refresh_preview' => 'Obnovit náhled',
         'add_section' => 'Přidat sekci',
         'groups' => [
             'general' => 'Obecné',
@@ -593,6 +596,7 @@ return [
             'layout' => 'Rozložení úvodní stránky',
             'about' => 'O nás a výhody',
             'faq' => 'Časté dotazy',
+            'blog' => 'Blog',
         ],
         'errors' => [
             'not_zip' => 'Soubor není platný ZIP.',

@@ -63,6 +63,7 @@ return [
     'add_to_cart' => 'Do košíka',
     'show_image' => 'Zobraziť obrázok :number',
     'added_to_cart' => '„:product" sme pridali do košíka.',
+    'show_all' => 'Zobraziť všetko',
     'close' => 'Zavrieť',
     'cart_error' => 'Produkt sa nepodarilo pridať do košíka. Skúste to znova.',
     'go_to_cart' => 'Prejsť do košíka',

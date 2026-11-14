@@ -189,3 +189,23 @@ select:not([multiple]):not([size]) {
         animation: none;
     }
 }
+
+/* Názov obchodu v hlavičke: vždy celý (písmo sa podľa miesta zmenší, prípadne sa zalomí na dva riadky). */
+.shop-name {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 1.15;
+}
+
+.shop-name.is-wrapped {
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Široký článok (Prispôsobiť → Blog → šírka textu): text blokov na šírku obrázka. */
+.blog-post-wide .block-section .max-w-3xl {
+    max-width: 64rem;
+}

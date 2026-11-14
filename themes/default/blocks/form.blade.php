@@ -1,7 +1,7 @@
 @if (! empty($block['form']))
-    <section id="{{ $blockId }}" class="container-shop max-w-3xl py-8">
+    <section id="{{ $blockId }}" class="block-section container-shop max-w-3xl py-8">
         @if (! empty($block['title']))
-            <h2 class="text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
+            <h2 class="block-title text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
         @endif
         @if (! empty($block['text']))
             <p class="mt-2 text-zinc-600">{{ $block['text'] }}</p>

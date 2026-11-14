@@ -10,9 +10,9 @@
         'clock' => 'M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z',
     ];
 @endphp
-<section id="{{ $blockId }}" class="container-shop py-12">
+<section id="{{ $blockId }}" class="block-section container-shop py-12">
     @if (! empty($block['title']))
-        <h2 class="mb-8 text-center text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
+        <h2 class="block-title mb-8 text-center text-2xl font-semibold tracking-tight">{{ $block['title'] }}</h2>
     @endif
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($block['items'] ?? [] as $benefit)

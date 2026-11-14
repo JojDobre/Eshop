@@ -15,11 +15,11 @@
             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
         </button>
 
-        <a href="{{ route('storefront.home') }}" @class(['flex shrink-0 items-center gap-3 font-semibold tracking-tight', 'md:absolute md:left-1/2 md:-translate-x-1/2' => $centered])>
+        <a href="{{ route('storefront.home') }}" @class(['flex min-w-0 items-center gap-3 font-semibold tracking-tight', 'md:absolute md:left-1/2 md:-translate-x-1/2' => $centered])>
             @if ($logo = $branding->logoUrl())
-                <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-8 w-auto">
+                <img src="{{ $logo }}" alt="{{ $shop->shop_name }}" class="h-8 w-auto shrink-0">
             @else
-                <span class="text-lg">{{ $shop->shop_name }}</span>
+                <span class="shop-name text-lg" data-fit-text>{{ $shop->shop_name }}</span>
             @endif
         </a>
 
@@ -43,8 +43,10 @@
                 </button>
             @endif
 
-            @include('theme::partials.language-switcher')
-            @include('theme::partials.currency-switcher')
+            <div class="hidden items-center sm:flex">
+                @include('theme::partials.language-switcher')
+                @include('theme::partials.currency-switcher')
+            </div>
 
             @if (Route::has('customer.account'))
                 <a href="{{ route('customer.account') }}" class="rounded-md p-2 text-zinc-700 hover:bg-zinc-100" aria-label="{{ empty($customer) ? __('theme::account.login') : __('theme::account.title') }}">
@@ -83,6 +85,12 @@
 
     @if ($navItems !== [])
         <nav id="mobile-menu" x-show="menu" x-cloak class="border-t border-zinc-100 md:hidden" aria-label="{{ __('theme::shop.categories') }}">
+            @if ((isset($shopCurrencies) && $shopCurrencies->isMulticurrency()) || (! empty($alternateUrls) && count($alternateUrls) > 1))
+                <div class="container-shop flex items-center gap-2 pt-3 sm:hidden">
+                    @include('theme::partials.language-switcher')
+                    @include('theme::partials.currency-switcher')
+                </div>
+            @endif
             <ul class="container-shop divide-y divide-zinc-100 py-2">
                 @foreach ($navItems as $navItem)
                     <li>

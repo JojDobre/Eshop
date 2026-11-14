@@ -22,6 +22,7 @@ use Filament\Tables\Table;
 use Modules\Forms\Filament\Resources\Forms\Pages\CreateForm;
 use Modules\Forms\Filament\Resources\Forms\Pages\EditForm;
 use Modules\Forms\Filament\Resources\Forms\Pages\ListForms;
+use Modules\Forms\Filament\Resources\Submissions\FormSubmissionResource;
 use Modules\Forms\Models\Form;
 use UnitEnum;
 
@@ -115,5 +116,11 @@ class FormResource extends Resource
             'create' => CreateForm::route('/create'),
             'edit' => EditForm::route('/{record}/edit'),
         ];
+    }
+
+    /** V menu pod položkou „FormSubmissionResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return FormSubmissionResource::getNavigationLabel();
     }
 }

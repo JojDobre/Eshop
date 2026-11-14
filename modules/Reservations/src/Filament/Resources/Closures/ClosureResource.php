@@ -14,6 +14,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Modules\Reservations\Filament\ReservationsNav;
+use Modules\Reservations\Filament\Resources\Bookings\BookingResource;
 use Modules\Reservations\Filament\Resources\Closures\Pages\ManageClosures;
 use Modules\Reservations\Models\BookingClosure;
 
@@ -74,5 +75,11 @@ class ClosureResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageClosures::route('/')];
+    }
+
+    /** V menu pod položkou „BookingResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return BookingResource::getNavigationLabel();
     }
 }

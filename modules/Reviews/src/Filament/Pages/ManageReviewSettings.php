@@ -2,6 +2,7 @@
 
 namespace Modules\Reviews\Filament\Pages;
 
+use App\Filament\Forms\FeatureNotice;
 use App\Filament\Pages\Settings\BaseSettingsPage;
 use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
@@ -39,7 +40,7 @@ class ManageReviewSettings extends BaseSettingsPage
 
         return $schema->components([
             Section::make()->columns(2)->schema([
-                Toggle::make('enabled')->label($t('enabled'))->columnSpanFull(),
+                FeatureNotice::make('reviews', 'enabled'),
                 Toggle::make('require_approval')->label($t('require_approval'))->helperText($t('require_approval_help')),
                 Toggle::make('verified_only')->label($t('verified_only'))->helperText($t('verified_only_help')),
                 Toggle::make('request_enabled')->label($t('request_enabled'))->helperText($t('request_enabled_help'))->live(),

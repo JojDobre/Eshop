@@ -17,6 +17,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\Blog\Filament\Resources\Comments\Pages\ManageComments;
+use Modules\Blog\Filament\Resources\Posts\PostResource;
 use Modules\Blog\Models\PostComment;
 use UnitEnum;
 
@@ -96,5 +97,11 @@ class CommentResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageComments::route('/')];
+    }
+
+    /** V menu pod položkou „PostResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return PostResource::getNavigationLabel();
     }
 }

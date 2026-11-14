@@ -2,6 +2,7 @@
 
 namespace Modules\Tax\Filament\Pages;
 
+use App\Filament\Forms\FeatureNotice;
 use App\Filament\Pages\Settings\BaseSettingsPage;
 use App\Settings\TaxSettings;
 use BackedEnum;
@@ -48,8 +49,8 @@ class ManageTaxSettings extends BaseSettingsPage
                 ->description($t('section_eu_help'))
                 ->visible(fn (Get $get) => (bool) $get('vat_payer'))
                 ->schema([
-                    Toggle::make('reverse_charge_enabled')->label($t('reverse_charge'))->helperText($t('reverse_charge_help')),
-                    Toggle::make('oss_enabled')->label($t('oss'))->helperText($t('oss_help'))->live(),
+                    FeatureNotice::make('tax.reverse_charge_enabled', 'reverse_charge_enabled'),
+                    FeatureNotice::make('tax.oss_enabled', 'oss_enabled'),
                     Toggle::make('oss_keep_gross_prices')->label($t('oss_keep_gross'))->helperText($t('oss_keep_gross_help'))
                         ->visible(fn (Get $get) => (bool) $get('oss_enabled')),
                 ]),

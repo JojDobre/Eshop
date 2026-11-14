@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Modules\Customers\CustomerSettings;
 use Modules\Customers\Filament\Resources\CustomerGroups\Pages\ManageCustomerGroups;
+use Modules\Customers\Filament\Resources\Customers\CustomerResource;
 use UnitEnum;
 
 class CustomerGroupResource extends Resource
@@ -97,5 +98,11 @@ class CustomerGroupResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageCustomerGroups::route('/')];
+    }
+
+    /** V menu pod položkou „CustomerResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return CustomerResource::getNavigationLabel();
     }
 }

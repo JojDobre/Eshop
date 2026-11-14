@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\Filament\Resources\Products\ProductResource;
 use Modules\Catalog\Filament\Resources\ProductTypes\Pages\ManageProductTypes;
 use Modules\Catalog\Models\ProductType;
 use UnitEnum;
@@ -92,5 +93,11 @@ class ProductTypeResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageProductTypes::route('/')];
+    }
+
+    /** V menu pod položkou „ProductResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return ProductResource::getNavigationLabel();
     }
 }

@@ -4,17 +4,19 @@ namespace App\Filament\Pages\Settings;
 
 use App\Core\Support\Currencies;
 use App\Core\Support\EcbRates;
+use App\Filament\Forms\FeatureNotice;
 use App\Settings\CurrencySettings;
 use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Text;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -71,24 +73,22 @@ class ManageCurrencySettings extends BaseSettingsPage
             Section::make()
                 ->description($t('intro', ['default' => $default]))
                 ->schema([
-                    Toggle::make('multicurrency_enabled')
-                        ->label(__('admin.features.currencies'))
-                        ->helperText(__('admin.features.currencies_help'))
-                        ->live(),
+                    FeatureNotice::make('core.currencies', 'multicurrency_enabled'),
                     CheckboxList::make('enabled')
                         ->label($t('enabled'))
                         ->options($others->mapWithKeys(fn (string $symbol, string $code) => [$code => "{$code} ({$symbol})"])->all())
-                        ->columns(4)
-                        ->visible(fn (Get $get) => (bool) $get('multicurrency_enabled'))
+                        // Meny sa vyberajú vždy (bez nich sa viac mien nedá zapnúť vo Funkciách obchodu).
+                        ->columns(['default' => 2, 'sm' => 4])
                         ->live(),
-                    Toggle::make('auto_update')
-                        ->label($t('auto_update'))
-                        ->helperText(fn () => $t('auto_update_help').(app(CurrencySettings::class)->rates_updated_at
-                            ? ' '.$t('updated_at', ['time' => Carbon::parse(app(CurrencySettings::class)->rates_updated_at)->diffForHumans()])
-                            : '')),
+                    // Automatické kurzy sa zapínajú vo Funkciách obchodu, tu je iba čas poslednej aktualizácie.
+                    Hidden::make('auto_update'),
+                    Text::make(fn () => app(CurrencySettings::class)->rates_updated_at
+                        ? $t('updated_at', ['time' => Carbon::parse(app(CurrencySettings::class)->rates_updated_at)->diffForHumans()])
+                        : $t('auto_update_help'))
+                        ->visible(fn (Get $get) => (bool) $get('multicurrency_enabled')),
                 ]),
             Section::make($t('rates'))
-                ->visible(fn (Get $get) => $get('multicurrency_enabled') && ($get('enabled') ?? []) !== [])
+                ->visible(fn (Get $get) => ($get('enabled') ?? []) !== [])
                 ->schema($rows),
         ]);
     }

@@ -1,0 +1,620 @@
+/*
+ * Téma administrácie: čistý moderný vzhľad nad Filamentom a plne responzívne tabuľky.
+ * Na úzkych obrazovkách (a v úzkom obsahu) sa riadky tabuliek zobrazia ako karty s popiskami stĺpcov
+ * (popisky dopĺňa skript resources/views/filament/hooks/responsive-tables.blade.php).
+ */
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../app/Core/**/*.php';
+@source '../../../../modules/*/src/**/*.php';
+@source '../../../../modules/*/resources/views/**/*.blade.php';
+@source '../../../../resources/views/filament/**/*.blade.php';
+
+/* ---------- Základ ---------- */
+:root {
+    --admin-radius: 0.875rem;
+    --admin-ring: color-mix(in oklab, var(--gray-950) 7%, transparent);
+    --admin-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 1px rgb(0 0 0 / 0.02);
+}
+
+.fi-body {
+    background-color: var(--gray-50);
+    -webkit-font-smoothing: antialiased;
+}
+
+.dark .fi-body {
+    background-color: var(--gray-950);
+}
+
+/* ---------- Horná lišta a menu ---------- */
+.fi-topbar {
+    background-color: color-mix(in oklab, white 85%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    box-shadow: inset 0 -1px 0 var(--admin-ring);
+}
+
+.dark .fi-topbar {
+    background-color: color-mix(in oklab, var(--gray-900) 85%, transparent);
+}
+
+.fi-topbar > nav,
+.fi-topbar nav {
+    box-shadow: none;
+    background: transparent;
+}
+
+@media (min-width: 64rem) {
+    .fi-sidebar {
+        background-color: white;
+        box-shadow: inset -1px 0 0 var(--admin-ring);
+    }
+
+    .dark .fi-sidebar {
+        background-color: var(--gray-900);
+    }
+}
+
+.fi-sidebar-group-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+}
+
+.fi-sidebar-item-btn {
+    border-radius: 0.625rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.fi-sidebar-item-label,
+.fi-sidebar-group-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background-color: var(--primary-50);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary-600) 12%, transparent);
+}
+
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background-color: color-mix(in oklab, var(--primary-500) 14%, transparent);
+}
+
+/* ---------- Nadpisy stránok ---------- */
+.fi-header {
+    gap: 0.75rem 1rem;
+}
+
+.fi-header-heading {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 40rem) {
+    .fi-header-heading {
+        font-size: 1.75rem;
+        line-height: 2.25rem;
+    }
+}
+
+.fi-header-subheading {
+    max-width: 48rem;
+}
+
+.fi-breadcrumbs {
+    display: none;
+}
+
+@media (min-width: 48rem) {
+    .fi-breadcrumbs {
+        display: block;
+    }
+}
+
+/* ---------- Karty: sekcie, tabuľky, widgety ---------- */
+.fi-section:not(.fi-section-not-contained),
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat,
+.fi-fo-repeater-item,
+.fi-fo-builder-item {
+    border-radius: var(--admin-radius);
+    box-shadow: var(--admin-shadow), 0 0 0 1px var(--admin-ring);
+}
+
+.fi-section-header-heading {
+    font-size: 0.975rem;
+    letter-spacing: -0.01em;
+}
+
+.fi-wi-stats-overview-stat-value {
+    letter-spacing: -0.02em;
+}
+
+/* ---------- Tlačidlá a polia ---------- */
+.fi-btn {
+    border-radius: 0.625rem;
+    font-weight: 600;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.fi-btn:active {
+    transform: translateY(1px);
+}
+
+/* Hlavné tlačidlá vždy vo farbe značky s bielym textom (nie bledý odtieň s tmavým textom). */
+.fi-btn.fi-color-primary:not(.fi-outlined):not(.fi-ac-btn-group *) {
+    --bg: var(--primary-600);
+    --hover-bg: var(--primary-700);
+    --text: white;
+    --hover-text: white;
+    background-color: var(--primary-600);
+    color: white;
+}
+
+.fi-btn.fi-color-primary:not(.fi-outlined):hover {
+    background-color: var(--primary-700);
+}
+
+.fi-btn.fi-color-primary:not(.fi-outlined) .fi-icon {
+    color: white;
+}
+
+.fi-input-wrp {
+    border-radius: 0.625rem;
+}
+
+.fi-fo-field-label-content,
+.fi-fo-field-wrp-label {
+    font-weight: 500;
+}
+
+.fi-fo-field-wrp-helper-text,
+.fi-sc-text {
+    overflow-wrap: anywhere;
+}
+
+/* Záložky formulárov sa na úzkych obrazovkách zalomia do ďalšieho riadku (bez posúvania do strany). */
+.fi-tabs {
+    max-width: 100%;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    row-gap: 0.25rem;
+}
+
+.fi-tabs-item {
+    flex-shrink: 0;
+}
+
+/* ---------- Tabuľky ---------- */
+.fi-ta-header-cell {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    white-space: nowrap;
+}
+
+.fi-ta-header-cell button,
+.fi-ta-header-cell span {
+    white-space: nowrap;
+}
+
+.fi-ta-row {
+    transition: background-color 0.12s ease;
+}
+
+.fi-ta-row:hover {
+    background-color: color-mix(in oklab, var(--gray-50) 70%, transparent);
+}
+
+.dark .fi-ta-row:hover {
+    background-color: color-mix(in oklab, white 3%, transparent);
+}
+
+/* Akcie v riadku ako ikonové tlačidlá (popis je v bublinke a pre čítačky obrazovky). */
+.fi-ta-actions {
+    gap: 0.125rem;
+    flex-wrap: nowrap;
+}
+
+.fi-ta-row .fi-ta-actions .fi-link:has(> .fi-icon:not(.fi-loading-indicator)) {
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    border-radius: 0.5rem;
+    padding: 0;
+    transition: background-color 0.12s ease;
+}
+
+.fi-ta-row .fi-ta-actions .fi-link:has(> .fi-icon:not(.fi-loading-indicator)):hover {
+    background-color: var(--gray-100);
+    text-decoration: none;
+}
+
+.dark .fi-ta-row .fi-ta-actions .fi-link:has(> .fi-icon:not(.fi-loading-indicator)):hover {
+    background-color: var(--gray-800);
+}
+
+.fi-ta-row .fi-ta-actions .fi-link:has(> .fi-icon:not(.fi-loading-indicator)) > .fi-icon {
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.fi-ta-row .fi-ta-actions .fi-link:has(> .fi-icon:not(.fi-loading-indicator)) .fi-link-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Prázdna skupina hromadných akcií (kým nie je nič vybrané) nezaberá miesto. */
+.fi-ta-header-toolbar > .fi-ta-actions:not(:has(> :not([style*='display: none']))) {
+    display: none;
+}
+
+.fi-ta-header-toolbar:has(> .fi-ta-actions:not(:has(> :not([style*='display: none'])))) {
+    justify-content: flex-end;
+}
+
+/* Hlavička tabuľky (vyhľadávanie, filtre) sa zalamuje namiesto pretečenia. */
+.fi-ta-header-toolbar {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.fi-ta-header-toolbar > * {
+    min-width: 0;
+}
+
+.fi-ta-search-field {
+    min-width: 0;
+    flex: 1 1 14rem;
+}
+
+.fi-pagination {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+/*
+ * Riadky ako karty: tabuľka v úzkom priestore (mobil, tablet s menu, úzke stĺpce formulára).
+ * Riadi sa šírkou kontajnera tabuľky, nie celej obrazovky.
+ */
+.fi-ta-content-ctn,
+.fi-ta-content {
+    container-type: inline-size;
+    container-name: admin-table;
+}
+
+@container admin-table (max-width: 46rem) {
+    .fi-ta-table,
+    .fi-ta-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .fi-ta-table thead {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.375rem;
+        padding: 0.875rem 1rem;
+        border-top: 1px solid var(--gray-100);
+    }
+
+    .dark .fi-ta-table tr.fi-ta-row {
+        border-color: var(--gray-800);
+    }
+
+    .fi-ta-table tr.fi-ta-row:first-child {
+        border-top: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td > * {
+        min-width: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td > .fi-ta-col,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item {
+        padding: 0;
+        text-align: right;
+        justify-content: flex-end;
+    }
+
+    /* Popisok stĺpca vľavo, hodnota vpravo. */
+    .fi-ta-table tr.fi-ta-row > td[data-label]:not([data-label=''])::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        max-width: 45%;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--gray-500);
+    }
+
+    /* Prvý dátový stĺpec (zvyčajne názov) ako nadpis karty bez popisku. */
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell {
+        padding-right: 5.5rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell::before {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell .fi-ta-text-item,
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell > .fi-ta-col {
+        text-align: left;
+        justify-content: flex-start;
+        font-weight: 600;
+    }
+
+    /* Prázdne bunky v karte skryť. */
+    .fi-ta-table tr.fi-ta-row > td.admin-empty-cell {
+        display: none;
+    }
+
+    /* Zaškrtávacie políčko a akcie v rohoch karty. */
+    .fi-ta-table tr.fi-ta-row > td.fi-ta-selection-cell {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        width: auto;
+    }
+
+    .fi-ta-table tr.fi-ta-row:has(> td.fi-ta-selection-cell) {
+        padding-left: 3rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell::before {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell .fi-ta-actions {
+        padding: 0;
+    }
+
+    /* Obrázok produktu/súboru menší, vľavo pri nadpise. */
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-image img {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+    }
+
+    /* Dlhé texty (popisy, predmety e-mailov) sa v karte zalomia. */
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-description,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item-label {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .fi-ta-table .fi-ta-group-header-row,
+    .fi-ta-table .fi-ta-row-not-reorderable {
+        display: block;
+    }
+}
+
+/* Stredne široká tabuľka (tablet s menu): karty v dvoch stĺpcoch, aby sa nemuselo toľko posúvať. */
+@container admin-table (min-width: 34rem) and (max-width: 46rem) {
+    .fi-ta-table tbody.fi-ta-records {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fi-ta-table tr.fi-ta-row {
+        border-top: 1px solid var(--gray-100);
+    }
+
+    .fi-ta-table tr.fi-ta-row:nth-child(-n + 2) {
+        border-top: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row:nth-child(odd) {
+        border-right: 1px solid var(--gray-100);
+    }
+
+    .dark .fi-ta-table tr.fi-ta-row {
+        border-color: var(--gray-800);
+    }
+}
+
+/* ---------- Ostatné ---------- */
+.fi-modal-window {
+    border-radius: 1rem;
+}
+
+.fi-dropdown-panel {
+    border-radius: 0.75rem;
+}
+
+.fi-badge {
+    border-radius: 9999px;
+}
+
+/* Dlhé hodnoty (e-maily, adresy, kódy) sa zalomia namiesto pretečenia. */
+.fi-in-entry-content,
+.fi-sc-text.fi-font-mono,
+.fi-copyable {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.fi-main {
+    padding-bottom: 3rem;
+}
+
+/* ---------- Rýchle akcie na nástenke ---------- */
+.admin-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+    gap: 0.75rem;
+}
+
+.admin-quick-tile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.875rem 1rem;
+    border-radius: var(--admin-radius);
+    background: white;
+    box-shadow: var(--admin-shadow), 0 0 0 1px var(--admin-ring);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.dark .admin-quick-tile {
+    background: var(--gray-900);
+    color: var(--gray-100);
+}
+
+.admin-quick-tile:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.06), 0 0 0 1px color-mix(in oklab, var(--primary-600) 35%, transparent);
+}
+
+.admin-quick-tile-accent {
+    background: var(--primary-600);
+    color: white;
+}
+
+.dark .admin-quick-tile-accent {
+    background: var(--primary-600);
+    color: white;
+}
+
+.admin-quick-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--primary-600);
+}
+
+.admin-quick-tile-accent .admin-quick-icon {
+    color: white;
+}
+
+.admin-quick-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-quick-count {
+    margin-left: auto;
+    min-width: 1.5rem;
+    padding: 0 0.4rem;
+    border-radius: 9999px;
+    background: var(--primary-600);
+    color: white;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    text-align: center;
+}
+
+/* Dlhé hodnoty v obsahu stránok (adresy, cesty, kódy) sa zalomia namiesto pretečenia. */
+.fi-main p,
+.fi-main dd,
+.fi-main li {
+    overflow-wrap: break-word;
+}
+
+/* ---------- Prispôsobenie šablóny: nastavenia vedľa náhľadu, na mobile pod sebou ---------- */
+.admin-customize-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+}
+
+@media (min-width: 64rem) {
+    .admin-customize-grid {
+        grid-template-columns: minmax(20rem, 28rem) minmax(0, 1fr);
+    }
+}
+
+.admin-customize-preview {
+    width: 100%;
+    height: 75vh;
+    border: 1px solid var(--gray-200);
+    border-radius: 0.75rem;
+    background: #fff;
+}
+
+.admin-customize-grid select {
+    max-width: 100%;
+}
+
+/* Zoznam sekcií úvodnej stránky ako tabuľka aj v úzkom stĺpci nastavení (Filament ju inak zobrazí po riadkoch). */
+.admin-customize-grid .fi-fo-table-repeater > table {
+    display: table;
+}
+
+.admin-customize-grid .fi-fo-table-repeater > table > thead {
+    display: table-header-group;
+}
+
+.admin-customize-grid .fi-fo-table-repeater > table > tbody {
+    display: table-row-group;
+}
+
+.admin-customize-grid .fi-fo-table-repeater > table > tbody > tr {
+    display: table-row;
+    padding: 0;
+}
+
+.admin-customize-grid .fi-fo-table-repeater > table > tbody > tr > td {
+    display: table-cell;
+    padding: 0.375rem 0.5rem;
+    vertical-align: middle;
+}
+
+.admin-customize-grid .fi-fo-table-repeater > table > thead > tr > th {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.admin-customize-grid .fi-fo-table-repeater .fi-fo-field {
+    gap: 0;
+}
+
+/* Poradie sekcií sa mení šípkami; úchyt na ťahanie by v úzkom stĺpci zaberal miesto. */
+.admin-customize-grid .fi-fo-table-repeater .fi-fo-table-repeater-actions [x-sortable-handle] {
+    display: none;
+}
+
+.admin-customize-grid .fi-fo-table-repeater .fi-fo-table-repeater-actions {
+    gap: 0.25rem;
+}

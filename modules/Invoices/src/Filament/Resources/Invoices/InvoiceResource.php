@@ -90,4 +90,11 @@ class InvoiceResource extends Resource
     {
         return ['index' => ListInvoices::route('/')];
     }
+
+    /** V menu pod položkou „OrderResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        // Ak modul s nadradenou položkou nie je zapnutý alebo prístupný, položka ostane samostatná.
+        return class_exists(OrderResource::class) && OrderResource::canAccess() ? OrderResource::getNavigationLabel() : null;
+    }
 }

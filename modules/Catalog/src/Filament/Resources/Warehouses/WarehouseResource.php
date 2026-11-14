@@ -17,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Modules\Catalog\CatalogFeatures;
+use Modules\Catalog\Filament\Resources\StockLots\StockLotResource;
 use Modules\Catalog\Filament\Resources\Warehouses\Pages\ManageWarehouses;
 use Modules\Catalog\Models\Warehouse;
 use UnitEnum;
@@ -90,5 +91,12 @@ class WarehouseResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageWarehouses::route('/')];
+    }
+
+    /** V menu pod položkou „StockLotResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        // Ak modul s nadradenou položkou nie je zapnutý alebo prístupný, položka ostane samostatná.
+        return class_exists(StockLotResource::class) && StockLotResource::canAccess() ? StockLotResource::getNavigationLabel() : null;
     }
 }

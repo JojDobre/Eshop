@@ -31,7 +31,7 @@
 @endphp
 
 @section('title', $product->meta_title ?: (\App\Settings\SeoSettings::render($seo?->product_title, $seoVariables) ?? $product->name))
-@section('meta_description', $product->meta_description ?: (\App\Settings\SeoSettings::render($seo?->product_description, $seoVariables) ?: $product->short_description ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160)))
+@section('meta_description', $product->meta_description ?: (\App\Settings\SeoSettings::render($seo?->product_description, $seoVariables) ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->short_description), 160) ?: \Illuminate\Support\Str::limit(strip_tags((string) $product->description), 160)))
 @section('canonical', $product->url())
 @if ($images)
     @section('og_image', $images[0])
@@ -80,7 +80,7 @@
         '@'.'context' => 'https://schema.org',
         '@type' => 'Product',
         'name' => $product->name,
-        'description' => $product->short_description ?: strip_tags((string) $product->description),
+        'description' => strip_tags((string) $product->short_description) ?: strip_tags((string) $product->description),
         'sku' => $product->sku,
         'image' => $images ?: null,
         // Priemerné hodnotenie (iba schválené hodnotenia z modulu Hodnotenia).
@@ -210,7 +210,8 @@
                 @endif
 
                 @if ($product->short_description)
-                    <p class="mt-6 text-zinc-600">{{ $product->short_description }}</p>
+                    {{-- Krátky popis môže obsahovať formátovanie (tučné písmo, zoznamy, odkazy). --}}
+                    <div class="prose prose-zinc prose-sm mt-6 max-w-none text-zinc-600">{{ safe_html($product->short_description) }}</div>
                 @endif
 
                 @if ($product->isBundle() && $product->bundleItems->isNotEmpty())

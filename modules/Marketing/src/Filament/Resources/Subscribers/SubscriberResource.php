@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
+use Modules\Customers\Filament\Resources\Customers\CustomerResource;
 use Modules\Marketing\Filament\Resources\Subscribers\Pages\ManageSubscribers;
 use Modules\Marketing\Models\Subscriber;
 use Modules\Marketing\Newsletter\Newsletter;
@@ -89,5 +90,12 @@ class SubscriberResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageSubscribers::route('/')];
+    }
+
+    /** V menu pod položkou „CustomerResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        // Ak modul s nadradenou položkou nie je zapnutý alebo prístupný, položka ostane samostatná.
+        return class_exists(CustomerResource::class) && CustomerResource::canAccess() ? CustomerResource::getNavigationLabel() : null;
     }
 }

@@ -255,8 +255,13 @@ return [
         'uploaded' => 'Záloha byla nahrána. Nyní ji můžete obnovit.',
     ],
     'rich_text' => [
+        'video' => 'Video',
+        'video_heading' => 'Vložit video',
+        'video_insert' => 'Vložit',
+        'video_url' => 'Odkaz na video',
+        'video_url_help' => 'YouTube nebo Vimeo. V editoru se zobrazí jako odkaz, v obchodě jako přehrávač.',
         'brand' => 'Barva obchodu',
-        'help' => 'Obrázek vložíte tlačítkem se sponkou. Video z YouTube nebo Vimea vložíte jako odkaz na samostatném řádku.',
+        'help' => 'Obrázek vložíte tlačítkem se sponkou, video tlačítkem ▶ (YouTube nebo Vimeo).',
     ],
     'admin_menu' => [
         'title' => 'Menu administrace',
@@ -385,6 +390,21 @@ return [
         'web_cron' => 'Webový cron – pokud hosting neumí spouštět příkazy',
         'web_cron_help' => 'Tuto adresu nechte volat každých 5–15 minut (v administraci hostingu nebo službou jako cron-job.org). Adresu nikomu neposílejte.',
     ],
+    'feature_notice' => [
+        'off' => 'Funkce „:feature“ je vypnutá',
+        'help' => 'Funkce obchodu se zapínají a vypínají na jednom místě. Nastavení níže se uplatní po jejím zapnutí.',
+        'open' => 'Zapnout ve Funkcích obchodu',
+    ],
+
+    'quick' => [
+        'new_product' => 'Přidat produkt',
+        'orders' => 'Nové objednávky',
+        'messages' => 'Zprávy',
+        'reviews' => 'Hodnocení',
+        'home' => 'Úvodní stránka',
+        'design' => 'Vzhled obchodu',
+    ],
+
     'media' => [
         'title' => 'Knihovna souborů',
         'label' => 'soubor',
@@ -403,7 +423,8 @@ return [
         'files' => 'Soubory',
         'files_help' => 'Obrázky (JPG, PNG, WebP, GIF, SVG) a PDF, nejvýše 10 MB na soubor.',
         'uploaded' => 'Nahrané soubory: :count',
-        'pick' => 'Vybrat z knihovny',
+        'pick' => 'Z knihovny',
+        'pick_heading' => 'Vybrat z knihovny',
         'pick_help' => 'Obrázky nahrané kdekoli v administraci (produkty, kategorie, blog, bloky, šablona).',
         'use_selected' => 'Použít vybrané',
         'sync' => 'Načíst obrázky obchodu',
@@ -558,6 +579,8 @@ return [
         'saved' => 'Nastavení šablony byla uložena.',
         'no_settings' => 'Tato šablona nemá žádná nastavení.',
         'preview_page' => 'Stránka v náhledu',
+        'section' => 'Sekce',
+        'layout' => 'Rozložení',
         'add_section' => 'Přidat sekci',
         'groups' => [
             'general' => 'Obecné',
@@ -600,6 +623,7 @@ return [
         'home' => 'Úvodní stránka',
         'layout' => 'Upravujete',
         'title' => 'Nadpis',
+        'section' => 'Bloky',
         'add' => 'Přidat blok',
         'saved' => 'Bloky byly uloženy.',
         'page_help' => 'Další obsah pod textem stránky, např. banner nebo produkty.',

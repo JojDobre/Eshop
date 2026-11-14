@@ -12,6 +12,8 @@ export default defineConfig(({ command }) => ({
                 'resources/css/installer.css',
                 // Písmo administrácie (uložené na hostingu, nie z externej služby)
                 'resources/css/admin-font.css',
+                // Téma administrácie (Filament)
+                'resources/css/filament/admin/theme.css',
                 // Predvolená šablóna obchodu
                 'themes/default/assets/css/theme.css',
                 'themes/default/assets/js/theme.js',

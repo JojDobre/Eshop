@@ -31,6 +31,6 @@ final class BlockBuilder
     /** Sekcia „Bloky“ do formulára stránky alebo kategórie. */
     public static function section(string $description): Section
     {
-        return Section::make(__('admin.blocks.title'))->description($description)->collapsed()->schema([self::make()]);
+        return Section::make(__('admin.blocks.section'))->description($description)->collapsed()->schema([self::make()]);
     }
 }

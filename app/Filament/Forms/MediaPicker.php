@@ -66,7 +66,7 @@ final class MediaPicker
             ->icon(Heroicon::OutlinedPhoto)
             ->link()
             ->visible(fn (FileUpload $component) => self::isImageField($component) && ! $component->isDisabled())
-            ->modalHeading(__('admin.media.pick'))
+            ->modalHeading(__('admin.media.pick_heading'))
             ->modalWidth('5xl')
             ->modalSubmitActionLabel(__('admin.media.use_selected'))
             ->schema(fn (FileUpload $component) => [

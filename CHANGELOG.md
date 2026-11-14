@@ -1,5 +1,23 @@
 # Prehľad zmien
 
+## 1.3.0 – Nový vzhľad administrácie
+
+- **Moderný a plne responzívny vzhľad administrácie:** čisté karty, prehľadné menu, výrazné hlavné tlačidlá,
+  akcie v tabuľkách ako ikony s popisom. Tabuľky sa na mobile a v úzkom priestore zobrazia ako karty s popiskami
+  stĺpcov (na tablete v dvoch stĺpcoch) – nikde netreba posúvať riadky do strany. Prešli sme všetky stránky
+  administrácie v šírke počítača, tabletu aj mobilu.
+- **Kratšie menu:** menej používané položky sú pod hlavnou položkou (napr. Štítky, Parametre a Typy produktov pod
+  Produktmi, Doklady a Vrátenie pod Objednávkami, Formuláre pod Správami).
+- **Nástenka:** rýchle akcie (pridať produkt, nové objednávky, správy, hodnotenia na schválenie, úvodná stránka,
+  vzhľad) s počtom položiek, ktoré čakajú na vybavenie.
+- **Funkcie sa zapínajú na jednom mieste** (Nastavenia → Funkcie obchodu). Stránky nastavení funkcie už nemajú druhý
+  prepínač; keď je funkcia vypnutá, zobrazia upozornenie s odkazom na zapnutie.
+- **Editor:** tlačidlo Video (YouTube, Vimeo); editor aj v krátkom popise produktu.
+- **Prispôsobenie šablóny:** skupiny nastavení sa dajú zbaliť, sekcie úvodnej stránky v kompaktnej tabuľke, šablóny
+  môžu skryť zdedené nastavenia, ktoré nepoužívajú (Farma už neukazuje druhý oznamový pruh ani tvar tlačidiel).
+- Dátumy v slovenskom formáte s kalendárom, kalendár rezervácií na mobile po dňoch pod sebou, gramaticky správne
+  texty prázdnych tabuliek a nových záznamov, kratší odkaz „Z knižnice“, opravené rozloženie nastavení Obchod a Značka.
+
 ## 1.2.3 – Oprava nahrávania veľkých súborov
 
 - Oprava: aktualizačný balík (vyše 30 MB) ani väčšiu zálohu sa nedalo nahrať v administrácii – knižnica Livewire

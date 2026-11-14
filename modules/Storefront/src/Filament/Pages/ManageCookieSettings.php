@@ -2,11 +2,11 @@
 
 namespace Modules\Storefront\Filament\Pages;
 
+use App\Filament\Forms\FeatureNotice;
 use App\Filament\Pages\Settings\BaseSettingsPage;
 use App\Filament\Pages\Settings\ManageGeneralSettings;
 use BackedEnum;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -40,7 +40,7 @@ class ManageCookieSettings extends BaseSettingsPage
             Section::make()
                 ->description($t('intro'))
                 ->schema([
-                    Toggle::make('enabled')->label($t('enabled'))->helperText($t('enabled_help')),
+                    FeatureNotice::make('storefront.cookies', 'enabled'),
                     Textarea::make('analytics_code')->label($t('analytics_code'))->helperText($t('analytics_code_help'))
                         ->rows(6)->extraInputAttributes(['class' => 'font-mono text-xs']),
                     Textarea::make('marketing_code')->label($t('marketing_code'))->helperText($t('marketing_code_help'))

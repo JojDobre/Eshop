@@ -245,7 +245,7 @@ return [
     ],
 
     'product_type' => [
-        'label' => 'typ produktu',
+        'label' => 'Typ produktu',
         'plural' => 'Typy produktov',
         'none' => 'Bez typu',
         'name' => 'Názov',

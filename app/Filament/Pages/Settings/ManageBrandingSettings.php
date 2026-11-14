@@ -37,7 +37,8 @@ class ManageBrandingSettings extends BaseSettingsPage
     {
         return $schema->components([
             Section::make(__('admin.settings.branding.section_logo'))
-                ->columns(3)
+                ->columns(['default' => 1, 'sm' => 3])
+                ->columnSpanFull()
                 ->schema([
                     $this->image('logo')
                         ->label(__('admin.settings.branding.logo'))

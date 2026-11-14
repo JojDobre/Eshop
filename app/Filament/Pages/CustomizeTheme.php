@@ -11,6 +11,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -80,11 +81,20 @@ class CustomizeTheme extends Page implements HasSchemas
             $groups[$definition['group'] ?? 'general'][] = $this->field($key, $definition);
         }
 
+        // Poradie skupín: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. Skupiny sa dajú zbaliť,
+        // aby sa v dlhom zozname nastavení nemuselo toľko posúvať.
+        $order = array_flip(['layout', 'header', 'home', 'about', 'faq', 'catalog', 'style', 'colors', 'footer', 'general']);
+        uksort($groups, fn ($a, $b) => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
+
         $sections = [];
 
         foreach ($groups as $group => $fields) {
             $label = __('admin.themes.groups.'.$group);
-            $sections[] = Section::make($label === 'admin.themes.groups.'.$group ? ucfirst($group) : $label)->schema($fields)->compact();
+            $sections[] = Section::make($label === 'admin.themes.groups.'.$group ? ucfirst($group) : $label)
+                ->schema($fields)
+                ->compact()
+                ->collapsible()
+                ->collapsed($sections !== []);
         }
 
         return $schema->statePath('data')->components($sections === [] ? [] : $sections);
@@ -108,15 +118,19 @@ class CustomizeTheme extends Page implements HasSchemas
             'textarea' => Textarea::make($key)->rows(3)->maxLength(5000)->live(debounce: 600),
             'richtext' => RichText::make($key, 'theme')->live(debounce: 1000),
             'sections' => Repeater::make($key)
-                ->schema([
+                // Kompaktná tabuľka: jedna sekcia = jeden riadok (sekcia, rozloženie, poradie šípkami).
+                ->table(array_values(array_filter([
+                    TableColumn::make(__('admin.themes.section')),
+                    $definition['layouts'] !== [] ? TableColumn::make(__('admin.themes.layout'))->width('8.5rem') : null,
+                ])))
+                ->schema(array_values(array_filter([
                     Select::make('section')->hiddenLabel()->required()->selectablePlaceholder(false)
                         ->options(collect($definition['options'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all()),
-                    Select::make('layout')->hiddenLabel()->selectablePlaceholder(false)
+                    $definition['layouts'] !== [] ? Select::make('layout')->hiddenLabel()->selectablePlaceholder(false)
                         ->options(collect($definition['layouts'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all())
-                        ->default(array_key_first($definition['layouts']))
-                        ->visible($definition['layouts'] !== []),
-                ])
-                ->columns(2)->reorderable()->reorderableWithButtons()->defaultItems(0)
+                        ->default(array_key_first($definition['layouts'])) : null,
+                ])))
+                ->reorderable()->reorderableWithButtons()->defaultItems(0)
                 ->addActionLabel(__('admin.themes.add_section'))
                 ->live(),
             'image' => FileUpload::make($key)->disk('public')->directory('theme')->visibility('public')->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])->maxSize(4096)->live(),

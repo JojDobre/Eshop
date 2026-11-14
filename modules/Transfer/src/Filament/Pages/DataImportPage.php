@@ -176,4 +176,10 @@ class DataImportPage extends Page implements HasSchemas
         $this->mapping = [];
         $this->form->fill(['entity' => 'products']);
     }
+
+    /** V menu pod položkou „DataExport“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return DataExport::getNavigationLabel();
+    }
 }

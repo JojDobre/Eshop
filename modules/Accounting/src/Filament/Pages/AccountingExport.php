@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Modules\Accounting\AccountingExporters;
 use Modules\Invoices\InvoiceType;
 use Modules\Invoices\Models\Invoice;
+use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Models\Order;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use UnitEnum;
@@ -130,5 +131,12 @@ class AccountingExport extends Page implements HasSchemas
         $name = $exporter->key().'-'.$from->format('Ymd').'-'.$to->format('Ymd').'.xml';
 
         return response()->streamDownload(fn () => print ($xml), $name, ['Content-Type' => 'application/xml; charset=UTF-8']);
+    }
+
+    /** V menu pod položkou „OrderResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        // Ak modul s nadradenou položkou nie je zapnutý alebo prístupný, položka ostane samostatná.
+        return class_exists(OrderResource::class) && OrderResource::canAccess() ? OrderResource::getNavigationLabel() : null;
     }
 }

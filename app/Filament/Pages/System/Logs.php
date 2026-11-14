@@ -107,4 +107,10 @@ class Logs extends Page implements HasTable
                 }),
         ];
     }
+
+    /** V menu pod položkou „SystemStatusPage“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return SystemStatusPage::getNavigationLabel();
+    }
 }

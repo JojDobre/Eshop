@@ -7,6 +7,7 @@ use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeManager;
 use App\Filament\AdminGroup;
 use App\Filament\Concerns\FillsContentTranslations;
+use App\Filament\Pages\Themes;
 use App\Filament\Resources\MenuItems\Pages\ManageMenuItems;
 use App\Models\MenuItem;
 use BackedEnum;
@@ -148,5 +149,11 @@ class MenuItemResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageMenuItems::route('/')];
+    }
+
+    /** V menu pod položkou „Themes“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return Themes::getNavigationLabel();
     }
 }

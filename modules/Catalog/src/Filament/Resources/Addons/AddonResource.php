@@ -22,6 +22,7 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\Filament\Resources\Addons\Pages\ManageAddons;
+use Modules\Catalog\Filament\Resources\Products\ProductResource;
 use Modules\Catalog\Models\Addon;
 use Modules\Catalog\Models\Product;
 use UnitEnum;
@@ -103,5 +104,11 @@ class AddonResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageAddons::route('/')];
+    }
+
+    /** V menu pod položkou „ProductResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return ProductResource::getNavigationLabel();
     }
 }

@@ -33,6 +33,8 @@ final class Theme
         public readonly array $vite = [],
         public readonly array $stylesheets = [],
         public readonly array $scripts = [],
+        /** Zdedené nastavenia, ktoré táto šablóna nepoužíva (v prispôsobení sa nezobrazia). */
+        public readonly array $hiddenSettings = [],
     ) {}
 
     public static function fromFile(string $manifestPath): ?self
@@ -57,6 +59,7 @@ final class Theme
             requiredEshopVersion: is_string($data['requires']['eshop'] ?? null) ? $data['requires']['eshop'] : null,
             screenshot: $screenshot !== null && is_file($path.'/'.$screenshot) ? $screenshot : null,
             settings: self::settings($data['settings'] ?? []),
+            hiddenSettings: array_values(array_filter((array) ($data['hide_settings'] ?? []), 'is_string')),
             menus: self::labels($data['menus'] ?? []),
             areas: self::labels($data['areas'] ?? []),
             vite: self::paths($data['vite'] ?? []),

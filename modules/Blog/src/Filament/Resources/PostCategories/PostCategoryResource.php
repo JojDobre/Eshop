@@ -15,6 +15,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Modules\Blog\Filament\Resources\PostCategories\Pages\ManagePostCategories;
+use Modules\Blog\Filament\Resources\Posts\PostResource;
 use Modules\Blog\Models\PostCategory;
 use UnitEnum;
 
@@ -81,5 +82,11 @@ class PostCategoryResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManagePostCategories::route('/')];
+    }
+
+    /** V menu pod položkou „PostResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return PostResource::getNavigationLabel();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Marketing\Filament\Pages;
 
+use App\Filament\Forms\FeatureNotice;
 use App\Filament\Pages\Settings\BaseSettingsPage;
 use App\Filament\Pages\Settings\ManageFeatures;
 use BackedEnum;
@@ -49,7 +50,7 @@ class ManageMarketingSettings extends BaseSettingsPage
 
         return $schema->components([
             Section::make($t('newsletter.section'))->columns(2)->schema([
-                Toggle::make('newsletter_enabled')->label($t('newsletter.enabled'))->helperText($t('newsletter.enabled_help'))->live(),
+                FeatureNotice::make('marketing.newsletter', 'newsletter_enabled'),
                 Toggle::make('newsletter_checkout')->label($t('newsletter.checkout'))->visible(fn ($get) => (bool) $get('newsletter_enabled')),
                 Select::make('newsletter_provider')->label($t('newsletter.provider'))->selectablePlaceholder(false)->live()
                     ->options(['none' => $t('newsletter.provider_none'), 'mailchimp' => 'Mailchimp', 'ecomail' => 'Ecomail'])
@@ -64,12 +65,12 @@ class ManageMarketingSettings extends BaseSettingsPage
                     ->visible(fn ($get) => $get('newsletter_enabled') && $get('newsletter_provider') === 'ecomail'),
             ]),
             Section::make($t('abandoned.section'))->description($t('abandoned.help'))->columns(2)->schema([
-                Toggle::make('abandoned_enabled')->label($t('abandoned.enabled'))->live(),
+                FeatureNotice::make('marketing.abandoned', 'abandoned_enabled'),
                 TextInput::make('abandoned_delay_hours')->label($t('abandoned.delay'))->required()->integer()->minValue(1)->maxValue(72)->suffix($t('abandoned.hours'))
                     ->visible(fn ($get) => (bool) $get('abandoned_enabled')),
             ]),
             Section::make($t('feeds.section'))->columns(2)->schema([
-                Toggle::make('feeds_enabled')->label($t('feeds.enabled'))->live(),
+                FeatureNotice::make('marketing.feeds', 'feeds_enabled'),
                 Toggle::make('feeds_out_of_stock')->label($t('feeds.out_of_stock'))->visible(fn ($get) => (bool) $get('feeds_enabled')),
                 Text::make(fn () => $t('feeds.urls', ['heureka' => route('marketing.feed', 'heureka'), 'google' => route('marketing.feed', 'google'), 'facebook' => route('marketing.feed', 'facebook')]))
                     ->columnSpanFull()->visible(fn ($get) => (bool) $get('feeds_enabled')),

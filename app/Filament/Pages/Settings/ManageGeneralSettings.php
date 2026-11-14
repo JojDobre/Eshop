@@ -4,12 +4,12 @@ namespace App\Filament\Pages\Settings;
 
 use App\Core\Content\ShopLocales;
 use App\Core\Themes\ThemeManager;
+use App\Filament\Forms\FeatureNotice;
 use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -60,7 +60,7 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->maxLength(40),
                 ]),
             Section::make(__('admin.settings.general.section_regional'))
-                ->columns(3)
+                ->columns(['default' => 1, 'sm' => 2])
                 ->schema([
                     Select::make('default_locale')
                         ->label(__('admin.settings.general.default_locale'))
@@ -76,19 +76,16 @@ class ManageGeneralSettings extends BaseSettingsPage
                         ->native(false),
                     Select::make('country')
                         ->label(__('admin.settings.general.country'))
+                        ->searchable()
                         ->options(collect(config('eshop.countries'))->mapWithKeys(fn ($code) => [$code => __('countries.'.$code)]))
                         ->required()
                         ->native(false),
-                    Toggle::make('locales_enabled')
-                        ->label(__('admin.features.locales'))
-                        ->helperText(__('admin.features.locales_help'))
-                        ->live()
-                        ->columnSpanFull(),
+                    FeatureNotice::make('core.locales', 'locales_enabled'),
                     CheckboxList::make('locales')
                         ->label(__('admin.settings.general.locales'))
                         ->helperText(__('admin.settings.general.locales_help'))
                         ->options(fn (Get $get) => collect(config('eshop.content_locales'))->except($get('default_locale'))->all())
-                        ->columns(4)
+                        ->columns(['default' => 2, 'lg' => 3])
                         ->columnSpanFull()
                         ->visible(fn (Get $get) => (bool) $get('locales_enabled'))
                         ->dehydrateStateUsing(fn (?array $state, Get $get) => array_values(array_diff($state ?? [], [$get('default_locale')]))),

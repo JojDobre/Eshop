@@ -255,8 +255,13 @@ return [
         'uploaded' => 'The backup has been uploaded. You can restore it now.',
     ],
     'rich_text' => [
+        'video' => 'Video',
+        'video_heading' => 'Insert video',
+        'video_insert' => 'Insert',
+        'video_url' => 'Video link',
+        'video_url_help' => 'YouTube or Vimeo. Shown as a link in the editor and as a player in the shop.',
         'brand' => 'Shop colour',
-        'help' => 'Insert an image with the paperclip button. Paste a YouTube or Vimeo link on its own line to embed the video.',
+        'help' => 'Insert images with the paperclip button and videos with the ▶ button (YouTube or Vimeo).',
     ],
     'admin_menu' => [
         'title' => 'Admin menu',
@@ -385,6 +390,21 @@ return [
         'web_cron' => 'Web cron – if your hosting cannot run commands',
         'web_cron_help' => 'Have this URL called every 5–15 minutes (in your hosting panel or a service like cron-job.org). Do not share the URL.',
     ],
+    'feature_notice' => [
+        'off' => 'The “:feature” feature is turned off',
+        'help' => 'Shop features are turned on and off in one place. The settings below apply once it is on.',
+        'open' => 'Turn on in Shop features',
+    ],
+
+    'quick' => [
+        'new_product' => 'Add product',
+        'orders' => 'New orders',
+        'messages' => 'Messages',
+        'reviews' => 'Reviews',
+        'home' => 'Home page',
+        'design' => 'Shop design',
+    ],
+
     'media' => [
         'title' => 'Media library',
         'label' => 'file',
@@ -403,7 +423,8 @@ return [
         'files' => 'Files',
         'files_help' => 'Images (JPG, PNG, WebP, GIF, SVG) and PDF, up to 10 MB per file.',
         'uploaded' => 'Uploaded files: :count',
-        'pick' => 'Choose from library',
+        'pick' => 'From library',
+        'pick_heading' => 'Choose from library',
         'pick_help' => 'Images uploaded anywhere in the administration (products, categories, blog, blocks, theme).',
         'use_selected' => 'Use selected',
         'sync' => 'Load shop images',
@@ -558,6 +579,8 @@ return [
         'saved' => 'Theme settings were saved.',
         'no_settings' => 'This theme has no settings.',
         'preview_page' => 'Page in preview',
+        'section' => 'Section',
+        'layout' => 'Layout',
         'add_section' => 'Add section',
         'groups' => [
             'general' => 'General',
@@ -600,6 +623,7 @@ return [
         'home' => 'Home page',
         'layout' => 'Editing',
         'title' => 'Heading',
+        'section' => 'Blocks',
         'add' => 'Add block',
         'saved' => 'Blocks were saved.',
         'page_help' => 'Additional content below the page text, e.g. a banner or products.',

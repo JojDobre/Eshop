@@ -24,6 +24,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Modules\Orders\Filament\Resources\Coupons\CouponResource;
 use Modules\Orders\Filament\Resources\GiftVouchers\Pages\ManageGiftVouchers;
 use Modules\Orders\GiftVouchers;
 use Modules\Orders\GiftVoucherSettings;
@@ -146,5 +147,11 @@ class GiftVoucherResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageGiftVouchers::route('/')];
+    }
+
+    /** V menu pod položkou „CouponResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return CouponResource::getNavigationLabel();
     }
 }

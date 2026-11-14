@@ -26,6 +26,7 @@ use Modules\Catalog\CatalogFeatures;
 use Modules\Catalog\CustomFields\CustomField;
 use Modules\Catalog\CustomFields\CustomFieldType;
 use Modules\Catalog\Filament\Resources\CustomFields\Pages\ManageCustomFields;
+use Modules\Catalog\Filament\Resources\Products\ProductResource;
 use UnitEnum;
 
 class CustomFieldResource extends Resource
@@ -188,5 +189,11 @@ class CustomFieldResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageCustomFields::route('/')];
+    }
+
+    /** V menu pod položkou „ProductResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return ProductResource::getNavigationLabel();
     }
 }

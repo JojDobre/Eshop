@@ -5,7 +5,7 @@
         <x-filament::button color="gray" size="sm" wire:click="today">{{ $t('today') }}</x-filament::button>
         <x-filament::button color="gray" size="sm" wire:click="move(1)" icon="heroicon-m-chevron-right" :label-sr-only="true">{{ $t('next') }}</x-filament::button>
         <h2 class="text-lg font-semibold" style="margin-inline: .5rem">{{ $label }}</h2>
-        <div style="margin-inline-start: auto" class="flex gap-2">
+        <div style="margin-inline-start: auto" class="flex flex-wrap gap-2">
             <select wire:model.live="resource" class="fi-select-input rounded-lg text-sm" aria-label="{{ $t('resource') }}">
                 <option value="">{{ $t('all_resources') }}</option>
                 @foreach ($resources as $id => $name)
@@ -20,10 +20,11 @@
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat({{ $mode === 'day' ? 1 : 7 }}, minmax(0, 1fr)); gap: .5rem">
+    {{-- Na úzkych obrazovkách sú dni pod sebou (7 stĺpcov by bolo nečitateľných), od šírky tabletu v mriežke. --}}
+    <div class="reservation-calendar-grid" style="--calendar-cols: {{ $mode === 'day' ? 1 : 7 }}">
         @foreach ($days as $day)
             @php($items = $byDay[$day->toDateString()])
-            <div @class(['rounded-lg border p-2 dark:border-white/10', 'opacity-50' => $mode === 'month' && $day->month !== $month]) style="min-height: {{ $mode === 'month' ? '6rem' : '12rem' }}; {{ $day->isToday() ? 'border-color: rgb(var(--primary-500, 59 130 246))' : '' }}">
+            <div @class(['rounded-lg border p-2 dark:border-white/10', 'opacity-50' => $mode === 'month' && $day->month !== $month]) style="min-height: var(--calendar-day-height, {{ $mode === 'month' ? '6rem' : '12rem' }}); {{ $day->isToday() ? 'border-color: rgb(var(--primary-500, 59 130 246))' : '' }}">
                 <div class="mb-1 text-xs font-medium text-gray-500">{{ $t('days.'.$day->dayOfWeekIso) }} {{ $day->format('j. n.') }}</div>
                 @forelse ($items as $booking)
                     <a href="{{ \Modules\Reservations\Filament\Resources\Bookings\BookingResource::getUrl('index', ['tableSearch' => $booking->number]) }}" class="mb-1 block rounded px-1.5 py-1 text-xs" style="background: {{ $booking->status === 'pending' ? 'rgba(234,179,8,.15)' : 'rgba(34,197,94,.15)' }}">
@@ -37,4 +38,11 @@
             </div>
         @endforeach
     </div>
+<style>
+    .reservation-calendar-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; --calendar-day-height: auto; }
+    @media (min-width: 48rem) {
+        .reservation-calendar-grid { grid-template-columns: repeat(var(--calendar-cols), minmax(0, 1fr)); --calendar-day-height: initial; }
+    }
+</style>
 </x-filament-panels::page>
+

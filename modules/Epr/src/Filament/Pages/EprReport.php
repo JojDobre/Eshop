@@ -17,6 +17,7 @@ use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Carbon;
 use Modules\Epr\EprSettings;
 use Modules\Epr\Packaging;
+use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use UnitEnum;
 
@@ -128,5 +129,12 @@ class EprReport extends Page implements HasSchemas
         $name = 'epr-'.Carbon::parse($data['from'])->format('Ymd').'-'.Carbon::parse($data['to'])->format('Ymd').'.csv';
 
         return response()->streamDownload(fn () => print ($csv), $name, ['Content-Type' => 'text/csv; charset=UTF-8']);
+    }
+
+    /** V menu pod položkou „OrderResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        // Ak modul s nadradenou položkou nie je zapnutý alebo prístupný, položka ostane samostatná.
+        return class_exists(OrderResource::class) && OrderResource::canAccess() ? OrderResource::getNavigationLabel() : null;
     }
 }

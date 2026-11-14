@@ -18,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Modules\Reservations\Filament\ReservationsNav;
+use Modules\Reservations\Filament\Resources\Bookings\BookingResource;
 use Modules\Reservations\Filament\Resources\Services\Pages\ManageServices;
 use Modules\Reservations\Models\BookingService;
 
@@ -87,5 +88,11 @@ class ServiceResource extends Resource
     public static function getPages(): array
     {
         return ['index' => ManageServices::route('/')];
+    }
+
+    /** V menu pod položkou „BookingResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return BookingResource::getNavigationLabel();
     }
 }

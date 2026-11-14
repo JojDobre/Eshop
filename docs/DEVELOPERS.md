@@ -70,6 +70,9 @@ themes/mojasablona/
 Odvodená šablóna (`"parent": "default"`) obsahuje iba súbory, ktoré mení – napr. šablóna **Farma**
 prepisuje hlavičku, pätičku, kartu produktu a úvodnú stránku a zvyšok preberá z Default. Nastavenia
 z `theme.json` sú v šablóne cez `$themeOptions->get('kluc')`, obrázky cez `$themeOptions->imageUrl('kluc')`.
+Typy nastavení: `text`, `textarea`, `richtext`, `color`, `select`, `toggle`, `number`, `image` a `sections`
+(zoradenie sekcií s rozložením). Zdedené nastavenia, ktoré odvodená šablóna nepoužíva, skryjete zoznamom
+`"hide_settings": ["announcement"]`, aby v prispôsobení nemiatli.
 Kontrolu šablóny spustíte v **Vzhľad → Šablóny**.
 
 Farba značky je premenná `--brand-primary`; predvolené premenné CSS definujte cez `:where(:root)`,

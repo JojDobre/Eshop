@@ -1,6 +1,6 @@
 {
     "name": "farma",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "title": {
         "sk": "Farma",
         "cs": "Farma",
@@ -21,6 +21,11 @@
         "themes/farma/assets/css/theme.css",
         "themes/default/assets/js/theme.js"
     ],
+    "hide_settings": [
+        "announcement",
+        "button_style",
+        "show_tagline"
+    ],
     "settings": {
         "home_sections": {
             "type": "sections",
@@ -31,9 +36,9 @@
                 "en": "Home page sections"
             },
             "help": {
-                "sk": "Poradie zmeníte šípkami, sekciu odstránite krížikom. „Bloky“ sú bloky z Obsah → Úvodná stránka a bloky (napr. formulár, video, text). Rozloženie „Obrátené“ prehodí stranu obrázka.",
-                "cs": "Pořadí změníte šipkami, sekci odstraníte křížkem. „Bloky“ jsou bloky z Obsah → Úvodní stránka a bloky (např. formulář, video, text). Rozložení „Obrácené“ prohodí stranu obrázku.",
-                "en": "Reorder with the arrows, remove a section with the cross. “Blocks” are the blocks from Content → Home page and blocks (e.g. form, video, text). The “Reversed” layout swaps the image side."
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite košom. „Bloky z obsahu“ sú bloky z Obsah → Úvodná stránka a bloky (napr. formulár, video, text). Rozloženie „Obrátené“ prehodí stranu obrázka.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte košem. „Bloky z obsahu“ jsou bloky z Obsah → Úvodní stránka a bloky (např. formulář, video, text). Rozložení „Obrácené“ prohodí stranu obrázku.",
+                "en": "Reorder with the arrows, remove a section with the bin. “Content blocks” are the blocks from Content → Home page and blocks (e.g. form, video, text). The “Reversed” layout swaps the image side."
             },
             "default": [
                 "hero",
@@ -53,9 +58,9 @@
                     "en": "Hero banner"
                 },
                 "categories": {
-                    "sk": "Kategórie v dlaždiciach",
-                    "cs": "Kategorie v dlaždicích",
-                    "en": "Category tiles"
+                    "sk": "Kategórie",
+                    "cs": "Kategorie",
+                    "en": "Categories"
                 },
                 "products": {
                     "sk": "Produkty",
@@ -73,14 +78,14 @@
                     "en": "Tip strip"
                 },
                 "about": {
-                    "sk": "O nás a výhody",
-                    "cs": "O nás a výhody",
-                    "en": "About and benefits"
+                    "sk": "O nás",
+                    "cs": "O nás",
+                    "en": "About"
                 },
                 "reviews": {
-                    "sk": "Hodnotenia zákazníkov",
-                    "cs": "Hodnocení zákazníků",
-                    "en": "Customer reviews"
+                    "sk": "Hodnotenia",
+                    "cs": "Hodnocení",
+                    "en": "Reviews"
                 },
                 "faq": {
                     "sk": "Časté otázky",
@@ -88,9 +93,9 @@
                     "en": "FAQ"
                 },
                 "blocks": {
-                    "sk": "Bloky (Obsah → Úvodná stránka a bloky)",
-                    "cs": "Bloky (Obsah → Úvodní stránka a bloky)",
-                    "en": "Blocks (Content → Home page and blocks)"
+                    "sk": "Bloky z obsahu",
+                    "cs": "Bloky z obsahu",
+                    "en": "Content blocks"
                 }
             },
             "layouts": {

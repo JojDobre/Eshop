@@ -121,8 +121,8 @@ class ProductResource extends Resource
                     TextInput::make('name')->label($t('name'))->required()->maxLength(200),
                     TextInput::make('slug')->label($t('slug'))->helperText(__('catalog::admin.slug_help'))->maxLength(220)
                         ->rule('regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'),
-                    Textarea::make('short_description')->label($t('short_description'))->helperText($t('short_description_help'))
-                        ->rows(2)->maxLength(500),
+                    RichText::compact('short_description')->label($t('short_description'))->helperText($t('short_description_help'))
+                        ->maxLength(3000),
                     RichText::make('description', 'products')->label($t('description')),
                 ]),
                 Section::make(__('catalog::admin.custom_fields.plural'))

@@ -156,7 +156,10 @@ class ThemeManager
      */
     public function settingDefinitions(?Theme $theme = null): array
     {
-        return $this->merged($theme, fn (Theme $item) => $item->settings);
+        $chain = $theme ? $this->chainFor($theme) : $this->chain();
+        $hidden = array_merge(...array_map(fn (Theme $item) => $item->hiddenSettings, $chain ?: [new Theme('', '', '')]));
+
+        return array_diff_key($this->merged($theme, fn (Theme $item) => $item->settings), array_flip($hidden));
     }
 
     /**

@@ -86,4 +86,10 @@ class BookingResourceResource extends Resource
     {
         return ['index' => ManageBookingResources::route('/')];
     }
+
+    /** V menu pod položkou „BookingResource“ (zobrazí sa po jej otvorení), aby bolo hlavné menu krátke. */
+    public static function getNavigationParentItem(): ?string
+    {
+        return \Modules\Reservations\Filament\Resources\Bookings\BookingResource::getNavigationLabel();
+    }
 }

@@ -4,6 +4,7 @@ namespace Modules\Pages\Filament\Resources\Pages;
 
 use App\Filament\AdminGroup;
 use App\Filament\Forms\BlockBuilder;
+use App\Filament\Forms\DisplayOptions;
 use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
@@ -84,6 +85,7 @@ class PageResource extends Resource
                         ->rule('regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/'),
                     RichText::make('content', 'pages')->label($t('content')),
                 ]),
+                DisplayOptions::section(),
                 BlockBuilder::section(__('admin.blocks.page_help')),
                 Section::make($t('seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label($t('meta_title'))->maxLength(70),

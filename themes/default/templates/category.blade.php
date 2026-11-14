@@ -11,18 +11,37 @@
 @endif
 
 @section('content')
-    <div class="container-shop py-8">
-        @include('theme::partials.breadcrumbs', ['items' => [
-            ...array_map(fn ($ancestor) => [$ancestor->name, $ancestor->url()], $category->ancestors()),
-            [$category->name, null],
-        ]])
+    @php($categoryDisplay = $category->display ?? [])
+    @php($categoryHeader = $categoryDisplay['header'] ?? 'title')
+    @php($categoryHeroImage = ! empty($categoryDisplay['hero_image']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($categoryDisplay['hero_image']) : $category->imageUrl())
+    @php($categoryShowDescription = ($categoryDisplay['show_description'] ?? true) && $category->description)
 
-        <header class="mt-6 max-w-3xl">
-            <h1 class="text-3xl font-semibold tracking-tight">{{ $category->name }}</h1>
-            @if ($category->description)
-                <div class="prose prose-zinc mt-4 max-w-none text-zinc-600">{{ safe_html($category->description) }}</div>
-            @endif
-        </header>
+    @if ($categoryHeader === 'hero')
+        @include('theme::partials.page-hero', ['heroTitle' => $category->name, 'heroText' => $categoryDisplay['hero_text'] ?? null, 'heroImage' => $categoryHeroImage, 'heroHeight' => $categoryDisplay['hero_height'] ?? 'medium'])
+    @endif
+
+    <div class="container-shop py-8">
+        @if ($categoryDisplay['breadcrumbs'] ?? true)
+            @include('theme::partials.breadcrumbs', ['items' => [
+                ...array_map(fn ($ancestor) => [$ancestor->name, $ancestor->url()], $category->ancestors()),
+                [$category->name, null],
+            ]])
+        @endif
+
+        @if ($categoryHeader === 'none')
+            <h1 class="sr-only">{{ $category->name }}</h1>
+        @endif
+
+        @if ($categoryHeader === 'title' || $categoryShowDescription)
+            <header class="mt-6 max-w-3xl">
+                @if ($categoryHeader === 'title')
+                    <h1 class="text-3xl font-semibold tracking-tight">{{ $category->name }}</h1>
+                @endif
+                @if ($categoryShowDescription)
+                    <div class="prose prose-zinc mt-4 max-w-none text-zinc-600">{{ safe_html($category->description) }}</div>
+                @endif
+            </header>
+        @endif
 
         @if ($subcategories->isNotEmpty())
             <ul class="mt-6 flex flex-wrap gap-2">

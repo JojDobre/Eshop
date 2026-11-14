@@ -281,3 +281,17 @@ main h1 {
     border-color: var(--brand-primary);
     color: var(--brand-primary-foreground, #fff);
 }
+
+/* Sekcie so stĺpcami v štýle Farmy. */
+.block-grid-section.section-bg-light {
+    background-color: var(--farma-cream);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}

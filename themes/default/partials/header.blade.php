@@ -85,12 +85,6 @@
 
     @if ($navItems !== [])
         <nav id="mobile-menu" x-show="menu" x-cloak class="border-t border-zinc-100 md:hidden" aria-label="{{ __('theme::shop.categories') }}">
-            @if ((isset($shopCurrencies) && $shopCurrencies->isMulticurrency()) || (! empty($alternateUrls) && count($alternateUrls) > 1))
-                <div class="container-shop flex items-center gap-2 pt-3 sm:hidden">
-                    @include('theme::partials.language-switcher')
-                    @include('theme::partials.currency-switcher')
-                </div>
-            @endif
             <ul class="container-shop divide-y divide-zinc-100 py-2">
                 @foreach ($navItems as $navItem)
                     <li>
@@ -105,6 +99,7 @@
                     </li>
                 @endforeach
             </ul>
+            <div class="container-shop border-t border-zinc-100 sm:hidden">@include('theme::partials.preference-switchers-inline')</div>
         </nav>
     @endif
 </header>

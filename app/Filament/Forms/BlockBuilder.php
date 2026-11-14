@@ -13,13 +13,16 @@ use Filament\Schemas\Components\Section;
  */
 final class BlockBuilder
 {
-    public static function make(string $name = 'blocks'): Builder
+    /**
+     * @param  list<string>  $exclude  Typy blokov, ktoré sa nedajú pridať (napr. sekcia v sekcii).
+     */
+    public static function make(string $name = 'blocks', array $exclude = []): Builder
     {
         return Builder::make($name)
             ->hiddenLabel()
             ->blocks(array_values(array_map(
                 fn (BlockType $type) => Block::make($type->key)->label(($type->label)())->icon($type->icon)->schema(($type->schema)()),
-                app(BlockTypes::class)->all(),
+                array_diff_key(app(BlockTypes::class)->all(), array_flip($exclude)),
             )))
             ->addActionLabel(__('admin.blocks.add'))
             ->blockPickerColumns(2)

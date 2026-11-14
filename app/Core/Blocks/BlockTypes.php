@@ -37,7 +37,7 @@ class BlockTypes
      *
      * @param  list<array{type?: string, data?: array<string, mixed>}>|null  $blocks
      */
-    public function render(?array $blocks): HtmlString
+    public function render(?array $blocks, string $idPrefix = ''): HtmlString
     {
         $html = '';
 
@@ -51,7 +51,7 @@ class BlockTypes
 
             try {
                 $data = $type->prepare ? ($type->prepare)($data) : $data;
-                $html .= view('theme::blocks.'.$type->key, ['block' => $data, 'blockId' => 'block-'.$type->key.'-'.$index])->render();
+                $html .= view('theme::blocks.'.$type->key, ['block' => $data, 'blockId' => 'block-'.$idPrefix.$type->key.'-'.$index])->render();
             } catch (Throwable $e) {
                 report($e);
             }

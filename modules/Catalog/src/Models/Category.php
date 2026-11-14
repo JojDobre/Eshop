@@ -45,6 +45,7 @@ class Category extends Model
     {
         return [
             'is_visible' => 'boolean',
+            'display' => 'array',
             'position' => 'integer',
         ];
     }

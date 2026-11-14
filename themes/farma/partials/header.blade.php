@@ -133,12 +133,6 @@
     @endif
 
     <div id="mobile-menu" x-show="menu" x-cloak class="border-b border-line bg-white md:hidden">
-        @if ((isset($shopCurrencies) && $shopCurrencies->isMulticurrency()) || (! empty($alternateUrls) && count($alternateUrls) > 1))
-            <div class="container-shop flex items-center gap-2 pt-3 sm:hidden">
-                @include('theme::partials.language-switcher')
-                @include('theme::partials.currency-switcher')
-            </div>
-        @endif
         @if (Route::has('catalog.search'))
             <form action="{{ route('catalog.search') }}" method="GET" role="search" class="container-shop pt-3">
                 <label for="mobile-search" class="sr-only">{{ __('theme::shop.search') }}</label>
@@ -158,5 +152,6 @@
                 <li><a href="{{ route('customer.account') }}" class="block py-3">{{ empty($customer) ? __('theme::account.login') : __('theme::account.title') }}</a></li>
             @endif
         </ul>
+        <div class="container-shop sm:hidden">@include('theme::partials.preference-switchers-inline')</div>
     </div>
 </header>

@@ -209,3 +209,28 @@ select:not([multiple]):not([size]) {
 .blog-post-wide .block-section .max-w-3xl {
     max-width: 64rem;
 }
+
+/* Bloky vnorené v stĺpcoch sekcie: bez vlastného okraja a odsadenia (rozostupy riadi sekcia). */
+.block-columns .container-shop {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.block-columns .block-section,
+.block-columns > [id^='block-'] {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Text na tmavom pozadí sekcie. */
+.block-grid-section.is-dark .block-title,
+.block-grid-section.is-dark .prose,
+.block-grid-section.is-dark .prose :where(h2, h3, strong, a) {
+    color: inherit;
+}
+
+.block-grid-section.is-dark .text-zinc-600 {
+    color: inherit;
+    opacity: 0.85;
+}

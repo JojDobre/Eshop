@@ -102,6 +102,7 @@ class Page extends Model
             'show_in_footer' => 'boolean',
             'position' => 'integer',
             'is_visible' => 'boolean',
+            'display' => 'array',
         ];
     }
 

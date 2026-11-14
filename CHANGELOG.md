@@ -1,5 +1,17 @@
 # Prehľad zmien
 
+## 1.5.0 – Skladanie vlastných sekcií, vzhľad stránok
+
+- **Vlastné sekcie ako v page builderi:** nový blok „Sekcia so stĺpcami“ (1 až 4 stĺpce, rôzne pomery šírky,
+  pozadie – svetlé, farba obchodu, tmavé alebo obrázok –, šírka, odsadenie, zarovnanie). Do každého stĺpca vložíte
+  ďalšie bloky. Nové prvky: Nadpis (s podnadpisom, veľkosťou a zarovnaním), Obrázok s textom, Tlačidlá, Karta
+  s ikonou a Medzera / čiara. Bloky fungujú na úvodnej stránke, v stránkach, kategóriách aj článkoch.
+- **Vzhľad stránok a kategórií:** klasický nadpis, banner s obrázkom (nadpis a text na obrázku, tri výšky) alebo bez
+  nadpisu (stránka iba z blokov), šírka textu, zobrazenie navigácie; pri kategórii aj skrytie popisu (banner
+  použije obrázok kategórie).
+- Jazyk a mena v mobilnom menu ako tlačidlá vedľa seba (namiesto rozbaľovacieho zoznamu, ktorý vypadával mimo
+  obrazovku).
+
 ## 1.4.0 – Bloky v prispôsobení šablóny, rozloženie blogu
 
 - **Bloky úvodnej stránky priamo v Prispôsobení šablóny** (Vzhľad → Prispôsobiť → Bloky úvodnej stránky) so živým

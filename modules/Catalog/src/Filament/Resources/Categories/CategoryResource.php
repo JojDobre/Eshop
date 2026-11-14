@@ -4,6 +4,7 @@ namespace Modules\Catalog\Filament\Resources\Categories;
 
 use App\Filament\AdminGroup;
 use App\Filament\Forms\BlockBuilder;
+use App\Filament\Forms\DisplayOptions;
 use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
@@ -77,6 +78,7 @@ class CategoryResource extends Resource
                     RichText::make('description', 'categories')->label($t('description')),
                 ]),
                 CustomFieldsSection::make(CustomField::CATEGORY),
+                DisplayOptions::section(category: true),
                 BlockBuilder::section(__('admin.blocks.category_help')),
                 Section::make(__('catalog::admin.seo'))->collapsed()->schema([
                     TextInput::make('meta_title')->label(__('catalog::admin.meta_title'))->maxLength(70),

@@ -77,4 +77,58 @@ class BlocksTest extends ShopTestCase
         $this->assertSame('https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ', CoreBlocks::videoEmbed('https://youtu.be/dQw4w9WgXcQ'));
         $this->assertNull(CoreBlocks::videoEmbed('https://evil.example/video'));
     }
+
+    public function test_section_with_columns_and_element_blocks(): void
+    {
+        $page = Page::query()->create(['name' => ['sk' => 'O farme'], 'blocks' => ['sk' => [[
+            'type' => 'section',
+            'data' => [
+                'layout' => 'wide_left', 'background' => 'dark', 'width' => 'contained', 'padding' => 'large',
+                'column_1' => [
+                    ['type' => 'heading', 'data' => ['title' => 'Naša farma', 'subtitle' => 'Od roku 2017', 'size' => 'large', 'align' => 'left']],
+                    ['type' => 'buttons', 'data' => ['items' => [['label' => 'Obchod', 'url' => '/', 'style' => 'primary'], ['label' => 'Kontakt', 'url' => '/kontakt', 'style' => 'secondary']]]],
+                ],
+                'column_2' => [
+                    ['type' => 'feature', 'data' => ['icon' => 'leaf', 'title' => 'Vlastný chov', 'text' => 'Bez chémie']],
+                    ['type' => 'spacer', 'data' => ['height' => 'small', 'divider' => true]],
+                ],
+                // Tretí stĺpec pri rozložení s dvomi stĺpcami sa nezobrazí.
+                'column_3' => [['type' => 'heading', 'data' => ['title' => 'Skrytý stĺpec']]],
+            ],
+        ]]]]);
+
+        $this->get($page->url())->assertOk()
+            ->assertSee('md:col-span-8', false)
+            ->assertSee('md:col-span-4', false)
+            ->assertSee('bg-zinc-900', false)
+            ->assertSee('Naša farma')
+            ->assertSee('Od roku 2017')
+            ->assertSee('btn-secondary', false)
+            ->assertSee('Vlastný chov')
+            ->assertSee('id="block-section-0-c2-feature-0"', false)
+            ->assertDontSee('Skrytý stĺpec');
+    }
+
+    public function test_page_and_category_display_options(): void
+    {
+        $page = Page::query()->create([
+            'name' => ['sk' => 'Naše vajcia'],
+            'content' => ['sk' => '<p>Obsah stránky</p>'],
+            'display' => ['header' => 'hero', 'hero_image' => 'pages/hero.jpg', 'hero_text' => 'Čerstvé každý deň', 'breadcrumbs' => false],
+        ]);
+
+        $this->get($page->url())->assertOk()
+            ->assertSee('page-hero', false)
+            ->assertSee('uploads/pages/hero.jpg', false)
+            ->assertSee('Čerstvé každý deň')
+            ->assertSee('Obsah stránky')
+            ->assertDontSee('aria-label="Breadcrumb"', false);
+
+        $category = $this->category('Klietky');
+        $category->update(['display' => ['header' => 'none', 'breadcrumbs' => true, 'show_description' => false], 'description' => ['sk' => '<p>Popis klietok</p>']]);
+
+        $this->get($category->fresh()->url())->assertOk()
+            ->assertSee('<h1 class="sr-only">Klietky</h1>', false)
+            ->assertDontSee('<p>Popis klietok</p>', false);
+    }
 }

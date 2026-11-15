@@ -17,7 +17,8 @@ Jedna inštalácia = jeden obchod s vlastným názvom, logom, farbami a šablón
 - **Aktualizácie** podpísané Ed25519 s automatickým aj ručným vrátením a záchranným skriptom.
 - **Zálohy** s heslom, kópiou na FTP/SFTP/S3, testom obnovy a obnovou aj na novom hostingu.
 - **GDPR** (automatické mazanie údajov), **EPR** (evidencia obalov), **prístupnosť** (WCAG 2.1 AA).
-- **Šablóna Farma** pre malé obchody s domácimi produktmi.
+- **Šablóna Farma** pre malé obchody s domácimi produktmi a **šablóna Dielňa** pre handmade a remeslá (s hotovým demom).
+- **Demo balíky:** export a import obsahu obchodu (produkty, stránky, blog, bloky, formuláre, menu, vzhľad, fotky).
 - E2E testy v prehliadači, záťažové testy ([`docs/PERFORMANCE.md`](docs/PERFORMANCE.md)), test prechodov zo všetkých verzií.
 
 **Rezervácie, dáta a doklady (krok 4f)**

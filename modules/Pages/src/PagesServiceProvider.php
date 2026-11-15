@@ -31,11 +31,11 @@ class PagesServiceProvider extends ModuleServiceProvider
         $this->app->make(MenuLinkTypes::class)->register(new MenuLinkType(
             key: 'page',
             label: fn () => __('pages::admin.label'),
-            options: fn () => Page::query()->orderBy('position')->get()->mapWithKeys(fn (Page $page) => [(string) $page->id => $page->title])->all(),
+            options: fn () => Page::query()->orderBy('position')->get()->mapWithKeys(fn (Page $page) => [(string) $page->id => $page->name])->all(),
             resolve: function (string $target): ?array {
                 $page = Page::query()->visible()->find((int) $target);
 
-                return $page ? ['url' => $page->url(), 'label' => $page->title] : null;
+                return $page ? ['url' => $page->url(), 'label' => $page->name] : null;
             },
         ));
 

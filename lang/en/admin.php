@@ -698,7 +698,7 @@ return [
         'invalid' => 'The file is not a valid demo package.',
         'failed' => 'The demo could not be imported',
         'imported' => 'Demo imported',
-        'imported_body' => 'Added: :products products, :pages pages, :posts posts. Adjust the sample texts and images in your shop.',
+        'imported_body' => 'Products: :products · pages: :pages · posts: :posts. Adjust the sample texts and images in your shop.',
     ],
     'saved_blocks' => [
         'label' => 'Saved section',

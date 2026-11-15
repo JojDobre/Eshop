@@ -10,6 +10,7 @@ use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Livewire\Livewire;
+use Modules\Pages\Models\Page;
 
 class ThemesTest extends ShopTestCase
 {
@@ -108,8 +109,11 @@ class ThemesTest extends ShopTestCase
         $parent = MenuItem::query()->create(['location' => 'header', 'type' => 'category', 'target' => (string) $coffee->id]);
         MenuItem::query()->create(['location' => 'header', 'parent_id' => $parent->id, 'type' => 'url', 'target' => '/akcia', 'label' => 'Akciové kávy']);
         MenuItem::query()->create(['location' => 'footer', 'type' => 'url', 'target' => 'https://example.com', 'label' => 'Blog', 'new_window' => true]);
+        $page = Page::query()->create(['name' => 'Náš príbeh', 'is_visible' => true]);
+        MenuItem::query()->create(['location' => 'header', 'type' => 'page', 'target' => (string) $page->id]);
 
         $this->get('/')
+            ->assertSee('>Náš príbeh</a>', false)
             ->assertSee($coffee->url())
             ->assertSee('Akciové kávy')
             ->assertSee('href="https://example.com"', false);

@@ -2,12 +2,15 @@
 
 namespace Tests\Feature\Shop;
 
+use App\Core\Demo\DemoImporter;
 use App\Core\Themes\ThemeChecker;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Models\BlockLayout;
 use App\Settings\GeneralSettings;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use Modules\Catalog\Models\Product;
 use Modules\Pages\Models\Page;
 
 class BundledThemesTest extends ShopTestCase
@@ -28,7 +31,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -131,5 +134,60 @@ class BundledThemesTest extends ShopTestCase
         $this->get('/')->assertOk()->assertSee(theme_asset('custom.css', 'starter'), false);
         $this->get($page->url())->assertOk()->assertSee('Sme malý obchod.');
         $this->get(theme_asset('custom.css', 'starter'))->assertOk();
+    }
+
+    public function test_dielna_theme_renders_default_texts_settings_and_sections(): void
+    {
+        $ceramics = $this->category('Keramika');
+        $this->product('Hrnček Piesok', '28.00', category: $ceramics);
+        $this->activate('dielna');
+
+        // Bez nastavení: predvolené texty šablóny v jazyku obchodu.
+        $this->get('/')
+            ->assertOk()
+            ->assertSee(__('theme::dielna.categories_title'))
+            ->assertSee('Hrnček Piesok')
+            ->assertSee('--dielna-bg: #f7f1e8', false)
+            ->assertSee('<em class="font-normal text-accent">pomaly</em>', false);
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('dielna'), [
+            'home_sections' => [['section' => 'story', 'layout' => 'reverse'], ['section' => 'hero', 'layout' => 'default']],
+            'hero_title' => 'Ručne *točené* hrnčeky', 'notice_text' => 'Doprava zdarma od 50 €', 'logo_text' => 'z mojej dielne',
+            'story_signature' => 'Lucia', 'story_text' => '<p>Môj príbeh</p><script>alert(1)</script>', 'color_ink' => '#112233',
+        ]);
+
+        $html = $this->get('/')->assertOk()
+            ->assertSee('Doprava zdarma od 50 €')
+            ->assertSee('z mojej dielne')
+            ->assertSee('<em class="font-normal text-accent">točené</em>', false)
+            ->assertSee('Môj príbeh')
+            ->assertDontSee('<script>alert(1)</script>', false)
+            ->assertSee('--dielna-ink: #112233', false)
+            ->assertDontSee(__('theme::dielna.categories_title'))
+            ->getContent();
+        // Poradie sekcií podľa nastavenia: príbeh pred úvodom.
+        $this->assertTrue(strpos($html, 'Môj príbeh') < strpos($html, 'točené'));
+
+        $this->get($ceramics->url())->assertOk()->assertSee('Hrnček Piesok');
+        $this->get(Product::query()->first()->url())->assertOk();
+        $this->get(route('cart.show'))->assertOk();
+    }
+
+    public function test_dielna_bundled_demo_imports(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/dielna-demo-'.uniqid()]);
+        $theme = app(ThemeManager::class)->find('dielna');
+        $this->assertNotNull($theme->demoPath());
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(15, $counts['products']);
+        $this->assertSame('dielna', app(GeneralSettings::class)->theme);
+        $this->activate('dielna');
+        $this->get('/')->assertOk()->assertSee('Lucia')->assertSee('Keramika')->assertSee('Drevené lyžičky, sada 3 ks');
+        $this->get(Product::query()->where('name->sk', 'Hrnček Piesok')->sole()->url())->assertOk()->assertSee('Glazúra')->assertSee('Šalvia');
+        $this->get(Page::query()->where('name->sk', 'Výroba na mieru')->sole()->url())->assertOk()->assertSee('Poslať požiadavku');
+
+        Storage::disk('public')->deleteDirectory('demo/dielna');
     }
 }

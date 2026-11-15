@@ -65,6 +65,8 @@ final class DemoSchema
         'saved_block_id' => 'saved_blocks',
         'blog_category_id' => 'blog_categories',
         'post_ids' => 'blog_posts',
+        // Nastavenie šablóny Dielňa: formulár v sekcii Výroba na mieru.
+        'custom_form' => 'forms',
     ];
 
     /** Stĺpce s blokmi alebo nastaveniami, v ktorých sa prepisujú ID. */

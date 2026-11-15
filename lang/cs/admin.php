@@ -698,7 +698,7 @@ return [
         'invalid' => 'Soubor není platný demo balíček.',
         'failed' => 'Demo se nepodařilo nahrát',
         'imported' => 'Demo bylo nahráno',
-        'imported_body' => 'Přidáno: :products produktů, :pages stránek, :posts článků. Ukázkové texty a obrázky si upravte ve svém obchodě.',
+        'imported_body' => 'Produkty: :products · stránky: :pages · články: :posts. Ukázkové texty a obrázky si upravte ve svém obchodě.',
     ],
     'saved_blocks' => [
         'label' => 'Uložená sekce',

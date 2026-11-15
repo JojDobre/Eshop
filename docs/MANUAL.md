@@ -38,10 +38,16 @@ Reklamácie a odstúpenia sú v **Predaj → Reklamácie** (protokol v PDF, dobr
 
 ## Vzhľad obchodu
 
-**Vzhľad → Šablóny:** výber šablóny s náhľadom (Default, Fresh, Farma). **Prispôsobiť** mení farby,
+**Vzhľad → Šablóny:** výber šablóny s náhľadom (Default, Fresh, Farma, Dielňa). **Prispôsobiť** mení farby,
 písmo, banery, oznam v hornom pruhu a texty úvodnej stránky so živým náhľadom. Úvodnú stránku,
 stránky aj kategórie môžete poskladať z blokov (**Vzhľad → Bloky**). Ponuky v hlavičke a pätičke
 upravíte v **Obsah → Ponuky**.
+
+**Demo:** šablóny s demom (napr. Dielňa) majú tlačidlo **Nahrať demo** – nahrá ukážkové produkty, kategórie,
+stránky, blog, formuláre, menu a nastavenia vzhľadu s fotkami, aby obchod hneď vyzeral hotový. Režim **Nahradiť**
+(iba v obchode bez objednávok) zmaže doterajší obsah, **Pridať** demo doplní. Pred nahratím sa vytvorí záloha,
+právne stránky, doprava, platby a nastavenia ostanú. **Exportovať obsah ako demo** stiahne obsah obchodu ako ZIP,
+ktorý nahráte v inom obchode cez **Nahrať demo zo súboru**.
 
 ## Marketing
 

@@ -282,7 +282,13 @@ class DemoImporter
                 $existing = DB::table('pages')->where('role', $row['role'])->value('id');
 
                 if ($existing) {
-                    DB::table('pages')->where('id', $existing)->update(array_intersect_key($row, array_flip(['content', 'blocks', 'display'])) + ['updated_at' => now()]);
+                    // Text právnych stránok (podmienky, GDPR…) patrí obchodníkovi – demo doplní iba bloky (napr. formulár na stránke Kontakt).
+                    $blocks = json_decode((string) ($row['blocks'] ?? ''), true);
+
+                    if (is_array($blocks) && array_filter($blocks) !== []) {
+                        DB::table('pages')->where('id', $existing)->update(['blocks' => $row['blocks'], 'updated_at' => now()]);
+                    }
+
                     $this->map[$table][$oldId] = (int) $existing;
 
                     continue;
@@ -386,6 +392,11 @@ class DemoImporter
             }
 
             foreach ((array) $values as $name => $payload) {
+                // Prázdne hodnoty (napr. demo bez loga) neprepíšu nastavenia obchodu.
+                if ($payload === null || in_array($payload, ['null', '""', '[]'], true)) {
+                    continue;
+                }
+
                 DB::table('settings')->updateOrInsert(['group' => $group, 'name' => $name], ['payload' => $this->restore($payload)]);
             }
         }

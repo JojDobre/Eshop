@@ -1,5 +1,19 @@
 # Prehľad zmien
 
+## 1.7.0 – Šablóna Dielňa a demo balíky
+
+- **Nová šablóna Dielňa** pre handmade a remeselné obchody: úvod s fotkou v oblúku, otáčajúcou sa pečiatkou a ručne
+  písanými poznámkami, pruh s výhodami, kategórie podľa remesla, novinky, príbeh tvorcu s podpisom, postup výroby,
+  formulár na výrobu na mieru, recenzie, galéria a odber noviniek. Teplé farby (nastaviteľné v Prispôsobení), pätkové
+  písmo Fraunces, ručné písmo Caveat. Všetky texty majú predvolené znenie v slovenčine, češtine a angličtine.
+- **Hotové demo „Hlina & Vosk“** k šablóne Dielňa: 15 produktov s variantmi (glazúra, veľkosť) a doplnkami (vyrytý
+  text, darčekové balenie), 6 kategórií s fotkami, stránky O mne a Výroba na mieru s formulárom, blog, menu a nastavenia
+  vzhľadu – v troch jazykoch a s cenami v EUR aj CZK. Nahráte ho jedným klikom vo Vzhľad → Šablóny.
+- **Demo balíky pre všetky šablóny:** Nahrať demo (dodané so šablónou alebo zo súboru) a Exportovať obsah ako demo.
+  Režim Nahradiť (iba bez objednávok) alebo Pridať, záloha pred nahratím, prepojenie produktov, kategórií, formulárov
+  a uložených sekcií v blokoch a menu. Právne stránky, logo, doprava ani platby sa neprepíšu.
+- Oprava: položka menu odkazujúca na stránku nemala názov.
+
 ## 1.6.0 – Automatické aktualizácie, Google Disk, rýchle obrázky, uložené sekcie
 
 - **Automatické aktualizácie:** Systém → Aktualizácie zistí novú verziu na GitHube a nainštaluje ju jedným

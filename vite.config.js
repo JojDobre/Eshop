@@ -21,6 +21,8 @@ export default defineConfig(({ command }) => ({
                 'themes/fresh/assets/css/theme.css',
                 // Šablóna Farma (odvodená od Default)
                 'themes/farma/assets/css/theme.css',
+                // Šablóna Dielňa (handmade, odvodená od Default)
+                'themes/dielna/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

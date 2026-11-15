@@ -1,0 +1,1407 @@
+{
+    "format": 1,
+    "eshop": "1.6.0",
+    "title": {
+        "sk": "Hlina & Vosk – keramika, sviečky a šperky",
+        "cs": "Hlína & Vosk – keramika, svíčky a šperky",
+        "en": "Clay & Wax – ceramics, candles and jewellery"
+    },
+    "theme": "dielna",
+    "created_at": "2026-11-15T15:41:10+00:00",
+    "tables": {
+        "manufacturers": [],
+        "product_labels": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Posledné kusy\",\"cs\":\"Poslední kusy\",\"en\":\"Last pieces\"}",
+                "color": "#f7f1e8",
+                "text_color": "#93432b",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Na objednávku\",\"cs\":\"Na objednávku\",\"en\":\"Made to order\"}",
+                "color": "#f7f1e8",
+                "text_color": "#2b2520",
+                "position": 2
+            }
+        ],
+        "addons": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Vyrytý text alebo meno\",\"cs\":\"Vyrytý text nebo jméno\",\"en\":\"Engraved text or name\"}",
+                "description": "{\"sk\":\"Predĺži výrobu o 3 dni.\",\"cs\":\"Prodlouží výrobu o 3 dny.\",\"en\":\"Adds 3 days to production.\"}",
+                "price": 500,
+                "currency": "EUR",
+                "needs_text": 1,
+                "text_label": "{\"sk\":\"Text (max. 20 znakov)\",\"cs\":\"Text (max. 20 znaků)\",\"en\":\"Text (max. 20 characters)\"}",
+                "text_max_length": 20,
+                "position": 1,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Darčekové balenie s lístkom\",\"cs\":\"Dárkové balení s lístkem\",\"en\":\"Gift wrapping with a note\"}",
+                "description": "{\"sk\":\"Recyklovaný papier, sušená levanduľa a ručne písaný lístok.\",\"cs\":\"Recyklovaný papír, sušená levandule a ručně psaný lístek.\",\"en\":\"Recycled paper, dried lavender and a handwritten note.\"}",
+                "price": 300,
+                "currency": "EUR",
+                "needs_text": 0,
+                "text_label": null,
+                "text_max_length": 50,
+                "position": 2,
+                "is_active": 1
+            }
+        ],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Keramika\",\"cs\":\"Keramika\",\"en\":\"Ceramics\"}",
+                "slug": "{\"sk\":\"keramika\",\"cs\":\"keramika\",\"en\":\"ceramics\"}",
+                "description": "{\"sk\":\"<p>Hrnčeky, misky a vázy z kameninovej hliny. Každý kus je točený ručne, preto sa tvar aj farba glazúry mierne líšia – a práve to je na nich krásne.</p>\",\"cs\":\"<p>Hrnky, misky a vázy z kameninové hlíny. Každý kus je točený ručně, proto se tvar i barva glazury mírně liší – a právě to je na nich krásné.</p>\",\"en\":\"<p>Mugs, bowls and vases made of stoneware clay. Every piece is thrown by hand, so the shape and glaze colour vary slightly – and that is what makes them beautiful.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/mugs.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Sviečky\",\"cs\":\"Svíčky\",\"en\":\"Candles\"}",
+                "slug": "{\"sk\":\"sviecky\",\"cs\":\"svicky\",\"en\":\"candles\"}",
+                "description": "{\"sk\":\"<p>Sójové sviečky s dreveným knôtom a prírodnými vôňami, liate do vlastných nádob.</p>\",\"cs\":\"<p>Sójové svíčky s dřevěným knotem a přírodními vůněmi, lité do vlastních nádob.</p>\",\"en\":\"<p>Soy candles with wooden wicks and natural scents, poured into our own vessels.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/candles.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "parent_id": null,
+                "name": "{\"sk\":\"Šperky\",\"cs\":\"Šperky\",\"en\":\"Jewellery\"}",
+                "slug": "{\"sk\":\"sperky\",\"cs\":\"sperky\",\"en\":\"jewellery\"}",
+                "description": "{\"sk\":\"<p>Ľahké náušnice a náhrdelníky z kože, korálok a chirurgickej ocele.</p>\",\"cs\":\"<p>Lehké náušnice a náhrdelníky z kůže, korálků a chirurgické oceli.</p>\",\"en\":\"<p>Light earrings and necklaces made of leather, beads and surgical steel.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/earrings.webp",
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "parent_id": null,
+                "name": "{\"sk\":\"Pletené\",\"cs\":\"Pletené\",\"en\":\"Knitwear\"}",
+                "slug": "{\"sk\":\"pletene\",\"cs\":\"pletene\",\"en\":\"knitwear\"}",
+                "description": "{\"sk\":\"<p>Čiapky a šály pletené ručne z merino vlny.</p>\",\"cs\":\"<p>Čepice a šály pletené ručně z merino vlny.</p>\",\"en\":\"<p>Hats and scarves hand-knitted from merino wool.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/beanie.webp",
+                "position": 4,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 5,
+                "parent_id": null,
+                "name": "{\"sk\":\"Mydlá\",\"cs\":\"Mýdla\",\"en\":\"Soaps\"}",
+                "slug": "{\"sk\":\"mydla\",\"cs\":\"mydla\",\"en\":\"soaps\"}",
+                "description": "{\"sk\":\"<p>Prírodné mydlá varené za studena s bylinkami a esenciálnymi olejmi.</p>\",\"cs\":\"<p>Přírodní mýdla vařená za studena s bylinkami a esenciálními oleji.</p>\",\"en\":\"<p>Natural cold-process soaps with herbs and essential oils.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/soap.webp",
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "parent_id": null,
+                "name": "{\"sk\":\"Drevo\",\"cs\":\"Dřevo\",\"en\":\"Wood\"}",
+                "slug": "{\"sk\":\"drevo\",\"cs\":\"drevo\",\"en\":\"wood\"}",
+                "description": "{\"sk\":\"<p>Lyžičky, dosky a drobnosti vyrezávané z miestneho dreva.</p>\",\"cs\":\"<p>Lžičky, prkénka a drobnosti vyřezávané z místního dřeva.</p>\",\"en\":\"<p>Spoons, boards and small things carved from local wood.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/dielna/wood.webp",
+                "position": 6,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Hrnček Piesok\",\"cs\":\"Hrnek Písek\",\"en\":\"Sand mug\"}",
+                "slug": "{\"sk\":\"hrncek-piesok\",\"cs\":\"hrnek-pisek\",\"en\":\"sand-mug\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"ručne točený, matná glazúra\",\"cs\":\"ručně točený, matná glazura\",\"en\":\"hand-thrown, matte glaze\"}",
+                "description": "{\"sk\":\"<p>Hrnček točený z kameninovej hliny, s matnou glazúrou v tóne piesku. Spodná časť ostáva prírodná, aby ste cítili hlinu v dlaniach.</p><h3>Materiál a starostlivosť</h3><p>Kamenina vypálená pri 1 240 °C. Vhodné do umývačky riadu aj mikrovlnnej rúry, glazúra je bez olova a bezpečná pre potraviny.</p><p><em>Každý kus je originál – tvar a farba sa môžu mierne líšiť.</em></p>\",\"cs\":\"<p>Hrnek točený z kameninové hlíny, s matnou glazurou v tónu písku. Spodní část zůstává přírodní, abyste cítili hlínu v dlaních.</p><h3>Materiál a péče</h3><p>Kamenina vypálená při 1 240 °C. Vhodné do myčky i mikrovlnné trouby, glazura je bez olova a bezpečná pro potraviny.</p><p><em>Každý kus je originál – tvar a barva se mohou mírně lišit.</em></p>\",\"en\":\"<p>A mug thrown from stoneware clay with a matte sand-tone glaze. The base is left raw so you can feel the clay in your hands.</p><h3>Material and care</h3><p>Stoneware fired at 1,240 °C. Dishwasher and microwave safe, lead-free food-safe glaze.</p><p><em>Every piece is unique – shape and colour may vary slightly.</em></p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/mugs.webp\",\"demo/dielna/cups.webp\",\"demo/dielna/hero.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 3,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "hrncek piesok hrnek pisek sand mug rucne toceny, matna glazura rucne toceny, matna glazura hand-thrown, matte glaze",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Šálky na espresso, sada 2 ks\",\"cs\":\"Šálky na espresso, sada 2 ks\",\"en\":\"Espresso cups, set of 2\"}",
+                "slug": "{\"sk\":\"salky-na-espresso-sada-2-ks\",\"cs\":\"salky-na-espresso-sada-2-ks\",\"en\":\"espresso-cups-set-of-2\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"80 ml, glazúra mlieko a med\",\"cs\":\"80 ml, glazura mléko a med\",\"en\":\"80 ml, milk and honey glaze\"}",
+                "description": "{\"sk\":\"<p>Malé šálky na ranné espresso. Sada dvoch kusov v rovnakej glazúre, každý trochu iný.</p><h3>Materiál a starostlivosť</h3><p>Kamenina vypálená pri 1 240 °C. Vhodné do umývačky riadu aj mikrovlnnej rúry, glazúra je bez olova a bezpečná pre potraviny.</p><p><em>Každý kus je originál – tvar a farba sa môžu mierne líšiť.</em></p>\",\"cs\":\"<p>Malé šálky na ranní espresso. Sada dvou kusů ve stejné glazuře, každý trochu jiný.</p><h3>Materiál a péče</h3><p>Kamenina vypálená při 1 240 °C. Vhodné do myčky i mikrovlnné trouby, glazura je bez olova a bezpečná pro potraviny.</p><p><em>Každý kus je originál – tvar a barva se mohou mírně lišit.</em></p>\",\"en\":\"<p>Small cups for your morning espresso. A set of two in the same glaze, each slightly different.</p><h3>Material and care</h3><p>Stoneware fired at 1,240 °C. Dishwasher and microwave safe, lead-free food-safe glaze.</p><p><em>Every piece is unique – shape and colour may vary slightly.</em></p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/cups.webp\",\"demo/dielna/mugs.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 8,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "salky na espresso, sada 2 ks salky na espresso, sada 2 ks espresso cups, set of 2 80 ml, glazura mlieko a med 80 ml, glazura mleko a med 80 ml, milk and honey glaze",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Váza Ľan\",\"cs\":\"Váza Len\",\"en\":\"Linen vase\"}",
+                "slug": "{\"sk\":\"vaza-lan\",\"cs\":\"vaza-len\",\"en\":\"linen-vase\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"výška 24 cm, na sušené kvety\",\"cs\":\"výška 24 cm, na sušené květiny\",\"en\":\"24 cm tall, for dried flowers\"}",
+                "description": "{\"sk\":\"<p>Štíhla váza s jemnou textúrou ľanu. Krásna sama osebe aj so sušenými kvetmi.</p><h3>Materiál a starostlivosť</h3><p>Kamenina vypálená pri 1 240 °C. Vhodné do umývačky riadu aj mikrovlnnej rúry, glazúra je bez olova a bezpečná pre potraviny.</p><p><em>Každý kus je originál – tvar a farba sa môžu mierne líšiť.</em></p>\",\"cs\":\"<p>Štíhlá váza s jemnou texturou lnu. Krásná sama o sobě i se sušenými květinami.</p><h3>Materiál a péče</h3><p>Kamenina vypálená při 1 240 °C. Vhodné do myčky i mikrovlnné trouby, glazura je bez olova a bezpečná pro potraviny.</p><p><em>Každý kus je originál – tvar a barva se mohou mírně lišit.</em></p>\",\"en\":\"<p>A slim vase with a subtle linen texture. Beautiful on its own or with dried flowers.</p><h3>Material and care</h3><p>Stoneware fired at 1,240 °C. Dishwasher and microwave safe, lead-free food-safe glaze.</p><p><em>Every piece is unique – shape and colour may vary slightly.</em></p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/vase.webp\",\"demo/dielna/bowls.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 5,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "vaza lan vaza len linen vase vyska 24 cm, na susene kvety vyska 24 cm, na susene kvetiny 24 cm tall, for dried flowers",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Misky na šperky, sada 3 ks\",\"cs\":\"Misky na šperky, sada 3 ks\",\"en\":\"Jewellery dishes, set of 3\"}",
+                "slug": "{\"sk\":\"misky-na-sperky-sada-3-ks\",\"cs\":\"misky-na-sperky-sada-3-ks\",\"en\":\"jewellery-dishes-set-of-3\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"vyrobím do 10 dní\",\"cs\":\"vyrobím do 10 dnů\",\"en\":\"made within 10 days\"}",
+                "description": "{\"sk\":\"<p>Tri malé misky na prstienky a náušnice v mixe glazúr. Vyrábam na objednávku.</p><h3>Materiál a starostlivosť</h3><p>Kamenina vypálená pri 1 240 °C. Vhodné do umývačky riadu aj mikrovlnnej rúry, glazúra je bez olova a bezpečná pre potraviny.</p><p><em>Každý kus je originál – tvar a farba sa môžu mierne líšiť.</em></p>\",\"cs\":\"<p>Tři malé misky na prstýnky a náušnice v mixu glazur. Vyrábím na objednávku.</p><h3>Materiál a péče</h3><p>Kamenina vypálená při 1 240 °C. Vhodné do myčky i mikrovlnné trouby, glazura je bez olova a bezpečná pro potraviny.</p><p><em>Každý kus je originál – tvar a barva se mohou mírně lišit.</em></p>\",\"en\":\"<p>Three small dishes for rings and earrings in mixed glazes. Made to order.</p><h3>Material and care</h3><p>Stoneware fired at 1,240 °C. Dishwasher and microwave safe, lead-free food-safe glaze.</p><p><em>Every piece is unique – shape and colour may vary slightly.</em></p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/bowls.webp\",\"demo/dielna/rings.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "misky na sperky, sada 3 ks misky na sperky, sada 3 ks jewellery dishes, set of 3 vyrobim do 10 dni vyrobim do 10 dnu made within 10 days",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 1,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 5,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Misky Vlna, sada 5 ks\",\"cs\":\"Misky Vlna, sada 5 ks\",\"en\":\"Wave bowls, set of 5\"}",
+                "slug": "{\"sk\":\"misky-vlna-sada-5-ks\",\"cs\":\"misky-vlna-sada-5-ks\",\"en\":\"wave-bowls-set-of-5\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"mix pastelových glazúr\",\"cs\":\"mix pastelových glazur\",\"en\":\"mix of pastel glazes\"}",
+                "description": "{\"sk\":\"<p>Päť misiek s vlnitým okrajom na oriešky, olivy či drobnosti.</p><h3>Materiál a starostlivosť</h3><p>Kamenina vypálená pri 1 240 °C. Vhodné do umývačky riadu aj mikrovlnnej rúry, glazúra je bez olova a bezpečná pre potraviny.</p><p><em>Každý kus je originál – tvar a farba sa môžu mierne líšiť.</em></p>\",\"cs\":\"<p>Pět misek s vlnitým okrajem na oříšky, olivy či drobnosti.</p><h3>Materiál a péče</h3><p>Kamenina vypálená při 1 240 °C. Vhodné do myčky i mikrovlnné trouby, glazura je bez olova a bezpečná pro potraviny.</p><p><em>Každý kus je originál – tvar a barva se mohou mírně lišit.</em></p>\",\"en\":\"<p>Five bowls with wavy rims for nuts, olives or trinkets.</p><h3>Material and care</h3><p>Stoneware fired at 1,240 °C. Dishwasher and microwave safe, lead-free food-safe glaze.</p><p><em>Every piece is unique – shape and colour may vary slightly.</em></p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/rings.webp\",\"demo/dielna/bowls.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 4,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "misky vlna, sada 5 ks misky vlna, sada 5 ks wave bowls, set of 5 mix pastelovych glazur mix pastelovych glazur mix of pastel glazes",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 6,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Sójová sviečka Les po daždi\",\"cs\":\"Sójová svíčka Les po dešti\",\"en\":\"Forest after rain soy candle\"}",
+                "slug": "{\"sk\":\"sojova-sviecka-les-po-dazdi\",\"cs\":\"sojova-svicka-les-po-desti\",\"en\":\"forest-after-rain-soy-candle\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"drevený knôt, vôňa machu a cédra\",\"cs\":\"dřevěný knot, vůně mechu a cedru\",\"en\":\"wooden wick, moss and cedar scent\"}",
+                "description": "{\"sk\":\"<p>Sviečka zo sójového vosku s dreveným knôtom, ktorý jemne praská. Vonia ako les po letnom daždi.</p>\",\"cs\":\"<p>Svíčka ze sójového vosku s dřevěným knotem, který jemně praská. Voní jako les po letním dešti.</p>\",\"en\":\"<p>A soy wax candle with a gently crackling wooden wick. It smells like a forest after summer rain.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/candles.webp\",\"demo/dielna/candle-glass.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "sojova sviecka les po dazdi sojova svicka les po desti forest after rain soy candle dreveny knot, vona machu a cedra dreveny knot, vune mechu a cedru wooden wick, moss and cedar scent",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 7,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Sviečka v skle Večer\",\"cs\":\"Svíčka ve skle Večer\",\"en\":\"Evening candle in glass\"}",
+                "slug": "{\"sk\":\"sviecka-v-skle-vecer\",\"cs\":\"svicka-ve-skle-vecer\",\"en\":\"evening-candle-in-glass\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"40 hodín horenia\",\"cs\":\"40 hodin hoření\",\"en\":\"40 hours burn time\"}",
+                "description": "{\"sk\":\"<p>Teplá vôňa vanilky a santalového dreva pre pokojné večery.</p>\",\"cs\":\"<p>Teplá vůně vanilky a santalového dřeva pro klidné večery.</p>\",\"en\":\"<p>A warm vanilla and sandalwood scent for calm evenings.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/candle-glass.webp\",\"demo/dielna/candles2.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 12,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "sviecka v skle vecer svicka ve skle vecer evening candle in glass 40 hodin horenia 40 hodin horeni 40 hours burn time",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 8,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Sviečky na stôl, sada 3 ks\",\"cs\":\"Svíčky na stůl, sada 3 ks\",\"en\":\"Table candles, set of 3\"}",
+                "slug": "{\"sk\":\"sviecky-na-stol-sada-3-ks\",\"cs\":\"svicky-na-stul-sada-3-ks\",\"en\":\"table-candles-set-of-3\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"bez vône, na slávnostný stôl\",\"cs\":\"bez vůně, na slavnostní stůl\",\"en\":\"unscented, for festive tables\"}",
+                "description": "{\"sk\":\"<p>Sada troch sviečok v rôznych výškach, bez vône – nebudú prekážať pri jedle.</p>\",\"cs\":\"<p>Sada tří svíček v různých výškách, bez vůně – nebudou rušit při jídle.</p>\",\"en\":\"<p>A set of three candles in different heights, unscented so they will not distract from food.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/candles2.webp\",\"demo/dielna/candles.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 10,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "sviecky na stol, sada 3 ks svicky na stul, sada 3 ks table candles, set of 3 bez vone, na slavnostny stol bez vune, na slavnostni stul unscented, for festive tables",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 9,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kožené náušnice Kvapka\",\"cs\":\"Kožené náušnice Kapka\",\"en\":\"Drop leather earrings\"}",
+                "slug": "{\"sk\":\"kozene-nausnice-kvapka\",\"cs\":\"kozene-nausnice-kapka\",\"en\":\"drop-leather-earrings\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"ľahké, s chirurgickou oceľou\",\"cs\":\"lehké, s chirurgickou ocelí\",\"en\":\"light, with surgical steel\"}",
+                "description": "{\"sk\":\"<p>Ľahučké náušnice z jemnej kože v tvare kvapky. Háčiky z chirurgickej ocele nedráždia.</p>\",\"cs\":\"<p>Lehoučké náušnice z jemné kůže ve tvaru kapky. Háčky z chirurgické oceli nedráždí.</p>\",\"en\":\"<p>Feather-light drop earrings made of soft leather. Surgical steel hooks are gentle on the skin.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/earrings.webp\",\"demo/dielna/jewelry-make.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kozene nausnice kvapka kozene nausnice kapka drop leather earrings lahke, s chirurgickou ocelou lehke, s chirurgickou oceli light, with surgical steel",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 10,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Korálkový náhrdelník Leto\",\"cs\":\"Korálkový náhrdelník Léto\",\"en\":\"Summer bead necklace\"}",
+                "slug": "{\"sk\":\"koralkovy-nahrdelnik-leto\",\"cs\":\"koralkovy-nahrdelnik-leto\",\"en\":\"summer-bead-necklace\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"sklenené korálky, dĺžka 45 cm\",\"cs\":\"skleněné korálky, délka 45 cm\",\"en\":\"glass beads, 45 cm long\"}",
+                "description": "{\"sk\":\"<p>Farebný náhrdelník zo sklenených korálok navlečených ručne.</p>\",\"cs\":\"<p>Barevný náhrdelník ze skleněných korálků navlečených ručně.</p>\",\"en\":\"<p>A colourful necklace of hand-strung glass beads.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/beads.webp\",\"demo/dielna/jewelry-make.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 6,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "koralkovy nahrdelnik leto koralkovy nahrdelnik leto summer bead necklace sklenene koralky, dlzka 45 cm sklenene koralky, delka 45 cm glass beads, 45 cm long",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 11,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pletená čiapka Machová\",\"cs\":\"Pletená čepice Mechová\",\"en\":\"Moss knitted hat\"}",
+                "slug": "{\"sk\":\"pletena-ciapka-machova\",\"cs\":\"pletena-cepice-mechova\",\"en\":\"moss-knitted-hat\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"100 % merino vlna\",\"cs\":\"100 % merino vlna\",\"en\":\"100 % merino wool\"}",
+                "description": "{\"sk\":\"<p>Hrejivá čiapka s copovým vzorom, pletená ručne z mäkkej merino vlny.</p>\",\"cs\":\"<p>Hřejivá čepice s copánkovým vzorem, pletená ručně z měkké merino vlny.</p>\",\"en\":\"<p>A warm cable-knit hat hand-knitted from soft merino wool.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/beanie.webp\",\"demo/dielna/knitting.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 7,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pletena ciapka machova pletena cepice mechova moss knitted hat 100 % merino vlna 100 % merino vlna 100 % merino wool",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 12,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pletený šál Škorica\",\"cs\":\"Pletená šála Skořice\",\"en\":\"Cinnamon knitted scarf\"}",
+                "slug": "{\"sk\":\"pleteny-sal-skorica\",\"cs\":\"pletena-sala-skorice\",\"en\":\"cinnamon-knitted-scarf\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"dĺžka 180 cm\",\"cs\":\"délka 180 cm\",\"en\":\"180 cm long\"}",
+                "description": "{\"sk\":\"<p>Dlhý šál v teplej škoricovej farbe, ktorý zahreje aj v najchladnejších dňoch.</p>\",\"cs\":\"<p>Dlouhá šála v teplé skořicové barvě, která zahřeje i v nejchladnějších dnech.</p>\",\"en\":\"<p>A long scarf in warm cinnamon that keeps you cosy on the coldest days.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/knit.webp\",\"demo/dielna/knitting.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 4,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pleteny sal skorica pletena sala skorice cinnamon knitted scarf dlzka 180 cm delka 180 cm 180 cm long",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 13,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Prírodné mydlo Levanduľa\",\"cs\":\"Přírodní mýdlo Levandule\",\"en\":\"Lavender natural soap\"}",
+                "slug": "{\"sk\":\"prirodne-mydlo-levandula\",\"cs\":\"prirodni-mydlo-levandule\",\"en\":\"lavender-natural-soap\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"100 g, varené za studena\",\"cs\":\"100 g, vařené za studena\",\"en\":\"100 g, cold process\"}",
+                "description": "{\"sk\":\"<p>Jemné mydlo s levanduľovým olejom a sušenými kvetmi, vhodné aj pre citlivú pokožku.</p>\",\"cs\":\"<p>Jemné mýdlo s levandulovým olejem a sušenými květy, vhodné i pro citlivou pokožku.</p>\",\"en\":\"<p>A gentle soap with lavender oil and dried flowers, suitable for sensitive skin.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/soap.webp\",\"demo/dielna/soaps.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "prirodne mydlo levandula prirodni mydlo levandule lavender natural soap 100 g, varene za studena 100 g, varene za studena 100 g, cold process",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 14,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Sada mydiel na darček\",\"cs\":\"Sada mýdel na dárek\",\"en\":\"Soap gift set\"}",
+                "slug": "{\"sk\":\"sada-mydiel-na-darcek\",\"cs\":\"sada-mydel-na-darek\",\"en\":\"soap-gift-set\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"4 vône v papierovej krabičke\",\"cs\":\"4 vůně v papírové krabičce\",\"en\":\"4 scents in a paper box\"}",
+                "description": "{\"sk\":\"<p>Štyri mydlá – levanduľa, mäta, med a ovos – zabalené ako darček.</p>\",\"cs\":\"<p>Čtyři mýdla – levandule, máta, med a oves – zabalená jako dárek.</p>\",\"en\":\"<p>Four soaps – lavender, mint, honey and oat – wrapped as a gift.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/soaps.webp\",\"demo/dielna/soap.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "sada mydiel na darcek sada mydel na darek soap gift set 4 vone v papierovej krabicke 4 vune v papirove krabicce 4 scents in a paper box",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 15,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Drevené lyžičky, sada 3 ks\",\"cs\":\"Dřevěné lžičky, sada 3 ks\",\"en\":\"Wooden spoons, set of 3\"}",
+                "slug": "{\"sk\":\"drevene-lyzicky-sada-3-ks\",\"cs\":\"drevene-lzicky-sada-3-ks\",\"en\":\"wooden-spoons-set-of-3\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"čerešňové drevo, ošetrené olejom\",\"cs\":\"třešňové dřevo, ošetřené olejem\",\"en\":\"cherry wood, oil finished\"}",
+                "description": "{\"sk\":\"<p>Ručne vyrezávané lyžičky z čerešňového dreva, ošetrené potravinárskym olejom.</p>\",\"cs\":\"<p>Ručně vyřezávané lžičky z třešňového dřeva, ošetřené potravinářským olejem.</p>\",\"en\":\"<p>Hand-carved cherry wood spoons finished with food-safe oil.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/dielna/wood.webp\",\"demo/dielna/desk.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 9,
+                "low_stock_threshold": null,
+                "weight": 400,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "drevene lyzicky, sada 3 ks drevene lzicky, sada 3 ks wooden spoons, set of 3 ceresnove drevo, osetrene olejom tresnove drevo, osetrene olejem cherry wood, oil finished",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Glazúra\",\"cs\":\"Glazura\",\"en\":\"Glaze\"}",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 6,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Piesok\",\"cs\":\"Písek\",\"en\":\"Sand\"}",
+                "color": "#d8c3a5",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Šalvia\",\"cs\":\"Šalvěj\",\"en\":\"Sage\"}",
+                "color": "#7d8b6a",
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Polnoc\",\"cs\":\"Půlnoc\",\"en\":\"Midnight\"}",
+                "color": "#2f3a4a",
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"180 g\",\"cs\":\"180 g\",\"en\":\"180 g\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"300 g\",\"cs\":\"300 g\",\"en\":\"300 g\"}",
+                "color": null,
+                "position": 2
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 3,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 10,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 10,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 69900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3400,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 84900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 6,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 97900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 7,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3600,
+                "compare_at_amount": 4200
+            },
+            {
+                "id": 8,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 89900,
+                "compare_at_amount": 104900
+            },
+            {
+                "id": 9,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 4800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 119900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 12,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 49900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 13,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2400,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 59900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 15,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 16,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 72900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 17,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2400,
+                "compare_at_amount": null
+            },
+            {
+                "id": 18,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 59900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 19,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3200,
+                "compare_at_amount": null
+            },
+            {
+                "id": 20,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 79900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 21,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 22,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 94900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 23,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 4500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 24,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 112900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 25,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 650,
+                "compare_at_amount": null
+            },
+            {
+                "id": 26,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 16900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 27,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 28,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 47900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 29,
+                "product_id": 15,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2200,
+                "compare_at_amount": null
+            },
+            {
+                "id": 30,
+                "product_id": 15,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 54900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 31,
+                "product_id": 6,
+                "product_variant_id": 5,
+                "currency": "EUR",
+                "amount": 2690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 32,
+                "product_id": 6,
+                "product_variant_id": 5,
+                "currency": "CZK",
+                "amount": 66900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Výroba na mieru\",\"cs\":\"Výroba na míru\",\"en\":\"Made to order\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Čo by ste chceli?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Hrnček alebo šálka\\nTaniere a misky\\nSviečka s vlastnou vôňou\\nŠperk\\nIné\"},{\"label\":\"Popíšte svoju predstavu (farba, text, termín)\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Co byste chtěli?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Hrnek nebo šálek\\nTalíře a misky\\nSvíčka s vlastní vůní\\nŠperk\\nJiné\"},{\"label\":\"Popište svou představu (barva, text, termín)\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"What would you like?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Mug or cup\\nPlates and bowls\\nCandle with your own scent\\nJewellery\\nOther\"},{\"label\":\"Describe your idea (colour, text, date)\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Poslať požiadavku\",\"cs\":\"Odeslat poptávku\",\"en\":\"Send request\"}",
+                "success_message": "{\"sk\":\"Ďakujem! Do 2 dní vám pošlem návrh a cenu.\",\"cs\":\"Děkuji! Do 2 dnů vám pošlu návrh a cenu.\",\"en\":\"Thank you! I will send you a proposal and price within 2 days.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "saved_blocks": [],
+        "blog_categories": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Z dielne\",\"cs\":\"Z dílny\",\"en\":\"From the workshop\"}",
+                "slug": "{\"sk\":\"z-dielne\",\"cs\":\"z-dilny\",\"en\":\"from-the-workshop\"}",
+                "description": null,
+                "position": 1
+            }
+        ],
+        "blog_tags": [],
+        "blog_posts": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Ako sa starať o ručne robenú keramiku\",\"cs\":\"Jak pečovat o ručně dělanou keramiku\",\"en\":\"How to care for handmade ceramics\"}",
+                "slug": "{\"sk\":\"ako-sa-starat-o-rucne-robenu-keramiku\",\"cs\":\"jak-pecovat-o-rucne-delanou-keramiku\",\"en\":\"how-to-care-for-handmade-ceramics\"}",
+                "excerpt": "{\"sk\":\"Pár jednoduchých rád, aby vám hrnčeky a misky vydržali roky.\",\"cs\":\"Pár jednoduchých rad, aby vám hrnky a misky vydržely roky.\",\"en\":\"A few simple tips to make your mugs and bowls last for years.\"}",
+                "blocks": "{\"sk\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Umývačka áno, ale…</h2><p>Kamenina vypálená pri vysokej teplote zvládne umývačku. Ak chcete, aby glazúra dlho žiarila, umývajte ju radšej ručne.</p><h2>Pozor na teplotné šoky</h2><p>Nelejte vriacu vodu do hrnčeka vytiahnutého z mrazu a nedávajte horúcu misku na studenú dlažbu.</p>\",\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Myčka ano, ale…</h2><p>Kamenina vypálená při vysoké teplotě zvládne myčku. Pokud chcete, aby glazura dlouho zářila, myjte ji raději ručně.</p><h2>Pozor na teplotní šoky</h2><p>Nelijte vroucí vodu do hrnku vytaženého z mrazu a nepokládejte horkou misku na studenou dlažbu.</p>\",\"visibility\":\"all\"}}],\"en\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Dishwasher yes, but…</h2><p>High-fired stoneware can go in the dishwasher. If you want the glaze to shine for longer, wash it by hand.</p><h2>Avoid thermal shocks</h2><p>Do not pour boiling water into a mug straight from the freezer or put a hot bowl on cold tiles.</p>\",\"visibility\":\"all\"}}]}",
+                "cover_image": "demo/dielna/cups.webp",
+                "blog_category_id": 1,
+                "author_id": null,
+                "status": "published",
+                "published_at": "2026-11-05 15:41:09",
+                "comments_enabled": 1,
+                "meta_title": null,
+                "meta_description": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Prečo lejem sviečky zo sójového vosku\",\"cs\":\"Proč leji svíčky ze sójového vosku\",\"en\":\"Why I pour candles from soy wax\"}",
+                "slug": "{\"sk\":\"preco-lejem-sviecky-zo-sojoveho-vosku\",\"cs\":\"proc-leji-svicky-ze-sojoveho-vosku\",\"en\":\"why-i-pour-candles-from-soy-wax\"}",
+                "excerpt": "{\"sk\":\"Sójový vosk horí čistejšie a dlhšie. Tu je, prečo som prešla od parafínu.\",\"cs\":\"Sójový vosk hoří čistěji a déle. Tady je, proč jsem přešla od parafínu.\",\"en\":\"Soy wax burns cleaner and longer. Here is why I moved away from paraffin.\"}",
+                "blocks": "{\"sk\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Sójový vosk je prírodný, obnoviteľný a horí pomalšie než parafín. Vôňa sa uvoľňuje jemne a sviečka nečadí.</p><h2>Drevený knôt</h2><p>Drevený knôt pri horení jemne praská ako oheň v krbe – preto ho mám tak rada.</p>\",\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Sójový vosk je přírodní, obnovitelný a hoří pomaleji než parafín. Vůně se uvolňuje jemně a svíčka nečadí.</p><h2>Dřevěný knot</h2><p>Dřevěný knot při hoření jemně praská jako oheň v krbu – proto ho mám tak ráda.</p>\",\"visibility\":\"all\"}}],\"en\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Soy wax is natural, renewable and burns slower than paraffin. The scent is released gently and the candle does not smoke.</p><h2>Wooden wick</h2><p>A wooden wick crackles softly like a fireplace – that is why I love it.</p>\",\"visibility\":\"all\"}}]}",
+                "cover_image": "demo/dielna/candles.webp",
+                "blog_category_id": 1,
+                "author_id": null,
+                "status": "published",
+                "published_at": "2026-11-09 15:41:09",
+                "comments_enabled": 1,
+                "meta_title": null,
+                "meta_description": null
+            }
+        ],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"a32aa7b3-41c7-4613-827c-35acd7b2d2e8\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"O mne\",\"cs\":\"O mně\",\"en\":\"About me\"}",
+                "slug": "{\"sk\":\"o-mne\",\"cs\":\"o-mne\",\"en\":\"about-me\"}",
+                "content": "{\"en\":\"\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 10,
+                "is_visible": 1,
+                "blocks": "{\"sk\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/dielna/wheel.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Ahoj, som Lucia\",\"content\":\"<p>Pred piatimi rokmi som si kúpila starý hrnčiarsky kruh a z koníčka sa stala malá dielňa. Točím, glazúrujem a vypaľujem sama, sviečky lejem do vlastných nádob a pri každom balíku napíšem pár slov rukou.</p><p>Verím, že veci, ktoré vznikajú pomaly, majú dušu. Preto vyrábam v malých sériách a často len jeden kus.</p>\"}},{\"type\":\"section\",\"data\":{\"layout\":\"thirds\",\"background\":\"light\",\"width\":\"contained\",\"padding\":\"medium\",\"align\":\"start\",\"visibility\":\"all\",\"column_1\":[{\"type\":\"feature\",\"data\":{\"icon\":\"leaf\",\"title\":\"Lokálne materiály\",\"text\":\"Hlina z Modry, sójový vosk bez parafínu.\",\"visibility\":\"all\"}}],\"column_2\":[{\"type\":\"feature\",\"data\":{\"icon\":\"gift\",\"title\":\"Balím bez plastu\",\"text\":\"Recyklovaný papier a ručne písaný lístok.\",\"visibility\":\"all\"}}],\"column_3\":[{\"type\":\"feature\",\"data\":{\"icon\":\"star\",\"title\":\"Malé série\",\"text\":\"Často len jeden jediný kus.\",\"visibility\":\"all\"}}]}}],\"cs\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/dielna/wheel.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Ahoj, jsem Lucie\",\"content\":\"<p>Před pěti lety jsem si koupila starý hrnčířský kruh a z koníčku se stala malá dílna. Točím, glazuji a vypaluji sama, svíčky leji do vlastních nádob a ke každému balíku napíšu pár slov rukou.</p><p>Věřím, že věci, které vznikají pomalu, mají duši. Proto vyrábím v malých sériích a často jen jeden kus.</p>\"}},{\"type\":\"section\",\"data\":{\"layout\":\"thirds\",\"background\":\"light\",\"width\":\"contained\",\"padding\":\"medium\",\"align\":\"start\",\"visibility\":\"all\",\"column_1\":[{\"type\":\"feature\",\"data\":{\"icon\":\"leaf\",\"title\":\"Lokální materiály\",\"text\":\"Hlína z Moravy, sójový vosk bez parafínu.\",\"visibility\":\"all\"}}],\"column_2\":[{\"type\":\"feature\",\"data\":{\"icon\":\"gift\",\"title\":\"Balím bez plastu\",\"text\":\"Recyklovaný papír a ručně psaný lístek.\",\"visibility\":\"all\"}}],\"column_3\":[{\"type\":\"feature\",\"data\":{\"icon\":\"star\",\"title\":\"Malé série\",\"text\":\"Často jen jediný kus.\",\"visibility\":\"all\"}}]}}],\"en\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/dielna/wheel.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Hi, I am Lucy\",\"content\":\"<p>Five years ago I bought an old potter's wheel and a hobby turned into a small workshop. I throw, glaze and fire everything myself, pour candles into my own vessels and write a few words by hand for every parcel.</p><p>I believe things made slowly have a soul. That is why I work in small batches, often just one piece.</p>\"}},{\"type\":\"section\",\"data\":{\"layout\":\"thirds\",\"background\":\"light\",\"width\":\"contained\",\"padding\":\"medium\",\"align\":\"start\",\"visibility\":\"all\",\"column_1\":[{\"type\":\"feature\",\"data\":{\"icon\":\"leaf\",\"title\":\"Local materials\",\"text\":\"Local clay and paraffin-free soy wax.\",\"visibility\":\"all\"}}],\"column_2\":[{\"type\":\"feature\",\"data\":{\"icon\":\"gift\",\"title\":\"Plastic-free packing\",\"text\":\"Recycled paper and a handwritten note.\",\"visibility\":\"all\"}}],\"column_3\":[{\"type\":\"feature\",\"data\":{\"icon\":\"star\",\"title\":\"Small batches\",\"text\":\"Often just a single piece.\",\"visibility\":\"all\"}}]}}]}",
+                "display": null
+            },
+            {
+                "id": 7,
+                "name": "{\"sk\":\"Výroba na mieru\",\"cs\":\"Výroba na míru\",\"en\":\"Made to order\"}",
+                "slug": "{\"sk\":\"vyroba-na-mieru\",\"cs\":\"vyroba-na-miru\",\"en\":\"made-to-order\"}",
+                "content": "{\"sk\":\"<p>Hrnček s menom, sada tanierov na svadbu alebo sviečka s vlastnou vôňou? Napíšte mi svoju predstavu a do 2 dní pošlem návrh a cenu. Výroba trvá zvyčajne 7 – 14 dní.</p>\",\"cs\":\"<p>Hrnek se jménem, sada talířů na svatbu nebo svíčka s vlastní vůní? Napište mi svou představu a do 2 dnů pošlu návrh a cenu. Výroba trvá obvykle 7–14 dní.</p>\",\"en\":\"<p>A mug with a name, a set of wedding plates or a candle with your own scent? Tell me your idea and I will send a proposal and price within 2 days. Making usually takes 7–14 days.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 11,
+                "is_visible": 1,
+                "blocks": "{\"sk\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"en\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}]}",
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "3",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "page",
+                "target": "7",
+                "new_window": 0,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "page",
+                "target": "6",
+                "new_window": 0,
+                "position": 5
+            },
+            {
+                "id": 6,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":\"Blog\",\"cs\":\"Blog\",\"en\":\"Blog\"}",
+                "type": "url",
+                "target": "/blog",
+                "new_window": 0,
+                "position": 6
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 8,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 9,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 10,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 12,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 13,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 14,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 15,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 3,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 4,
+                "product_option_value_id": 4
+            },
+            {
+                "product_variant_id": 5,
+                "product_option_value_id": 5
+            }
+        ],
+        "addon_product": [
+            {
+                "addon_id": 1,
+                "product_id": 1
+            },
+            {
+                "addon_id": 1,
+                "product_id": 15
+            },
+            {
+                "addon_id": 2,
+                "product_id": 1
+            },
+            {
+                "addon_id": 2,
+                "product_id": 2
+            },
+            {
+                "addon_id": 2,
+                "product_id": 3
+            },
+            {
+                "addon_id": 2,
+                "product_id": 4
+            },
+            {
+                "addon_id": 2,
+                "product_id": 5
+            },
+            {
+                "addon_id": 2,
+                "product_id": 6
+            },
+            {
+                "addon_id": 2,
+                "product_id": 7
+            },
+            {
+                "addon_id": 2,
+                "product_id": 9
+            },
+            {
+                "addon_id": 2,
+                "product_id": 10
+            },
+            {
+                "addon_id": 2,
+                "product_id": 11
+            },
+            {
+                "addon_id": 2,
+                "product_id": 12
+            },
+            {
+                "addon_id": 2,
+                "product_id": 14
+            },
+            {
+                "addon_id": 2,
+                "product_id": 15
+            }
+        ],
+        "product_label_product": [
+            {
+                "product_label_id": 1,
+                "product_id": 1
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 4
+            }
+        ],
+        "blog_post_tag": [],
+        "blog_post_product": [
+            {
+                "blog_post_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "blog_post_id": 1,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "blog_post_id": 2,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "blog_post_id": 2,
+                "product_id": 7,
+                "position": 0
+            }
+        ],
+        "blog_post_catalog_category": []
+    },
+    "theme_settings": "{\"notice_text\":\"Každý kúsok je originál z mojej dielne · Doprava zdarma od 50 €\",\"logo_text\":\"ručne vyrobené na Slovensku\",\"hero_image\":\"demo/dielna/hero.webp\",\"hero_button_2\":\"Vyrobiť na mieru\",\"hero_link_2\":\"http://127.0.0.1:8125/stranka/vyroba-na-mieru\",\"hero_note\":\"★ 4,9 · viac ako 1 200 spokojných zákazníkov\",\"hero_sticker\":\"Posledné 3 kusy!\",\"hero_sticker_text\":\"Hrnček Piesok\",\"hero_stamp\":\"RUČNE VYROBENÉ • NA SLOVENSKU •\",\"story_kicker\":\"ahoj, som Lucia\",\"story_text\":\"<p>Pred piatimi rokmi som si kúpila starý hrnčiarsky kruh a z koníčka sa stala malá dielňa. Točím, glazúrujem a vypaľujem sama. Sviečky lejem do vlastných nádob a pri každom balíku napíšem pár slov rukou.</p><ul><li>Malé série, často len jeden kus</li><li>Lokálna hlina, sójový vosk bez parafínu</li><li>Balím do recyklovaného papiera bez plastu</li></ul>\",\"story_image\":\"demo/dielna/wheel.webp\",\"story_image_2\":\"demo/dielna/jewelry-make.webp\",\"story_signature\":\"Lucia\",\"story_button\":\"Môj príbeh\",\"story_link\":\"http://127.0.0.1:8125/stranka/o-mne\",\"process_title\":\"Ako vzniká jeden hrnček\",\"step_1_image\":\"demo/dielna/hero.webp\",\"step_1_title\":\"Točenie na kruhu\",\"step_1_text\":\"Každý hrnček tvarujem ručne, preto má vlastný charakter.\",\"step_2_image\":\"demo/dielna/desk.webp\",\"step_2_title\":\"Sušenie a glazúra\",\"step_2_text\":\"Týždeň schne, potom ho ručne glazúrujem.\",\"step_3_image\":\"demo/dielna/cups.webp\",\"step_3_title\":\"Dva výpaly v peci\",\"step_3_text\":\"Pri 1 240 °C – vhodný do umývačky aj mikrovlnky.\",\"custom_stats\":\"2 dni | na návrh\\n7 – 14 dní | výroba\\n350+ | zákaziek\",\"custom_form\":2,\"review_1_text\":\"Hrnček je krajší ako na fotke a balík voňal ako sviečka. Lístok od Lucie si nechávam.\",\"review_1_author\":\"Zuzana, Bratislava\",\"review_2_text\":\"Objednali sme sadu tanierov s menami na svadbu. Hostia boli nadšení.\",\"review_2_author\":\"Peter a Ema, Žilina\",\"review_3_text\":\"Sviečky horia rovnomerne a vôňa je jemná, nie umelá. Už tretia objednávka.\",\"review_3_author\":\"Mária, Košice\",\"gallery_title\":\"@hlinaavosk\",\"gallery_link\":\"https://www.instagram.com/\",\"gallery_1\":\"demo/dielna/vase.webp\",\"gallery_2\":\"demo/dielna/rings.webp\",\"gallery_3\":\"demo/dielna/candle-glass.webp\",\"gallery_4\":\"demo/dielna/knitting.webp\",\"gallery_5\":\"demo/dielna/soaps.webp\",\"gallery_6\":\"demo/dielna/beads.webp\",\"footer_signature\":\"Lucia\"}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#b4573a\""
+        }
+    }
+}

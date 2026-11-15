@@ -6,6 +6,7 @@ use App\Core\Backup\BackupManager;
 use App\Core\Content\MediaLibrary;
 use App\Core\Modules\ModuleManager;
 use App\Core\Themes\ThemeManager;
+use App\Settings\CatalogSettings;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
@@ -76,6 +77,7 @@ class DemoImporter
 
         @set_time_limit(0);
         $this->enableModules((array) ($data['modules'] ?? []));
+        $this->enableCatalogFeatures($data);
         $this->map = [];
         $this->uploadsUrl = rtrim(Storage::disk('public')->url(''), '/').'/';
         $counts = [];
@@ -201,6 +203,36 @@ class DemoImporter
         }
     }
 
+    /**
+     * Zapne funkcie katalógu, ktoré obsah dema používa (typy produktov s cenou za jednotku, doplnkové voľby,
+     * predobjednávky), aby sa v obchode akejkoľvek veľkosti zobrazili rovnako ako v deme.
+     *
+     * @param  array<string, mixed>  $data
+     */
+    private function enableCatalogFeatures(array $data): void
+    {
+        $products = collect((array) ($data['tables']['products'] ?? []));
+        $needed = array_filter([
+            'product_types' => $products->contains(fn ($row) => ! empty($row['product_type_id'])),
+            'addons' => ! empty($data['pivots']['addon_product'] ?? []),
+            'preorders' => $products->contains(fn ($row) => ! empty($row['preorder_enabled'])),
+        ]);
+
+        if ($needed === []) {
+            return;
+        }
+
+        rescue(function () use ($needed): void {
+            $settings = app(CatalogSettings::class);
+
+            foreach (array_keys($needed) as $feature) {
+                $settings->{'feature_'.$feature} = true;
+            }
+
+            $settings->save();
+        }, report: true);
+    }
+
     private function copyMedia(string $directory): void
     {
         if (! is_dir($directory.'/media')) {
@@ -295,6 +327,18 @@ class DemoImporter
             foreach (DemoSchema::JSON_COLUMNS_WITH_REFERENCES as $column) {
                 if (is_string($row[$column] ?? null)) {
                     $row[$column] = $this->remapJson($row[$column]);
+                }
+            }
+
+            // Typ produktu s rovnakým názvom a jednotkou už v obchode je (inštalátor vytvára bežné typy) – použije sa ten.
+            if ($table === 'product_types' && $oldId !== null) {
+                $existingType = DB::table('product_types')->where('unit', $row['unit'] ?? 'pcs')->get(['id', 'name'])
+                    ->first(fn ($type) => (json_decode((string) $type->name, true) ?: []) == (json_decode((string) ($row['name'] ?? ''), true) ?: []));
+
+                if ($existingType !== null) {
+                    $this->map[$table][$oldId] = $existingType->id;
+
+                    continue;
                 }
             }
 

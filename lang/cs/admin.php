@@ -657,6 +657,8 @@ return [
             'faq' => 'Časté dotazy',
             'blog' => 'Blog',
             'offer' => 'Poukaz a obchod',
+            'routine' => 'Rutina a složky',
+            'quiz' => 'Banner s výzvou',
             'reviews' => 'Recenze',
             'contact' => 'Kontakt a otevírací doba',
         ],

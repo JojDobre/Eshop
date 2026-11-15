@@ -66,6 +66,7 @@ return [
     'image_previous' => 'Previous photo',
     'image_next' => 'Next photo',
     'show_image' => 'Show image :number',
+    'added_many_to_cart' => '{1} :count product was added to your cart.|[2,*] :count products were added to your cart.',
     'added_to_cart' => '“:product” has been added to your cart.',
     'show_all' => 'Show all',
     'close' => 'Close',

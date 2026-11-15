@@ -66,6 +66,7 @@ return [
     'image_previous' => 'Predchádzajúca fotka',
     'image_next' => 'Ďalšia fotka',
     'show_image' => 'Zobraziť obrázok :number',
+    'added_many_to_cart' => '{1} :count produkt sme pridali do košíka.|[2,4] :count produkty sme pridali do košíka.|[5,*] :count produktov sme pridali do košíka.',
     'added_to_cart' => '„:product" sme pridali do košíka.',
     'show_all' => 'Zobraziť všetko',
     'close' => 'Zavrieť',

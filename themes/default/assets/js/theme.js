@@ -71,6 +71,16 @@ document.addEventListener('submit', async (event) => {
             return;
         }
 
+        // Suma košíka v hlavičke (šablóny, ktoré ju zobrazujú).
+        if (data.total) {
+            document.querySelectorAll('[data-cart-total]').forEach((total) => {
+                total.textContent = data.total;
+                if (total.dataset.cartTotal) {
+                    total.dataset.cartTotal.split(' ').forEach((cls) => total.classList.add(cls));
+                }
+            });
+        }
+
         document.querySelectorAll('[data-cart-count]').forEach((badge) => {
             badge.textContent = data.count;
             // Skrytý počet (prázdny košík) sa zobrazí; data-cart-count môže určiť triedu zobrazenia, napr. „flex“.

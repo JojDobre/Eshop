@@ -1,0 +1,276 @@
+/*
+ * Šablóna Esencia (kozmetika a drogéria): štýly Default + súbory tejto šablóny.
+ * Farby a písmo nadpisov určuje paleta z Prispôsobenia (partials/palette.blade.php), tu sú iba predvolené hodnoty.
+ * Písma sú uložené na hostingu: Bricolage Grotesque, Unbounded, Outfit a Inter.
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource-variable/unbounded';
+@import '@fontsource-variable/outfit';
+
+@source '../../**/*.blade.php';
+/* Farebné podklady skladané v šablónach z čísla (bg-t1 … bg-t6). */
+@source inline('bg-t{1,2,3,4,5,6}');
+
+:where(:root) {
+    --es-ac: #ff5a3c;
+    --es-acd: #f2401f;
+    --es-onac: #14213d;
+    --es-ac2: #ffc93c;
+    --es-onac2: #14213d;
+    --es-ink: #14213d;
+    --es-muted: #566079;
+    --es-line: #e8eaf0;
+    --es-soft: #f3f4f7;
+    --es-t1: #ffe4dc;
+    --es-t2: #dde8ff;
+    --es-t3: #fff1c2;
+    --es-t4: #d9f5ea;
+    --es-t5: #f1e3ff;
+    --es-t6: #ffdbe6;
+    --es-head: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+    --es-head-weight: 800;
+    --es-head-spacing: -0.03em;
+}
+
+@utility font-head {
+    font-family: var(--es-head);
+    font-weight: var(--es-head-weight);
+    letter-spacing: var(--es-head-spacing);
+}
+
+@utility bg-ac {
+    background-color: var(--es-ac);
+}
+
+@utility text-onac {
+    color: var(--es-onac);
+}
+
+@utility bg-ac2 {
+    background-color: var(--es-ac2);
+}
+
+@utility text-onac2 {
+    color: var(--es-onac2);
+}
+
+@utility bg-ink {
+    background-color: var(--es-ink);
+}
+
+@utility text-ink {
+    color: var(--es-ink);
+}
+
+@utility text-muted {
+    color: var(--es-muted);
+}
+
+@utility text-ac {
+    color: color-mix(in srgb, var(--es-ac) 70%, var(--es-ink));
+}
+
+@utility border-line {
+    border-color: var(--es-line);
+}
+
+@utility bg-soft {
+    background-color: var(--es-soft);
+}
+
+@utility bg-t1 {
+    background-color: var(--es-t1);
+}
+
+@utility bg-t2 {
+    background-color: var(--es-t2);
+}
+
+@utility bg-t3 {
+    background-color: var(--es-t3);
+}
+
+@utility bg-t4 {
+    background-color: var(--es-t4);
+}
+
+@utility bg-t5 {
+    background-color: var(--es-t5);
+}
+
+@utility bg-t6 {
+    background-color: var(--es-t6);
+}
+
+body {
+    background-color: #fff;
+    color: var(--es-ink);
+}
+
+main h1,
+main h2,
+.es-heading {
+    font-family: var(--es-head);
+    font-weight: var(--es-head-weight);
+    letter-spacing: var(--es-head-spacing);
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold transition;
+    }
+
+    .btn-primary,
+    .btn-ac {
+        @apply bg-[var(--es-ac)] text-[var(--es-onac)] hover:bg-[var(--es-acd)];
+    }
+
+    .btn-ink {
+        @apply bg-[var(--es-ink)] text-white hover:opacity-90;
+    }
+
+    .btn-ac2 {
+        @apply bg-[var(--es-ac2)] text-[var(--es-onac2)] hover:brightness-95;
+    }
+
+    .btn-secondary {
+        @apply border-2 border-[var(--es-line)] bg-white text-[var(--es-ink)] hover:border-[var(--es-ink)];
+    }
+
+    .input {
+        @apply rounded-2xl border-[var(--es-line)] bg-white px-4 py-3 shadow-none;
+    }
+
+    .label {
+        @apply font-semibold;
+    }
+
+    .es-h2 {
+        font-family: var(--es-head);
+        font-weight: var(--es-head-weight);
+        letter-spacing: var(--es-head-spacing);
+        font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+        line-height: 1.05;
+    }
+
+    .es-chip {
+        @apply whitespace-nowrap rounded-full border-[1.5px] border-[var(--es-line)] bg-white px-4 py-2 text-sm font-medium transition hover:border-[var(--es-ink)];
+    }
+
+    .es-chip.is-active,
+    .es-chip[aria-current] {
+        @apply border-[var(--es-ink)] bg-[var(--es-ink)] text-white;
+    }
+
+    .es-sticker {
+        @apply bg-[var(--es-ac2)] text-[var(--es-onac2)];
+    }
+
+    .es-link {
+        @apply text-sm font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--es-ac)];
+    }
+}
+
+.es-zoom img {
+    transition: transform 0.5s ease;
+}
+
+.es-zoom:hover img {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .es-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny v štýle Esencie. */
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--es-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--es-soft);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--es-muted);
+}
+
+main .rounded-2xl {
+    border-radius: 1.5rem;
+}
+
+/* Bloky (Obsah → Bloky) v štýle Esencie. */
+.block-title {
+    font-family: var(--es-head);
+    font-weight: var(--es-head-weight);
+    letter-spacing: var(--es-head-spacing);
+    font-size: 1.8rem;
+    line-height: 1.05;
+    color: var(--es-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 2.6rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--es-t1);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--es-ink);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title,
+.prose :where(h2, h3) {
+    font-family: var(--es-head);
+    font-weight: var(--es-head-weight);
+    letter-spacing: var(--es-head-spacing);
+}
+
+.blog-chip.is-active {
+    background-color: var(--es-ink);
+    border-color: var(--es-ink);
+    color: #fff;
+}

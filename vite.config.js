@@ -25,6 +25,8 @@ export default defineConfig(({ command }) => ({
                 'themes/dielna/assets/css/theme.css',
                 // Šablóna Štúdio (služby a rezervácie, odvodená od Default)
                 'themes/studio/assets/css/theme.css',
+                // Šablóna Esencia (kozmetika a drogéria, odvodená od Default)
+                'themes/esencia/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

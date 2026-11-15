@@ -22,7 +22,9 @@ final class DemoSchema
         'product_labels' => [],
         'addons' => [],
         'categories' => ['parent_id' => 'categories'],
-        'products' => ['manufacturer_id' => 'manufacturers', 'product_type_id' => null, 'tax_rate_id' => null, 'availability_status_id' => null],
+        // Typy produktov (merná jednotka pre cenu za liter, kilogram…).
+        'product_types' => [],
+        'products' => ['manufacturer_id' => 'manufacturers', 'product_type_id' => 'product_types', 'tax_rate_id' => null, 'availability_status_id' => null],
         'product_options' => ['product_id' => 'products'],
         'product_option_values' => ['product_option_id' => 'product_options'],
         'product_variants' => ['product_id' => 'products'],
@@ -72,6 +74,10 @@ final class DemoSchema
         // Nastavenie šablóny Dielňa: formulár v sekcii Výroba na mieru.
         'custom_form' => 'forms',
         'service_ids' => 'booking_services',
+        // Nastavenie šablóny Esencia: produkty v sekcii Rutina v 3 krokoch.
+        'routine_product_1' => 'products',
+        'routine_product_2' => 'products',
+        'routine_product_3' => 'products',
     ];
 
     /** Stĺpce s blokmi alebo nastaveniami, v ktorých sa prepisujú ID. */

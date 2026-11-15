@@ -657,6 +657,8 @@ return [
             'faq' => 'FAQ',
             'blog' => 'Blog',
             'offer' => 'Voucher and shop',
+            'routine' => 'Routine and ingredients',
+            'quiz' => 'Call-to-action banner',
             'reviews' => 'Reviews',
             'contact' => 'Contact and opening hours',
         ],

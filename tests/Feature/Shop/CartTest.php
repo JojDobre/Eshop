@@ -3,6 +3,7 @@
 namespace Tests\Feature\Shop;
 
 use Modules\Cart\Models\CartItem;
+use Modules\Catalog\VariantGenerator;
 
 class CartTest extends ShopTestCase
 {
@@ -27,6 +28,27 @@ class CartTest extends ShopTestCase
         $this->delete(route('cart.remove', $item->id))->assertRedirect(route('cart.show'));
         $this->assertDatabaseCount('cart_items', 0);
         $this->get(route('cart.show'))->assertSee('Váš košík je prázdny.');
+    }
+
+    public function test_several_products_can_be_added_at_once(): void
+    {
+        $foam = $this->product('Pena', '11.90', 10);
+        $cream = $this->product('Krém', '15.90', 10);
+
+        $this->postJson(route('cart.add-many'), ['product_ids' => [$foam->id, $cream->id]])
+            ->assertOk()
+            ->assertJsonPath('count', 2)
+            ->assertJsonPath('total', "27,80\u{00A0}€")
+            ->assertJsonPath('message', '2 produkty sme pridali do košíka.');
+
+        // Produkt s variantmi zastaví pridanie skôr, než sa košík zmení.
+        $serum = $this->product('Sérum', '19.90', 10);
+        $option = $serum->options()->create(['name' => ['sk' => 'Objem'], 'position' => 1]);
+        $option->values()->createMany([['value' => ['sk' => '30 ml'], 'position' => 1], ['value' => ['sk' => '50 ml'], 'position' => 2]]);
+        app(VariantGenerator::class)->generate($serum);
+
+        $this->postJson(route('cart.add-many'), ['product_ids' => [$foam->id, $serum->id]])->assertStatus(422);
+        $this->assertSame(2, (int) CartItem::query()->sum('quantity'));
     }
 
     public function test_quantity_is_limited_by_stock(): void

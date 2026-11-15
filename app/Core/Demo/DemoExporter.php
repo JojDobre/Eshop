@@ -63,7 +63,14 @@ class DemoExporter
 
         foreach (array_keys(DemoSchema::TABLES) as $table) {
             if (Schema::hasTable($table)) {
-                $tables[$table] = $this->rows(DB::table($table)->orderBy('id')->get());
+                $query = DB::table($table)->orderBy('id');
+
+                // Typy produktov iba tie, ktoré produkty v deme používajú.
+                if ($table === 'product_types') {
+                    $query->whereIn('id', DB::table('products')->whereNotNull('product_type_id')->distinct()->pluck('product_type_id'));
+                }
+
+                $tables[$table] = $this->rows($query->get());
             }
         }
 

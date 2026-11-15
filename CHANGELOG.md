@@ -1,5 +1,20 @@
 # Prehľad zmien
 
+## 1.9.0 – Šablóna Esencia pre kozmetiku a drogériu
+
+- **Nová šablóna Esencia** pre kozmetiku a drogériu: moderný vzhľad na bielom pozadí s výraznými farbami,
+  úvodný banner s nálepkou a dvoma akciami, rýchly výber podľa potreby, mozaika kategórií, bestsellery s objemami,
+  cenou za liter a tlačidlom do košíka, výhody, rutina v 3 krokoch, zložky, banner s kvízom, recenzie
+  s označením overeného nákupu a články z blogu. Ikony namiesto emoji.
+- **Štyri farebné palety** na výber v Prispôsobení (Koral, Lila, Mäta, Jemná) alebo farba značky obchodu, a tri
+  písma nadpisov. Paleta sa použije v celom obchode vrátane košíka a pokladne, text na farbe má vždy dostatočný kontrast.
+- **Hotové demo „Lúka“:** 12 produktov v 5 kategóriách s výrobcami, objemami a cenou za liter, rutina, kvíz typu
+  pleti s formulárom, blog s radami, menu a texty v troch jazykoch.
+- **Košík:** pridanie viacerých produktov naraz (rutina v 3 krokoch) a suma košíka v hlavičke, ktorá sa
+  aktualizuje aj pri pridaní bez obnovenia stránky.
+- **Demo balíky:** prenášajú typy produktov (použije sa existujúci typ s rovnakým názvom) a pri importe zapnú
+  funkcie katalógu, ktoré obsah dema používa (typy produktov, doplnkové voľby, predobjednávky).
+
 ## 1.8.0 – Šablóna Štúdio pre služby a rezervácie, preklady textov šablóny
 
 - **Nová šablóna Štúdio** pre kaderníctva, kozmetiku, masáže, nechtové štúdiá a ďalšie služby s online rezerváciou:

@@ -66,12 +66,58 @@ class CartController extends Controller
             return response()->json([
                 'message' => __('theme::shop.added_to_cart', ['product' => $name]),
                 'count' => $this->cart->itemCount(),
+                'total' => rescue(fn () => format_price(($summary = $this->cart->summary())->subtotal(), $summary->currency), null, false),
                 'cart_url' => route('cart.show'),
                 'cart_label' => __('theme::shop.go_to_cart'),
             ]);
         }
 
         return back()->with('cart_added', $name);
+    }
+
+    /**
+     * Pridanie viacerých produktov naraz (napr. celá rutina alebo „kúpte spolu“). Produkty s variantmi
+     * sa nepridajú – pri nich si zákazník musí zvoliť variant na stránke produktu.
+     */
+    public function addMany(Request $request): RedirectResponse|JsonResponse
+    {
+        $data = $request->validate([
+            'product_ids' => ['required', 'array', 'min:1', 'max:10'],
+            'product_ids.*' => ['integer'],
+        ]);
+
+        $products = Product::query()->with(['prices', 'variants'])->whereIn('id', $data['product_ids'])->get();
+
+        if ($products->isEmpty()) {
+            return $this->addFailed($request, __('cart::messages.item_not_found'));
+        }
+
+        // Produkt s variantmi zastaví celé pridanie ešte pred zmenou košíka.
+        if ($withVariants = $products->first(fn (Product $product) => $product->hasVariants())) {
+            return $this->addFailed($request, __('cart::messages.choose_variant', ['product' => $withVariants->name]));
+        }
+
+        try {
+            foreach ($products as $product) {
+                $this->cart->add($product, 1);
+            }
+        } catch (CartException $e) {
+            return $this->addFailed($request, $e->getMessage());
+        }
+
+        $message = trans_choice('theme::shop.added_many_to_cart', $products->count(), ['count' => $products->count()]);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => $message,
+                'count' => $this->cart->itemCount(),
+                'total' => rescue(fn () => format_price(($summary = $this->cart->summary())->subtotal(), $summary->currency), null, false),
+                'cart_url' => route('cart.show'),
+                'cart_label' => __('theme::shop.go_to_cart'),
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     private function addFailed(Request $request, string $message): RedirectResponse|JsonResponse

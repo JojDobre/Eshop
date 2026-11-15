@@ -184,7 +184,7 @@ class CustomizeTheme extends Page implements HasSchemas
 
         // Poradie skupín: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. Skupiny sa dajú zbaliť,
         // aby sa v dlhom zozname nastavení nemuselo toľko posúvať.
-        $order = array_flip(['layout', 'header', 'home', 'about', 'offer', 'reviews', 'faq', 'contact', 'catalog', 'blog', 'style', 'colors', 'footer', 'general']);
+        $order = array_flip(['layout', 'style', 'header', 'home', 'catalog', 'routine', 'quiz', 'about', 'offer', 'reviews', 'faq', 'contact', 'blog', 'colors', 'footer', 'general']);
         uksort($groups, fn ($a, $b) => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
 
         $sections = [];

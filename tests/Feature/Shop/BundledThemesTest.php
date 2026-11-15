@@ -7,12 +7,15 @@ use App\Core\Themes\ThemeChecker;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Models\BlockLayout;
+use App\Settings\BrandingSettings;
+use App\Settings\CatalogSettings;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Modules\Catalog\Models\Product;
+use Modules\Catalog\Models\ProductType;
 use Modules\Pages\Models\Page;
 use Modules\Reservations\Models\Booking;
 use Modules\Reservations\Models\BookingResource;
@@ -38,7 +41,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -271,5 +274,78 @@ class BundledThemesTest extends ShopTestCase
         $this->get(route('reservations.service', $service))->assertOk()->assertSee('Farbenie a melír');
 
         Storage::disk('public')->deleteDirectory('demo/studio');
+    }
+
+    public function test_esencia_theme_renders_palettes_sections_and_routine(): void
+    {
+        $skin = $this->category('Pleť');
+        $foam = $this->product('Čistiaca pena', '11.90', category: $skin);
+        $cream = $this->product('Výživný krém', '15.90', category: $skin);
+        $this->activate('esencia');
+
+        // Bez nastavení: paleta Koral, predvolené texty, bez rutiny (nie sú vybrané produkty).
+        $this->get('/')->assertOk()
+            ->assertSee('--es-ac: #ff5a3c', false)
+            ->assertSee("--es-head: 'Bricolage Grotesque Variable'", false)
+            ->assertSee('--brand-primary: #ff5a3c', false)
+            ->assertSee(__('theme::esencia.hero_title'))
+            ->assertSee('Čistiaca pena')
+            ->assertDontSee(route('cart.add-many'), false);
+
+        $theme = app(ThemeManager::class)->find('esencia');
+        app(ThemeOptions::class)->save($theme, [
+            'palette' => 'lila', 'heading_font' => 'outfit',
+            'notice_items' => "Doprava zdarma od 39 €\nVzorky zdarma",
+            'concerns' => 'Suchá pleť | /hladat?q=suchá',
+            'routine_product_1' => $foam->id, 'routine_product_2' => $cream->id,
+            'quiz_link' => '/stranka/kviz', 'quiz_title' => 'Kvíz pleti',
+            'nav_highlight' => 'Akcie −20 %', 'nav_highlight_link' => '/akcie',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('--es-ac: #6c3cff', false)
+            ->assertSee('--es-onac: #ffffff', false)
+            ->assertSee("--es-head: 'Outfit Variable'", false)
+            ->assertSee('Vzorky zdarma')
+            ->assertSee('Suchá pleť')
+            ->assertSee(route('cart.add-many'), false)
+            ->assertSee('Kvíz pleti')
+            ->assertSee('Akcie −20 %');
+
+        // Farba značky obchodu: tmavý text na svetlej farbe.
+        app(BrandingSettings::class)->fill(['primary_color' => '#ffe066'])->save();
+        app(ThemeOptions::class)->save($theme, ['palette' => 'brand']);
+        $this->get('/')->assertOk()->assertSee('--es-ac: #ffe066', false)->assertSee('--es-onac: #14213d', false);
+
+        $this->get($skin->url())->assertOk()->assertSee('Výživný krém');
+        $this->get($foam->url())->assertOk();
+        $this->get(route('cart.show'))->assertOk();
+    }
+
+    public function test_esencia_bundled_demo_imports_with_unit_prices_and_routine(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/esencia-demo-'.uniqid()]);
+        app(CatalogSettings::class)->fill(['feature_product_types' => false])->save();
+        $theme = app(ThemeManager::class)->find('esencia');
+        $types = ProductType::query()->count();
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(12, $counts['products']);
+        $this->assertSame('esencia', app(GeneralSettings::class)->theme);
+        // Funkcia typov produktov sa zapne, aby sa zobrazila cena za liter.
+        $this->assertTrue(app(CatalogSettings::class)->feature_product_types);
+        $this->assertLessThanOrEqual($types + 1, ProductType::query()->count());
+
+        $foam = Product::query()->where('name->sk', 'Jemná čistiaca pena pre citlivú pleť')->sole();
+        $this->assertSame($foam->id, (int) app(ThemeOptions::class)->values($theme)['routine_product_1']);
+        $this->assertSame('l', $foam->unit());
+
+        $this->activate('esencia');
+        $this->get('/')->assertOk()->assertSee('Pleť, ktorá sa teší na zimu')->assertSee('Jemná čistiaca pena pre citlivú pleť')->assertSee(route('cart.add-many'), false);
+        $this->assertSame('Skin that looks forward to winter', app(ThemeOptions::class)->values($theme, 'en')['hero_title']);
+        $this->get(Page::query()->where('name->sk', 'Kvíz typu pleti')->sole()->url())->assertOk()->assertSee('Poslať a získať odporúčanie');
+
+        Storage::disk('public')->deleteDirectory('demo/esencia');
     }
 }

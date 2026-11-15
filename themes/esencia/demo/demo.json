@@ -1,0 +1,1151 @@
+{
+    "format": 1,
+    "eshop": "1.9.0",
+    "title": {
+        "sk": "Lúka – prírodná kozmetika a ekodrogéria",
+        "cs": "Lúka – přírodní kosmetika a ekodrogerie",
+        "en": "Lúka – natural cosmetics and eco drugstore"
+    },
+    "theme": "esencia",
+    "modules": [
+        "blog",
+        "forms"
+    ],
+    "created_at": "2026-11-15T20:31:44+00:00",
+    "tables": {
+        "manufacturers": [
+            {
+                "id": 1,
+                "name": "Lúka Lab",
+                "address": null,
+                "email": null,
+                "website": null,
+                "eu_responsible_person": null,
+                "safety_info": null
+            },
+            {
+                "id": 2,
+                "name": "Bylinková lekáreň",
+                "address": null,
+                "email": null,
+                "website": null,
+                "eu_responsible_person": null,
+                "safety_info": null
+            },
+            {
+                "id": 3,
+                "name": "Vlasy & Co.",
+                "address": null,
+                "email": null,
+                "website": null,
+                "eu_responsible_person": null,
+                "safety_info": null
+            },
+            {
+                "id": 4,
+                "name": "Čistý domov",
+                "address": null,
+                "email": null,
+                "website": null,
+                "eu_responsible_person": null,
+                "safety_info": null
+            }
+        ],
+        "product_labels": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Bestseller\",\"cs\":\"Bestseller\",\"en\":\"Bestseller\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Novinka\",\"cs\":\"Novinka\",\"en\":\"New\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 2
+            }
+        ],
+        "addons": [],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Pleť\",\"cs\":\"Pleť\",\"en\":\"Skin\"}",
+                "slug": "{\"sk\":\"plet\",\"cs\":\"plet\",\"en\":\"skin\"}",
+                "description": "{\"sk\":\"<p>Séra, krémy, oleje a čistiace prípravky pre každý typ pleti.</p>\",\"cs\":\"<p>Séra, krémy, oleje a čisticí přípravky pro každý typ pleti.</p>\",\"en\":\"<p>Serums, creams, oils and cleansers for every skin type.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/esencia/drop.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Vlasy\",\"cs\":\"Vlasy\",\"en\":\"Hair\"}",
+                "slug": "{\"sk\":\"vlasy\",\"cs\":\"vlasy\",\"en\":\"hair\"}",
+                "description": "{\"sk\":\"<p>Šampóny a starostlivosť o vlasy s prírodným zložením.</p>\",\"cs\":\"<p>Šampony a péče o vlasy s přírodním složením.</p>\",\"en\":\"<p>Shampoos and hair care with natural ingredients.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/esencia/shampoo.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "parent_id": null,
+                "name": "{\"sk\":\"Telo\",\"cs\":\"Tělo\",\"en\":\"Body\"}",
+                "slug": "{\"sk\":\"telo\",\"cs\":\"telo\",\"en\":\"body\"}",
+                "description": "{\"sk\":\"<p>Telové mlieka, krémy na ruky a oleje do kúpeľa.</p>\",\"cs\":\"<p>Tělová mléka, krémy na ruce a oleje do koupele.</p>\",\"en\":\"<p>Body lotions, hand creams and bath oils.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/esencia/lotion.webp",
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "parent_id": null,
+                "name": "{\"sk\":\"Make-up\",\"cs\":\"Make-up\",\"en\":\"Make-up\"}",
+                "slug": "{\"sk\":\"make-up\",\"cs\":\"make-up\",\"en\":\"make-up\"}",
+                "description": "{\"sk\":\"<p>Prirodzený make-up s ošetrujúcimi zložkami.</p>\",\"cs\":\"<p>Přirozený make-up s pečujícími složkami.</p>\",\"en\":\"<p>Natural make-up with caring ingredients.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/esencia/makeup.webp",
+                "position": 4,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 5,
+                "parent_id": null,
+                "name": "{\"sk\":\"Ekodomácnosť\",\"cs\":\"Ekodomácnost\",\"en\":\"Eco home\"}",
+                "slug": "{\"sk\":\"ekodomacnost\",\"cs\":\"ekodomacnost\",\"en\":\"eco-home\"}",
+                "description": "{\"sk\":\"<p>Mydlá, náplne a čistiace prostriedky bez zbytočného plastu.</p>\",\"cs\":\"<p>Mýdla, náplně a čisticí prostředky bez zbytečného plastu.</p>\",\"en\":\"<p>Soaps, refills and cleaning products without unnecessary plastic.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/esencia/soaps.webp",
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "product_types": [
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Kozmetika a drogéria\",\"cs\":\"Kosmetika a drogerie\",\"en\":\"Cosmetics\"}",
+                "requires_shipping": 1,
+                "is_unique": 0,
+                "unit": "l",
+                "position": 4
+            }
+        ],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Hydratačné sérum s kyselinou hyalurónovou\",\"cs\":\"Hydratační sérum s kyselinou hyaluronovou\",\"en\":\"Hyaluronic acid hydrating serum\"}",
+                "slug": "{\"sk\":\"hydratacne-serum-s-kyselinou-hyaluronovou\",\"cs\":\"hydratacni-serum-s-kyselinou-hyaluronovou\",\"en\":\"hyaluronic-acid-hydrating-serum\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"pre suchú a dehydrovanú pleť\",\"cs\":\"pro suchou a dehydrovanou pleť\",\"en\":\"for dry and dehydrated skin\"}",
+                "description": "{\"sk\":\"<p>Ľahké sérum s dvoma veľkosťami molekúl kyseliny hyalurónovej hydratuje povrch aj hlbšie vrstvy pokožky. Pleť je vypnutá a pripravená na krém.</p>\",\"cs\":\"<p>Lehké sérum se dvěma velikostmi molekul kyseliny hyaluronové hydratuje povrch i hlubší vrstvy pokožky. Pleť je vypnutá a připravená na krém.</p>\",\"en\":\"<p>A light serum with two sizes of hyaluronic acid molecules hydrates both the surface and deeper layers of the skin. Skin feels plump and ready for cream.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/drop.webp\",\"demo/esencia/dropper.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.0300",
+                "tax_rate_id": null,
+                "manufacturer_id": 1,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "hydratacne serum s kyselinou hyaluronovou hydratacni serum s kyselinou hyaluronovou hyaluronic acid hydrating serum pre suchu a dehydrovanu plet pro suchou a dehydrovanou plet for dry and dehydrated skin",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Výživný pleťový krém s bambuckým maslom\",\"cs\":\"Výživný pleťový krém s bambuckým máslem\",\"en\":\"Nourishing face cream with shea butter\"}",
+                "slug": "{\"sk\":\"vyzivny-pletovy-krem-s-bambuckym-maslom\",\"cs\":\"vyzivny-pletovy-krem-s-bambuckym-maslem\",\"en\":\"nourishing-face-cream-with-shea-butter\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"na deň aj noc, 50 ml\",\"cs\":\"na den i noc, 50 ml\",\"en\":\"day and night, 50 ml\"}",
+                "description": "{\"sk\":\"<p>Bohatý, no rýchlo sa vstrebávajúci krém s bambuckým maslom a skvalánom. Obnovuje ochrannú bariéru pleti.</p>\",\"cs\":\"<p>Bohatý, ale rychle se vstřebávající krém s bambuckým máslem a skvalanem. Obnovuje ochrannou bariéru pleti.</p>\",\"en\":\"<p>A rich yet fast-absorbing cream with shea butter and squalane that restores the skin barrier.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/cream.webp\",\"demo/esencia/marble.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.0500",
+                "tax_rate_id": null,
+                "manufacturer_id": 2,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "vyzivny pletovy krem s bambuckym maslom vyzivny pletovy krem s bambuckym maslem nourishing face cream with shea butter na den aj noc, 50 ml na den i noc, 50 ml day and night, 50 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Jemná čistiaca pena pre citlivú pleť\",\"cs\":\"Jemná čisticí pěna pro citlivou pleť\",\"en\":\"Gentle cleansing foam for sensitive skin\"}",
+                "slug": "{\"sk\":\"jemna-cistiaca-pena-pre-citlivu-plet\",\"cs\":\"jemna-cistici-pena-pro-citlivou-plet\",\"en\":\"gentle-cleansing-foam-for-sensitive-skin\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"bez sulfátov, 150 ml\",\"cs\":\"bez sulfátů, 150 ml\",\"en\":\"sulphate-free, 150 ml\"}",
+                "description": "{\"sk\":\"<p>Hebká pena odstráni nečistoty a make-up bez pocitu napätia. S aloe vera a panthenolom.</p>\",\"cs\":\"<p>Hebká pěna odstraní nečistoty a make-up bez pocitu pnutí. S aloe vera a panthenolem.</p>\",\"en\":\"<p>A soft foam that removes dirt and make-up without tightness. With aloe vera and panthenol.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/orange.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.1500",
+                "tax_rate_id": null,
+                "manufacturer_id": 1,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "jemna cistiaca pena pre citlivu plet jemna cistici pena pro citlivou plet gentle cleansing foam for sensitive skin bez sulfatov, 150 ml bez sulfatu, 150 ml sulphate-free, 150 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Pleťový olej so šípkami\",\"cs\":\"Pleťový olej se šípky\",\"en\":\"Rosehip face oil\"}",
+                "slug": "{\"sk\":\"pletovy-olej-so-sipkami\",\"cs\":\"pletovy-olej-se-sipky\",\"en\":\"rosehip-face-oil\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"regenerácia na noc, 30 ml\",\"cs\":\"regenerace na noc, 30 ml\",\"en\":\"overnight renewal, 30 ml\"}",
+                "description": "{\"sk\":\"<p>Za studena lisovaný šípkový olej s vitamínom E. Pár kvapiek večer stačí na rozjasnenú pleť ráno.</p>\",\"cs\":\"<p>Za studena lisovaný šípkový olej s vitamínem E. Pár kapek večer stačí na rozjasněnou pleť ráno.</p>\",\"en\":\"<p>Cold-pressed rosehip oil with vitamin E. A few drops at night for brighter skin in the morning.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/hero.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.0300",
+                "tax_rate_id": null,
+                "manufacturer_id": 2,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pletovy olej so sipkami pletovy olej se sipky rosehip face oil regeneracia na noc, 30 ml regenerace na noc, 30 ml overnight renewal, 30 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 5,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Upokojujúce pleťové tonikum\",\"cs\":\"Zklidňující pleťové tonikum\",\"en\":\"Soothing face toner\"}",
+                "slug": "{\"sk\":\"upokojujuce-pletove-tonikum\",\"cs\":\"zklidnujici-pletove-tonikum\",\"en\":\"soothing-face-toner\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"bez alkoholu, 200 ml\",\"cs\":\"bez alkoholu, 200 ml\",\"en\":\"alcohol-free, 200 ml\"}",
+                "description": "{\"sk\":\"<p>Tonikum s ružovou vodou a niacínamidom upokojí pleť po umytí a pripraví ju na sérum.</p>\",\"cs\":\"<p>Tonikum s růžovou vodou a niacinamidem zklidní pleť po umytí a připraví ji na sérum.</p>\",\"en\":\"<p>A toner with rose water and niacinamide that calms skin after cleansing and preps it for serum.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/dropper.webp\",\"demo/esencia/face.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.2000",
+                "tax_rate_id": null,
+                "manufacturer_id": 1,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "upokojujuce pletove tonikum zklidnujici pletove tonikum soothing face toner bez alkoholu, 200 ml bez alkoholu, 200 ml alcohol-free, 200 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 6,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Hydratačný šampón s ovsom\",\"cs\":\"Hydratační šampon s ovsem\",\"en\":\"Hydrating oat shampoo\"}",
+                "slug": "{\"sk\":\"hydratacny-sampon-s-ovsom\",\"cs\":\"hydratacni-sampon-s-ovsem\",\"en\":\"hydrating-oat-shampoo\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"pre suché a jemné vlasy\",\"cs\":\"pro suché a jemné vlasy\",\"en\":\"for dry and fine hair\"}",
+                "description": "{\"sk\":\"<p>Jemný šampón s ovsom a panthenolom umyje vlasy bez vysušenia. Vlasy sú mäkké aj bez kondicionéra.</p>\",\"cs\":\"<p>Jemný šampon s ovsem a panthenolem umyje vlasy bez vysušení. Vlasy jsou měkké i bez kondicionéru.</p>\",\"en\":\"<p>A gentle shampoo with oat and panthenol that cleans without drying. Hair stays soft even without conditioner.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/shampoo.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.2500",
+                "tax_rate_id": null,
+                "manufacturer_id": 3,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "hydratacny sampon s ovsom hydratacni sampon s ovsem hydrating oat shampoo pre suche a jemne vlasy pro suche a jemne vlasy for dry and fine hair",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 7,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Telové mlieko s bambuckým maslom\",\"cs\":\"Tělové mléko s bambuckým máslem\",\"en\":\"Shea butter body lotion\"}",
+                "slug": "{\"sk\":\"telove-mlieko-s-bambuckym-maslom\",\"cs\":\"telove-mleko-s-bambuckym-maslem\",\"en\":\"shea-butter-body-lotion\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"rýchlo sa vstrebáva, 200 ml\",\"cs\":\"rychle se vstřebává, 200 ml\",\"en\":\"fast absorbing, 200 ml\"}",
+                "description": "{\"sk\":\"<p>Ľahké telové mlieko pre celú rodinu. Nezanecháva mastný film a jemne vonia vanilkou.</p>\",\"cs\":\"<p>Lehké tělové mléko pro celou rodinu. Nezanechává mastný film a jemně voní vanilkou.</p>\",\"en\":\"<p>A light body lotion for the whole family. No greasy film and a gentle vanilla scent.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/tube.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.2000",
+                "tax_rate_id": null,
+                "manufacturer_id": 2,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "telove mlieko s bambuckym maslom telove mleko s bambuckym maslem shea butter body lotion rychlo sa vstrebava, 200 ml rychle se vstrebava, 200 ml fast absorbing, 200 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 8,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Krém na ruky Mandľa\",\"cs\":\"Krém na ruce Mandle\",\"en\":\"Almond hand cream\"}",
+                "slug": "{\"sk\":\"krem-na-ruky-mandla\",\"cs\":\"krem-na-ruce-mandle\",\"en\":\"almond-hand-cream\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"pre suché ruky, 75 ml\",\"cs\":\"pro suché ruce, 75 ml\",\"en\":\"for dry hands, 75 ml\"}",
+                "description": "{\"sk\":\"<p>Výživný krém s mandľovým olejom chráni ruky pred vysušením v zime aj pri častom umývaní.</p>\",\"cs\":\"<p>Výživný krém s mandlovým olejem chrání ruce před vysušením v zimě i při častém mytí.</p>\",\"en\":\"<p>A nourishing cream with almond oil that protects hands in winter and with frequent washing.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/lotion.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.0750",
+                "tax_rate_id": null,
+                "manufacturer_id": 2,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "krem na ruky mandla krem na ruce mandle almond hand cream pre suche ruky, 75 ml pro suche ruce, 75 ml for dry hands, 75 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 9,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Olej do kúpeľa Levanduľa\",\"cs\":\"Olej do koupele Levandule\",\"en\":\"Lavender bath oil\"}",
+                "slug": "{\"sk\":\"olej-do-kupela-levandula\",\"cs\":\"olej-do-koupele-levandule\",\"en\":\"lavender-bath-oil\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"na pokojný večer, 100 ml\",\"cs\":\"na klidný večer, 100 ml\",\"en\":\"for a calm evening, 100 ml\"}",
+                "description": "{\"sk\":\"<p>Zmes rastlinných olejov s levanduľovou silicou. Pokožku vyživí a navodí pokojný spánok.</p>\",\"cs\":\"<p>Směs rostlinných olejů s levandulovou silicí. Pokožku vyživí a navodí klidný spánek.</p>\",\"en\":\"<p>A blend of plant oils with lavender essential oil. Nourishes skin and helps you sleep.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/purple.webp\",\"demo/esencia/wood.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.1000",
+                "tax_rate_id": null,
+                "manufacturer_id": 2,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "olej do kupela levandula olej do koupele levandule lavender bath oil na pokojny vecer, 100 ml na klidny vecer, 100 ml for a calm evening, 100 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 10,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Tónovací krém s SPF 30\",\"cs\":\"Tónovací krém s SPF 30\",\"en\":\"Tinted cream SPF 30\"}",
+                "slug": "{\"sk\":\"tonovaci-krem-s-spf-30\",\"cs\":\"tonovaci-krem-s-spf-30\",\"en\":\"tinted-cream-spf-30\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"ľahké krytie, 3 odtiene\",\"cs\":\"lehké krytí, 3 odstíny\",\"en\":\"light coverage, 3 shades\"}",
+                "description": "{\"sk\":\"<p>Ľahký tónovací krém zjednotí pleť, hydratuje a chráni pred slnkom. Prirodzený výsledok bez efektu masky.</p>\",\"cs\":\"<p>Lehký tónovací krém sjednotí pleť, hydratuje a chrání před sluncem. Přirozený výsledek bez efektu masky.</p>\",\"en\":\"<p>A light tinted cream that evens out skin, hydrates and protects from the sun. A natural finish without a mask effect.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/makeup.webp\",\"demo/esencia/pinkset.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.0300",
+                "tax_rate_id": null,
+                "manufacturer_id": 1,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "tonovaci krem s spf 30 tonovaci krem s spf 30 tinted cream spf 30 lahke krytie, 3 odtiene lehke kryti, 3 odstiny light coverage, 3 shades",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 11,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Prírodné mydlá, sada 3 ks\",\"cs\":\"Přírodní mýdla, sada 3 ks\",\"en\":\"Natural soaps, set of 3\"}",
+                "slug": "{\"sk\":\"prirodne-mydla-sada-3-ks\",\"cs\":\"prirodni-mydla-sada-3-ks\",\"en\":\"natural-soaps-set-of-3\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"levanduľa, mäta, ovos\",\"cs\":\"levandule, máta, oves\",\"en\":\"lavender, mint, oat\"}",
+                "description": "{\"sk\":\"<p>Tri mydlá varené za studena v papierovom obale. Vhodné na ruky aj telo.</p>\",\"cs\":\"<p>Tři mýdla vařená za studena v papírovém obalu. Vhodná na ruce i tělo.</p>\",\"en\":\"<p>Three cold-process soaps in paper packaging. For hands and body.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/soaps.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": 4,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "prirodne mydla, sada 3 ks prirodni mydla, sada 3 ks natural soaps, set of 3 levandula, mata, ovos levandule, mata, oves lavender, mint, oat",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 12,
+                "product_type_id": 5,
+                "name": "{\"sk\":\"Tekuté mydlo v sklenenej fľaši\",\"cs\":\"Tekuté mýdlo ve skleněné lahvi\",\"en\":\"Liquid soap in a glass bottle\"}",
+                "slug": "{\"sk\":\"tekute-mydlo-v-sklenenej-flasi\",\"cs\":\"tekute-mydlo-ve-sklenene-lahvi\",\"en\":\"liquid-soap-in-a-glass-bottle\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"fľašu doplníte náplňou, 300 ml\",\"cs\":\"láhev doplníte náplní, 300 ml\",\"en\":\"refillable bottle, 300 ml\"}",
+                "description": "{\"sk\":\"<p>Tekuté mydlo s pumpičkou v sklenenej fľaši, ktorú doplníte z náplne. Menej plastu v kúpeľni.</p>\",\"cs\":\"<p>Tekuté mýdlo s pumpičkou ve skleněné lahvi, kterou doplníte z náplně. Méně plastu v koupelně.</p>\",\"en\":\"<p>Liquid soap with a pump in a refillable glass bottle. Less plastic in your bathroom.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/esencia/soapbottle.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 250,
+                "unit_amount": "0.3000",
+                "tax_rate_id": null,
+                "manufacturer_id": 4,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "tekute mydlo v sklenenej flasi tekute mydlo ve sklenene lahvi liquid soap in a glass bottle flasu doplnite naplnou, 300 ml lahev doplnite naplni, 300 ml refillable bottle, 300 ml",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Objem\",\"cs\":\"Objem\",\"en\":\"Size\"}",
+                "position": 1
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"30 ml\",\"cs\":\"30 ml\",\"en\":\"30 ml\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"50 ml\",\"cs\":\"50 ml\",\"en\":\"50 ml\"}",
+                "color": null,
+                "position": 2
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 20,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 20,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 49900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1590,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 39900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1190,
+                "compare_at_amount": null
+            },
+            {
+                "id": 6,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 29900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 7,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1890,
+                "compare_at_amount": null
+            },
+            {
+                "id": 8,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 47900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 9,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1250,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 31900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 990,
+                "compare_at_amount": 1240
+            },
+            {
+                "id": 12,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 24900,
+                "compare_at_amount": 30900
+            },
+            {
+                "id": 13,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1390,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 34900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 15,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 790,
+                "compare_at_amount": null
+            },
+            {
+                "id": 16,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 19900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 17,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 18,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 37900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 19,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 20,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 42900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 21,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1290,
+                "compare_at_amount": null
+            },
+            {
+                "id": 22,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 32900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 23,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 890,
+                "compare_at_amount": null
+            },
+            {
+                "id": 24,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 22900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 25,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "EUR",
+                "amount": 2790,
+                "compare_at_amount": null
+            },
+            {
+                "id": 26,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "CZK",
+                "amount": 69900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Kvíz typu pleti\",\"cs\":\"Kvíz typu pleti\",\"en\":\"Skin quiz\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Aká je vaša pleť večer?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Napätá a suchá\\nLesklá v T-zóne\\nLesklá na celej tvári\\nZačervenaná a citlivá\"},{\"label\":\"Čo chcete zlepšiť?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Hydratáciu\\nVrásky\\nAkné a póry\\nNerovnomerný tón\"},{\"label\":\"Niečo, čo by sme mali vedieť (alergie, obľúbené produkty)\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Jaká je vaše pleť večer?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Napjatá a suchá\\nLesklá v T-zóně\\nLesklá na celém obličeji\\nZarudlá a citlivá\"},{\"label\":\"Co chcete zlepšit?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Hydrataci\\nVrásky\\nAkné a póry\\nNerovnoměrný tón\"},{\"label\":\"Něco, co bychom měli vědět (alergie, oblíbené produkty)\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"How does your skin feel in the evening?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Tight and dry\\nShiny in the T-zone\\nShiny all over\\nRed and sensitive\"},{\"label\":\"What would you like to improve?\",\"type\":\"select\",\"required\":true,\"width\":\"full\",\"options\":\"Hydration\\nFine lines\\nAcne and pores\\nUneven tone\"},{\"label\":\"Anything we should know (allergies, favourite products)\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Poslať a získať odporúčanie\",\"cs\":\"Odeslat a získat doporučení\",\"en\":\"Send and get my routine\"}",
+                "success_message": "{\"sk\":\"Ďakujeme! Do 24 hodín vám pošleme rutinu na mieru aj s kódom na vzorky zadarmo.\",\"cs\":\"Děkujeme! Do 24 hodin vám pošleme rutinu na míru i s kódem na vzorky zdarma.\",\"en\":\"Thank you! Within 24 hours we will send your personal routine and a code for free samples.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "saved_blocks": [],
+        "blog_categories": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Starostlivosť\",\"cs\":\"Péče\",\"en\":\"Skincare\"}",
+                "slug": "{\"sk\":\"starostlivost\",\"cs\":\"pece\",\"en\":\"skincare\"}",
+                "description": null,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ekodomácnosť\",\"cs\":\"Ekodomácnost\",\"en\":\"Eco home\"}",
+                "slug": "{\"sk\":\"ekodomacnost\",\"cs\":\"ekodomacnost\",\"en\":\"eco-home\"}",
+                "description": null,
+                "position": 2
+            }
+        ],
+        "blog_tags": [],
+        "blog_posts": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Ako si zostaviť rannú a večernú rutinu\",\"cs\":\"Jak si sestavit ranní a večerní rutinu\",\"en\":\"How to build a morning and evening routine\"}",
+                "slug": "{\"sk\":\"ako-si-zostavit-rannu-a-vecernu-rutinu\",\"cs\":\"jak-si-sestavit-ranni-a-vecerni-rutinu\",\"en\":\"how-to-build-a-morning-and-evening-routine\"}",
+                "excerpt": "{\"sk\":\"Čistenie, sérum a krém – v akom poradí a prečo.\",\"cs\":\"Čištění, sérum a krém – v jakém pořadí a proč.\",\"en\":\"Cleanser, serum and cream – in which order and why.\"}",
+                "blocks": "{\"sk\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Ráno</h2><p>Pleť umyte jemnou penou, naneste hydratačné sérum a zakončite krémom s SPF.</p><h2>Večer</h2><p>Odstráňte make-up, použite tonikum a výživný krém alebo pár kvapiek pleťového oleja.</p>\",\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Ráno</h2><p>Pleť umyjte jemnou pěnou, naneste hydratační sérum a zakončete krémem s SPF.</p><h2>Večer</h2><p>Odstraňte make-up, použijte tonikum a výživný krém nebo pár kapek pleťového oleje.</p>\",\"visibility\":\"all\"}}],\"en\":[{\"type\":\"text\",\"data\":{\"content\":\"<h2>Morning</h2><p>Cleanse with a gentle foam, apply a hydrating serum and finish with an SPF cream.</p><h2>Evening</h2><p>Remove make-up, use a toner and a nourishing cream or a few drops of face oil.</p>\",\"visibility\":\"all\"}}]}",
+                "cover_image": "demo/esencia/lotion.webp",
+                "blog_category_id": 1,
+                "author_id": null,
+                "status": "published",
+                "published_at": "2026-11-03 20:27:54",
+                "comments_enabled": 1,
+                "meta_title": null,
+                "meta_description": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"5 vecí v kúpeľni, ktoré nahradíte bez plastu\",\"cs\":\"5 věcí v koupelně, které nahradíte bez plastu\",\"en\":\"5 bathroom items you can swap for plastic-free\"}",
+                "slug": "{\"sk\":\"5-veci-v-kupelni-ktore-nahradite-bez-plastu\",\"cs\":\"5-veci-v-koupelne-ktere-nahradite-bez-plastu\",\"en\":\"5-bathroom-items-you-can-swap-for-plastic-free\"}",
+                "excerpt": "{\"sk\":\"Tuhé mydlá, náplne a ďalšie jednoduché zmeny.\",\"cs\":\"Tuhá mýdla, náplně a další jednoduché změny.\",\"en\":\"Solid soaps, refills and other easy swaps.\"}",
+                "blocks": "{\"sk\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Začnite tuhým mydlom namiesto tekutého, fľaše dopĺňajte z náplní a vyberajte kozmetiku v skle alebo papieri.</p>\",\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Začněte tuhým mýdlem místo tekutého, lahve doplňujte z náplní a vybírejte kosmetiku ve skle nebo papíru.</p>\",\"visibility\":\"all\"}}],\"en\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Start with solid soap instead of liquid, refill your bottles and choose cosmetics in glass or paper.</p>\",\"visibility\":\"all\"}}]}",
+                "cover_image": "demo/esencia/soaps.webp",
+                "blog_category_id": 2,
+                "author_id": null,
+                "status": "published",
+                "published_at": "2026-11-07 20:27:54",
+                "comments_enabled": 1,
+                "meta_title": null,
+                "meta_description": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Prečo čítať INCI a na čo si dať pozor\",\"cs\":\"Proč číst INCI a na co si dát pozor\",\"en\":\"Why read the INCI list and what to watch for\"}",
+                "slug": "{\"sk\":\"preco-citat-inci-a-na-co-si-dat-pozor\",\"cs\":\"proc-cist-inci-a-na-co-si-dat-pozor\",\"en\":\"why-read-the-inci-list-and-what-to-watch-for\"}",
+                "excerpt": "{\"sk\":\"Zloženie kozmetiky ľudskou rečou.\",\"cs\":\"Složení kosmetiky lidskou řečí.\",\"en\":\"Cosmetic ingredients in plain language.\"}",
+                "blocks": "{\"sk\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Zložky sú zoradené podľa množstva. Čím vyššie, tým viac ich produkt obsahuje. Hľadajte účinné látky v prvej polovici zoznamu.</p>\",\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Složky jsou seřazeny podle množství. Čím výš, tím víc jich produkt obsahuje. Hledejte účinné látky v první polovině seznamu.</p>\",\"visibility\":\"all\"}}],\"en\":[{\"type\":\"text\",\"data\":{\"content\":\"<p>Ingredients are listed by amount. The higher up, the more the product contains. Look for active ingredients in the first half of the list.</p>\",\"visibility\":\"all\"}}]}",
+                "cover_image": "demo/esencia/wood.webp",
+                "blog_category_id": 1,
+                "author_id": null,
+                "status": "published",
+                "published_at": "2026-11-11 20:27:54",
+                "comments_enabled": 1,
+                "meta_title": null,
+                "meta_description": null
+            }
+        ],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"7ce5b95c-9b36-410c-aacf-54acf3a3c61b\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"Kvíz typu pleti\",\"cs\":\"Kvíz typu pleti\",\"en\":\"Skin quiz\"}",
+                "slug": "{\"sk\":\"kviz-typu-pleti\",\"cs\":\"kviz-typu-pleti\",\"en\":\"skin-quiz\"}",
+                "content": "{\"sk\":\"<p>Odpovedzte na pár otázok o vašej pleti. Naša kozmetička vám do 24 hodín pošle odporúčanú rutinu a kód na vzorky zadarmo.</p>\",\"cs\":\"<p>Odpovězte na pár otázek o vaší pleti. Naše kosmetička vám do 24 hodin pošle doporučenou rutinu a kód na vzorky zdarma.</p>\",\"en\":\"<p>Answer a few questions about your skin. Our beautician will send you a recommended routine and a code for free samples within 24 hours.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 10,
+                "is_visible": 1,
+                "blocks": "{\"sk\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"en\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}]}",
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "3",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "4",
+                "new_window": 0,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "5",
+                "new_window": 0,
+                "position": 5
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 8,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 9,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 10,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 12,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 2
+            }
+        ],
+        "addon_product": [],
+        "product_label_product": [
+            {
+                "product_label_id": 1,
+                "product_id": 1
+            },
+            {
+                "product_label_id": 1,
+                "product_id": 6
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 3
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 9
+            }
+        ],
+        "blog_post_tag": [],
+        "blog_post_product": [
+            {
+                "blog_post_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "blog_post_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "blog_post_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "blog_post_id": 2,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "blog_post_id": 2,
+                "product_id": 12,
+                "position": 0
+            },
+            {
+                "blog_post_id": 3,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "blog_post_id": 3,
+                "product_id": 5,
+                "position": 0
+            }
+        ],
+        "blog_post_catalog_category": []
+    },
+    "theme_settings": "{\"palette\":\"koral\",\"notice_items\":\"Doprava zdarma od 39 €\\n2 vzorky ku každej objednávke\\nOdoslanie do 24 hodín\",\"nav_highlight\":\"Akcie −20 %\",\"nav_highlight_link\":\"/produkt/hydratacny-sampon-s-ovsom\",\"nav_extra\":\"Kvíz typu pleti\",\"nav_extra_link\":\"/stranka/kviz-typu-pleti\",\"hero_badge\":\"Zimná starostlivosť\",\"hero_title\":\"Pleť, ktorá sa teší na zimu\",\"hero_text\":\"Hydratačné séra, krémy a oleje s overeným zložením. Prírodné, účinné a od slovenských výrobcov.\",\"hero_button\":\"Nakupovať pleť\",\"hero_link\":\"/kategoria/plet\",\"hero_button_2\":\"Kvíz typu pleti\",\"hero_link_2\":\"/stranka/kviz-typu-pleti\",\"hero_image\":\"demo/esencia/hero.webp\",\"hero_sticker\":\"až −20 %\",\"promo_1_label\":\"Novinka\",\"promo_1_title\":\"Olej do kúpeľa s levanduľou\",\"promo_1_link_text\":\"Pozrieť\",\"promo_1_link\":\"/produkt/olej-do-kupela-levandula\",\"promo_1_image\":\"demo/esencia/purple.webp\",\"promo_2_label\":\"Bez plastu\",\"promo_2_title\":\"Mydlá a náplne do kúpeľne\",\"promo_2_link_text\":\"Ekodomácnosť\",\"promo_2_link\":\"/kategoria/ekodomacnost\",\"promo_2_image\":\"demo/esencia/soapbottle.webp\",\"concerns\":\"Suchá pleť | /hladat?q=hydrata%C4%8Dn%C3%A9\\nCitlivá pleť | /hladat?q=citliv%C3%BA\\nAkné a póry | /hladat?q=tonikum\\nVrásky | /hladat?q=s%C3%A9rum\\nSuché vlasy | /hladat?q=%C5%A1amp%C3%B3n\\nSuché ruky | /hladat?q=ruky\\nBez plastu | /kategoria/ekodomacnost\",\"products_title\":\"Obľúbené produkty\",\"benefit_1\":\"Dermatologicky testované\",\"benefit_2\":\"Vegan a cruelty free\",\"benefit_3\":\"Doprava zdarma od 39 €\",\"benefit_4\":\"2 vzorky ku každej objednávke\",\"routine_title\":\"Hydratácia pre suchú pleť\",\"routine_text\":\"Čistiaca pena, šípkový olej a výživný krém, ktoré sa navzájom dopĺňajú. Pridajte si celú rutinu jedným kliknutím.\",\"routine_product_1\":3,\"routine_step_1\":\"Čistenie\",\"routine_product_2\":4,\"routine_step_2\":\"Olej\",\"routine_product_3\":2,\"routine_step_3\":\"Krém\",\"ingredient_1_link\":\"/produkt/hydratacne-serum-s-kyselinou-hyaluronovou\",\"ingredient_2_link\":\"/produkt/pletovy-olej-so-sipkami\",\"ingredient_3_link\":\"/produkt/hydratacny-sampon-s-ovsom\",\"quiz_title\":\"Neviete si vybrať? Kvíz za 60 sekúnd\",\"quiz_text\":\"Odpovedzte na pár otázok a naša kozmetička vám pošle rutinu na mieru aj so vzorkami zadarmo.\",\"quiz_button\":\"Spustiť kvíz\",\"quiz_link\":\"/stranka/kviz-typu-pleti\",\"quiz_image\":\"demo/esencia/face.webp\",\"reviews_summary\":\"4,9 z 2 340 hodnotení\",\"review_1_text\":\"Po týždni so sérom mám pleť konečne hydratovanú aj v zime.\",\"review_1_author\":\"Zuzana, Bratislava\",\"review_1_product\":\"Hydratačné sérum\",\"review_2_text\":\"Šampón vonia ovsom a vlasy sú mäkké aj bez kondicionéra.\",\"review_2_author\":\"Martina, Trnava\",\"review_2_product\":\"Šampón s ovsom\",\"review_3_text\":\"Balík prišiel na druhý deň aj so vzorkami. Super prístup!\",\"review_3_author\":\"Peter, Žilina\",\"review_3_product\":\"Telové mlieko\",\"footer_text\":\"Prírodná kozmetika a ekodrogéria od slovenských a českých výrobcov. Zloženie každého produktu overujeme.\",\"footer_badges\":\"Vegan\\nBez parabénov\\nCruelty free\",\"_translations\":{\"cs\":{\"notice_items\":\"Doprava zdarma od 990 Kč\\n2 vzorky ke každé objednávce\\nOdeslání do 24 hodin\",\"nav_highlight\":\"Akce −20 %\",\"nav_extra\":\"Kvíz typu pleti\",\"hero_badge\":\"Zimní péče\",\"hero_title\":\"Pleť, která se těší na zimu\",\"hero_text\":\"Hydratační séra, krémy a oleje s ověřeným složením. Přírodní, účinné a od slovenských výrobců.\",\"hero_button\":\"Nakupovat pleť\",\"hero_button_2\":\"Kvíz typu pleti\",\"hero_sticker\":\"až −20 %\",\"promo_1_label\":\"Novinka\",\"promo_1_title\":\"Olej do koupele s levandulí\",\"promo_1_link_text\":\"Prohlédnout\",\"promo_2_label\":\"Bez plastu\",\"promo_2_title\":\"Mýdla a náplně do koupelny\",\"promo_2_link_text\":\"Ekodomácnost\",\"concerns\":\"Suchá pleť | /hladat?q=hydrata%C4%8Dn%C3%A9\\nCitlivá pleť | /hladat?q=citliv%C3%BA\\nAkné a póry | /hladat?q=tonikum\\nVrásky | /hladat?q=s%C3%A9rum\\nSuché vlasy | /hladat?q=%C5%A1amp%C3%B3n\\nSuché ruce | /hladat?q=ruky\\nBez plastu | /kategoria/ekodomacnost\",\"products_title\":\"Oblíbené produkty\",\"benefit_1\":\"Dermatologicky testováno\",\"benefit_2\":\"Vegan a cruelty free\",\"benefit_3\":\"Doprava zdarma od 990 Kč\",\"benefit_4\":\"2 vzorky ke každé objednávce\",\"routine_title\":\"Hydratace pro suchou pleť\",\"routine_text\":\"Čisticí pěna, šípkový olej a výživný krém, které se navzájem doplňují. Přidejte si celou rutinu jedním kliknutím.\",\"routine_step_1\":\"Čištění\",\"routine_step_2\":\"Olej\",\"routine_step_3\":\"Krém\",\"quiz_title\":\"Nevíte si vybrat? Kvíz za 60 sekund\",\"quiz_text\":\"Odpovězte na pár otázek a naše kosmetička vám pošle rutinu na míru i se vzorky zdarma.\",\"quiz_button\":\"Spustit kvíz\",\"reviews_summary\":\"4,9 z 2 340 hodnocení\",\"review_1_text\":\"Po týdnu se sérem mám pleť konečně hydratovanou i v zimě.\",\"review_1_product\":\"Hydratační sérum\",\"review_2_text\":\"Šampon voní ovsem a vlasy jsou měkké i bez kondicionéru.\",\"review_2_product\":\"Šampon s ovsem\",\"review_3_text\":\"Balík přišel druhý den i se vzorky. Super přístup!\",\"review_3_product\":\"Tělové mléko\",\"footer_text\":\"Přírodní kosmetika a ekodrogerie od slovenských a českých výrobců. Složení každého produktu ověřujeme.\",\"footer_badges\":\"Vegan\\nBez parabenů\\nCruelty free\"},\"en\":{\"notice_items\":\"Free shipping over €39\\n2 samples with every order\\nShipped within 24 hours\",\"nav_highlight\":\"Sale −20%\",\"nav_extra\":\"Skin quiz\",\"hero_badge\":\"Winter care\",\"hero_title\":\"Skin that looks forward to winter\",\"hero_text\":\"Hydrating serums, creams and oils with proven ingredients. Natural, effective and made in Slovakia.\",\"hero_button\":\"Shop skincare\",\"hero_button_2\":\"Skin quiz\",\"hero_sticker\":\"up to −20%\",\"promo_1_label\":\"New\",\"promo_1_title\":\"Lavender bath oil\",\"promo_1_link_text\":\"View\",\"promo_2_label\":\"Plastic-free\",\"promo_2_title\":\"Soaps and refills for your bathroom\",\"promo_2_link_text\":\"Eco home\",\"concerns\":\"Dry skin | /hladat?q=hydrata%C4%8Dn%C3%A9\\nSensitive skin | /hladat?q=citliv%C3%BA\\nAcne and pores | /hladat?q=tonikum\\nFine lines | /hladat?q=s%C3%A9rum\\nDry hair | /hladat?q=%C5%A1amp%C3%B3n\\nDry hands | /hladat?q=ruky\\nPlastic-free | /kategoria/ekodomacnost\",\"products_title\":\"Customer favourites\",\"benefit_1\":\"Dermatologically tested\",\"benefit_2\":\"Vegan and cruelty free\",\"benefit_3\":\"Free shipping over €39\",\"benefit_4\":\"2 samples with every order\",\"routine_title\":\"Hydration for dry skin\",\"routine_text\":\"A cleansing foam, rosehip oil and a nourishing cream that work together. Add the whole routine in one click.\",\"routine_step_1\":\"Cleanse\",\"routine_step_2\":\"Oil\",\"routine_step_3\":\"Cream\",\"quiz_title\":\"Not sure what to choose? 60-second quiz\",\"quiz_text\":\"Answer a few questions and our beautician will send you a personal routine with free samples.\",\"quiz_button\":\"Start the quiz\",\"reviews_summary\":\"4.9 from 2,340 reviews\",\"review_1_text\":\"After a week with the serum my skin is finally hydrated, even in winter.\",\"review_1_product\":\"Hydrating serum\",\"review_2_text\":\"The shampoo smells of oats and my hair is soft without conditioner.\",\"review_2_product\":\"Oat shampoo\",\"review_3_text\":\"The parcel arrived the next day with samples. Great service!\",\"review_3_product\":\"Body lotion\",\"footer_text\":\"Natural cosmetics and eco drugstore products from Slovak and Czech makers. We check the ingredients of every product.\",\"footer_badges\":\"Vegan\\nParaben-free\\nCruelty free\"}}}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#ff5a3c\""
+        }
+    }
+}

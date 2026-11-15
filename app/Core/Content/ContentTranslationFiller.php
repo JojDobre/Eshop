@@ -5,6 +5,7 @@ namespace App\Core\Content;
 use App\Models\BlockLayout;
 use App\Models\CustomerGroup;
 use App\Models\MenuItem;
+use App\Models\SavedBlock;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -66,6 +67,7 @@ class ContentTranslationFiller
         Form::class,
         BookingService::class,
         BlockLayout::class,
+        SavedBlock::class,
         MenuItem::class,
         CustomerGroup::class,
     ];

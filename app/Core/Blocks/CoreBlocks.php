@@ -4,6 +4,9 @@ namespace App\Core\Blocks;
 
 use App\Filament\Forms\BlockBuilder;
 use App\Filament\Forms\RichText;
+use App\Filament\Resources\SavedBlocks\SavedBlockResource;
+use App\Models\SavedBlock;
+use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -12,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
+use Illuminate\Support\HtmlString;
 
 /**
  * Základné bloky jadra: banner, text, obrázok, video, výhody obchodu, vlastný HTML kód.
@@ -111,7 +115,7 @@ final class CoreBlocks
                 Select::make('align')->label($t('grid.align'))->selectablePlaceholder(false)->default('start')
                     ->options(['start' => $t('grid.align_start'), 'center' => $t('grid.align_center')]),
             ]),
-            ...collect(range(1, 4))->map(fn (int $column) => BlockBuilder::make('column_'.$column, ['section'])
+            ...collect(range(1, 4))->map(fn (int $column) => BlockBuilder::make('column_'.$column, ['section'], presets: false)
                 ->label($t('grid.column').' '.$column)->hiddenLabel(false)->columnSpanFull()
                 ->visible(fn (Get $get) => count(self::SECTION_LAYOUTS[$get('layout') ?? 'halves'] ?? [1]) >= $column))->all(),
             self::hidden(),
@@ -166,10 +170,45 @@ final class CoreBlocks
             self::hidden(),
         ], icon: 'heroicon-o-minus'));
 
+        // Uložená sekcia z knižnice: úprava na jednom mieste sa prejaví všade, kde je vložená.
+        $types->register(new BlockType('saved', fn () => $t('types.saved'), fn () => [
+            Select::make('saved_block_id')->label(__('admin.saved_blocks.label'))->required()->searchable()
+                ->options(fn () => SavedBlock::query()->orderBy('name')->pluck('name', 'id')->all())
+                ->helperText(__('admin.saved_blocks.block_help'))
+                ->hintAction(Action::make('editSaved')->label(__('admin.saved_blocks.edit'))->icon('heroicon-o-pencil-square')
+                    ->visible(fn (Get $get) => filled($get('saved_block_id')))
+                    ->url(fn (Get $get) => filled($get('saved_block_id')) ? SavedBlockResource::getUrl('edit', ['record' => $get('saved_block_id')]) : null, shouldOpenInNewTab: true)),
+            self::hidden(),
+        ], prepare: fn (array $data) => [...$data, 'html' => self::renderSaved((int) ($data['saved_block_id'] ?? 0))], icon: 'heroicon-o-bookmark'));
+
         $types->register(new BlockType('html', fn () => $t('types.html'), fn () => [
             Textarea::make('html')->label($t('html'))->helperText($t('html_help'))->rows(8)->required(),
             self::hidden(),
         ], icon: 'heroicon-o-code-bracket'));
+    }
+
+    /** Hĺbka vnorenia uložených sekcií (ochrana pred nekonečným cyklom). */
+    private static int $savedDepth = 0;
+
+    public static function renderSaved(int $id): ?HtmlString
+    {
+        if ($id < 1 || self::$savedDepth >= 3) {
+            return null;
+        }
+
+        $saved = SavedBlock::query()->find($id);
+
+        if ($saved === null) {
+            return null;
+        }
+
+        self::$savedDepth++;
+
+        try {
+            return app(BlockTypes::class)->render($saved->blockList(), 'saved'.$id.'-'.self::$savedDepth.'-');
+        } finally {
+            self::$savedDepth--;
+        }
     }
 
     public static function image(string $name): FileUpload

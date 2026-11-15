@@ -29,6 +29,7 @@ class MediaLibrary
         'blog_posts' => ['cover_image', 'blocks', 'excerpt'],
         'pages' => ['content', 'blocks'],
         'block_layouts' => ['blocks'],
+        'saved_blocks' => ['blocks'],
         'theme_settings' => ['values'],
         'settings' => ['payload'],
         'email_templates' => ['body'],

@@ -234,3 +234,16 @@ select:not([multiple]):not([size]) {
     color: inherit;
     opacity: 0.85;
 }
+
+/* Zobrazenie bloku podľa zariadenia (nastavuje sa pri každom bloku v administrácii). */
+@media (max-width: 767.98px) {
+    .block-only-desktop {
+        display: none !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .block-only-mobile {
+        display: none !important;
+    }
+}

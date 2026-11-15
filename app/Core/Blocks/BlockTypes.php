@@ -51,7 +51,13 @@ class BlockTypes
 
             try {
                 $data = $type->prepare ? ($type->prepare)($data) : $data;
-                $html .= view('theme::blocks.'.$type->key, ['block' => $data, 'blockId' => 'block-'.$idPrefix.$type->key.'-'.$index])->render();
+                $output = view('theme::blocks.'.$type->key, ['block' => $data, 'blockId' => 'block-'.$idPrefix.$type->key.'-'.$index])->render();
+                $visibility = $data['visibility'] ?? 'all';
+
+                // Zobrazenie podľa zariadenia: obal s triedou, ktorú skryje CSS šablóny (bez JavaScriptu).
+                $html .= in_array($visibility, ['desktop', 'mobile'], true) && trim($output) !== ''
+                    ? '<div class="block-only-'.$visibility.'">'.$output.'</div>'
+                    : $output;
             } catch (Throwable $e) {
                 report($e);
             }

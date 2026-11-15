@@ -84,6 +84,15 @@ aby ich nastavenia obchodu vždy prepísali.
 2. `scripts/build-release.sh` – inštalačný balík `dist/eshop-<verzia>.zip` a aktualizačný balík
    `dist/eshop-update-<verzia>.zip`, podpísaný kľúčom z `ESHOP_SIGNING_KEY`.
 3. `scripts/e2e.sh` – inštalácia a nákupy v prehliadači, `scripts/a11y-check.cjs` – prístupnosť.
+4. `scripts/e2e-shopping/run.cjs` – podrobný test celého nákupu (55 kontrol) na čistej inštalácii
+   s ukážkovými dátami a veľkosťou obchodu „veľký“: košík, varianty, doplnky, sklad, kupóny, poukážky,
+   validácie pokladne, dopravy a platby, administrácia objednávky (faktúra, storno), zákaznícky účet,
+   mobil, angličtina a CZK. Testovacie dáta pridá `seed.php` cez `php artisan tinker`:
+
+   ```bash
+   E2E_BASE=http://127.0.0.1:8199 E2E_APP=/cesta/k/eshop DB_NAME=eshop_e2e DB_USERNAME=root \
+   E2E_ADMIN_EMAIL=admin@example.test E2E_ADMIN_PASSWORD=… node scripts/e2e-shopping/run.cjs
+   ```
 
 Pár kľúčov na podpisovanie vytvorí `php scripts/generate-signing-key.php`. Súkromný kľúč nikdy
 nedávajte do repozitára, verejný vložte do `App\Core\Eshop::UPDATE_PUBLIC_KEY`.

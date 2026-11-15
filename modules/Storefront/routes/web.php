@@ -10,5 +10,5 @@ Route::middleware(SetStorefrontLocale::class)->group(function (): void {
     Route::get('/', HomeController::class)->name('storefront.home');
     Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('storefront.sitemap');
     Route::get('/robots.txt', [SeoController::class, 'robots'])->name('storefront.robots');
-    Route::post('/mena', CurrencyController::class)->name('storefront.currency')->middleware('throttle:30,1');
+    Route::post('/mena', CurrencyController::class)->name('storefront.currency')->middleware('throttle:30,1,storefront.currency');
 });

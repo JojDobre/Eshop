@@ -197,6 +197,22 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'shop_name' => 'shop name',
+        'contact_email' => 'contact email',
+        'url' => 'shop address',
+        'admin_name' => 'administrator name',
+        'admin_email' => 'administrator email',
+        'admin_password' => 'administrator password',
+        'host' => 'database server',
+        'database' => 'database name',
+        'username' => 'database user',
+        'prefix' => 'table prefix',
+        'locale' => 'language',
+        'size' => 'shop size',
+        'terms' => 'terms and conditions',
+        'refund_account' => 'account number (IBAN)',
+        'delete_password' => 'password',
+    ],
 
 ];

@@ -10,10 +10,10 @@ return [
     'discount' => 'Sleva',
     'subtotal' => 'Zboží',
     'shipping' => 'Doprava',
-    'payment' => 'Platba',
+    'payment' => 'Způsob platby',
     'payment_fee' => 'Poplatek za platbu',
     'status' => 'Stav',
-    'payment_status' => 'Platba',
+    'payment_status' => 'Stav platby',
     'statuses' => [
         'new' => 'Nová',
         'processing' => 'Zpracovává se',

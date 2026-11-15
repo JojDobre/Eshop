@@ -44,6 +44,7 @@ return [
     'quantity_discount_row' => 'od :quantity ks: −:percent % (:price/ks)',
     'gift_voucher' => 'Kód dárkového poukazu',
     'gift_voucher_applied' => 'Poukaz :code (zůstatek :balance)',
+    'goods_total' => 'Celkem za zboží',
     'gift_voucher_paid' => 'Uhrazeno poukazem',
     'amount_due' => 'Zbývá uhradit',
     'price_includes_vat' => 'Cena včetně DPH',

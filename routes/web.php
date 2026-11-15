@@ -28,7 +28,7 @@ Route::prefix('install')
         Route::get('/database', 'database')->name('database');
         Route::post('/database', 'saveDatabase')->name('database.save');
         Route::get('/shop', 'shop')->name('shop');
-        Route::post('/shop', 'install')->name('run')->middleware('throttle:10,1');
+        Route::post('/shop', 'install')->name('run')->middleware('throttle:10,1,run');
         Route::get('/done', 'done')->name('done');
     });
 
@@ -36,7 +36,7 @@ Route::prefix('install')
 Route::get('/cron/{token}', CronController::class)
     ->name('cron.web')
     ->where('token', '[a-f0-9]{32}')
-    ->middleware('throttle:6,1');
+    ->middleware('throttle:6,1,cron.web');
 
 // Súbory šablón vzhľadu (bez kompilácie a symbolických odkazov, pozri theme_asset()).
 Route::get('/theme-assets/{theme}/{path}', [ThemeAssetController::class, 'asset'])

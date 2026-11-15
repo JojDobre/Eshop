@@ -7,10 +7,10 @@ use Modules\Marketing\Http\Controllers\NewsletterController;
 use Modules\Storefront\Http\Middleware\SetStorefrontLocale;
 
 Route::middleware(SetStorefrontLocale::class)->group(function (): void {
-    Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:5,1');
+    Route::post('/newsletter', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('throttle:5,1,newsletter.subscribe');
     Route::get('/newsletter/potvrdit/{token}', [NewsletterController::class, 'confirm'])->name('newsletter.confirm')->where('token', '[A-Za-z0-9]{48}');
     Route::get('/newsletter/odhlasit/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe')->where('token', '[A-Za-z0-9]{48}');
-    Route::post('/pokladna/email-kosika', [AbandonedCartController::class, 'email'])->name('marketing.cart.email')->middleware('throttle:20,1');
+    Route::post('/pokladna/email-kosika', [AbandonedCartController::class, 'email'])->name('marketing.cart.email')->middleware('throttle:20,1,marketing.cart.email');
     Route::get('/kosik/obnovit/{token}', [AbandonedCartController::class, 'restore'])->name('marketing.cart.restore')->whereUuid('token');
 });
 

@@ -44,6 +44,7 @@ return [
     'quantity_discount_row' => 'from :quantity pcs: −:percent % (:price/pc)',
     'gift_voucher' => 'Gift voucher code',
     'gift_voucher_applied' => 'Voucher :code (balance :balance)',
+    'goods_total' => 'Goods total',
     'gift_voucher_paid' => 'Paid by voucher',
     'amount_due' => 'Amount due',
     'price_includes_vat' => 'Price includes VAT',

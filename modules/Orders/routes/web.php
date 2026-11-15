@@ -12,13 +12,13 @@ use Modules\Storefront\Http\Middleware\SetStorefrontLocale;
 
 Route::middleware(SetStorefrontLocale::class)->group(function (): void {
     Route::get('/pokladna', [CheckoutController::class, 'show'])->name('checkout.show');
-    Route::get('/pokladna/vydajne-miesta', PickupPointController::class)->name('checkout.pickup-points')->middleware('throttle:60,1');
-    Route::post('/pokladna', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('throttle:20,1');
-    Route::post('/kosik/kupon', [CouponController::class, 'apply'])->name('coupon.apply')->middleware('throttle:20,1');
+    Route::get('/pokladna/vydajne-miesta', PickupPointController::class)->name('checkout.pickup-points')->middleware('throttle:60,1,checkout.pickup-points');
+    Route::post('/pokladna', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('throttle:20,1,checkout.store');
+    Route::post('/kosik/kupon', [CouponController::class, 'apply'])->name('coupon.apply')->middleware('throttle:20,1,coupon.apply');
     Route::delete('/kosik/kupon', [CouponController::class, 'remove'])->name('coupon.remove');
-    Route::post('/kosik/poukazka', [GiftVoucherController::class, 'apply'])->name('voucher.apply')->middleware('throttle:10,1');
+    Route::post('/kosik/poukazka', [GiftVoucherController::class, 'apply'])->name('voucher.apply')->middleware('throttle:10,1,voucher.apply');
     Route::delete('/kosik/poukazka', [GiftVoucherController::class, 'remove'])->name('voucher.remove');
-    Route::get('/objednavka/{token}/zaplatit', PaymentController::class)->name('orders.pay')->where('token', '[A-Za-z0-9]{32,64}')->middleware('throttle:20,1');
+    Route::get('/objednavka/{token}/zaplatit', PaymentController::class)->name('orders.pay')->where('token', '[A-Za-z0-9]{32,64}')->middleware('throttle:20,1,orders.pay');
     Route::get('/objednavka/{token}', OrderController::class)->name('orders.show')->where('token', '[A-Za-z0-9]{32,64}');
-    Route::get('/stiahnut/{token}', DownloadController::class)->name('downloads.show')->where('token', '[A-Za-z0-9]{32,64}')->middleware('throttle:30,1');
+    Route::get('/stiahnut/{token}', DownloadController::class)->name('downloads.show')->where('token', '[A-Za-z0-9]{32,64}')->middleware('throttle:30,1,downloads.show');
 });

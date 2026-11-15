@@ -140,4 +140,36 @@ class CouponsAndShippingTest extends ShopTestCase
         $this->assertSame(550, $coupon->value);
         $this->get('/admin/coupons')->assertOk()->assertSee('VIANOCE');
     }
+
+    public function test_cart_counts_free_shipping_from_discounted_total(): void
+    {
+        $this->coupon([]);
+        $product = $this->product('Mlynček', '65.00');
+        $this->post(route('cart.add'), ['product_id' => $product->id]);
+
+        // Bez zľavy je doprava zadarmo (od 60 €).
+        $this->get(route('cart.show'))->assertSee('Máte dopravu zadarmo.');
+
+        // So zľavou 10 % zostáva 58,50 € – rovnako ako v pokladni sa doprava platí.
+        $this->post(route('coupon.apply'), ['code' => 'leto10']);
+        $this->get(route('cart.show'))
+            ->assertSee('Spolu za tovar')
+            ->assertSee("58,50\u{00A0}€")
+            ->assertSee("Do dopravy zadarmo vám chýba 1,50\u{00A0}€.");
+    }
+
+    public function test_rate_limits_are_counted_per_action(): void
+    {
+        // Každá akcia má vlastné počítadlo: veľa pridaní do košíka nesmie zablokovať kupón ani objednávku.
+        $product = $this->product('Káva', '5.00', stock: 100);
+        $this->coupon([]);
+
+        foreach (range(1, 25) as $attempt) {
+            $this->post(route('cart.add'), ['product_id' => $product->id])->assertRedirect();
+        }
+
+        $this->post(route('coupon.apply'), ['code' => 'leto10'])->assertSessionHas('success');
+        $this->post(route('checkout.store'), $this->checkoutData())->assertRedirect();
+        $this->assertSame(1, Order::query()->count());
+    }
 }

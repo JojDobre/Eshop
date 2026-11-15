@@ -10,10 +10,10 @@ return [
     'discount' => 'Discount',
     'subtotal' => 'Goods',
     'shipping' => 'Shipping',
-    'payment' => 'Payment',
+    'payment' => 'Payment method',
     'payment_fee' => 'Payment fee',
     'status' => 'Status',
-    'payment_status' => 'Payment',
+    'payment_status' => 'Payment status',
     'statuses' => [
         'new' => 'New',
         'processing' => 'Processing',

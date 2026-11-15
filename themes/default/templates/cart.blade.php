@@ -71,17 +71,36 @@
                                 <dd>{{ $couponDiscount > 0 ? '−'.format_price($couponDiscount) : __('theme::shop.free_shipping') }}</dd>
                             </div>
                         @endif
+                        @php($goodsTotal = max(0, $summary->subtotal() - (int) ($couponDiscount ?? 0)))
+                        @if (! empty($coupon) && ($couponDiscount ?? 0) > 0)
+                            <div class="flex justify-between border-t border-zinc-200 pt-2 text-base font-semibold">
+                                <dt>{{ __('theme::shop.goods_total') }}</dt>
+                                <dd>{{ format_price($goodsTotal) }}</dd>
+                            </div>
+                        @endif
+                        @if (! empty($giftVoucher))
+                            @php($voucherCovers = min((int) $giftVoucher->balance, $goodsTotal))
+                            <div class="flex justify-between text-sm text-emerald-700">
+                                <dt>{{ __('theme::shop.gift_voucher_paid') }}</dt>
+                                <dd>−{{ format_price($voucherCovers) }}</dd>
+                            </div>
+                            <div class="flex justify-between text-base font-semibold">
+                                <dt>{{ __('theme::shop.amount_due') }}</dt>
+                                <dd>{{ format_price($goodsTotal - $voucherCovers) }}</dd>
+                            </div>
+                        @endif
                     </dl>
                     <p class="mt-1 text-sm text-zinc-500">{{ __('theme::shop.shipping_calculated_at_checkout') }}</p>
 
                     @if (! empty($freeShippingFrom))
-                        @php($remaining = max(0, $freeShippingFrom - $summary->subtotal()))
+                        {{-- Doprava zadarmo sa počíta zo sumy po zľave (rovnako ako v pokladni). --}}
+                        @php($remaining = max(0, $freeShippingFrom - $goodsTotal))
                         <div class="mt-5">
                             <p class="text-sm text-zinc-700">
                                 {{ $remaining > 0 ? __('theme::shop.free_shipping_remaining', ['amount' => format_price($remaining)]) : __('theme::shop.free_shipping_reached') }}
                             </p>
                             <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-zinc-200">
-                                <div class="h-full rounded-full bg-primary" style="width: {{ min(100, (int) round($summary->subtotal() / max(1, $freeShippingFrom) * 100)) }}%"></div>
+                                <div class="h-full rounded-full bg-primary" style="width: {{ min(100, (int) round($goodsTotal / max(1, $freeShippingFrom) * 100)) }}%"></div>
                             </div>
                         </div>
                     @endif

@@ -12,5 +12,5 @@ Route::middleware(SetStorefrontLocale::class)->group(function (): void {
     Route::get('/blog/stitok/{slug}', [BlogController::class, 'tag'])->name('blog.tag');
     Route::get('/blog/nahlad/{token}', [BlogController::class, 'preview'])->name('blog.preview')->where('token', '[A-Za-z0-9]{40}');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
-    Route::post('/blog/{slug}/komentar', CommentController::class)->name('blog.comment')->middleware('throttle:5,1');
+    Route::post('/blog/{slug}/komentar', CommentController::class)->name('blog.comment')->middleware('throttle:5,1,blog.comment');
 });

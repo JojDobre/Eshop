@@ -170,4 +170,14 @@ class InstallerTest extends TestCase
 
         $this->assertFalse($this->app->make(Installation::class)->isInstalled());
     }
+
+    public function test_installer_errors_use_readable_field_names(): void
+    {
+        $this->withSession(['installer.locale' => 'sk', 'installer.database' => ['version' => '8.4.0', 'limited' => false]])
+            ->post(route('install.run'), ['locale' => 'sk', 'currency' => 'EUR', 'country' => 'SK'])
+            ->assertSessionHasErrors([
+                'admin_password' => 'Pole heslo správcu je povinné.',
+                'shop_name' => 'Pole názov obchodu je povinné.',
+            ]);
+    }
 }

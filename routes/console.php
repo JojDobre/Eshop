@@ -6,6 +6,7 @@ use App\Core\Installer\Installation;
 use App\Core\Privacy\DataRetention;
 use App\Core\Support\EcbRates;
 use App\Core\System\CronHeartbeat;
+use App\Core\Updates\UpdateChecker;
 use App\Core\Updates\Updater;
 use App\Settings\CurrencySettings;
 use App\Settings\SystemSettings;
@@ -67,6 +68,13 @@ Schedule::call(fn () => app(DataRetention::class)->run())
     ->when($installed)
     ->withoutOverlapping(60);
 
+// Kontrola nových verzií (upozornenie správcom, prípadne automatická inštalácia mimo špičky).
+Schedule::call(fn () => app(UpdateChecker::class)->runScheduled())
+    ->name('eshop:updates')
+    ->dailyAt('04:50')
+    ->when($installed)
+    ->withoutOverlapping(60);
+
 // Príkazy pre správcov so SSH (na webhostingu bez SSH slúži administrácia a public/rescue.php).
 Artisan::command('eshop:backup {--without-files}', function (): void {
     $result = app(BackupRunner::class)->run(! $this->option('without-files'));
@@ -84,6 +92,11 @@ Artisan::command('eshop:update {package} {--allow-unsigned}', function (string $
     $installed = app(Updater::class)->install($package, (bool) $this->option('allow-unsigned'));
     $this->info(__('admin.updates.installed', ['version' => $installed->version()]));
 })->purpose('Nainštaluje aktualizačný balík');
+
+Artisan::command('eshop:update-latest', function (): void {
+    $installed = app(UpdateChecker::class)->installAvailable();
+    $this->info(__('admin.updates.installed', ['version' => $installed->version()]));
+})->purpose('Stiahne a nainštaluje najnovšiu verziu z GitHubu');
 
 Artisan::command('eshop:rollback', function (): void {
     app(Updater::class)->rollback();

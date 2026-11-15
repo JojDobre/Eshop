@@ -3,10 +3,12 @@
 namespace App\Filament\Pages\System;
 
 use App\Core\Eshop;
+use App\Core\Updates\UpdateChecker;
 use App\Core\Updates\UpdateException;
 use App\Core\Updates\Updater;
 use App\Filament\AdminGroup;
 use App\Models\User;
+use App\Settings\SystemSettings;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -15,7 +17,6 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 use Throwable;
 use UnitEnum;
 
@@ -52,6 +53,23 @@ class Updates extends Page
         return __('admin.updates.title');
     }
 
+    /** Odznak v menu, keď je známa novšia verzia (bez sieťovej požiadavky). */
+    public static function getNavigationBadge(): ?string
+    {
+        return rescue(fn () => app(UpdateChecker::class)->cachedAvailable()['version'] ?? null, report: false);
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
+    public function mount(): void
+    {
+        // Pri otvorení stránky stačí výsledok poslednej kontroly (najviac 6 hodín starý).
+        $this->available = rescue(fn () => app(UpdateChecker::class)->available(), report: false);
+    }
+
     public function getTitle(): string
     {
         return __('admin.updates.title');
@@ -63,7 +81,8 @@ class Updates extends Page
             'version' => Eshop::VERSION,
             'lastUpdate' => app(Updater::class)->lastUpdate(),
             'signed' => Updater::publicKeys() !== [],
-            'feed' => filled(config('eshop.updates.feed_url')),
+            'autoInstall' => app(SystemSettings::class)->updates_auto_install,
+            'source' => filled(config('eshop.updates.feed_url')) ? (string) config('eshop.updates.feed_url') : 'github.com/'.config('eshop.updates.github_repo'),
         ];
     }
 
@@ -76,18 +95,55 @@ class Updates extends Page
                 ->label($t('check'))
                 ->icon(Heroicon::OutlinedMagnifyingGlass)
                 ->color('gray')
-                ->visible(fn (): bool => filled(config('eshop.updates.feed_url')))
                 ->action(function () use ($t): void {
-                    try {
-                        $feed = Http::timeout(10)->acceptJson()->get((string) config('eshop.updates.feed_url'))->throw()->json();
-                    } catch (Throwable $e) {
-                        Notification::make()->danger()->title($t('check_failed'))->body($e->getMessage())->send();
+                    $checker = app(UpdateChecker::class);
+
+                    if ($checker->latest(true) === null) {
+                        Notification::make()->danger()->title($t('check_failed'))->send();
 
                         return;
                     }
 
-                    $this->available = is_array($feed) && version_compare((string) ($feed['version'] ?? '0'), Eshop::VERSION, '>') ? $feed : null;
+                    $this->available = $checker->available();
                     Notification::make()->success()->title($this->available ? $t('available', ['version' => $this->available['version']]) : $t('up_to_date'))->send();
+                }),
+            Action::make('installAvailable')
+                ->label(fn () => $t('install_now', ['version' => $this->available['version'] ?? '']))
+                ->icon(Heroicon::OutlinedArrowDownTray)
+                ->visible(fn (): bool => filled($this->available['download'] ?? null))
+                ->requiresConfirmation()
+                ->modalHeading(fn () => $t('install_now', ['version' => $this->available['version'] ?? '']))
+                ->modalDescription($t('install_now_confirm'))
+                ->action(function () use ($t): void {
+                    try {
+                        $package = app(UpdateChecker::class)->installAvailable();
+                    } catch (UpdateException $e) {
+                        Notification::make()->danger()->title($t('failed'))->body($e->getMessage())->persistent()->send();
+
+                        return;
+                    }
+
+                    Notification::make()->success()->title($t('installed', ['version' => $package->version()]))->persistent()->send();
+                    $this->redirect(self::getUrl());
+                }),
+            Action::make('settings')
+                ->label($t('settings'))
+                ->icon(Heroicon::OutlinedCog6Tooth)
+                ->color('gray')
+                ->fillForm(fn () => [
+                    'updates_auto_install' => app(SystemSettings::class)->updates_auto_install,
+                    'updates_notify' => app(SystemSettings::class)->updates_notify,
+                ])
+                ->schema([
+                    Toggle::make('updates_notify')->label($t('notify'))->helperText($t('notify_help')),
+                    Toggle::make('updates_auto_install')->label($t('auto_install'))->helperText($t('auto_install_help')),
+                ])
+                ->action(function (array $data) use ($t): void {
+                    $settings = app(SystemSettings::class);
+                    $settings->updates_notify = (bool) $data['updates_notify'];
+                    $settings->updates_auto_install = (bool) $data['updates_auto_install'];
+                    $settings->save();
+                    Notification::make()->success()->title($t('settings_saved'))->send();
                 }),
             Action::make('upload')
                 ->label($t('upload'))

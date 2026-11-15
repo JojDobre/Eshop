@@ -129,6 +129,8 @@ return [
     'updates' => [
         'public_key' => env('ESHOP_UPDATE_PUBLIC_KEY'),
         'feed_url' => env('ESHOP_UPDATE_FEED'),
+        // Repozitár na GitHube, z ktorého vydaní sa sťahujú aktualizácie (prázdne = vypnuté).
+        'github_repo' => env('ESHOP_UPDATE_REPO', 'JojDobre/Eshop'),
     ],
 
 ];

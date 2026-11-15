@@ -49,6 +49,15 @@ class SystemSettings extends Settings
     /** Výsledok poslednej kontroly zálohy: name, ok, message, checked_at. */
     public ?array $backups_last_check;
 
+    /** Automaticky nainštalovať novú verziu (denná kontrola cez cron). */
+    public bool $updates_auto_install;
+
+    /** Poslať správcom e-mail o novej verzii. */
+    public bool $updates_notify;
+
+    /** Verzia, o ktorej už správcovia dostali e-mail. */
+    public ?string $updates_notified_version;
+
     public static function group(): string
     {
         return 'system';

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Core\Demo\DemoExporter;
+use App\Core\Demo\DemoImporter;
 use App\Core\Themes\Theme;
 use App\Core\Themes\ThemeChecker;
 use App\Core\Themes\ThemeFiles;
@@ -12,14 +14,18 @@ use App\Http\Middleware\ApplyThemePreview;
 use App\Settings\GeneralSettings;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Component;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 use UnitEnum;
@@ -102,6 +108,36 @@ class Themes extends Page
                         Notification::make()->danger()->title($e->getMessage())->send();
                     }
                 }),
+            // Demo z iného obchodu alebo zo súboru (iba údaje a obrázky, žiadny kód).
+            $this->demoImportAction(Action::make('importDemoFile'))
+                ->label(__('admin.demo.import_file'))
+                ->color('gray')
+                ->schema(fn () => [
+                    FileUpload::make('zip')->label(__('admin.demo.zip'))->disk('local')->directory('demo-uploads')
+                        ->acceptedFileTypes(['application/zip', 'application/x-zip-compressed'])->maxSize(512000)->required(),
+                    ...$this->demoFields(),
+                ])
+                ->action(function (array $data): void {
+                    $path = Storage::disk('local')->path($data['zip']);
+
+                    try {
+                        $this->runDemoImport($path, $data);
+                    } finally {
+                        Storage::disk('local')->delete($data['zip']);
+                    }
+                }),
+            Action::make('exportDemo')
+                ->label(__('admin.demo.export'))
+                ->icon(Heroicon::OutlinedArchiveBoxArrowDown)
+                ->color('gray')
+                ->visible(fn (): bool => (bool) auth()->user()?->isSuperAdmin())
+                ->modalDescription(__('admin.demo.export_help'))
+                ->schema([TextInput::make('title')->label(__('admin.demo.title'))->default(fn () => app(GeneralSettings::class)->shop_name)->maxLength(80)])
+                ->action(function (array $data): BinaryFileResponse {
+                    $zip = app(DemoExporter::class)->exportZip([app()->getLocale() => (string) ($data['title'] ?? '')]);
+
+                    return response()->download($zip, 'demo-'.Str::slug((string) ($data['title'] ?? 'eshop')).'.zip')->deleteFileAfterSend();
+                }),
             // Šablóna obsahuje spustiteľný kód (Blade), preto ju nahrá iba hlavný správca.
             Action::make('upload')
                 ->visible(fn (): bool => (bool) auth()->user()?->isSuperAdmin())
@@ -128,6 +164,69 @@ class Themes extends Page
                     }
                 }),
         ];
+    }
+
+    /** Nahratie dema dodaného so šablónou (produkty, stránky, bloky, formuláre, nastavenia vzhľadu). */
+    public function importThemeDemoAction(): Action
+    {
+        return $this->demoImportAction(Action::make('importThemeDemo'))
+            ->label(__('admin.demo.import_theme'))
+            ->link()->size('sm')
+            ->modalHeading(fn (array $arguments) => __('admin.demo.import_heading', ['theme' => app(ThemeManager::class)->find($arguments['theme'] ?? '')?->title() ?? '']))
+            ->action(function (array $arguments, array $data): void {
+                $theme = app(ThemeManager::class)->find($arguments['theme'] ?? '');
+
+                if ($theme?->demoPath()) {
+                    $this->runDemoImport($theme->demoPath(), $data);
+                }
+            });
+    }
+
+    /** Spoločný formulár importu: režim pridať/nahradiť a aktivácia šablóny. */
+    private function demoImportAction(Action $action): Action
+    {
+        return $action
+            ->icon(Heroicon::OutlinedSparkles)
+            ->visible(fn (): bool => (bool) auth()->user()?->isSuperAdmin())
+            ->modalDescription(__('admin.demo.import_help'))
+            ->modalSubmitActionLabel(__('admin.demo.import_submit'))
+            ->schema(fn () => $this->demoFields());
+    }
+
+    /**
+     * @return list<Component|Field>
+     */
+    private function demoFields(): array
+    {
+        return [
+            Radio::make('mode')->label(__('admin.demo.mode'))->required()
+                ->default(app(DemoImporter::class)->canReplace() ? 'replace' : 'add')
+                ->options(['replace' => __('admin.demo.mode_replace'), 'add' => __('admin.demo.mode_add')])
+                ->descriptions(['replace' => __('admin.demo.mode_replace_help'), 'add' => __('admin.demo.mode_add_help')])
+                ->disableOptionWhen(fn (string $value) => $value === 'replace' && ! app(DemoImporter::class)->canReplace())
+                ->helperText(app(DemoImporter::class)->canReplace() ? null : __('admin.demo.replace_has_orders')),
+            Toggle::make('activate')->label(__('admin.demo.activate'))->default(true),
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    private function runDemoImport(string $path, array $data): void
+    {
+        try {
+            $counts = app(DemoImporter::class)->import($path, ($data['mode'] ?? 'add') === 'replace', (bool) ($data['activate'] ?? true));
+        } catch (Throwable $e) {
+            report($e);
+            Notification::make()->danger()->title(__('admin.demo.failed'))->body($e->getMessage())->persistent()->send();
+
+            return;
+        }
+
+        Notification::make()->success()->title(__('admin.demo.imported'))
+            ->body(__('admin.demo.imported_body', ['products' => $counts['products'] ?? 0, 'pages' => $counts['pages'] ?? 0, 'posts' => $counts['blog_posts'] ?? 0]))
+            ->persistent()->send();
+        $this->redirect(self::getUrl());
     }
 
     public function activateAction(): Action

@@ -68,6 +68,12 @@ final class Theme
         );
     }
 
+    /** Priečinok s demom dodaným so šablónou (demo.json + media/), alebo null. */
+    public function demoPath(): ?string
+    {
+        return is_file($this->path.'/demo/demo.json') ? $this->path.'/demo' : null;
+    }
+
     public function title(?string $locale = null): string
     {
         $locale ??= app()->getLocale();

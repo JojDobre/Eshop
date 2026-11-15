@@ -38,6 +38,9 @@
                     @if (\App\Filament\Pages\ThemeEditor::canAccess() && app(\App\Core\Themes\ThemeFiles::class)->canEdit($theme))
                         <x-filament::link :href="\App\Filament\Pages\ThemeEditor::getUrl(['theme' => $theme->name])" size="sm">{{ __('admin.themes.edit_files') }}</x-filament::link>
                     @endif
+                    @if ($theme->demoPath())
+                        {{ ($this->importThemeDemoAction)(['theme' => $theme->name]) }}
+                    @endif
                     {{ ($this->checkAction)(['theme' => $theme->name]) }}
                     {{ ($this->exportAction)(['theme' => $theme->name]) }}
                     @if ($item['deletable'])

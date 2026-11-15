@@ -36,6 +36,19 @@ class Form extends Model
         return ['is_active' => 'boolean'];
     }
 
+    protected static function booted(): void
+    {
+        // Polia sa ukladajú ako zoznam: MySQL v stĺpci JSON preusporiada kľúče objektu (napr. UUID z opakovača)
+        // a formulár by mal na webe polia v inom poradí.
+        static::saving(function (Form $form): void {
+            foreach ($form->getTranslations('fields') as $locale => $fields) {
+                if (is_array($fields) && ! array_is_list($fields)) {
+                    $form->setTranslation('fields', $locale, array_values($fields));
+                }
+            }
+        });
+    }
+
     public function submissions(): HasMany
     {
         return $this->hasMany(FormSubmission::class);

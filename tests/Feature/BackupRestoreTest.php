@@ -6,6 +6,7 @@ use App\Core\Backup\BackupManager;
 use App\Core\Backup\BackupRestorer;
 use App\Core\Backup\BackupRunner;
 use App\Core\Backup\BackupVerifier;
+use App\Core\Backup\GoogleDrive;
 use App\Core\Backup\RemoteBackups;
 use App\Core\Backup\SqlImporter;
 use App\Models\User;
@@ -58,7 +59,7 @@ class BackupRestoreTest extends InstalledTestCase
         {
             public function __construct(SystemSettings $settings, private Filesystem $fake)
             {
-                parent::__construct($settings, app(\App\Core\Backup\GoogleDrive::class));
+                parent::__construct($settings, app(GoogleDrive::class));
             }
 
             public function disk(): Filesystem

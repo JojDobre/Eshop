@@ -1,0 +1,2947 @@
+{
+    "format": 1,
+    "eshop": "1.10.0",
+    "title": {
+        "sk": "Atelier – slovenská módna značka",
+        "cs": "Atelier – slovenská módní značka",
+        "en": "Atelier – Slovak fashion brand"
+    },
+    "theme": "butik",
+    "modules": [
+        "forms"
+    ],
+    "created_at": "2026-11-15T20:52:02+00:00",
+    "tables": {
+        "manufacturers": [],
+        "product_labels": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Novinka\",\"cs\":\"Novinka\",\"en\":\"New\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 1
+            }
+        ],
+        "addons": [],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Ženy\",\"cs\":\"Ženy\",\"en\":\"Women\"}",
+                "slug": "{\"sk\":\"zeny\",\"cs\":\"zeny\",\"en\":\"women\"}",
+                "description": "{\"sk\":\"<p>Nohavice, svetre, mikiny a vesty z novej kolekcie.</p>\",\"cs\":\"<p>Kalhoty, svetry, mikiny a vesty z nové kolekce.</p>\",\"en\":\"<p>Trousers, knitwear, sweatshirts and vests from the new collection.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/butik/black.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Muži\",\"cs\":\"Muži\",\"en\":\"Men\"}",
+                "slug": "{\"sk\":\"muzi\",\"cs\":\"muzi\",\"en\":\"men\"}",
+                "description": "{\"sk\":\"<p>Bundy, mikiny a tričká na každý deň.</p>\",\"cs\":\"<p>Bundy, mikiny a trička na každý den.</p>\",\"en\":\"<p>Jackets, sweatshirts and tees for every day.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/butik/manjacket.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "parent_id": null,
+                "name": "{\"sk\":\"Doplnky\",\"cs\":\"Doplňky\",\"en\":\"Accessories\"}",
+                "slug": "{\"sk\":\"doplnky\",\"cs\":\"doplnky\",\"en\":\"accessories\"}",
+                "description": "{\"sk\":\"<p>Klobúky, čiapky a opasky, ktoré dotvoria outfit.</p>\",\"cs\":\"<p>Klobouky, čepice a opasky, které dotvoří outfit.</p>\",\"en\":\"<p>Hats, beanies and belts to finish your outfit.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/butik/beanie.webp",
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "parent_id": null,
+                "name": "{\"sk\":\"Topánky\",\"cs\":\"Boty\",\"en\":\"Shoes\"}",
+                "slug": "{\"sk\":\"topanky\",\"cs\":\"boty\",\"en\":\"shoes\"}",
+                "description": "{\"sk\":\"<p>Kožené čižmy a tenisky.</p>\",\"cs\":\"<p>Kožené kozačky a tenisky.</p>\",\"en\":\"<p>Leather boots and sneakers.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/butik/boots.webp",
+                "position": 4,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "product_types": [],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Široké nohavice s pukmi\",\"cs\":\"Široké kalhoty s puky\",\"en\":\"Wide pleated trousers\"}",
+                "slug": "{\"sk\":\"siroke-nohavice-s-pukmi\",\"cs\":\"siroke-kalhoty-s-puky\",\"en\":\"wide-pleated-trousers\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"vysoký pás, vlna s recyklovaným polyesterom\",\"cs\":\"vysoký pas, vlna s recyklovaným polyesterem\",\"en\":\"high waist, wool with recycled polyester\"}",
+                "description": "{\"sk\":\"<p>Vysoký pás, puky vpredu a široké nohavice, ktoré opticky predlžujú postavu. Modelka meria 175 cm a má veľkosť S.</p>\",\"cs\":\"<p>Vysoký pas, puky vpředu a široké nohavice, které opticky prodlužují postavu. Modelka měří 175 cm a má velikost S.</p>\",\"en\":\"<p>A high waist, front pleats and wide legs that lengthen your silhouette. The model is 175 cm tall and wears size S.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/black.webp\",\"demo/butik/two.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "siroke nohavice s pukmi siroke kalhoty s puky wide pleated trousers vysoky pas, vlna s recyklovanym polyesterom vysoky pas, vlna s recyklovanym polyesterem high waist, wool with recycled polyester",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pletený sveter z merina\",\"cs\":\"Pletený svetr z merina\",\"en\":\"Merino knit sweater\"}",
+                "slug": "{\"sk\":\"pleteny-sveter-z-merina\",\"cs\":\"pleteny-svetr-z-merina\",\"en\":\"merino-knit-sweater\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"100 % merino, voľný strih\",\"cs\":\"100 % merino, volný střih\",\"en\":\"100% merino, relaxed fit\"}",
+                "description": "{\"sk\":\"<p>Mäkký sveter z jemnej merino vlny s odhaleným ramenom. Hreje, dýcha a neškriabe.</p>\",\"cs\":\"<p>Měkký svetr z jemné merino vlny s odhaleným ramenem. Hřeje, dýchá a nekouše.</p>\",\"en\":\"<p>A soft off-the-shoulder sweater in fine merino wool. Warm, breathable and never itchy.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/sweater.webp\",\"demo/butik/knit.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pleteny sveter z merina pleteny svetr z merina merino knit sweater 100 % merino, volny strih 100 % merino, volny strih 100% merino, relaxed fit",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Oversize mikina Slnko\",\"cs\":\"Oversize mikina Slunce\",\"en\":\"Sun oversized sweatshirt\"}",
+                "slug": "{\"sk\":\"oversize-mikina-slnko\",\"cs\":\"oversize-mikina-slunce\",\"en\":\"sun-oversized-sweatshirt\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"bavlna, voľný strih\",\"cs\":\"bavlna, volný střih\",\"en\":\"cotton, loose fit\"}",
+                "description": "{\"sk\":\"<p>Pohodlná oversize mikina z hrubšej bavlny vo farbe, ktorá rozžiari aj sivý deň.</p>\",\"cs\":\"<p>Pohodlná oversize mikina z hrubší bavlny v barvě, která rozzáří i šedý den.</p>\",\"en\":\"<p>A comfy oversized sweatshirt in heavyweight cotton, in a colour that brightens any grey day.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/yellow.webp\",\"demo/butik/yellowsofa.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "oversize mikina slnko oversize mikina slunce sun oversized sweatshirt bavlna, volny strih bavlna, volny strih cotton, loose fit",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Dlhá vesta z vlny\",\"cs\":\"Dlouhá vesta z vlny\",\"en\":\"Long wool vest\"}",
+                "slug": "{\"sk\":\"dlha-vesta-z-vlny\",\"cs\":\"dlouha-vesta-z-vlny\",\"en\":\"long-wool-vest\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"bez gombíkov, voľne padajúca\",\"cs\":\"bez knoflíků, volně splývající\",\"en\":\"buttonless, loose drape\"}",
+                "description": "{\"sk\":\"<p>Dlhá vesta, ktorú nosíte cez košeľu aj tričko. Jednoduchý kúsok, ktorý zmení celý outfit.</p>\",\"cs\":\"<p>Dlouhá vesta, kterou nosíte přes košili i tričko. Jednoduchý kousek, který změní celý outfit.</p>\",\"en\":\"<p>A long vest to wear over a shirt or tee. A simple piece that changes the whole outfit.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/hat.webp\",\"demo/butik/two.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "dlha vesta z vlny dlouha vesta z vlny long wool vest bez gombikov, volne padajuca bez knofliku, volne splyvajici buttonless, loose drape",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 5,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Lesklá košeľa Rubín\",\"cs\":\"Lesklá košile Rubín\",\"en\":\"Ruby glossy shirt\"}",
+                "slug": "{\"sk\":\"leskla-kosela-rubin\",\"cs\":\"leskla-kosile-rubin\",\"en\":\"ruby-glossy-shirt\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"výrazná, na večer aj do kancelárie\",\"cs\":\"výrazná, na večer i do kanceláře\",\"en\":\"bold, for evenings or the office\"}",
+                "description": "{\"sk\":\"<p>Lesklá košeľa so stojačikom v sýtej červenej. Doplňte ju širokými nohavicami a máte hotovo.</p>\",\"cs\":\"<p>Lesklá košile se stojáčkem v syté červené. Doplňte ji širokými kalhotami a máte hotovo.</p>\",\"en\":\"<p>A glossy stand-collar shirt in deep red. Pair it with wide trousers and you are done.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/red.webp\",\"demo/butik/studio.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "leskla kosela rubin leskla kosile rubin ruby glossy shirt vyrazna, na vecer aj do kancelarie vyrazna, na vecer i do kancelare bold, for evenings or the office",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 6,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Mikina Limetka\",\"cs\":\"Mikina Limetka\",\"en\":\"Lime sweatshirt\"}",
+                "slug": "{\"sk\":\"mikina-limetka\",\"cs\":\"mikina-limetka\",\"en\":\"lime-sweatshirt\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"výrazná farba, mäkká bavlna\",\"cs\":\"výrazná barva, měkká bavlna\",\"en\":\"bold colour, soft cotton\"}",
+                "description": "{\"sk\":\"<p>Mikina v neónovej limetkovej, ktorá sa nestratí. Voľný strih a mäkká bavlna.</p>\",\"cs\":\"<p>Mikina v neonové limetkové, která se neztratí. Volný střih a měkká bavlna.</p>\",\"en\":\"<p>A neon lime sweatshirt that stands out. Loose fit and soft cotton.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/green.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "mikina limetka mikina limetka lime sweatshirt vyrazna farba, makka bavlna vyrazna barva, mekka bavlna bold colour, soft cotton",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 7,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Vlnená bunda Mesto\",\"cs\":\"Vlněná bunda Město\",\"en\":\"City wool jacket\"}",
+                "slug": "{\"sk\":\"vlnena-bunda-mesto\",\"cs\":\"vlnena-bunda-mesto\",\"en\":\"city-wool-jacket\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"zateplená, so skrytým zipsom\",\"cs\":\"zateplená, se skrytým zipem\",\"en\":\"insulated, hidden zip\"}",
+                "description": "{\"sk\":\"<p>Teplá bunda z vlnenej zmesi s vysokým golierom. Na cestu do práce aj na víkend.</p>\",\"cs\":\"<p>Teplá bunda z vlněné směsi s vysokým límcem. Na cestu do práce i na víkend.</p>\",\"en\":\"<p>A warm wool-blend jacket with a high collar. For your commute and weekends.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/manjacket.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "vlnena bunda mesto vlnena bunda mesto city wool jacket zateplena, so skrytym zipsom zateplena, se skrytym zipem insulated, hidden zip",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 8,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Tričko s grafikou Plameň\",\"cs\":\"Tričko s grafikou Plamen\",\"en\":\"Flame graphic tee\"}",
+                "slug": "{\"sk\":\"tricko-s-grafikou-plamen\",\"cs\":\"tricko-s-grafikou-plamen\",\"en\":\"flame-graphic-tee\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"organická bavlna\",\"cs\":\"organická bavlna\",\"en\":\"organic cotton\"}",
+                "description": "{\"sk\":\"<p>Čierne tričko z organickej bavlny s ručne kreslenou grafikou na chrbte.</p>\",\"cs\":\"<p>Černé tričko z organické bavlny s ručně kreslenou grafikou na zádech.</p>\",\"en\":\"<p>A black organic cotton tee with a hand-drawn graphic on the back.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/manhat.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "tricko s grafikou plamen tricko s grafikou plamen flame graphic tee organicka bavlna organicka bavlna organic cotton",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 9,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Bunda s potlačou Ulica\",\"cs\":\"Bunda s potiskem Ulice\",\"en\":\"Street print jacket\"}",
+                "slug": "{\"sk\":\"bunda-s-potlacou-ulica\",\"cs\":\"bunda-s-potiskem-ulice\",\"en\":\"street-print-jacket\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"ľahká, s umeleckou potlačou\",\"cs\":\"lehká, s uměleckým potiskem\",\"en\":\"light, with an art print\"}",
+                "description": "{\"sk\":\"<p>Ľahká bunda s celoplošnou potlačou od slovenskej ilustrátorky. Limitovaná séria 50 kusov.</p>\",\"cs\":\"<p>Lehká bunda s celoplošným potiskem od slovenské ilustrátorky. Limitovaná série 50 kusů.</p>\",\"en\":\"<p>A light jacket with an all-over print by a Slovak illustrator. Limited run of 50.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/orange.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "bunda s potlacou ulica bunda s potiskem ulice street print jacket lahka, s umeleckou potlacou lehka, s umeleckym potiskem light, with an art print",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 10,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Plstený klobúk\",\"cs\":\"Plstěný klobouk\",\"en\":\"Felt hat\"}",
+                "slug": "{\"sk\":\"plsteny-klobuk\",\"cs\":\"plsteny-klobouk\",\"en\":\"felt-hat\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"100 % vlna, jedna veľkosť\",\"cs\":\"100 % vlna, jedna velikost\",\"en\":\"100% wool, one size\"}",
+                "description": "{\"sk\":\"<p>Klobúk zo zhutnenej vlny so širokou strechou. Dodá šmrnc každému outfitu.</p>\",\"cs\":\"<p>Klobouk ze zhuštěné vlny se širokou krempou. Dodá šmrnc každému outfitu.</p>\",\"en\":\"<p>A wide-brim hat in pressed wool. Adds flair to any outfit.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/hat.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "plsteny klobuk plsteny klobouk felt hat 100 % vlna, jedna velkost 100 % vlna, jedna velikost 100% wool, one size",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 11,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pletená čiapka Škorica\",\"cs\":\"Pletená čepice Skořice\",\"en\":\"Cinnamon beanie\"}",
+                "slug": "{\"sk\":\"pletena-ciapka-skorica\",\"cs\":\"pletena-cepice-skorice\",\"en\":\"cinnamon-beanie\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"merino, jedna veľkosť\",\"cs\":\"merino, jedna velikost\",\"en\":\"merino, one size\"}",
+                "description": "{\"sk\":\"<p>Hrejivá čiapka z merino vlny v teplej škoricovej farbe.</p>\",\"cs\":\"<p>Hřejivá čepice z merino vlny v teplé skořicové barvě.</p>\",\"en\":\"<p>A warm merino beanie in a cosy cinnamon shade.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/beanie.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pletena ciapka skorica pletena cepice skorice cinnamon beanie merino, jedna velkost merino, jedna velikost merino, one size",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 12,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kožený opasok\",\"cs\":\"Kožený opasek\",\"en\":\"Leather belt\"}",
+                "slug": "{\"sk\":\"kozeny-opasok\",\"cs\":\"kozeny-opasek\",\"en\":\"leather-belt\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"hovädzia koža, mosadzná pracka\",\"cs\":\"hovězí kůže, mosazná přezka\",\"en\":\"cowhide, brass buckle\"}",
+                "description": "{\"sk\":\"<p>Klasický kožený opasok, ktorý vydrží roky. Šírka 3,5 cm.</p>\",\"cs\":\"<p>Klasický kožený opasek, který vydrží roky. Šířka 3,5 cm.</p>\",\"en\":\"<p>A classic leather belt that lasts for years. 3.5 cm wide.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/boots.webp\",\"demo/butik/tee.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kozeny opasok kozeny opasek leather belt hovadzia koza, mosadzna pracka hovezi kuze, mosazna prezka cowhide, brass buckle",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 13,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kožené čižmy\",\"cs\":\"Kožené kozačky\",\"en\":\"Leather boots\"}",
+                "slug": "{\"sk\":\"kozene-cizmy\",\"cs\":\"kozene-kozacky\",\"en\":\"leather-boots\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"šnurovacie, gumová podrážka\",\"cs\":\"šněrovací, gumová podrážka\",\"en\":\"lace-up, rubber sole\"}",
+                "description": "{\"sk\":\"<p>Šnurovacie čižmy z hladkej kože na pevnej podrážke. Pohodlné od prvého dňa.</p>\",\"cs\":\"<p>Šněrovací kozačky z hladké kůže na pevné podrážce. Pohodlné od prvního dne.</p>\",\"en\":\"<p>Lace-up boots in smooth leather on a sturdy sole. Comfortable from day one.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/boots.webp\",\"demo/butik/cardigan.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kozene cizmy kozene kozacky leather boots snurovacie, gumova podrazka snerovaci, gumova podrazka lace-up, rubber sole",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 14,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Biele tenisky\",\"cs\":\"Bílé tenisky\",\"en\":\"White sneakers\"}",
+                "slug": "{\"sk\":\"biele-tenisky\",\"cs\":\"bile-tenisky\",\"en\":\"white-sneakers\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"koža, vyrobené v Portugalsku\",\"cs\":\"kůže, vyrobeno v Portugalsku\",\"en\":\"leather, made in Portugal\"}",
+                "description": "{\"sk\":\"<p>Minimalistické kožené tenisky, ktoré sa hodia k obleku aj k džínsom.</p>\",\"cs\":\"<p>Minimalistické kožené tenisky, které se hodí k obleku i k džínám.</p>\",\"en\":\"<p>Minimal leather sneakers that go with a suit or jeans.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/butik/sneakers.webp\",\"demo/butik/shirts.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 600,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "biele tenisky bile tenisky white sneakers koza, vyrobene v portugalsku kuze, vyrobeno v portugalsku leather, made in portugal",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_id": 2,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 5,
+                "product_id": 3,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 6,
+                "product_id": 3,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 7,
+                "product_id": 4,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 8,
+                "product_id": 4,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 9,
+                "product_id": 5,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 10,
+                "product_id": 5,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 11,
+                "product_id": 6,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 12,
+                "product_id": 6,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 13,
+                "product_id": 7,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 14,
+                "product_id": 7,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 15,
+                "product_id": 8,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 16,
+                "product_id": 8,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 17,
+                "product_id": 9,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            },
+            {
+                "id": 18,
+                "product_id": 13,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 19,
+                "product_id": 13,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            },
+            {
+                "id": 20,
+                "product_id": 14,
+                "name": "{\"sk\":\"Farba\",\"cs\":\"Barva\",\"en\":\"Colour\"}",
+                "position": 1
+            },
+            {
+                "id": 21,
+                "product_id": 14,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 2
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Béžová\",\"cs\":\"Béžová\",\"en\":\"Beige\"}",
+                "color": "#c9b79c",
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Olivová\",\"cs\":\"Olivová\",\"en\":\"Olive\"}",
+                "color": "#6b6f5a",
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"XS\",\"cs\":\"XS\",\"en\":\"XS\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 6,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 7,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 8,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"XL\",\"cs\":\"XL\",\"en\":\"XL\"}",
+                "color": null,
+                "position": 5
+            },
+            {
+                "id": 9,
+                "product_option_id": 3,
+                "value": "{\"sk\":\"Krémová\",\"cs\":\"Krémová\",\"en\":\"Cream\"}",
+                "color": "#efe9df",
+                "position": 1
+            },
+            {
+                "id": 10,
+                "product_option_id": 3,
+                "value": "{\"sk\":\"Bordová\",\"cs\":\"Vínová\",\"en\":\"Burgundy\"}",
+                "color": "#7a2e2e",
+                "position": 2
+            },
+            {
+                "id": 11,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"XS\",\"cs\":\"XS\",\"en\":\"XS\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 12,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 13,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 14,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 15,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"Žltá\",\"cs\":\"Žlutá\",\"en\":\"Yellow\"}",
+                "color": "#f2c230",
+                "position": 1
+            },
+            {
+                "id": 16,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 2
+            },
+            {
+                "id": 17,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"Modrá\",\"cs\":\"Modrá\",\"en\":\"Blue\"}",
+                "color": "#9aa9c4",
+                "position": 3
+            },
+            {
+                "id": 18,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 19,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 20,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 21,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"XL\",\"cs\":\"XL\",\"en\":\"XL\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 22,
+                "product_option_id": 7,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 1
+            },
+            {
+                "id": 23,
+                "product_option_id": 7,
+                "value": "{\"sk\":\"Krémová\",\"cs\":\"Krémová\",\"en\":\"Cream\"}",
+                "color": "#efe9df",
+                "position": 2
+            },
+            {
+                "id": 24,
+                "product_option_id": 8,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 25,
+                "product_option_id": 8,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 26,
+                "product_option_id": 8,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 27,
+                "product_option_id": 9,
+                "value": "{\"sk\":\"Červená\",\"cs\":\"Červená\",\"en\":\"Red\"}",
+                "color": "#c4161c",
+                "position": 1
+            },
+            {
+                "id": 28,
+                "product_option_id": 9,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 2
+            },
+            {
+                "id": 29,
+                "product_option_id": 10,
+                "value": "{\"sk\":\"XS\",\"cs\":\"XS\",\"en\":\"XS\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 30,
+                "product_option_id": 10,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 31,
+                "product_option_id": 10,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 32,
+                "product_option_id": 10,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 33,
+                "product_option_id": 11,
+                "value": "{\"sk\":\"Limetková\",\"cs\":\"Limetková\",\"en\":\"Lime\"}",
+                "color": "#c8e000",
+                "position": 1
+            },
+            {
+                "id": 34,
+                "product_option_id": 12,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 35,
+                "product_option_id": 12,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 36,
+                "product_option_id": 12,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 37,
+                "product_option_id": 13,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 1
+            },
+            {
+                "id": 38,
+                "product_option_id": 14,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 39,
+                "product_option_id": 14,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 40,
+                "product_option_id": 14,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 41,
+                "product_option_id": 14,
+                "value": "{\"sk\":\"XL\",\"cs\":\"XL\",\"en\":\"XL\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 42,
+                "product_option_id": 15,
+                "value": "{\"sk\":\"Čierna\",\"cs\":\"Černá\",\"en\":\"Black\"}",
+                "color": "#111111",
+                "position": 1
+            },
+            {
+                "id": 43,
+                "product_option_id": 16,
+                "value": "{\"sk\":\"S\",\"cs\":\"S\",\"en\":\"S\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 44,
+                "product_option_id": 16,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 45,
+                "product_option_id": 16,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 46,
+                "product_option_id": 16,
+                "value": "{\"sk\":\"XL\",\"cs\":\"XL\",\"en\":\"XL\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 47,
+                "product_option_id": 17,
+                "value": "{\"sk\":\"M\",\"cs\":\"M\",\"en\":\"M\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 48,
+                "product_option_id": 17,
+                "value": "{\"sk\":\"L\",\"cs\":\"L\",\"en\":\"L\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 49,
+                "product_option_id": 17,
+                "value": "{\"sk\":\"XL\",\"cs\":\"XL\",\"en\":\"XL\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 50,
+                "product_option_id": 18,
+                "value": "{\"sk\":\"Hnedá\",\"cs\":\"Hnědá\",\"en\":\"Brown\"}",
+                "color": "#6e4327",
+                "position": 1
+            },
+            {
+                "id": 51,
+                "product_option_id": 19,
+                "value": "{\"sk\":\"37\",\"cs\":\"37\",\"en\":\"37\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 52,
+                "product_option_id": 19,
+                "value": "{\"sk\":\"38\",\"cs\":\"38\",\"en\":\"38\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 53,
+                "product_option_id": 19,
+                "value": "{\"sk\":\"39\",\"cs\":\"39\",\"en\":\"39\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 54,
+                "product_option_id": 19,
+                "value": "{\"sk\":\"40\",\"cs\":\"40\",\"en\":\"40\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 55,
+                "product_option_id": 19,
+                "value": "{\"sk\":\"41\",\"cs\":\"41\",\"en\":\"41\"}",
+                "color": null,
+                "position": 5
+            },
+            {
+                "id": 56,
+                "product_option_id": 20,
+                "value": "{\"sk\":\"Biela\",\"cs\":\"Bílá\",\"en\":\"White\"}",
+                "color": "#f4f4f4",
+                "position": 1
+            },
+            {
+                "id": 57,
+                "product_option_id": 21,
+                "value": "{\"sk\":\"38\",\"cs\":\"38\",\"en\":\"38\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 58,
+                "product_option_id": 21,
+                "value": "{\"sk\":\"39\",\"cs\":\"39\",\"en\":\"39\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 59,
+                "product_option_id": 21,
+                "value": "{\"sk\":\"40\",\"cs\":\"40\",\"en\":\"40\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 60,
+                "product_option_id": 21,
+                "value": "{\"sk\":\"41\",\"cs\":\"41\",\"en\":\"41\"}",
+                "color": null,
+                "position": 4
+            },
+            {
+                "id": 61,
+                "product_option_id": 21,
+                "value": "{\"sk\":\"42\",\"cs\":\"42\",\"en\":\"42\"}",
+                "color": null,
+                "position": 5
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 6,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 7,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 7
+            },
+            {
+                "id": 8,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 8
+            },
+            {
+                "id": 9,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 9
+            },
+            {
+                "id": 10,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 10
+            },
+            {
+                "id": 11,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 11
+            },
+            {
+                "id": 12,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 12
+            },
+            {
+                "id": 13,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 13
+            },
+            {
+                "id": 14,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 14
+            },
+            {
+                "id": 15,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 15
+            },
+            {
+                "id": 16,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 17,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 18,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 19,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 20,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 21,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 22,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 7
+            },
+            {
+                "id": 23,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 8
+            },
+            {
+                "id": 24,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 25,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 26,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 27,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 28,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 29,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 30,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 7
+            },
+            {
+                "id": 31,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 8
+            },
+            {
+                "id": 32,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 9
+            },
+            {
+                "id": 33,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 10
+            },
+            {
+                "id": 34,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 11
+            },
+            {
+                "id": 35,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 12
+            },
+            {
+                "id": 36,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 37,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 38,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 39,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 40,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 41,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 42,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 43,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 44,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 45,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 46,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 47,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 48,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 7
+            },
+            {
+                "id": 49,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 8
+            },
+            {
+                "id": 50,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 51,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 52,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 53,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 54,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 55,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 56,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 57,
+                "product_id": 8,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 58,
+                "product_id": 8,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 59,
+                "product_id": 8,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 60,
+                "product_id": 8,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 61,
+                "product_id": 9,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 62,
+                "product_id": 9,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 63,
+                "product_id": 9,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 64,
+                "product_id": 13,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 65,
+                "product_id": 13,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 66,
+                "product_id": 13,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 67,
+                "product_id": 13,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 68,
+                "product_id": 13,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 69,
+                "product_id": 14,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 70,
+                "product_id": 14,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 2,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 71,
+                "product_id": 14,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 72,
+                "product_id": 14,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 73,
+                "product_id": 14,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 6,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 5
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 6900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 172900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 8900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 222900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 4900,
+                "compare_at_amount": 7000
+            },
+            {
+                "id": 6,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 122900,
+                "compare_at_amount": 174900
+            },
+            {
+                "id": 7,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 7900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 8,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 197900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 9,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 6500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 162900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 5500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 12,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 137900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 13,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 15900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 397900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 15,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 16,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 87900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 17,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 11900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 18,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 297900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 19,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 4500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 20,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 112900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 21,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 22,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 62900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 23,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 24,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 97900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 25,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 14900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 26,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 372900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 27,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 8900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 28,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 222900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "saved_blocks": [],
+        "blog_categories": [],
+        "blog_tags": [],
+        "blog_posts": [],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"95712377-57d8-4ea3-ab9c-b1b94b293a19\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"Tabuľka veľkostí\",\"cs\":\"Tabulka velikostí\",\"en\":\"Size guide\"}",
+                "slug": "{\"sk\":\"tabulka-velkosti\",\"cs\":\"tabulka-velikosti\",\"en\":\"size-guide\"}",
+                "content": "{\"sk\":\"<p>Rozmery sú v centimetroch. Ak ste medzi dvoma veľkosťami, pri voľných strihoch zvoľte menšiu.</p><table><thead><tr><th>Veľkosť</th><th>Hrudník</th><th>Pás</th><th>Boky</th></tr></thead><tbody><tr><td>XS</td><td>82</td><td>64</td><td>88</td></tr><tr><td>S</td><td>86</td><td>68</td><td>92</td></tr><tr><td>M</td><td>90</td><td>72</td><td>96</td></tr><tr><td>L</td><td>96</td><td>78</td><td>102</td></tr><tr><td>XL</td><td>102</td><td>84</td><td>108</td></tr></tbody></table>\",\"cs\":\"<p>Rozměry jsou v centimetrech. Pokud jste mezi dvěma velikostmi, u volných střihů zvolte menší.</p><table><thead><tr><th>Velikost</th><th>Hrudník</th><th>Pas</th><th>Boky</th></tr></thead><tbody><tr><td>XS</td><td>82</td><td>64</td><td>88</td></tr><tr><td>S</td><td>86</td><td>68</td><td>92</td></tr><tr><td>M</td><td>90</td><td>72</td><td>96</td></tr><tr><td>L</td><td>96</td><td>78</td><td>102</td></tr><tr><td>XL</td><td>102</td><td>84</td><td>108</td></tr></tbody></table>\",\"en\":\"<p>Measurements are in centimetres. If you are between sizes, choose the smaller one for loose fits.</p><table><thead><tr><th>Size</th><th>Bust</th><th>Waist</th><th>Hips</th></tr></thead><tbody><tr><td>XS</td><td>82</td><td>64</td><td>88</td></tr><tr><td>S</td><td>86</td><td>68</td><td>92</td></tr><tr><td>M</td><td>90</td><td>72</td><td>96</td></tr><tr><td>L</td><td>96</td><td>78</td><td>102</td></tr><tr><td>XL</td><td>102</td><td>84</td><td>108</td></tr></tbody></table>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 10,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 7,
+                "name": "{\"sk\":\"Náš príbeh\",\"cs\":\"Náš příběh\",\"en\":\"Our story\"}",
+                "slug": "{\"sk\":\"nas-pribeh\",\"cs\":\"nas-pribeh\",\"en\":\"our-story\"}",
+                "content": "{\"en\":\"\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 11,
+                "is_visible": 1,
+                "blocks": "{\"sk\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/butik/studio.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Šijeme v Trnave\",\"content\":\"<p>Atelier vznikol v roku 2019 ako malá dielňa dvoch návrhárok. Dnes šijeme v Trnave v malých sériách z európskych materiálov a každý strih skúšame na skutočných ľuďoch.</p><p>Veríme, že menej kúskov s dobrým strihom je viac než plná skriňa.</p>\"}}],\"cs\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/butik/studio.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Šijeme v Trnavě\",\"content\":\"<p>Atelier vznikl v roce 2019 jako malá dílna dvou návrhářek. Dnes šijeme v Trnavě v malých sériích z evropských materiálů a každý střih zkoušíme na skutečných lidech.</p><p>Věříme, že méně kousků s dobrým střihem je víc než plná skříň.</p>\"}}],\"en\":[{\"type\":\"image_text\",\"data\":{\"image\":\"demo/butik/studio.webp\",\"image_side\":\"left\",\"visibility\":\"all\",\"title\":\"Made in Trnava\",\"content\":\"<p>Atelier started in 2019 as a small studio of two designers. Today we sew in small batches in Trnava from European fabrics and test every cut on real people.</p><p>We believe fewer pieces with a great cut beat a full wardrobe.</p>\"}}]}",
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "3",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": null,
+                "type": "category",
+                "target": "4",
+                "new_window": 0,
+                "position": 4
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 8,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 9,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 10,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 12,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 13,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 14,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 4
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 5
+            },
+            {
+                "product_variant_id": 3,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 3,
+                "product_option_value_id": 6
+            },
+            {
+                "product_variant_id": 4,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 4,
+                "product_option_value_id": 7
+            },
+            {
+                "product_variant_id": 5,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 5,
+                "product_option_value_id": 8
+            },
+            {
+                "product_variant_id": 6,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 6,
+                "product_option_value_id": 4
+            },
+            {
+                "product_variant_id": 7,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 7,
+                "product_option_value_id": 5
+            },
+            {
+                "product_variant_id": 8,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 8,
+                "product_option_value_id": 6
+            },
+            {
+                "product_variant_id": 9,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 9,
+                "product_option_value_id": 7
+            },
+            {
+                "product_variant_id": 10,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 10,
+                "product_option_value_id": 8
+            },
+            {
+                "product_variant_id": 11,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 11,
+                "product_option_value_id": 4
+            },
+            {
+                "product_variant_id": 12,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 12,
+                "product_option_value_id": 5
+            },
+            {
+                "product_variant_id": 13,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 13,
+                "product_option_value_id": 6
+            },
+            {
+                "product_variant_id": 14,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 14,
+                "product_option_value_id": 7
+            },
+            {
+                "product_variant_id": 15,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 15,
+                "product_option_value_id": 8
+            },
+            {
+                "product_variant_id": 16,
+                "product_option_value_id": 9
+            },
+            {
+                "product_variant_id": 16,
+                "product_option_value_id": 11
+            },
+            {
+                "product_variant_id": 17,
+                "product_option_value_id": 9
+            },
+            {
+                "product_variant_id": 17,
+                "product_option_value_id": 12
+            },
+            {
+                "product_variant_id": 18,
+                "product_option_value_id": 9
+            },
+            {
+                "product_variant_id": 18,
+                "product_option_value_id": 13
+            },
+            {
+                "product_variant_id": 19,
+                "product_option_value_id": 9
+            },
+            {
+                "product_variant_id": 19,
+                "product_option_value_id": 14
+            },
+            {
+                "product_variant_id": 20,
+                "product_option_value_id": 10
+            },
+            {
+                "product_variant_id": 20,
+                "product_option_value_id": 11
+            },
+            {
+                "product_variant_id": 21,
+                "product_option_value_id": 10
+            },
+            {
+                "product_variant_id": 21,
+                "product_option_value_id": 12
+            },
+            {
+                "product_variant_id": 22,
+                "product_option_value_id": 10
+            },
+            {
+                "product_variant_id": 22,
+                "product_option_value_id": 13
+            },
+            {
+                "product_variant_id": 23,
+                "product_option_value_id": 10
+            },
+            {
+                "product_variant_id": 23,
+                "product_option_value_id": 14
+            },
+            {
+                "product_variant_id": 24,
+                "product_option_value_id": 15
+            },
+            {
+                "product_variant_id": 24,
+                "product_option_value_id": 18
+            },
+            {
+                "product_variant_id": 25,
+                "product_option_value_id": 15
+            },
+            {
+                "product_variant_id": 25,
+                "product_option_value_id": 19
+            },
+            {
+                "product_variant_id": 26,
+                "product_option_value_id": 15
+            },
+            {
+                "product_variant_id": 26,
+                "product_option_value_id": 20
+            },
+            {
+                "product_variant_id": 27,
+                "product_option_value_id": 15
+            },
+            {
+                "product_variant_id": 27,
+                "product_option_value_id": 21
+            },
+            {
+                "product_variant_id": 28,
+                "product_option_value_id": 16
+            },
+            {
+                "product_variant_id": 28,
+                "product_option_value_id": 18
+            },
+            {
+                "product_variant_id": 29,
+                "product_option_value_id": 16
+            },
+            {
+                "product_variant_id": 29,
+                "product_option_value_id": 19
+            },
+            {
+                "product_variant_id": 30,
+                "product_option_value_id": 16
+            },
+            {
+                "product_variant_id": 30,
+                "product_option_value_id": 20
+            },
+            {
+                "product_variant_id": 31,
+                "product_option_value_id": 16
+            },
+            {
+                "product_variant_id": 31,
+                "product_option_value_id": 21
+            },
+            {
+                "product_variant_id": 32,
+                "product_option_value_id": 17
+            },
+            {
+                "product_variant_id": 32,
+                "product_option_value_id": 18
+            },
+            {
+                "product_variant_id": 33,
+                "product_option_value_id": 17
+            },
+            {
+                "product_variant_id": 33,
+                "product_option_value_id": 19
+            },
+            {
+                "product_variant_id": 34,
+                "product_option_value_id": 17
+            },
+            {
+                "product_variant_id": 34,
+                "product_option_value_id": 20
+            },
+            {
+                "product_variant_id": 35,
+                "product_option_value_id": 17
+            },
+            {
+                "product_variant_id": 35,
+                "product_option_value_id": 21
+            },
+            {
+                "product_variant_id": 36,
+                "product_option_value_id": 22
+            },
+            {
+                "product_variant_id": 36,
+                "product_option_value_id": 24
+            },
+            {
+                "product_variant_id": 37,
+                "product_option_value_id": 22
+            },
+            {
+                "product_variant_id": 37,
+                "product_option_value_id": 25
+            },
+            {
+                "product_variant_id": 38,
+                "product_option_value_id": 22
+            },
+            {
+                "product_variant_id": 38,
+                "product_option_value_id": 26
+            },
+            {
+                "product_variant_id": 39,
+                "product_option_value_id": 23
+            },
+            {
+                "product_variant_id": 39,
+                "product_option_value_id": 24
+            },
+            {
+                "product_variant_id": 40,
+                "product_option_value_id": 23
+            },
+            {
+                "product_variant_id": 40,
+                "product_option_value_id": 25
+            },
+            {
+                "product_variant_id": 41,
+                "product_option_value_id": 23
+            },
+            {
+                "product_variant_id": 41,
+                "product_option_value_id": 26
+            },
+            {
+                "product_variant_id": 42,
+                "product_option_value_id": 27
+            },
+            {
+                "product_variant_id": 42,
+                "product_option_value_id": 29
+            },
+            {
+                "product_variant_id": 43,
+                "product_option_value_id": 27
+            },
+            {
+                "product_variant_id": 43,
+                "product_option_value_id": 30
+            },
+            {
+                "product_variant_id": 44,
+                "product_option_value_id": 27
+            },
+            {
+                "product_variant_id": 44,
+                "product_option_value_id": 31
+            },
+            {
+                "product_variant_id": 45,
+                "product_option_value_id": 27
+            },
+            {
+                "product_variant_id": 45,
+                "product_option_value_id": 32
+            },
+            {
+                "product_variant_id": 46,
+                "product_option_value_id": 28
+            },
+            {
+                "product_variant_id": 46,
+                "product_option_value_id": 29
+            },
+            {
+                "product_variant_id": 47,
+                "product_option_value_id": 28
+            },
+            {
+                "product_variant_id": 47,
+                "product_option_value_id": 30
+            },
+            {
+                "product_variant_id": 48,
+                "product_option_value_id": 28
+            },
+            {
+                "product_variant_id": 48,
+                "product_option_value_id": 31
+            },
+            {
+                "product_variant_id": 49,
+                "product_option_value_id": 28
+            },
+            {
+                "product_variant_id": 49,
+                "product_option_value_id": 32
+            },
+            {
+                "product_variant_id": 50,
+                "product_option_value_id": 33
+            },
+            {
+                "product_variant_id": 50,
+                "product_option_value_id": 34
+            },
+            {
+                "product_variant_id": 51,
+                "product_option_value_id": 33
+            },
+            {
+                "product_variant_id": 51,
+                "product_option_value_id": 35
+            },
+            {
+                "product_variant_id": 52,
+                "product_option_value_id": 33
+            },
+            {
+                "product_variant_id": 52,
+                "product_option_value_id": 36
+            },
+            {
+                "product_variant_id": 53,
+                "product_option_value_id": 37
+            },
+            {
+                "product_variant_id": 53,
+                "product_option_value_id": 38
+            },
+            {
+                "product_variant_id": 54,
+                "product_option_value_id": 37
+            },
+            {
+                "product_variant_id": 54,
+                "product_option_value_id": 39
+            },
+            {
+                "product_variant_id": 55,
+                "product_option_value_id": 37
+            },
+            {
+                "product_variant_id": 55,
+                "product_option_value_id": 40
+            },
+            {
+                "product_variant_id": 56,
+                "product_option_value_id": 37
+            },
+            {
+                "product_variant_id": 56,
+                "product_option_value_id": 41
+            },
+            {
+                "product_variant_id": 57,
+                "product_option_value_id": 42
+            },
+            {
+                "product_variant_id": 57,
+                "product_option_value_id": 43
+            },
+            {
+                "product_variant_id": 58,
+                "product_option_value_id": 42
+            },
+            {
+                "product_variant_id": 58,
+                "product_option_value_id": 44
+            },
+            {
+                "product_variant_id": 59,
+                "product_option_value_id": 42
+            },
+            {
+                "product_variant_id": 59,
+                "product_option_value_id": 45
+            },
+            {
+                "product_variant_id": 60,
+                "product_option_value_id": 42
+            },
+            {
+                "product_variant_id": 60,
+                "product_option_value_id": 46
+            },
+            {
+                "product_variant_id": 61,
+                "product_option_value_id": 47
+            },
+            {
+                "product_variant_id": 62,
+                "product_option_value_id": 48
+            },
+            {
+                "product_variant_id": 63,
+                "product_option_value_id": 49
+            },
+            {
+                "product_variant_id": 64,
+                "product_option_value_id": 50
+            },
+            {
+                "product_variant_id": 64,
+                "product_option_value_id": 51
+            },
+            {
+                "product_variant_id": 65,
+                "product_option_value_id": 50
+            },
+            {
+                "product_variant_id": 65,
+                "product_option_value_id": 52
+            },
+            {
+                "product_variant_id": 66,
+                "product_option_value_id": 50
+            },
+            {
+                "product_variant_id": 66,
+                "product_option_value_id": 53
+            },
+            {
+                "product_variant_id": 67,
+                "product_option_value_id": 50
+            },
+            {
+                "product_variant_id": 67,
+                "product_option_value_id": 54
+            },
+            {
+                "product_variant_id": 68,
+                "product_option_value_id": 50
+            },
+            {
+                "product_variant_id": 68,
+                "product_option_value_id": 55
+            },
+            {
+                "product_variant_id": 69,
+                "product_option_value_id": 56
+            },
+            {
+                "product_variant_id": 69,
+                "product_option_value_id": 57
+            },
+            {
+                "product_variant_id": 70,
+                "product_option_value_id": 56
+            },
+            {
+                "product_variant_id": 70,
+                "product_option_value_id": 58
+            },
+            {
+                "product_variant_id": 71,
+                "product_option_value_id": 56
+            },
+            {
+                "product_variant_id": 71,
+                "product_option_value_id": 59
+            },
+            {
+                "product_variant_id": 72,
+                "product_option_value_id": 56
+            },
+            {
+                "product_variant_id": 72,
+                "product_option_value_id": 60
+            },
+            {
+                "product_variant_id": 73,
+                "product_option_value_id": 56
+            },
+            {
+                "product_variant_id": 73,
+                "product_option_value_id": 61
+            }
+        ],
+        "addon_product": [],
+        "product_label_product": [
+            {
+                "product_label_id": 1,
+                "product_id": 1
+            },
+            {
+                "product_label_id": 1,
+                "product_id": 5
+            },
+            {
+                "product_label_id": 1,
+                "product_id": 7
+            },
+            {
+                "product_label_id": 1,
+                "product_id": 14
+            }
+        ],
+        "blog_post_tag": [],
+        "blog_post_product": [],
+        "blog_post_catalog_category": []
+    },
+    "theme_settings": "{\"palette\":\"cierna\",\"notice_items\":\"Doprava zdarma od 60 €\\nVrátenie do 30 dní zadarmo\\nNová kolekcia jeseň / zima\",\"nav_highlight\":\"Výpredaj\",\"nav_highlight_link\":\"/produkt/oversize-mikina-slnko\",\"hero_kicker\":\"Kolekcia jeseň / zima 2026\",\"hero_title\":\"Nová|sezóna\",\"hero_image\":\"demo/butik/red.webp\",\"hero_button_1\":\"Nakupovať ženy\",\"hero_link_1\":\"/kategoria/zeny\",\"hero_button_2\":\"Nakupovať muži\",\"hero_link_2\":\"/kategoria/muzi\",\"tile_label\":\"Nohavice a vesty\",\"tile_title\":\"Krajčírska klasika\",\"tile_link\":\"/produkt/siroke-nohavice-s-pukmi\",\"tile_image\":\"demo/butik/two.webp\",\"sale_label\":\"Výpredaj do nedele\",\"sale_title\":\"−30 %\",\"sale_button\":\"Pozrieť výpredaj\",\"sale_link\":\"/produkt/oversize-mikina-slnko\",\"sale_image\":\"demo/butik/sneakers.webp\",\"look_text\":\"Klobúk, čiapka na chladnejšie dni a kožený opasok. Pridajte si celý set do košíka jedným kliknutím.\",\"look_image\":\"demo/butik/hat.webp\",\"look_product_1\":10,\"look_spot_1\":\"52, 20\",\"look_product_2\":11,\"look_spot_2\":\"40, 48\",\"look_product_3\":12,\"look_spot_3\":\"58, 66\",\"lookbook_label\":\"Lookbook\",\"lookbook_title\":\"Žltá|je nová|čierna\",\"lookbook_link\":\"/produkt/oversize-mikina-slnko\",\"lookbook_image\":\"demo/butik/yellowsofa.webp\",\"why_title\":\"Prečo Atelier\",\"why_1_title\":\"Šité na Slovensku\",\"why_1_text\":\"Malé série, férové mzdy, európske materiály.\",\"why_2_title\":\"Vrátenie do 30 dní\",\"why_2_text\":\"Bez udania dôvodu a zadarmo.\",\"why_3_title\":\"Pomôžeme s veľkosťou\",\"why_3_text\":\"Tabuľka veľkostí a rada stylistky.\",\"why_button\":\"Náš príbeh\",\"why_link\":\"/stranka/nas-pribeh\",\"instagram_title\":\"@atelier.sk\",\"instagram_link\":\"https://www.instagram.com/\",\"instagram_1\":\"demo/butik/green.webp\",\"instagram_2\":\"demo/butik/orange.webp\",\"instagram_3\":\"demo/butik/manhat.webp\",\"instagram_4\":\"demo/butik/studio.webp\",\"instagram_5\":\"demo/butik/beanie.webp\",\"instagram_6\":\"demo/butik/cardigan.webp\",\"newsletter_text\":\"Nové kolekcie, výpredaje a −10 % na prvý nákup.\",\"footer_text\":\"Slovenská značka oblečenia. Šijeme v malých sériách v Trnave z európskych materiálov.\",\"social_instagram\":\"https://www.instagram.com/\",\"social_tiktok\":\"https://www.tiktok.com/\",\"social_pinterest\":\"https://www.pinterest.com/\",\"_translations\":{\"cs\":{\"notice_items\":\"Doprava zdarma od 1 500 Kč\\nVrácení do 30 dnů zdarma\\nNová kolekce podzim / zima\",\"nav_highlight\":\"Výprodej\",\"hero_kicker\":\"Kolekce podzim / zima 2026\",\"hero_title\":\"Nová|sezóna\",\"hero_button_1\":\"Nakupovat ženy\",\"hero_button_2\":\"Nakupovat muži\",\"tile_label\":\"Kalhoty a vesty\",\"tile_title\":\"Krejčovská klasika\",\"sale_label\":\"Výprodej do neděle\",\"sale_title\":\"−30 %\",\"sale_button\":\"Zobrazit výprodej\",\"look_text\":\"Klobouk, čepice na chladnější dny a kožený opasek. Přidejte si celý set do košíku jedním kliknutím.\",\"lookbook_label\":\"Lookbook\",\"lookbook_title\":\"Žlutá|je nová|černá\",\"why_title\":\"Proč Atelier\",\"why_1_title\":\"Šité na Slovensku\",\"why_1_text\":\"Malé série, férové mzdy, evropské materiály.\",\"why_2_title\":\"Vrácení do 30 dnů\",\"why_2_text\":\"Bez udání důvodu a zdarma.\",\"why_3_title\":\"Pomůžeme s velikostí\",\"why_3_text\":\"Tabulka velikostí a rada stylistky.\",\"why_button\":\"Náš příběh\",\"newsletter_text\":\"Nové kolekce, výprodeje a −10 % na první nákup.\",\"footer_text\":\"Slovenská značka oblečení. Šijeme v malých sériích v Trnavě z evropských materiálů.\"},\"en\":{\"notice_items\":\"Free shipping over €60\\nFree 30-day returns\\nNew autumn / winter collection\",\"nav_highlight\":\"Sale\",\"hero_kicker\":\"Autumn / winter 2026 collection\",\"hero_title\":\"New|season\",\"hero_button_1\":\"Shop women\",\"hero_button_2\":\"Shop men\",\"tile_label\":\"Trousers and vests\",\"tile_title\":\"Tailored classics\",\"sale_label\":\"Sale ends Sunday\",\"sale_title\":\"−30%\",\"sale_button\":\"Shop the sale\",\"look_text\":\"A hat, a beanie for colder days and a leather belt. Add the whole set to your cart in one click.\",\"lookbook_label\":\"Lookbook\",\"lookbook_title\":\"Yellow|is the new|black\",\"why_title\":\"Why Atelier\",\"why_1_title\":\"Made in Slovakia\",\"why_1_text\":\"Small batches, fair wages, European fabrics.\",\"why_2_title\":\"30-day returns\",\"why_2_text\":\"No questions asked, free of charge.\",\"why_3_title\":\"Help with sizing\",\"why_3_text\":\"A size guide and stylist advice.\",\"why_button\":\"Our story\",\"newsletter_text\":\"New collections, sales and 10% off your first order.\",\"footer_text\":\"A Slovak clothing brand. We sew in small batches in Trnava from European fabrics.\"}}}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#e0261b\""
+        }
+    }
+}

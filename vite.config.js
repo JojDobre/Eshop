@@ -27,6 +27,8 @@ export default defineConfig(({ command }) => ({
                 'themes/studio/assets/css/theme.css',
                 // Šablóna Esencia (kozmetika a drogéria, odvodená od Default)
                 'themes/esencia/assets/css/theme.css',
+                // Šablóna Butik (móda, odvodená od Default)
+                'themes/butik/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

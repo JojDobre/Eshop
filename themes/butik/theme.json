@@ -1,0 +1,963 @@
+{
+    "name": "butik",
+    "version": "1.0.0",
+    "title": {
+        "sk": "Butik",
+        "cs": "Butik",
+        "en": "Butik"
+    },
+    "description": {
+        "sk": "Odvážna módna šablóna v štýle magazínu: veľké fotky, úzke verzálky, štyri palety. Novinky so záložkami, druhá fotka pri prejdení myšou, farby a veľkosti na karte, shop the look, lookbook a Instagram. S hotovým demom.",
+        "cs": "Odvážná módní šablona ve stylu magazínu: velké fotky, úzké verzálky, čtyři palety. Novinky se záložkami, druhá fotka při najetí myší, barvy a velikosti na kartě, shop the look, lookbook a Instagram. S hotovým demem.",
+        "en": "A bold editorial fashion theme: large photos, condensed capitals, four palettes. New arrivals with tabs, second photo on hover, colours and sizes on cards, shop the look, lookbook and Instagram. Includes a demo."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "screenshot": "screenshot.jpg",
+    "requires": {
+        "eshop": "^1.10"
+    },
+    "vite": [
+        "themes/butik/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ],
+    "hide_settings": [
+        "font",
+        "header_layout",
+        "announcement",
+        "button_style",
+        "show_tagline"
+    ],
+    "settings": {
+        "home_sections": {
+            "type": "sections",
+            "group": "layout",
+            "label": {
+                "sk": "Sekcie úvodnej stránky",
+                "cs": "Sekce úvodní stránky",
+                "en": "Home page sections"
+            },
+            "default": [
+                "hero",
+                "new",
+                "categories",
+                "look",
+                "story",
+                "instagram",
+                "blocks"
+            ],
+            "help": {
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite košom. „Bloky z obsahu“ sú bloky z Obsah → Bloky.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte košem. „Bloky z obsahu“ jsou bloky z Obsah → Bloky.",
+                "en": "Reorder with the arrows, remove with the bin. “Content blocks” come from Content → Blocks."
+            },
+            "options": {
+                "hero": {
+                    "sk": "Úvodný banner",
+                    "cs": "Úvodní banner",
+                    "en": "Hero"
+                },
+                "new": {
+                    "sk": "Novinky so záložkami",
+                    "cs": "Novinky se záložkami",
+                    "en": "New arrivals with tabs"
+                },
+                "categories": {
+                    "sk": "Kategórie",
+                    "cs": "Kategorie",
+                    "en": "Categories"
+                },
+                "look": {
+                    "sk": "Shop the look",
+                    "cs": "Shop the look",
+                    "en": "Shop the look"
+                },
+                "story": {
+                    "sk": "Lookbook a prečo my",
+                    "cs": "Lookbook a proč my",
+                    "en": "Lookbook and why us"
+                },
+                "instagram": {
+                    "sk": "Fotky z Instagramu",
+                    "cs": "Fotky z Instagramu",
+                    "en": "Instagram photos"
+                },
+                "blocks": {
+                    "sk": "Bloky z obsahu",
+                    "cs": "Bloky z obsahu",
+                    "en": "Content blocks"
+                }
+            },
+            "layouts": {
+                "default": {
+                    "sk": "Predvolené",
+                    "cs": "Výchozí",
+                    "en": "Default"
+                },
+                "reverse": {
+                    "sk": "Obrátené",
+                    "cs": "Obrácené",
+                    "en": "Reversed"
+                }
+            }
+        },
+        "palette": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Farebná paleta",
+                "cs": "Barevná paleta",
+                "en": "Colour palette"
+            },
+            "default": "cierna",
+            "help": {
+                "sk": "Farby celého obchodu vrátane tlačidiel v košíku a pokladni.",
+                "cs": "Barvy celého obchodu včetně tlačítek v košíku a pokladně.",
+                "en": "Colours of the whole shop including cart and checkout buttons."
+            },
+            "options": {
+                "cierna": {
+                    "sk": "Čierna – čierno-biela s červenou",
+                    "cs": "Černá – černobílá s červenou",
+                    "en": "Black – black and white with red"
+                },
+                "kobalt": {
+                    "sk": "Kobalt – kobaltovo modrá",
+                    "cs": "Kobalt – kobaltově modrá",
+                    "en": "Cobalt – cobalt blue"
+                },
+                "ruza": {
+                    "sk": "Ružová – výrazná ružová",
+                    "cs": "Růžová – výrazná růžová",
+                    "en": "Pink – bold pink"
+                },
+                "jemna": {
+                    "sk": "Jemná – levanduľová",
+                    "cs": "Jemná – levandulová",
+                    "en": "Soft – lavender"
+                },
+                "brand": {
+                    "sk": "Farba značky obchodu",
+                    "cs": "Barva značky obchodu",
+                    "en": "Shop brand colour"
+                }
+            }
+        },
+        "heading_font": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Písmo nadpisov",
+                "cs": "Písmo nadpisů",
+                "en": "Heading font"
+            },
+            "default": "anton",
+            "options": {
+                "anton": {
+                    "sk": "Anton – úzke verzálky",
+                    "cs": "Anton – úzké verzálky",
+                    "en": "Anton – condensed capitals"
+                },
+                "syne": {
+                    "sk": "Syne – výtvarné",
+                    "cs": "Syne – výtvarné",
+                    "en": "Syne – artistic"
+                },
+                "archivo": {
+                    "sk": "Archivo – široké a pevné",
+                    "cs": "Archivo – široké a pevné",
+                    "en": "Archivo – wide and solid"
+                }
+            }
+        },
+        "notice_items": {
+            "type": "textarea",
+            "group": "header",
+            "label": {
+                "sk": "Horný pruh – texty",
+                "cs": "Horní pruh – texty",
+                "en": "Top bar – texts"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý text na samostatnom riadku. Texty sa posúvajú do strany. Prázdne = pruh sa nezobrazí.",
+                "cs": "Každý text na samostatném řádku. Texty se posouvají do strany. Prázdné = pruh se nezobrazí.",
+                "en": "One per line; they scroll sideways. Empty = hidden."
+            }
+        },
+        "show_shop_name": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Názov obchodu (ak je nahrané logo)",
+                "cs": "Název obchodu (pokud je nahrané logo)",
+                "en": "Shop name (when a logo is uploaded)"
+            },
+            "default": false
+        },
+        "nav_highlight": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Zvýraznená položka ponuky",
+                "cs": "Zvýrazněná položka nabídky",
+                "en": "Highlighted menu item"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. „Výpredaj“. Prázdne = nezobrazí sa.",
+                "cs": "Např. „Výprodej“. Prázdné = nezobrazí se.",
+                "en": "E.g. “Sale”. Empty = hidden."
+            }
+        },
+        "nav_highlight_link": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Zvýraznená položka – odkaz",
+                "cs": "Zvýrazněná položka – odkaz",
+                "en": "Highlighted item – link"
+            },
+            "default": ""
+        },
+        "hero_kicker": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – malý nadpis",
+                "cs": "Úvod – malý nadpis",
+                "en": "Hero – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – nadpis",
+                "cs": "Úvod – nadpis",
+                "en": "Hero – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Nový riadok vložíte znakom |. Prázdne = predvolený text.",
+                "cs": "Nový řádek vložíte znakem |. Prázdné = výchozí text.",
+                "en": "Use | for a line break. Empty = default text."
+            }
+        },
+        "hero_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – fotka",
+                "cs": "Úvod – fotka",
+                "en": "Hero – photo"
+            },
+            "default": "",
+            "help": {
+                "sk": "Na výšku, aspoň 1200 px.",
+                "cs": "Na výšku, alespoň 1200 px.",
+                "en": "Portrait, at least 1200 px."
+            }
+        },
+        "hero_button_1": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – tlačidlo 1",
+                "cs": "Úvod – tlačítko 1",
+                "en": "Hero – button 1"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_link_1": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – odkaz tlačidla 1",
+                "cs": "Úvod – odkaz tlačítka 1",
+                "en": "Hero – button 1 link"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = prvá kategória.",
+                "cs": "Prázdné = první kategorie.",
+                "en": "Empty = first category."
+            }
+        },
+        "hero_button_2": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – tlačidlo 2",
+                "cs": "Úvod – tlačítko 2",
+                "en": "Hero – button 2"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "hero_link_2": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – odkaz tlačidla 2",
+                "cs": "Úvod – odkaz tlačítka 2",
+                "en": "Hero – button 2 link"
+            },
+            "default": ""
+        },
+        "tile_label": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Dlaždica s fotkou – malý nadpis",
+                "cs": "Dlaždice s fotkou – malý nadpis",
+                "en": "Photo tile – eyebrow"
+            },
+            "default": ""
+        },
+        "tile_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Dlaždica s fotkou – nadpis",
+                "cs": "Dlaždice s fotkou – nadpis",
+                "en": "Photo tile – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = dlaždica sa nezobrazí.",
+                "cs": "Prázdné = dlaždice se nezobrazí.",
+                "en": "Empty = hidden."
+            }
+        },
+        "tile_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Dlaždica s fotkou – odkaz",
+                "cs": "Dlaždice s fotkou – odkaz",
+                "en": "Photo tile – link"
+            },
+            "default": ""
+        },
+        "tile_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Dlaždica s fotkou – fotka",
+                "cs": "Dlaždice s fotkou – fotka",
+                "en": "Photo tile – photo"
+            },
+            "default": ""
+        },
+        "sale_label": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Farebná dlaždica – malý nadpis",
+                "cs": "Barevná dlaždice – malý nadpis",
+                "en": "Colour tile – eyebrow"
+            },
+            "default": ""
+        },
+        "sale_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Farebná dlaždica – veľký text",
+                "cs": "Barevná dlaždice – velký text",
+                "en": "Colour tile – big text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. „−40 %“. Prázdne = dlaždica sa nezobrazí.",
+                "cs": "Např. „−40 %“. Prázdné = dlaždice se nezobrazí.",
+                "en": "E.g. “−40%”. Empty = hidden."
+            }
+        },
+        "sale_button": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Farebná dlaždica – tlačidlo",
+                "cs": "Barevná dlaždice – tlačítko",
+                "en": "Colour tile – button"
+            },
+            "default": ""
+        },
+        "sale_link": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Farebná dlaždica – odkaz",
+                "cs": "Barevná dlaždice – odkaz",
+                "en": "Colour tile – link"
+            },
+            "default": ""
+        },
+        "sale_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Farebná dlaždica – obrázok",
+                "cs": "Barevná dlaždice – obrázek",
+                "en": "Colour tile – image"
+            },
+            "default": ""
+        },
+        "new_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Novinky – nadpis",
+                "cs": "Novinky – nadpis",
+                "en": "New arrivals – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "new_tabs": {
+            "type": "toggle",
+            "group": "catalog",
+            "label": {
+                "sk": "Novinky – záložky podľa hlavných kategórií",
+                "cs": "Novinky – záložky podle hlavních kategorií",
+                "en": "New arrivals – tabs by main categories"
+            },
+            "default": true
+        },
+        "new_count": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Novinky – počet produktov",
+                "cs": "Novinky – počet produktů",
+                "en": "New arrivals – product count"
+            },
+            "default": "4",
+            "options": {
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                },
+                "8": {
+                    "sk": "8",
+                    "cs": "8",
+                    "en": "8"
+                }
+            }
+        },
+        "categories_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Kategórie – nadpis",
+                "cs": "Kategorie – nadpis",
+                "en": "Categories – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        },
+        "second_image": {
+            "type": "toggle",
+            "group": "catalog",
+            "label": {
+                "sk": "Druhá fotka produktu pri prejdení myšou",
+                "cs": "Druhá fotka produktu při najetí myší",
+                "en": "Second product photo on hover"
+            },
+            "default": true
+        },
+        "look_label": {
+            "type": "text",
+            "group": "look",
+            "label": {
+                "sk": "Shop the look – malý nadpis",
+                "cs": "Shop the look – malý nadpis",
+                "en": "Shop the look – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "look_title": {
+            "type": "text",
+            "group": "look",
+            "label": {
+                "sk": "Shop the look – nadpis",
+                "cs": "Shop the look – nadpis",
+                "en": "Shop the look – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "look_text": {
+            "type": "textarea",
+            "group": "look",
+            "label": {
+                "sk": "Shop the look – text",
+                "cs": "Shop the look – text",
+                "en": "Shop the look – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "look_image": {
+            "type": "image",
+            "group": "look",
+            "label": {
+                "sk": "Shop the look – fotka",
+                "cs": "Shop the look – fotka",
+                "en": "Shop the look – photo"
+            },
+            "default": ""
+        },
+        "look_product_1": {
+            "type": "number",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 1 – ID produktu",
+                "cs": "Kousek 1 – ID produktu",
+                "en": "Item 1 – product ID"
+            },
+            "default": "",
+            "help": {
+                "sk": "ID nájdete v adrese produktu v administrácii. Bez produktov sa sekcia nezobrazí.",
+                "cs": "ID najdete v adrese produktu v administraci. Bez produktů se sekce nezobrazí.",
+                "en": "The ID is in the product URL in admin. Without products the section is hidden."
+            }
+        },
+        "look_spot_1": {
+            "type": "text",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 1 – bod na fotke",
+                "cs": "Kousek 1 – bod na fotce",
+                "en": "Item 1 – spot on the photo"
+            },
+            "default": "",
+            "help": {
+                "sk": "Poloha v percentách „zľava, zhora“, napr. „52, 22“. Prázdne = bod sa nezobrazí.",
+                "cs": "Poloha v procentech „zleva, shora“, např. „52, 22“.",
+                "en": "Position in percent “from left, from top”, e.g. “52, 22”."
+            }
+        },
+        "look_product_2": {
+            "type": "number",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 2 – ID produktu",
+                "cs": "Kousek 2 – ID produktu",
+                "en": "Item 2 – product ID"
+            },
+            "default": ""
+        },
+        "look_spot_2": {
+            "type": "text",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 2 – bod na fotke",
+                "cs": "Kousek 2 – bod na fotce",
+                "en": "Item 2 – spot on the photo"
+            },
+            "default": ""
+        },
+        "look_product_3": {
+            "type": "number",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 3 – ID produktu",
+                "cs": "Kousek 3 – ID produktu",
+                "en": "Item 3 – product ID"
+            },
+            "default": ""
+        },
+        "look_spot_3": {
+            "type": "text",
+            "group": "look",
+            "label": {
+                "sk": "Kúsok 3 – bod na fotke",
+                "cs": "Kousek 3 – bod na fotce",
+                "en": "Item 3 – spot on the photo"
+            },
+            "default": ""
+        },
+        "lookbook_label": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Lookbook – malý nadpis",
+                "cs": "Lookbook – malý nadpis",
+                "en": "Lookbook – eyebrow"
+            },
+            "default": ""
+        },
+        "lookbook_title": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Lookbook – nadpis",
+                "cs": "Lookbook – nadpis",
+                "en": "Lookbook – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Nový riadok vložíte znakom |. Prázdne = banner sa nezobrazí.",
+                "cs": "Nový řádek vložíte znakem |. Prázdné = banner se nezobrazí.",
+                "en": "Use | for a line break. Empty = hidden."
+            }
+        },
+        "lookbook_link": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Lookbook – odkaz",
+                "cs": "Lookbook – odkaz",
+                "en": "Lookbook – link"
+            },
+            "default": ""
+        },
+        "lookbook_image": {
+            "type": "image",
+            "group": "story",
+            "label": {
+                "sk": "Lookbook – fotka",
+                "cs": "Lookbook – fotka",
+                "en": "Lookbook – photo"
+            },
+            "default": ""
+        },
+        "why_title": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Prečo my – nadpis",
+                "cs": "Proč my – nadpis",
+                "en": "Why us – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "why_1_title": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 1 – nadpis",
+                "cs": "Důvod 1 – nadpis",
+                "en": "Reason 1 – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "why_1_text": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 1 – text",
+                "cs": "Důvod 1 – text",
+                "en": "Reason 1 – text"
+            },
+            "default": ""
+        },
+        "why_2_title": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 2 – nadpis",
+                "cs": "Důvod 2 – nadpis",
+                "en": "Reason 2 – title"
+            },
+            "default": ""
+        },
+        "why_2_text": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 2 – text",
+                "cs": "Důvod 2 – text",
+                "en": "Reason 2 – text"
+            },
+            "default": ""
+        },
+        "why_3_title": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 3 – nadpis",
+                "cs": "Důvod 3 – nadpis",
+                "en": "Reason 3 – title"
+            },
+            "default": ""
+        },
+        "why_3_text": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Dôvod 3 – text",
+                "cs": "Důvod 3 – text",
+                "en": "Reason 3 – text"
+            },
+            "default": ""
+        },
+        "why_button": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Prečo my – tlačidlo",
+                "cs": "Proč my – tlačítko",
+                "en": "Why us – button"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "why_link": {
+            "type": "text",
+            "group": "story",
+            "label": {
+                "sk": "Prečo my – odkaz",
+                "cs": "Proč my – odkaz",
+                "en": "Why us – link"
+            },
+            "default": ""
+        },
+        "instagram_title": {
+            "type": "text",
+            "group": "instagram",
+            "label": {
+                "sk": "Instagram – nadpis (napr. @znacka)",
+                "cs": "Instagram – nadpis (např. @znacka)",
+                "en": "Instagram – title (e.g. @brand)"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = sekcia sa nezobrazí.",
+                "cs": "Prázdné = sekce se nezobrazí.",
+                "en": "Empty = hidden."
+            }
+        },
+        "instagram_link": {
+            "type": "text",
+            "group": "instagram",
+            "label": {
+                "sk": "Instagram – odkaz na profil",
+                "cs": "Instagram – odkaz na profil",
+                "en": "Instagram – profile link"
+            },
+            "default": ""
+        },
+        "instagram_1": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 1",
+                "cs": "Fotka 1",
+                "en": "Photo 1"
+            },
+            "default": ""
+        },
+        "instagram_2": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 2",
+                "cs": "Fotka 2",
+                "en": "Photo 2"
+            },
+            "default": ""
+        },
+        "instagram_3": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 3",
+                "cs": "Fotka 3",
+                "en": "Photo 3"
+            },
+            "default": ""
+        },
+        "instagram_4": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 4",
+                "cs": "Fotka 4",
+                "en": "Photo 4"
+            },
+            "default": ""
+        },
+        "instagram_5": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 5",
+                "cs": "Fotka 5",
+                "en": "Photo 5"
+            },
+            "default": ""
+        },
+        "instagram_6": {
+            "type": "image",
+            "group": "instagram",
+            "label": {
+                "sk": "Fotka 6",
+                "cs": "Fotka 6",
+                "en": "Photo 6"
+            },
+            "default": ""
+        },
+        "newsletter_title": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Odber noviniek – nadpis",
+                "cs": "Odběr novinek – nadpis",
+                "en": "Newsletter – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Nový riadok vložíte znakom |. Prázdne = predvolený text.",
+                "cs": "Nový řádek vložíte znakem |.",
+                "en": "Use | for a line break."
+            }
+        },
+        "newsletter_text": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Odber noviniek – text",
+                "cs": "Odběr novinek – text",
+                "en": "Newsletter – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "footer_text": {
+            "type": "textarea",
+            "group": "footer",
+            "label": {
+                "sk": "Pätička – text o značke",
+                "cs": "Patička – text o značce",
+                "en": "Footer – about the brand"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "social_instagram": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Instagram (adresa)",
+                "cs": "Instagram (adresa)",
+                "en": "Instagram (URL)"
+            },
+            "default": ""
+        },
+        "social_tiktok": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "TikTok (adresa)",
+                "cs": "TikTok (adresa)",
+                "en": "TikTok (URL)"
+            },
+            "default": ""
+        },
+        "social_pinterest": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Pinterest (adresa)",
+                "cs": "Pinterest (adresa)",
+                "en": "Pinterest (URL)"
+            },
+            "default": ""
+        },
+        "social_facebook": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Facebook (adresa)",
+                "cs": "Facebook (adresa)",
+                "en": "Facebook (URL)"
+            },
+            "default": ""
+        }
+    }
+}

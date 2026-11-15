@@ -11,7 +11,7 @@
                 <h2 id="newsletter-heading" class="font-head text-4xl leading-none sm:text-5xl">{{ $opt('newsletter_title') }}</h2>
                 <p class="mt-3 opacity-90">{{ $opt('newsletter_text') }}</p>
             </div>
-            <div class="[&_.btn]:bg-[var(--es-ink)] [&_.btn]:px-6 [&_.btn]:py-3.5 [&_.btn]:text-white [&_.input]:rounded-full [&_.input]:border-0 [&_.input]:px-5 [&_.input]:py-3.5 [&_.input]:text-[var(--es-ink)] [&_a]:underline [&_form>p]:text-sm [&_form>p]:opacity-90 [&_label]:opacity-90">
+            <div class="[&_.btn]:bg-[var(--es-ink)] [&_.btn]:px-6 [&_.btn]:py-3.5 [&_.btn]:text-white [&_.input]:rounded-full [&_.input]:border-0 [&_.input]:px-5 [&_.input]:py-3.5 [&_.input]:text-[var(--es-ink)] [&_a]:underline [&_form>p]:text-sm [&_label]:!text-current [&_.text-zinc-600]:!text-current [&_form>p]:opacity-90 [&_label]:opacity-90">
                 @include('marketing::newsletter-form')
             </div>
         </div>

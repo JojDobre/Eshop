@@ -1,0 +1,286 @@
+/*
+ * Šablóna Butik (móda): štýly Default + súbory tejto šablóny.
+ * Farby a písmo nadpisov určuje paleta z Prispôsobenia (partials/palette.blade.php), tu sú predvolené hodnoty.
+ * Písma sú uložené na hostingu: Anton, Syne a Archivo (SIL Open Font License).
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource/anton';
+@import '@fontsource-variable/archivo';
+@import '@fontsource-variable/syne';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --bt-ac: #e0261b;
+    --bt-acd: #c01d13;
+    --bt-actext: #e0261b;
+    --bt-onac: #ffffff;
+    --bt-ink: #0d0d0d;
+    --bt-muted: #5f5f5f;
+    --bt-line: #e6e6e6;
+    --bt-soft: #f4f4f4;
+    --bt-head: 'Anton', Impact, 'Arial Narrow', sans-serif;
+    --bt-head-weight: 400;
+    --bt-head-spacing: 0.01em;
+    --bt-head-case: uppercase;
+    --bt-head-leading: 0.92;
+    --theme-font: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility font-head {
+    font-family: var(--bt-head);
+    font-weight: var(--bt-head-weight);
+    letter-spacing: var(--bt-head-spacing);
+    text-transform: var(--bt-head-case);
+    line-height: var(--bt-head-leading);
+}
+
+@utility bg-ac {
+    background-color: var(--bt-ac);
+}
+
+@utility text-onac {
+    color: var(--bt-onac);
+}
+
+/* Akcent na texte na bielom pozadí (pri svetlých paletách tmavší odtieň). */
+@utility text-ac {
+    color: var(--bt-actext);
+}
+
+@utility bg-ink {
+    background-color: var(--bt-ink);
+}
+
+@utility text-ink {
+    color: var(--bt-ink);
+}
+
+@utility text-muted {
+    color: var(--bt-muted);
+}
+
+@utility border-line {
+    border-color: var(--bt-line);
+}
+
+@utility border-ink {
+    border-color: var(--bt-ink);
+}
+
+@utility bg-soft {
+    background-color: var(--bt-soft);
+}
+
+/* Malý nadpis verzálkami s riedkym písmom. */
+@utility cap {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+body {
+    background-color: #fff;
+    color: var(--bt-ink);
+}
+
+main h1,
+main h2,
+.bt-heading {
+    font-family: var(--bt-head);
+    font-weight: var(--bt-head-weight);
+    letter-spacing: var(--bt-head-spacing);
+    text-transform: var(--bt-head-case);
+    line-height: var(--bt-head-leading);
+}
+
+/* Väčší nadpis na detaile produktu, stránkach a v kategórii. */
+@media (min-width: 64rem) {
+    main h1.text-3xl {
+        font-size: 3.5rem;
+    }
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-[1440px] px-4 sm:px-8;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-none px-7 py-3.5 text-[0.82rem] font-semibold uppercase tracking-[0.12em] transition;
+    }
+
+    .btn-primary,
+    .btn-ink {
+        @apply bg-[var(--bt-ink)] text-white hover:bg-[var(--bt-ac)] hover:text-[var(--bt-onac)];
+    }
+
+    .btn-ac {
+        @apply bg-[var(--bt-ac)] text-[var(--bt-onac)] hover:bg-[var(--bt-acd)];
+    }
+
+    .btn-secondary,
+    .btn-line {
+        @apply border-[1.5px] border-current bg-transparent;
+    }
+
+    .btn-light {
+        @apply bg-white text-[var(--bt-ink)] hover:bg-[var(--bt-ac)] hover:text-[var(--bt-onac)];
+    }
+
+    .input {
+        @apply rounded-none border-[var(--bt-line)] bg-white px-4 py-3 shadow-none;
+    }
+
+    .label {
+        @apply text-xs font-semibold uppercase tracking-[0.12em];
+    }
+
+    .bt-h2 {
+        font-family: var(--bt-head);
+        font-weight: var(--bt-head-weight);
+        letter-spacing: var(--bt-head-spacing);
+        text-transform: var(--bt-head-case);
+        line-height: var(--bt-head-leading);
+        font-size: clamp(2.6rem, 6vw, 4.5rem);
+    }
+
+    .bt-link {
+        @apply border-b-2 border-current pb-1 text-[0.72rem] font-semibold uppercase tracking-[0.18em] hover:text-[var(--bt-ac)];
+    }
+
+    .bt-tab {
+        @apply border-b-2 border-transparent pb-1 text-sm font-semibold uppercase tracking-wider text-[var(--bt-muted)] transition hover:text-[var(--bt-ink)];
+    }
+
+    .bt-tab[aria-selected='true'] {
+        @apply border-[var(--bt-ink)] text-[var(--bt-ink)];
+    }
+}
+
+/* Posúvajúci sa pruh v hlavičke. */
+.bt-marquee {
+    display: flex;
+    width: max-content;
+    animation: bt-marquee 40s linear infinite;
+}
+
+.bt-marquee:hover {
+    animation-play-state: paused;
+}
+
+@keyframes bt-marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.bt-zoom img {
+    transition: transform 0.7s ease;
+}
+
+.bt-zoom:hover img {
+    transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bt-marquee {
+        animation: none;
+    }
+
+    .bt-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny v štýle Butiku: hranaté rohy, jemné linky. */
+main .rounded-2xl,
+main .rounded-xl,
+main .rounded-lg {
+    border-radius: 0;
+}
+
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--bt-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--bt-soft);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--bt-muted);
+}
+
+/* Bloky (Obsah → Bloky) v štýle Butiku. */
+.block-title {
+    font-family: var(--bt-head);
+    font-weight: var(--bt-head-weight);
+    letter-spacing: var(--bt-head-spacing);
+    text-transform: var(--bt-head-case);
+    line-height: var(--bt-head-leading);
+    font-size: 2.6rem;
+    color: var(--bt-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 4rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 0.25rem;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--bt-soft);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--bt-ink);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title,
+.prose :where(h2, h3) {
+    font-family: var(--bt-head);
+    font-weight: var(--bt-head-weight);
+    text-transform: var(--bt-head-case);
+    letter-spacing: var(--bt-head-spacing);
+}
+
+.blog-chip.is-active {
+    background-color: var(--bt-ink);
+    border-color: var(--bt-ink);
+    color: #fff;
+}

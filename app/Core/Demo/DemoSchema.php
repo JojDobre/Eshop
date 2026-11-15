@@ -78,6 +78,10 @@ final class DemoSchema
         'routine_product_1' => 'products',
         'routine_product_2' => 'products',
         'routine_product_3' => 'products',
+        // Nastavenie šablóny Butik: produkty v sekcii Shop the look.
+        'look_product_1' => 'products',
+        'look_product_2' => 'products',
+        'look_product_3' => 'products',
     ];
 
     /** Stĺpce s blokmi alebo nastaveniami, v ktorých sa prepisujú ID. */

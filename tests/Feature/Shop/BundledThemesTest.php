@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductType;
+use Modules\Catalog\VariantGenerator;
 use Modules\Pages\Models\Page;
 use Modules\Reservations\Models\Booking;
 use Modules\Reservations\Models\BookingResource;
@@ -41,7 +42,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -347,5 +348,72 @@ class BundledThemesTest extends ShopTestCase
         $this->get(Page::query()->where('name->sk', 'Kvíz typu pleti')->sole()->url())->assertOk()->assertSee('Poslať a získať odporúčanie');
 
         Storage::disk('public')->deleteDirectory('demo/esencia');
+    }
+
+    public function test_butik_theme_renders_palettes_tabs_quick_sizes_and_look(): void
+    {
+        $women = $this->category('Ženy');
+        $men = $this->category('Muži');
+        $trousers = $this->product('Široké nohavice', '69.00', category: $women);
+        $this->product('Bunda', '159.00', category: $men);
+        $hat = $this->product('Klobúk', '45.00', category: $women);
+        $color = $trousers->options()->create(['name' => ['sk' => 'Farba'], 'position' => 1]);
+        $color->values()->createMany([['value' => ['sk' => 'Čierna'], 'color' => '#111111', 'position' => 1], ['value' => ['sk' => 'Béžová'], 'color' => '#c9b79c', 'position' => 2]]);
+        $size = $trousers->options()->create(['name' => ['sk' => 'Veľkosť'], 'position' => 2]);
+        $size->values()->createMany([['value' => ['sk' => 'S'], 'position' => 1], ['value' => ['sk' => 'M'], 'position' => 2]]);
+        app(VariantGenerator::class)->generate($trousers);
+        $trousers->variants()->update(['stock_quantity' => 5]);
+        $soldOut = $trousers->variants()->with('values')->get()->first(fn ($variant) => $variant->values->pluck('value')->contains('M') && $variant->values->pluck('value')->contains('Čierna'));
+        $soldOut->update(['stock_quantity' => 0]);
+        $this->activate('butik');
+
+        $html = $this->get('/')->assertOk()
+            ->assertSee('--bt-ac: #e0261b', false)
+            ->assertSee("--bt-head: 'Anton'", false)
+            ->assertSee('Široké nohavice')
+            ->assertSee('background: #c9b79c', false)
+            ->assertSee(__('theme::butik.quick_add'))
+            ->assertSee(__('theme::butik.sold_out_size', ['size' => 'M']))
+            ->assertSee('role="tablist"', false)
+            ->getContent();
+        $this->assertStringContainsString('Muži', $html);
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('butik'), [
+            'palette' => 'jemna', 'heading_font' => 'syne', 'notice_items' => "Doprava zdarma\nVrátenie do 30 dní",
+            'look_product_1' => $hat->id, 'look_spot_1' => '50, 30', 'nav_highlight' => 'Výpredaj',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('--bt-ac: #c9b8ff', false)
+            ->assertSee('--bt-actext: #6a4fd8', false)
+            ->assertSee("--bt-head: 'Syne Variable'", false)
+            ->assertSee('Vrátenie do 30 dní')
+            ->assertSee(__('theme::butik.look_add_all'))
+            ->assertSee(route('cart.add-many'), false)
+            ->assertSee('Výpredaj');
+
+        $this->get($women->url())->assertOk()->assertSee('Široké nohavice');
+        $this->get($trousers->url())->assertOk();
+    }
+
+    public function test_butik_bundled_demo_imports(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/butik-demo-'.uniqid()]);
+        $theme = app(ThemeManager::class)->find('butik');
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(14, $counts['products']);
+        $this->assertSame('butik', app(GeneralSettings::class)->theme);
+        $hat = Product::query()->where('name->sk', 'Plstený klobúk')->sole();
+        $this->assertSame($hat->id, (int) app(ThemeOptions::class)->values($theme)['look_product_1']);
+        $this->assertSame('New|season', app(ThemeOptions::class)->values($theme, 'en')['hero_title']);
+
+        $this->activate('butik');
+        $this->get('/')->assertOk()->assertSee('Krajčírska klasika')->assertSee('Plstený klobúk')->assertSee('@atelier.sk');
+        $this->get(Product::query()->where('name->sk', 'Široké nohavice s pukmi')->sole()->url())->assertOk()->assertSee('Olivová');
+        $this->get(Page::query()->where('name->sk', 'Tabuľka veľkostí')->sole()->url())->assertOk()->assertSee('Hrudník');
+
+        Storage::disk('public')->deleteDirectory('demo/butik');
     }
 }

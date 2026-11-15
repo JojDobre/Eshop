@@ -1,5 +1,18 @@
 # Prehľad zmien
 
+## 1.10.0 – Šablóna Butik pre módu
+
+- **Nová šablóna Butik** pre butiky a módne značky v štýle magazínu: veľké fotky na celú šírku, úzke verzálky,
+  posúvajúci sa pruh s výhodami, logo v strede, úvodný banner s dlaždicou a farebným výpredajom, novinky so
+  záložkami podľa kategórií, kategórie ako veľké fotky, shop the look s bodmi na fotke, lookbook, „prečo my“
+  a fotky z Instagramu.
+- **Karty produktov pre módu:** druhá fotka pri prejdení myšou, farby variantov ako bodky a rýchle pridanie
+  podľa veľkosti priamo z karty (vypredané veľkosti sú prečiarknuté).
+- **Štyri palety** (Čierna, Kobalt, Ružová, Jemná) alebo farba značky a tri písma nadpisov (Anton, Syne, Archivo).
+- **Hotové demo „Atelier“:** 14 produktov v 4 kategóriách s farbami a veľkosťami (73 variantov), tabuľka veľkostí,
+  náš príbeh, shop the look, menu a texty v troch jazykoch.
+- Oprava: súhlas pri odbere noviniek bol v šablóne Esencia na farebnom pozadí málo čitateľný.
+
 ## 1.9.0 – Šablóna Esencia pre kozmetiku a drogériu
 
 - **Nová šablóna Esencia** pre kozmetiku a drogériu: moderný vzhľad na bielom pozadí s výraznými farbami,

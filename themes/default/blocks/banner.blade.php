@@ -6,7 +6,7 @@
     'bg-zinc-900 text-white' => $bannerImage,
 ])>
     @if ($bannerImage)
-        <img src="{{ $bannerImage }}" alt="" class="absolute inset-0 h-full w-full object-cover opacity-60">
+        <img {{ responsive_img($bannerImage, '100vw') }} alt="" class="absolute inset-0 h-full w-full object-cover opacity-60">
     @endif
     <div @class([
         'container-shop relative',

@@ -11,7 +11,7 @@
                         </span>
                     </span>
                     @if ($categoryImage = $homeCategory->imageUrl())
-                        <img src="{{ $categoryImage }}" alt="" class="w-[42%] object-cover transition duration-500 group-hover:scale-105 {{ $reverse ? '[clip-path:ellipse(100%_95%_at_0%_50%)]' : '[clip-path:ellipse(100%_95%_at_100%_50%)]' }}" loading="lazy">
+                        <img {{ responsive_img($categoryImage, '(min-width: 1024px) 15vw, 40vw') }} alt="" class="w-[42%] object-cover transition duration-500 group-hover:scale-105 {{ $reverse ? '[clip-path:ellipse(100%_95%_at_0%_50%)]' : '[clip-path:ellipse(100%_95%_at_100%_50%)]' }}" loading="lazy">
                     @endif
                 </a>
             @endforeach

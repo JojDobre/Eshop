@@ -9,7 +9,7 @@
     <div class="{{ $wrap }} farma-section mt-5">
         <section @class(['grid overflow-hidden bg-cream', 'rounded-[28px]' => $layout !== 'full', 'lg:grid-cols-[1.4fr_1fr]' => $bannerImage && ! $reverse, 'lg:grid-cols-[1fr_1.4fr]' => $bannerImage && $reverse])>
             @if ($bannerImage)
-                <img src="{{ $bannerImage }}" alt="" @class(['h-48 w-full object-cover sm:h-full sm:min-h-[340px]', 'lg:order-2' => $reverse]) loading="lazy">
+                <img {{ responsive_img($bannerImage, '(min-width: 640px) 50vw, 100vw') }} alt="" @class(['h-48 w-full object-cover sm:h-full sm:min-h-[340px]', 'lg:order-2' => $reverse]) loading="lazy">
             @endif
             <div class="self-center p-6 sm:p-12">
                 @if ($bannerTitle !== '')
@@ -26,7 +26,7 @@
     </div>
 @elseif ($bannerImage)
     <div class="{{ $wrap }} farma-section mt-5">
-        @php($bannerImg = '<img src="'.e($bannerImage).'" alt="'.e($themeOptions->get('banner_button') ?: $shop->shop_name).'" class="w-full object-cover" loading="lazy">')
+        @php($bannerImg = '<img '.responsive_img($bannerImage, '100vw').' alt="'.e($themeOptions->get('banner_button') ?: $shop->shop_name).'" class="w-full object-cover" loading="lazy">')
         @if (filled($bannerLink))
             <a href="{{ $bannerLink }}" @class(['farma-zoom block overflow-hidden', 'rounded-[28px]' => $layout !== 'full'])>{!! $bannerImg !!}</a>
         @else

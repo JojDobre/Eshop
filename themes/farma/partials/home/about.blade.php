@@ -29,7 +29,7 @@
 @if (filled($themeOptions->get('about_title')))
     <section class="{{ $layout === 'full' ? 'container-shop' : $wrap }} farma-section grid items-center gap-8 py-14 sm:py-20 {{ $aboutImage && $layout !== 'narrow' ? 'lg:grid-cols-2 lg:gap-16' : '' }}">
         @if ($aboutImage)
-            <img src="{{ $aboutImage }}" alt="" @class(['w-full rounded-[28px] object-cover', 'lg:order-2' => $reverse]) loading="lazy">
+            <img {{ responsive_img($aboutImage, '(min-width: 1024px) 50vw, 100vw') }} alt="" @class(['w-full rounded-[28px] object-cover', 'lg:order-2' => $reverse]) loading="lazy">
         @endif
         <div>
             <h2 class="farma-h2">{{ $themeOptions->get('about_title') }}</h2>

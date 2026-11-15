@@ -6,7 +6,7 @@
         <div @class(['grid gap-3', 'grid-cols-2' => ($block['columns'] ?? '3') === '2', 'grid-cols-2 sm:grid-cols-3' => ($block['columns'] ?? '3') === '3', 'grid-cols-2 sm:grid-cols-4' => ($block['columns'] ?? '3') === '4'])>
             @foreach ((array) $block['images'] as $galleryImage)
                 <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($galleryImage) }}" target="_blank" rel="noopener" class="block aspect-square overflow-hidden rounded-xl bg-zinc-100">
-                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($galleryImage) }}" alt="{{ $block['title'] ?? '' }}" loading="lazy" class="h-full w-full object-cover">
+                    <img {{ responsive_img(\Illuminate\Support\Facades\Storage::disk('public')->url($galleryImage), '(min-width: 1024px) 25vw, 50vw') }} alt="{{ $block['title'] ?? '' }}" loading="lazy" class="h-full w-full object-cover">
                 </a>
             @endforeach
         </div>

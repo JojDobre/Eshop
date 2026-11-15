@@ -2,7 +2,9 @@
 
 use App\Core\Backup\BackupRestorer;
 use App\Core\Backup\BackupRunner;
+use App\Core\Content\MediaLibrary;
 use App\Core\Installer\Installation;
+use App\Core\Media\ResponsiveImage;
 use App\Core\Privacy\DataRetention;
 use App\Core\Support\EcbRates;
 use App\Core\System\CronHeartbeat;
@@ -13,6 +15,7 @@ use App\Settings\SystemSettings;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schedule;
+use Illuminate\Support\Facades\Storage;
 
 /*
 | Plánované úlohy. Na hostingu stačí cron „php artisan schedule:run“ každú minútu
@@ -75,6 +78,13 @@ Schedule::call(fn () => app(UpdateChecker::class)->runScheduled())
     ->when($installed)
     ->withoutOverlapping(60);
 
+// Zmenšené verzie obrázkov, ktoré sa v obchode zobrazili a ešte nie sú vytvorené.
+Schedule::call(fn () => app(ResponsiveImage::class)->processQueue())
+    ->name('eshop:image-variants')
+    ->everyFiveMinutes()
+    ->when($installed)
+    ->withoutOverlapping(10);
+
 // Príkazy pre správcov so SSH (na webhostingu bez SSH slúži administrácia a public/rescue.php).
 Artisan::command('eshop:backup {--without-files}', function (): void {
     $result = app(BackupRunner::class)->run(! $this->option('without-files'));
@@ -97,6 +107,19 @@ Artisan::command('eshop:update-latest', function (): void {
     $installed = app(UpdateChecker::class)->installAvailable();
     $this->info(__('admin.updates.installed', ['version' => $installed->version()]));
 })->purpose('Stiahne a nainštaluje najnovšiu verziu z GitHubu');
+
+Artisan::command('eshop:images', function (): void {
+    $disk = Storage::disk('public');
+    $created = 0;
+
+    foreach (MediaLibrary::DIRECTORIES as $directory) {
+        foreach ($disk->directoryExists($directory) ? $disk->allFiles($directory) : [] as $path) {
+            $created += app(ResponsiveImage::class)->generateAll($path);
+        }
+    }
+
+    $this->info("WebP: {$created}");
+})->purpose('Vytvorí zmenšené WebP verzie všetkých obrázkov');
 
 Artisan::command('eshop:rollback', function (): void {
     app(Updater::class)->rollback();

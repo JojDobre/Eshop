@@ -2,6 +2,7 @@
 
 namespace App\Core\Backup;
 
+use App\Core\Media\ResponsiveImage;
 use App\Settings\SystemSettings;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
@@ -60,7 +61,7 @@ class BackupManager
             }
 
             if ($withFiles && is_dir(public_path('uploads'))) {
-                foreach (Finder::create()->files()->in(public_path('uploads'))->ignoreDotFiles(false) as $file) {
+                foreach (Finder::create()->files()->in(public_path('uploads'))->exclude(ResponsiveImage::DIRECTORY)->ignoreDotFiles(false) as $file) {
                     $zip->addFile($file->getRealPath(), 'uploads/'.str_replace('\\', '/', $file->getRelativePathname()));
                 }
             }

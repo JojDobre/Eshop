@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Core\Media\ResponsiveImage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +41,10 @@ class MediaFile extends Model
         });
 
         // Zmazaním záznamu sa zmaže aj súbor.
-        static::deleted(fn (MediaFile $file) => Storage::disk($file->disk)->delete($file->path));
+        static::deleted(function (MediaFile $file): void {
+            Storage::disk($file->disk)->delete($file->path);
+            app(ResponsiveImage::class)->forget($file->path);
+        });
     }
 
     public function url(): string

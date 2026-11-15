@@ -41,7 +41,7 @@
         @if ($postLayout === 'hero' && $postCover)
             {{-- Obrázok cez celú šírku, nadpis na ňom. --}}
             <header class="relative isolate overflow-hidden bg-zinc-900 text-white">
-                <img src="{{ $postCover }}" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-60">
+                <img {{ responsive_img($postCover, '100vw') }} alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-60">
                 <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                 <div class="container-shop flex min-h-[22rem] items-end py-12 sm:min-h-[30rem]">
                     <div class="mx-auto w-full {{ $postWidth }}">
@@ -65,7 +65,7 @@
                             <p class="mt-6 text-lg text-zinc-700">{{ $post->excerpt }}</p>
                         @endif
                     </div>
-                    <img src="{{ $postCover }}" alt="" class="aspect-[4/3] w-full rounded-2xl object-cover">
+                    <img {{ responsive_img($postCover, '(min-width: 1024px) 50vw, 100vw') }} alt="" class="aspect-[4/3] w-full rounded-2xl object-cover">
                 </div>
             </header>
         @else
@@ -80,7 +80,7 @@
                     @endif
                 </div>
                 @if ($postCover)
-                    <img src="{{ $postCover }}" alt="" class="mx-auto mt-8 max-h-[32rem] w-full max-w-5xl rounded-2xl object-cover">
+                    <img {{ responsive_img($postCover, '(min-width: 1024px) 64rem, 100vw') }} alt="" class="mx-auto mt-8 max-h-[32rem] w-full max-w-5xl rounded-2xl object-cover">
                 @endif
             </header>
         @endif

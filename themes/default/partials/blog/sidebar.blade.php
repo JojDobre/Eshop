@@ -25,7 +25,7 @@
                     <li>
                         <a href="{{ $latestPost->url() }}" class="group flex items-center gap-3">
                             @if ($latestCover = $latestPost->coverUrl())
-                                <img src="{{ $latestCover }}" alt="" loading="lazy" class="size-14 shrink-0 rounded-lg object-cover">
+                                <img {{ responsive_img($latestCover, '56px') }} alt="" loading="lazy" class="size-14 shrink-0 rounded-lg object-cover">
                             @endif
                             <span class="text-sm font-medium text-zinc-800 group-hover:text-primary">{{ $latestPost->name }}</span>
                         </a>

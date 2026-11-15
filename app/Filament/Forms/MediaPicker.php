@@ -3,6 +3,7 @@
 namespace App\Filament\Forms;
 
 use App\Core\Content\MediaLibrary;
+use App\Core\Media\ResponsiveImage;
 use App\Models\MediaFile;
 use Filament\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
@@ -27,6 +28,8 @@ final class MediaPicker
 
                     if ($path && self::isImageField($component)) {
                         app(MediaLibrary::class)->register($path, $file->getClientOriginalName());
+                        // Zmenšené verzie hneď po nahratí, aby boli obrázky v obchode rýchle od prvej návštevy.
+                        rescue(fn () => app(ResponsiveImage::class)->generateAll($path), report: true);
                     }
 
                     return $path;

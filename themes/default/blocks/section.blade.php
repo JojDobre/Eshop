@@ -19,7 +19,7 @@
     'py-20 sm:py-28' => ($block['padding'] ?? 'medium') === 'large',
 ])>
     @if ($sectionImage)
-        <img src="{{ $sectionImage }}" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-50" loading="lazy">
+        <img {{ responsive_img($sectionImage, '100vw') }} alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-50" loading="lazy">
     @endif
     <div @class([
         'grid grid-cols-1 gap-8 md:grid-cols-12',

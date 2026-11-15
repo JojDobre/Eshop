@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CronController;
+use App\Http\Controllers\ImageVariantController;
 use App\Http\Controllers\InstallController;
 use App\Http\Controllers\ThemeAssetController;
 use App\Http\Middleware\SetInstallerLocale;
@@ -42,3 +43,8 @@ Route::get('/theme-assets/{theme}/{path}', [ThemeAssetController::class, 'asset'
     ->where(['theme' => '[a-z][a-z0-9-]*', 'path' => '[A-Za-z0-9_\-./]+'])->name('theme.asset');
 Route::get('/theme-screenshot/{theme}', [ThemeAssetController::class, 'screenshot'])
     ->where('theme', '[a-z][a-z0-9-]*')->name('theme.screenshot');
+
+// Zmenšené WebP verzie obrázkov (vytvoria sa pri prvom vyžiadaní, potom sú to statické súbory).
+Route::get('/uploads/_v/{width}/{path}', ImageVariantController::class)
+    ->where(['width' => '[0-9]{3,4}', 'path' => '[A-Za-z0-9_\-./ ]+\.webp'])
+    ->name('image.variant');

@@ -34,7 +34,19 @@ server {
     # Nahrané súbory sa nikdy nespúšťajú (náhrada za public/uploads/.htaccess).
     location ^~ /uploads/ {
         location ~* \.(php\d?|phtml|phar|pl|py|cgi|sh|html?|svg|js)$ { deny all; }
+        # Obrázky sa dlho cachujú; chýbajúca zmenšená verzia (uploads/_v/…) sa vytvorí v Laravel.
+        expires 30d;
+        add_header Cache-Control "public";
+        try_files $uri /index.php?$query_string;
     }
+
+    location ^~ /build/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml text/plain;
 
     location ~ \.php$ {
         include fastcgi_params;

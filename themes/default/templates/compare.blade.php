@@ -68,7 +68,7 @@
                                 @foreach ($group['products'] as $product)
                                     <th scope="col" class="p-3 text-left align-top font-normal">
                                         <a href="{{ $product->url() }}" class="block">
-                                            <span class="block aspect-square max-w-[9rem] overflow-hidden rounded-lg bg-zinc-100">@include('theme::partials.product-image', ['url' => $product->mainImageUrl(), 'alt' => $product->name])</span>
+                                            <span class="block aspect-square max-w-[9rem] overflow-hidden rounded-lg bg-zinc-100">@include('theme::partials.product-image', ['url' => $product->mainImageUrl(), 'alt' => $product->name, 'sizes' => '144px'])</span>
                                             <span class="mt-2 block font-medium text-zinc-900 hover:underline">{{ $product->name }}</span>
                                         </a>
                                         <span class="mt-1 block font-semibold">{{ ($price = $product->priceFrom()) !== null ? format_price($product->displayPrice($price)) : __('theme::shop.price_unavailable') }}</span>

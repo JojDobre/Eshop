@@ -18,7 +18,7 @@
                     @foreach ($summary->lines as $line)
                         <li class="flex gap-4 py-5">
                             <a href="{{ $line->product->url() }}" class="size-20 shrink-0 overflow-hidden rounded-lg bg-zinc-100 sm:size-24">
-                                @include('theme::partials.product-image', ['url' => $line->imageUrls()[0] ?? null, 'alt' => $line->name()])
+                                @include('theme::partials.product-image', ['url' => $line->imageUrls()[0] ?? null, 'alt' => $line->name(), 'sizes' => '96px'])
                             </a>
                             <div class="flex flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                                 <div>

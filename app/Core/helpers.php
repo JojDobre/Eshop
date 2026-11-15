@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Blocks\BlockTypes;
+use App\Core\Media\ResponsiveImage;
 use App\Core\Support\CurrencyContext;
 use App\Core\Support\Price;
 use App\Core\Themes\ThemeManager;
@@ -101,5 +102,27 @@ if (! function_exists('safe_html')) {
         }, $clean) ?? $clean;
 
         return new HtmlString($clean);
+    }
+}
+
+if (! function_exists('image_srcset')) {
+    /**
+     * Atribút srcset so zmenšenými WebP verziami obrázka z verejného disku (null pre SVG, GIF či externé adresy).
+     */
+    function image_srcset(?string $image): ?string
+    {
+        return rescue(fn () => app(ResponsiveImage::class)->srcset($image), report: false);
+    }
+}
+
+if (! function_exists('responsive_img')) {
+    /**
+     * Atribúty src, srcset a sizes pre značku <img>, napr. <img {{ responsive_img($url, '(min-width: 1024px) 25vw, 50vw') }} alt="">.
+     */
+    function responsive_img(?string $image, string $sizes = '100vw'): HtmlString
+    {
+        $srcset = image_srcset($image);
+
+        return new HtmlString('src="'.e((string) $image).'"'.($srcset ? ' srcset="'.e($srcset).'" sizes="'.e($sizes).'"' : ''));
     }
 }

@@ -6,7 +6,7 @@
     'min-h-[24rem] sm:min-h-[36rem]' => ($heroHeight ?? 'medium') === 'large',
 ])>
     @if (! empty($heroImage))
-        <img src="{{ $heroImage }}" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" fetchpriority="high">
+        <img {{ responsive_img($heroImage, '100vw') }} alt="" class="absolute inset-0 -z-10 h-full w-full object-cover" fetchpriority="high">
         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
     @endif
     <div class="container-shop w-full py-10 sm:py-14">

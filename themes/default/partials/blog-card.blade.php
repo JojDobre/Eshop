@@ -13,7 +13,7 @@
     @if ($cover || $cardLayout !== 'list')
         <div @class(['overflow-hidden rounded-xl bg-zinc-100', 'aspect-[16/10]' => $cardLayout !== 'large', 'aspect-[16/9]' => $cardLayout === 'large'])>
             @if ($cover)
-                <img src="{{ $cover }}" alt="" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]">
+                <img {{ responsive_img($cover, '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw') }} alt="" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]">
             @endif
         </div>
     @endif

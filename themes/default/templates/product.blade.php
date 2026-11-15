@@ -107,13 +107,33 @@
         ]])
 
         <div class="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
-            <div x-data="{ active: 0, images: @js($images) }" @variant-images.window="images = $event.detail.length ? $event.detail : @js($images); active = 0">
-                <div class="aspect-square overflow-hidden rounded-2xl bg-zinc-100">
+            @php
+                // Zmenšené WebP verzie všetkých fotiek produktu a variantov (prehliadač si vyberie ostrú veľkosť podľa displeja).
+                $imageSrcsets = collect($images)
+                    ->merge($product->variants->flatMap(fn ($variant) => array_filter($variant->images ?? [], 'is_string') === [] ? [] : $variant->imageUrls()))
+                    ->unique()
+                    ->mapWithKeys(fn ($url) => [$url => image_srcset($url)])
+                    ->filter()
+                    ->all();
+            @endphp
+            <div x-data="{ active: 0, images: @js($images), srcsets: @js((object) $imageSrcsets), zoom: false,
+                    open(index) { this.active = index; this.zoom = true; document.documentElement.classList.add('overflow-hidden'); this.$nextTick(() => this.$refs.lightboxClose?.focus()); },
+                    close() { this.zoom = false; document.documentElement.classList.remove('overflow-hidden'); },
+                    step(delta) { this.active = (this.active + delta + this.images.length) % this.images.length; } }"
+                 @variant-images.window="images = $event.detail.length ? $event.detail : @js($images); active = 0"
+                 @keydown.escape.window="zoom && close()" @keydown.arrow-right.window="zoom && step(1)" @keydown.arrow-left.window="zoom && step(-1)">
+                <div class="group relative aspect-square overflow-hidden rounded-2xl bg-zinc-100">
                     @if ($images)
                         <template x-for="(image, index) in images" :key="image">
-                            <img :src="image" alt="{{ $product->name }}" x-show="active === index" class="h-full w-full object-cover">
+                            <button type="button" x-show="active === index" @click="open(index)" class="block h-full w-full cursor-zoom-in" aria-label="{{ __('theme::shop.image_zoom') }}">
+                                <img :src="image" :srcset="srcsets[image] || false" sizes="(min-width: 1280px) 40rem, (min-width: 1024px) 50vw, 100vw"
+                                     alt="{{ $product->name }}" class="h-full w-full object-cover" :fetchpriority="index === 0 ? 'high' : 'auto'" decoding="async">
+                            </button>
                         </template>
-                        <noscript><img src="{{ $images[0] }}" alt="{{ $product->name }}" class="h-full w-full object-cover"></noscript>
+                        <span class="pointer-events-none absolute bottom-3 right-3 flex size-10 items-center justify-center rounded-full bg-white/90 text-zinc-700 opacity-80 shadow-sm transition group-hover:opacity-100" aria-hidden="true">
+                            <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" /></svg>
+                        </span>
+                        <noscript><a href="{{ $images[0] }}"><img {{ responsive_img($images[0], '(min-width: 1024px) 50vw, 100vw') }} alt="{{ $product->name }}" class="h-full w-full object-cover"></a></noscript>
                     @else
                         @include('theme::partials.product-image', ['url' => null, 'alt' => $product->name])
                     @endif
@@ -123,10 +143,32 @@
                         <button type="button" @click="active = index" class="aspect-square overflow-hidden rounded-lg bg-zinc-100 ring-offset-2"
                                 :class="active === index ? 'ring-2 ring-primary' : 'opacity-70 hover:opacity-100'"
                                 :aria-label="'{{ __('theme::shop.show_image', ['number' => '']) }}' + (index + 1)">
-                            <img :src="image" alt="" loading="lazy" class="h-full w-full object-cover">
+                            <img :src="image" :srcset="srcsets[image] || false" sizes="(min-width: 1024px) 8rem, 20vw" alt="" loading="lazy" decoding="async" class="h-full w-full object-cover">
                         </button>
                     </template>
                 </div>
+
+                {{-- Fotka v plnej kvalite (originál) cez celú obrazovku. --}}
+                <template x-teleport="body">
+                    <div x-show="zoom" x-cloak x-transition.opacity class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-2 sm:p-8"
+                         role="dialog" aria-modal="true" aria-label="{{ $product->name }}" @click.self="close()">
+                        <img :src="zoom ? images[active] : ''" alt="{{ $product->name }}" class="max-h-full max-w-full select-none object-contain" @click.stop>
+                        <button type="button" x-ref="lightboxClose" @click="close()" class="absolute right-3 top-3 flex size-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label="{{ __('theme::shop.close') }}">
+                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                        </button>
+                        <template x-if="images.length > 1">
+                            <div>
+                                <button type="button" @click.stop="step(-1)" class="absolute left-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:left-6" aria-label="{{ __('theme::shop.image_previous') }}">
+                                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+                                </button>
+                                <button type="button" @click.stop="step(1)" class="absolute right-2 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:right-6" aria-label="{{ __('theme::shop.image_next') }}">
+                                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                                </button>
+                                <p class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-sm text-white" x-text="(active + 1) + ' / ' + images.length"></p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
             </div>
 
             <div>

@@ -23,7 +23,7 @@
 <style>:root { --farma-footer: {{ $themeOptions->get('footer_color', '#44702f') }}; }</style>
 
 @if ($noticeText !== '')
-    <div class="border-b border-[#f3dcc4] bg-soft text-sm" x-data="{ hidden: false }" x-init="try { hidden = localStorage.getItem('{{ $noticeKey }}') === '1' } catch (e) {}" x-show="! hidden" role="region" aria-label="{{ __('theme::farma.notice') }}">
+    <div class="border-b border-[#f3dcc4] bg-soft text-sm" x-data="{ hidden: false }" x-init="hidden = (() => { try { return localStorage.getItem('{{ $noticeKey }}') === '1' } catch (e) { return false } })()" x-show="! hidden" role="region" aria-label="{{ __('theme::farma.notice') }}">
         <div class="container-shop relative flex min-h-11 items-center justify-center gap-3 py-2 pr-10 sm:pr-8">
             @if (filled($themeOptions->get('notice_label')))
                 <span class="hidden shrink-0 rounded-full bg-white px-2.5 py-0.5 text-xs font-black uppercase tracking-wide text-accent sm:inline">{{ $themeOptions->get('notice_label') }}</span>
@@ -41,7 +41,7 @@
                 <a href="{{ $themeOptions->get('notice_link') }}" class="farma-arrow hidden shrink-0 font-extrabold text-accent hover:underline sm:inline">{{ __('theme::farma.notice_more') }} <span aria-hidden="true">→</span></a>
             @endif
             <button type="button" class="absolute right-2 rounded-full p-1.5 text-zinc-400 hover:text-zinc-700 sm:right-4" aria-label="{{ __('theme::farma.close') }}"
-                    @click="hidden = true; try { localStorage.setItem('{{ $noticeKey }}', '1') } catch (e) {}">
+                    @click="hidden = true; (() => { try { localStorage.setItem('{{ $noticeKey }}', '1') } catch (e) {} })()">
                 <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" /></svg>
             </button>
         </div>

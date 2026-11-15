@@ -2,7 +2,7 @@
 <section id="{{ $blockId }}" class="block-section container-shop py-12">
     <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
         @if ($imageTextImage)
-            <img src="{{ $imageTextImage }}" alt="{{ $block['title'] ?? '' }}" loading="lazy" @class(['w-full rounded-2xl object-cover', 'md:order-2' => ($block['image_side'] ?? 'left') === 'right'])>
+            <img {{ responsive_img($imageTextImage, '(min-width: 768px) 50vw, 100vw') }} alt="{{ $block['title'] ?? '' }}" loading="lazy" @class(['w-full rounded-2xl object-cover', 'md:order-2' => ($block['image_side'] ?? 'left') === 'right'])>
         @endif
         <div>
             @if (! empty($block['title']))

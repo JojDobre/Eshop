@@ -1,7 +1,7 @@
 {{-- Úvodný baner (obrázok s odkazom) alebo názov obchodu. --}}
 <div class="{{ $wrap }} farma-section">
     @if ($heroImage = $themeOptions->imageUrl('hero_image'))
-        @php($heroImg = '<img src="'.e($heroImage).'" alt="'.e($shop->shop_name).'" class="h-52 w-full object-cover sm:h-[460px]" fetchpriority="high">')
+        @php($heroImg = '<img '.responsive_img($heroImage, '100vw').' alt="'.e($shop->shop_name).'" class="h-52 w-full object-cover sm:h-[460px]" fetchpriority="high">')
         @php($heroClass = 'mt-4 block overflow-hidden sm:mt-6 '.($layout === 'full' ? '' : 'rounded-[20px] sm:rounded-[28px]'))
         @if (filled($themeOptions->get('hero_link')))
             <a href="{{ $themeOptions->get('hero_link') }}" class="{{ $heroClass }} farma-zoom">{!! $heroImg !!}</a>

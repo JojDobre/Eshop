@@ -55,7 +55,7 @@
                                 <article class="group relative grid items-center gap-6 overflow-hidden rounded-2xl bg-zinc-50 lg:grid-cols-2">
                                     <div @class(['aspect-[16/10] h-full w-full bg-zinc-100', 'lg:order-2' => ($blogSection['layout'] ?? '') === 'reverse'])>
                                         @if ($featuredCover = $featuredPost->coverUrl())
-                                            <img src="{{ $featuredCover }}" alt="" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]">
+                                            <img {{ responsive_img($featuredCover, '(min-width: 1024px) 60vw, 100vw') }} alt="" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]">
                                         @endif
                                     </div>
                                     <div class="p-6 sm:p-10">

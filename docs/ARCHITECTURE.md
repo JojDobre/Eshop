@@ -286,13 +286,22 @@ predvoľby je funkcia voliteľná. Zmena veľkosti najprv ukáže prehľad zmien
 
 - **Zálohy** (`App\Core\Backup`): export databázy v PHP cez PDO (bez `mysqldump`, iba tabuľky databázy obchodu),
   ZIP s nahranými súbormi a nastaveniami do `storage/app/backups`, voliteľne šifrovaný AES-256. `BackupRunner`
-  po vytvorení spustí test obnovy (`BackupVerifier`) a kópiu na externé úložisko (`RemoteBackups`, Laravel
-  Filesystem: FTP, SFTP, S3). `BackupRestorer` načíta SQL príkaz po príkaze (`SqlImporter`), obnoví súbory
+  po vytvorení spustí test obnovy (`BackupVerifier`) a kópiu na externé úložisko (`RemoteBackups`: Google Disk cez Drive API v3
+  a OAuth – `GoogleDrive`, nahrávanie po 8 MB častiach –, alebo Laravel Filesystem: FTP, SFTP, S3). `BackupRestorer` načíta SQL príkaz po príkaze (`SqlImporter`), obnoví súbory
   a prevezme `APP_KEY`.
 - **Aktualizácie** (`App\Core\Updates`): balík `package.zip` + `manifest.json` s SHA-256 a podpisom Ed25519
   (verejný kľúč `Eshop::UPDATE_PUBLIC_KEY` alebo `ESHOP_UPDATE_PUBLIC_KEY`). `Updater` uloží pôvodné súbory
   do `storage/app/updates/rollback.zip`, nahradí súbory (okrem `.env`, `storage/`, `public/uploads/`),
   spustí migrácie a kontrolu `/up`; pri chybe vráti súbory aj databázu. `public/rescue.php` funguje bez Laravelu.
+  `UpdateChecker` číta najnovšie vydanie z GitHub API (`ESHOP_UPDATE_REPO`, predvolene JojDobre/Eshop) alebo
+  z vlastného kanála (`ESHOP_UPDATE_FEED`), stiahne `eshop-update-*.zip`, overí SHA-256 z GitHubu a nainštaluje ho;
+  denná úloha `eshop:updates` posiela e-maily a pri zapnutej voľbe inštaluje automaticky.
+- **Obrázky** (`App\Core\Media\ResponsiveImage`): WebP verzie 320 – 2560 px v `public/uploads/_v/{šírka}/{cesta}.webp`
+  (statické súbory). Vytvoria sa pri nahratí, chýbajúce dogeneruje úloha `eshop:image-variants` alebo prvá požiadavka
+  na adresu verzie. `responsive_img()` / `image_srcset()` ponúkajú iba existujúce verzie a originál.
+- **Uložené sekcie** (`App\Models\SavedBlock`, blok `saved`): bloky vkladané na viac miest, vykreslia sa na mieste
+  vloženia (najviac 3 úrovne vnorenia). Každý blok má voľbu `visibility` (all/desktop/mobile → obal `block-only-*`),
+  hotové šablóny sekcií sú v `App\Core\Blocks\SectionPresets`.
 - **Ochrana údajov** (`App\Core\Privacy\DataRetention`): pravidlá `RetentionPolicy` z jadra a modulov,
   lehoty v `PrivacySettings`, denne cez plánovač.
 - **Nastavenia modulov** (`src/*Settings.php`) zaregistruje `ModuleServiceProvider` ako jednu inštanciu

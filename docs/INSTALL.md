@@ -88,7 +88,13 @@ V administrácii (`/admin`) nastavte:
 ## Zálohy a obnova
 
 Zálohy spravujete v **Systém → Zálohy**: denné alebo týždenné automatické zálohy, šifrovanie heslom,
-kópia na externé úložisko (FTP, SFTP, S3) a automatický test obnovy po každej zálohe. Záloha (ZIP)
+kópia na externé úložisko (Google Disk, FTP, SFTP, S3) a automatický test obnovy po každej zálohe.
+
+**Google Disk:** v Google Cloud Console vytvorte projekt, zapnite Google Drive API, nastavte prihlasovaciu obrazovku
+(svoj e-mail pridajte medzi testovacích používateľov alebo aplikáciu zverejnite) a vytvorte OAuth klienta typu
+„Webová aplikácia“ s adresou presmerovania, ktorú ukazuje formulár (`…/admin/backups/google/callback`). V nastaveniach
+záloh zvoľte Google Disk, vložte Client ID a Client Secret, uložte a kliknite na **Prepojiť s Google Diskom**.
+Obchod vidí iba súbory, ktoré sám vytvoril (rozsah `drive.file`). Záloha (ZIP)
 obsahuje `database.sql`, nahrané súbory (`uploads/`), nastavenia modulov (`eshop/`) a `env.txt` s kľúčom
 `APP_KEY`, bez ktorého sa po obnove nedajú prečítať uložené heslá. Zálohu uchovávajte na bezpečnom mieste.
 
@@ -107,7 +113,12 @@ vypnúť režim údržby, vymazať vyrovnávacie pamäte a obnoviť databázu zo
 
 ## Aktualizácie
 
-V **Systém → Aktualizácie** nahrajte balík `eshop-update-<verzia>.zip`. Pred inštaláciou sa overí podpis
+V **Systém → Aktualizácie** kliknite na **Skontrolovať aktualizácie** a potom na **Aktualizovať na <verzia>** –
+balík sa stiahne z GitHubu a overí jeho kontrolný súčet SHA-256 (a podpis). V **Nastaveniach aktualizácií**
+zapnete e-mail o novej verzii alebo **automatickú inštaláciu** (každú noc okolo 4:50, vyžaduje cron; o výsledku
+príde e-mail). Na VPS: `php artisan eshop:update-latest`.
+
+Balík sa dá nahrať aj ručne: nahrajte `eshop-update-<verzia>.zip`. Pred inštaláciou sa overí podpis
 a kompatibilita, vytvorí sa záloha a pri chybe sa všetko vráti automaticky. Poslednú aktualizáciu viete
 vrátiť aj ručne tlačidlom **Vrátiť aktualizáciu**.
 

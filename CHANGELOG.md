@@ -1,5 +1,28 @@
 # Prehľad zmien
 
+## 1.6.0 – Automatické aktualizácie, Google Disk, rýchle obrázky, uložené sekcie
+
+- **Automatické aktualizácie:** Systém → Aktualizácie zistí novú verziu na GitHube a nainštaluje ju jedným
+  kliknutím (stiahnutie, kontrola SHA-256 a podpisu, záloha, vrátenie pri chybe). V nastaveniach zapnete e-mail
+  o novej verzii alebo automatickú inštaláciu každú noc. Odznak v menu ukáže dostupnú verziu.
+- **Zálohy na Google Disk:** prepojenie Google účtu cez OAuth, zálohy sa nahrávajú po častiach do vlastného
+  priečinka, staré kópie sa mažú podľa nastavenia.
+- **Rýchlejšie a ostré obrázky:** pre každý obrázok sa vytvoria WebP verzie od 320 po 2560 px a prehliadač si
+  vyberie veľkosť podľa obrazovky aj hustoty pixelov (ostré aj na mobile s Retina displejom, najväčšou možnosťou je
+  vždy originál). Fotku produktu otvoríte kliknutím v plnej kvalite cez celú obrazovku (šípky, Esc). Dlhšie
+  ukladanie obrázkov v prehliadači.
+- **Uložené sekcie:** ľubovoľný blok uložíte do knižnice (ikona záložky pri bloku) a vložíte blokom „Uložená
+  sekcia“ na úvodnú stránku, stránky, kategórie či články – úprava v knižnici (Obsah → Bloky → Uložené sekcie)
+  sa prejaví všade.
+- **Zobrazenie podľa zariadenia:** pri každom bloku a sekcii voľba Všetky zariadenia / Iba počítač / Iba mobil.
+- **Hotové šablóny sekcií:** tlačidlo „Vložiť hotovú sekciu“ pod blokmi – úvodný banner, výhody obchodu,
+  vlastnosti v stĺpcoch, novinky, akcie, recenzie, o nás, výzva na akciu, časté otázky, kontakt.
+- **Otestovaný celý nákup** (55 automatických kontrol v prehliadači) a opravy: limity požiadaviek sa už nesčítavajú
+  naprieč akciami (po pridaní viacerých produktov do košíka sa nedal uplatniť kód poukážky ani odoslať objednávka),
+  košík ukazuje sumu po zľave a platbu poukážkou a dopravu zadarmo počíta zo sumy po zľave ako pokladňa, chyby
+  v inštalátore a formulároch majú čitateľné názvy polí, v objednávke sa rozlišuje spôsob a stav platby, opravená
+  lišta oznamu v šablóne Farma.
+
 ## 1.5.0 – Skladanie vlastných sekcií, vzhľad stránok
 
 - **Vlastné sekcie ako v page builderi:** nový blok „Sekcia so stĺpcami“ (1 až 4 stĺpce, rôzne pomery šírky,

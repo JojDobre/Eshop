@@ -594,6 +594,8 @@ return [
         'types' => ['url' => 'Vlastní adresa'],
     ],
     'themes' => [
+        'text_locale' => 'Jazyk textů',
+        'text_locale_help' => 'Texty, nadpisy a odstavce se ukládají pro vybraný jazyk. Prázdné pole v jiném jazyce použije text ve výchozím jazyce obchodu.',
         'create_child' => 'Vytvořit odvozenou šablonu',
         'create_child_help' => 'Odvozená šablona přebírá vše od rodiče. Upravujete v ní jen to, co chcete změnit, a aktualizace rodiče vaše úpravy nepřepíše.',
         'parent' => 'Rodičovská šablona',
@@ -654,6 +656,9 @@ return [
             'about' => 'O nás a výhody',
             'faq' => 'Časté dotazy',
             'blog' => 'Blog',
+            'offer' => 'Poukaz a obchod',
+            'reviews' => 'Recenze',
+            'contact' => 'Kontakt a otevírací doba',
         ],
         'errors' => [
             'not_zip' => 'Soubor není platný ZIP.',
@@ -689,7 +694,7 @@ return [
         'mode_replace_help' => 'Smaže produkty, kategorie, blog, vlastní stránky, bloky, formuláře a menu a nahraje demo. Právní stránky, doprava, platby a nastavení zůstanou.',
         'mode_add' => 'Přidat',
         'mode_add_help' => 'Demo se přidá k současnému obsahu (bloky úvodní stránky a nastavení vzhledu se nahradí).',
-        'replace_has_orders' => 'Obchod už má objednávky, obsah proto nelze nahradit – demo můžete pouze přidat.',
+        'replace_has_orders' => 'Obchod už má objednávky nebo rezervace, obsah proto nelze nahradit – demo můžete pouze přidat.',
         'activate' => 'Aktivovat šablonu dema',
         'zip' => 'Demo balíček (ZIP)',
         'export' => 'Exportovat obsah jako demo',

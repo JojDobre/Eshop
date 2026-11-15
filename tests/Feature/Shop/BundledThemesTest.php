@@ -8,10 +8,15 @@ use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Models\BlockLayout;
 use App\Settings\GeneralSettings;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Modules\Catalog\Models\Product;
 use Modules\Pages\Models\Page;
+use Modules\Reservations\Models\Booking;
+use Modules\Reservations\Models\BookingResource;
+use Modules\Reservations\Models\BookingService;
 
 class BundledThemesTest extends ShopTestCase
 {
@@ -24,6 +29,8 @@ class BundledThemesTest extends ShopTestCase
         $themes = app(ThemeManager::class);
         $themes->flush();
         View::replaceNamespace('theme', $themes->viewPaths());
+        // Prepísané šablóny modulov (napr. rezervácie v šablóne Štúdio) podľa novej šablóny.
+        View::replaceNamespace('reservations', [...$themes->moduleOverridePaths('reservations'), base_path('modules/Reservations/resources/views')]);
         View::getFinder()->flush();
         app('translator')->setLoaded([]);
         $this->app->forgetScopedInstances();
@@ -31,7 +38,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -189,5 +196,80 @@ class BundledThemesTest extends ShopTestCase
         $this->get(Page::query()->where('name->sk', 'Výroba na mieru')->sole()->url())->assertOk()->assertSee('Poslať požiadavku');
 
         Storage::disk('public')->deleteDirectory('demo/dielna');
+    }
+
+    public function test_studio_theme_renders_services_booking_panel_and_reservation_pages(): void
+    {
+        Mail::fake();
+        $this->travelTo(Carbon::parse('2027-05-10 08:00'));
+        $this->activate('studio');
+
+        // Bez služieb a nastavení: predvolené texty šablóny, bez rezervačného panela.
+        $this->get('/')->assertOk()
+            ->assertSee(__('theme::studio.steps_title'))
+            ->assertSee('--studio-bg: #f6f2ec', false)
+            ->assertDontSee(__('theme::studio.panel_title'));
+
+        $mira = BookingResource::query()->create(['name' => 'Mira', 'schedule' => ['2' => [['09:00', '12:00'], ['13:00', '19:00']]]]);
+        $cut = BookingService::query()->create(['name' => 'Strih a fúkaná', 'category' => 'Vlasy', 'duration_minutes' => 60, 'price' => 3500, 'currency' => 'EUR']);
+        $nails = BookingService::query()->create(['name' => 'Gélová manikúra', 'category' => 'Nechty', 'duration_minutes' => 60, 'price' => 3200, 'currency' => 'EUR', 'payment_mode' => 'deposit', 'deposit' => 1000]);
+        $cut->resources()->attach($mira);
+        $nails->resources()->attach($mira);
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('studio'), [
+            'stats' => "12 rokov | skúseností\n4 odborníčky | s certifikátmi",
+            'member_1_name' => 'Mira Kováčová', 'member_1_role' => 'kaderníčka',
+            'opening_hours' => 'Pondelok – Piatok | 8:00 – 20:00', 'contact_address' => 'Hlavná 12, Bratislava',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee(__('theme::studio.panel_title'))
+            ->assertSee(route('reservations.service', $cut), false)
+            ->assertSee('Strih a fúkaná')
+            ->assertSee('Nechty')
+            ->assertSee('12 rokov')
+            ->assertSee('Mira Kováčová')
+            ->assertSee('Hlavná 12, Bratislava')
+            ->assertSee('google.com/maps/search', false);
+
+        $this->get(route('reservations.index'))->assertOk()->assertSee('Vlasy')->assertSee('Gélová manikúra');
+
+        // Utorok: počty voľných termínov pri dňoch a časy podľa časti dňa.
+        $this->get(route('reservations.service', ['service' => $cut, 'date' => '2027-05-11', 'time' => '14:00']))->assertOk()
+            ->assertSee(trans_choice('theme::studio.free_slots', 9, ['count' => 9]))
+            ->assertSee(__('theme::studio.part_morning'))
+            ->assertSee(__('theme::studio.part_afternoon'))
+            ->assertSee(__('theme::studio.part_evening'))
+            ->assertSee('14:00 – 15:00');
+
+        $this->post(route('reservations.book', $cut), ['date' => '2027-05-11', 'time' => '14:00', 'customer_name' => 'Jana', 'email' => 'jana@example.com', 'terms' => '1'])
+            ->assertRedirect();
+        $booking = Booking::query()->sole();
+        $this->get($booking->url())->assertOk()
+            ->assertSee(__('theme::studio.booked_title'))
+            ->assertSee('jana@example.com')
+            ->assertSee('Hlavná 12, Bratislava');
+    }
+
+    public function test_studio_bundled_demo_imports_with_reservations_and_translations(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/studio-demo-'.uniqid()]);
+        $theme = app(ThemeManager::class)->find('studio');
+        $this->assertNotNull($theme->demoPath());
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(10, $counts['booking_services']);
+        $this->assertSame(4, $counts['booking_resources']);
+        $this->assertSame('studio', app(GeneralSettings::class)->theme);
+        $this->assertSame(['cs', 'en'], array_keys(app(ThemeOptions::class)->translations($theme)));
+        $this->activate('studio');
+        $this->get('/')->assertOk()->assertSee('Mira Kováčová')->assertSee('Masáž lávovými kameňmi')->assertSee('Hlavná 12, Bratislava');
+        $service = BookingService::query()->where('name->sk', 'Farbenie a melír')->sole();
+        $this->assertSame('Hair', $service->getTranslation('category', 'en'));
+        $this->assertCount(1, $service->resources);
+        $this->get(route('reservations.service', $service))->assertOk()->assertSee('Farbenie a melír');
+
+        Storage::disk('public')->deleteDirectory('demo/studio');
     }
 }

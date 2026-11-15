@@ -7,6 +7,7 @@ use App\Filament\Forms\MoneyInput;
 use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -14,6 +15,7 @@ use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
@@ -54,6 +56,9 @@ class ServiceResource extends Resource
             TextInput::make('name')->label($t('name'))->required()->maxLength(120),
             Select::make('resources')->label($t('resources'))->helperText($t('resources_help'))->relationship('resources', 'name')->multiple()->preload(),
             Textarea::make('description')->label($t('description'))->rows(2)->maxLength(1000)->columnSpanFull(),
+            TextInput::make('category')->label($t('category'))->helperText($t('category_help'))->maxLength(60),
+            FileUpload::make('image')->label($t('image'))->disk('public')->directory('services')->visibility('public')
+                ->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])->maxSize(8192)->imageResizeTargetWidth('1600')->imageResizeMode('contain')->imageResizeUpscale(false),
             TextInput::make('duration_minutes')->label($t('duration'))->required()->integer()->minValue(5)->maxValue(1440)->suffix('min')->default(60),
             TextInput::make('buffer_minutes')->label($t('buffer'))->helperText($t('buffer_help'))->integer()->minValue(0)->maxValue(240)->suffix('min')->default(0),
             TextInput::make('capacity')->label($t('capacity'))->helperText($t('capacity_help'))->required()->integer()->minValue(1)->maxValue(500)->default(1),
@@ -71,7 +76,8 @@ class ServiceResource extends Resource
 
         return $table
             ->columns([
-                TextColumn::make('name')->label($t('name'))->weight('medium'),
+                ImageColumn::make('image')->label('')->disk('public')->square()->size(44),
+                TextColumn::make('name')->label($t('name'))->weight('medium')->description(fn (BookingService $record) => $record->category),
                 TextColumn::make('duration_minutes')->label($t('duration'))->suffix(' min'),
                 TextColumn::make('price')->label($t('price'))->formatStateUsing(fn (BookingService $record) => format_price($record->price, $record->currency)),
                 TextColumn::make('resources.name')->label($t('resources'))->badge()->color('gray'),

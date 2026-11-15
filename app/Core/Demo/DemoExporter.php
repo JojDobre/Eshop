@@ -3,6 +3,7 @@
 namespace App\Core\Demo;
 
 use App\Core\Eshop;
+use App\Core\Modules\ModuleManager;
 use App\Core\Themes\ThemeManager;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -92,6 +93,8 @@ class DemoExporter
             'eshop' => Eshop::VERSION,
             'title' => $title,
             'theme' => $theme,
+            // Moduly, ktoré demo potrebuje (pri importe sa zapnú).
+            'modules' => array_values(array_filter(['reservations', 'blog', 'forms'], fn (string $module) => app(ModuleManager::class)->isActive($module) && $this->moduleHasContent($module))),
             'created_at' => now()->toIso8601String(),
             'tables' => $tables,
             'pivots' => $pivots,
@@ -109,6 +112,13 @@ class DemoExporter
                 File::copy($disk->path($path), $directory.'/media/'.$path);
             }
         }
+    }
+
+    private function moduleHasContent(string $module): bool
+    {
+        $table = ['reservations' => 'booking_services', 'blog' => 'blog_posts', 'forms' => 'forms'][$module];
+
+        return Schema::hasTable($table) && DB::table($table)->exists();
     }
 
     /**
@@ -169,6 +179,8 @@ class DemoExporter
     {
         $uploads = rtrim(Storage::disk('public')->url(''), '/').'/';
         $value = str_replace($uploads, DemoSchema::UPLOADS_PLACEHOLDER, $value);
+        // Odkazy na stránky tohto obchodu ako relatívne adresy, aby fungovali aj na inej doméne.
+        $value = str_replace(rtrim(url('/'), '/').'/', '/', $value);
 
         if (preg_match_all(DemoSchema::MEDIA_PATTERN, $value, $matches)) {
             foreach ($matches[1] as $path) {

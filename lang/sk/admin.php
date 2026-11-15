@@ -593,6 +593,8 @@ return [
         'types' => ['url' => 'Vlastná adresa'],
     ],
     'themes' => [
+        'text_locale' => 'Jazyk textov',
+        'text_locale_help' => 'Texty, nadpisy a odseky sa ukladajú pre vybraný jazyk. Prázdne pole v inom jazyku použije text v predvolenom jazyku obchodu.',
         'create_child' => 'Vytvoriť odvodenú šablónu',
         'create_child_help' => 'Odvodená šablóna preberá všetko od rodiča. Upravujete v nej iba to, čo chcete zmeniť, a aktualizácia rodiča vaše úpravy neprepíše.',
         'parent' => 'Rodičovská šablóna',
@@ -653,6 +655,9 @@ return [
             'about' => 'O nás a výhody',
             'faq' => 'Časté otázky',
             'blog' => 'Blog',
+            'offer' => 'Poukážka a obchod',
+            'reviews' => 'Recenzie',
+            'contact' => 'Kontakt a otváracie hodiny',
         ],
         'errors' => [
             'not_zip' => 'Súbor nie je platný ZIP.',
@@ -688,7 +693,7 @@ return [
         'mode_replace_help' => 'Zmaže produkty, kategórie, blog, vlastné stránky, bloky, formuláre a menu a nahrá demo. Právne stránky, doprava, platby a nastavenia ostanú.',
         'mode_add' => 'Pridať',
         'mode_add_help' => 'Demo sa pridá k súčasnému obsahu (bloky úvodnej stránky a nastavenia vzhľadu sa nahradia).',
-        'replace_has_orders' => 'Obchod už má objednávky, obsah sa preto nedá nahradiť – demo môžete iba pridať.',
+        'replace_has_orders' => 'Obchod už má objednávky alebo rezervácie, obsah sa preto nedá nahradiť – demo môžete iba pridať.',
         'activate' => 'Aktivovať šablónu dema',
         'zip' => 'Demo balík (ZIP)',
         'export' => 'Exportovať obsah ako demo',

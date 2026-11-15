@@ -26,6 +26,7 @@ use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 
@@ -54,6 +55,12 @@ class CustomizeTheme extends Page implements HasSchemas
     /** @var array<string, mixed> */
     public ?array $data = [];
 
+    /** Jazyk, v ktorom sa upravujú texty šablóny (predvolený jazyk = hlavné hodnoty, ostatné = preklady). */
+    public string $textLocale = '';
+
+    /** @var array<string, array<string, mixed>> Texty v jazykoch, ktoré sa práve neupravujú: {jazyk: {kľúč: text}}. */
+    public array $texts = [];
+
     public static function canAccess(): bool
     {
         return auth()->user()?->can('settings.manage') ?? false;
@@ -64,9 +71,79 @@ class CustomizeTheme extends Page implements HasSchemas
         abort_if(app(ThemeManager::class)->find($theme) === null, 404);
 
         $this->theme = $theme;
-        $values = app(ThemeOptions::class)->values($this->themeModel());
-        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$theme, $values);
+        $this->textLocale = app(ShopLocales::class)->default();
+        $values = app(ThemeOptions::class)->values($this->themeModel(), $this->textLocale);
+        $this->texts = app(ThemeOptions::class)->translations($this->themeModel());
+        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$theme, [...$values, ThemeOptions::TRANSLATIONS => $this->texts]);
         $this->form->fill([...$values, self::BLOCKS_FIELD => $this->homeBlocks()]);
+    }
+
+    /**
+     * Jazyky obchodu na prepínanie textov (iba pri viacjazyčnom obchode).
+     *
+     * @return array<string, string>
+     */
+    public function textLocales(): array
+    {
+        $locales = app(ShopLocales::class);
+
+        return $locales->isMultilingual() ? collect($locales->enabled())->mapWithKeys(fn ($locale) => [$locale => $locales->label($locale)])->all() : [];
+    }
+
+    /** Prepne jazyk upravovaných textov; rozpísané texty v pôvodnom jazyku sa zapamätajú. */
+    public function switchTextLocale(string $locale): void
+    {
+        if (! array_key_exists($locale, $this->textLocales()) || $locale === $this->textLocale) {
+            return;
+        }
+
+        $state = $this->form->getRawState();
+        $keys = $this->translatableKeys();
+
+        foreach ($keys as $key) {
+            $this->texts[$this->textLocale][$key] = $state[$key] ?? '';
+        }
+
+        $this->textLocale = $locale;
+
+        foreach ($keys as $key) {
+            $state[$key] = $this->texts[$locale][$key] ?? '';
+        }
+
+        $this->form->fill($state);
+        $this->refreshPreview();
+    }
+
+    /** @return list<string> */
+    private function translatableKeys(): array
+    {
+        return array_keys(array_filter(app(ThemeManager::class)->settingDefinitions($this->themeModel()),
+            fn (array $definition) => in_array($definition['type'], ThemeOptions::TRANSLATABLE_TYPES, true)));
+    }
+
+    /**
+     * Hodnoty formulára s textmi v predvolenom jazyku v hlavných kľúčoch a prekladmi pod kľúčom _translations.
+     *
+     * @param  array<string, mixed>  $state
+     * @return array<string, mixed>
+     */
+    private function withTranslations(array $state): array
+    {
+        $default = app(ShopLocales::class)->default();
+        $texts = $this->texts;
+
+        foreach ($this->translatableKeys() as $key) {
+            $texts[$this->textLocale][$key] = $state[$key] ?? '';
+        }
+
+        foreach ($this->translatableKeys() as $key) {
+            $state[$key] = $texts[$default][$key] ?? $state[$key] ?? '';
+        }
+
+        unset($texts[$default]);
+        $state[ThemeOptions::TRANSLATIONS] = $texts;
+
+        return $state;
     }
 
     /**
@@ -107,7 +184,7 @@ class CustomizeTheme extends Page implements HasSchemas
 
         // Poradie skupín: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. Skupiny sa dajú zbaliť,
         // aby sa v dlhom zozname nastavení nemuselo toľko posúvať.
-        $order = array_flip(['layout', 'header', 'home', 'about', 'faq', 'catalog', 'blog', 'style', 'colors', 'footer', 'general']);
+        $order = array_flip(['layout', 'header', 'home', 'about', 'offer', 'reviews', 'faq', 'contact', 'catalog', 'blog', 'style', 'colors', 'footer', 'general']);
         uksort($groups, fn ($a, $b) => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
 
         $sections = [];
@@ -153,7 +230,7 @@ class CustomizeTheme extends Page implements HasSchemas
             'select' => Select::make($key)->options(collect($definition['options'])->map(fn ($labels, $value) => Theme::label($labels, (string) $value))->all())->selectablePlaceholder(false)->native(false)->live(),
             'toggle' => Toggle::make($key)->live(),
             'number' => TextInput::make($key)->numeric()->live(debounce: 600),
-            'textarea' => Textarea::make($key)->rows(3)->maxLength(5000)->live(debounce: 600),
+            'textarea' => Textarea::make($key)->rows(3)->maxLength(5000)->live(debounce: 600)->placeholder(fn () => $this->defaultText($key)),
             'richtext' => RichText::make($key, 'theme')->live(debounce: 1000),
             'sections' => Repeater::make($key)
                 // Kompaktná tabuľka: jedna sekcia = jeden riadok (sekcia, rozloženie, poradie šípkami).
@@ -172,16 +249,28 @@ class CustomizeTheme extends Page implements HasSchemas
                 ->addActionLabel(__('admin.themes.add_section'))
                 ->live(),
             'image' => FileUpload::make($key)->disk('public')->directory('theme')->visibility('public')->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])->maxSize(4096)->live(),
-            default => TextInput::make($key)->maxLength(500)->live(debounce: 600),
+            default => TextInput::make($key)->maxLength(500)->live(debounce: 600)->placeholder(fn () => $this->defaultText($key)),
         };
 
         return $field->label($label)->helperText($help)->afterStateUpdated(fn () => $this->refreshPreview());
     }
 
+    /** Pri preklade sa v prázdnom poli zobrazí text v predvolenom jazyku. */
+    private function defaultText(string $key): ?string
+    {
+        if ($this->textLocale === '' || $this->textLocale === app(ShopLocales::class)->default()) {
+            return null;
+        }
+
+        $text = $this->texts[app(ShopLocales::class)->default()][$key] ?? app(ThemeOptions::class)->values($this->themeModel(), app(ShopLocales::class)->default())[$key] ?? null;
+
+        return is_scalar($text) && trim((string) $text) !== '' ? Str::limit((string) $text, 120) : null;
+    }
+
     /** Neuložené hodnoty do relácie a obnovenie náhľadu. */
     public function refreshPreview(): void
     {
-        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$this->theme, $this->form->getRawState());
+        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$this->theme, $this->withTranslations($this->form->getRawState()));
         $this->dispatch('theme-preview-refresh');
     }
 
@@ -200,6 +289,11 @@ class CustomizeTheme extends Page implements HasSchemas
     {
         $active = app(ThemeManager::class)->activeName() === $this->theme;
         $path = str_starts_with($this->previewPath, '/') ? $this->previewPath : '/';
+
+        // Náhľad prekladu: stránka v upravovanom jazyku.
+        if ($this->textLocale !== '' && $this->textLocale !== app(ShopLocales::class)->default()) {
+            $path = '/'.app(ShopLocales::class)->urlCode($this->textLocale).($path === '/' ? '' : $path);
+        }
 
         return url($path).'?theme_customize=1&theme_preview='.($active ? '0' : $this->theme);
     }
@@ -236,8 +330,8 @@ class CustomizeTheme extends Page implements HasSchemas
         $this->saveHomeBlocks(array_values((array) ($state[self::BLOCKS_FIELD] ?? [])));
         unset($state[self::BLOCKS_FIELD]);
 
-        app(ThemeOptions::class)->save($this->themeModel(), $state);
-        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$this->theme, app(ThemeOptions::class)->values($this->themeModel()));
+        app(ThemeOptions::class)->save($this->themeModel(), $this->withTranslations($state));
+        session()->put(ApplyThemePreview::SESSION_VALUES.'.'.$this->theme, $this->withTranslations($this->form->getRawState()));
 
         Notification::make()->success()->title(__('admin.themes.saved'))->send();
     }
@@ -250,7 +344,9 @@ class CustomizeTheme extends Page implements HasSchemas
                 ->modalDescription(__('admin.themes.reset_confirm'))
                 ->action(function (): void {
                     app(ThemeOptions::class)->reset($this->themeModel());
-                    $values = app(ThemeOptions::class)->values($this->themeModel());
+                    $this->texts = [];
+                    $this->textLocale = app(ShopLocales::class)->default();
+                    $values = app(ThemeOptions::class)->values($this->themeModel(), $this->textLocale);
                     $this->form->fill([...$values, self::BLOCKS_FIELD => $this->homeBlocks()]);
                     $this->refreshPreview();
                 }),

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Shop;
 
+use App\Core\Content\ShopLocales;
 use App\Core\Themes\ThemeManager;
 use App\Core\Themes\ThemeOptions;
 use App\Core\Themes\ThemePackages;
@@ -141,5 +142,40 @@ class ThemeManagementTest extends ShopTestCase
         $this->actingAs($this->superAdmin());
         $page->call('save');
         $this->assertSame('pill', app(ThemeOptions::class)->values(app(ThemeManager::class)->find('default'))['button_style']);
+    }
+
+    public function test_theme_texts_can_be_translated_in_customizer(): void
+    {
+        $settings = app(GeneralSettings::class);
+        $settings->locales = ['sk', 'cs', 'en'];
+        $settings->save();
+        app(ShopLocales::class)->refresh();
+        $this->actingAs($this->superAdmin());
+
+        $page = Livewire::test(CustomizeTheme::class, ['theme' => 'default'])
+            ->assertSee('Jazyk textov')
+            ->set('data.announcement', 'Doprava zdarma')
+            ->call('switchTextLocale', 'en')
+            ->assertSet('data.announcement', '')
+            ->set('data.announcement', 'Free shipping');
+
+        // Náhľad prekladu sa otvára v upravovanom jazyku.
+        $this->assertStringContainsString('/en?', $page->instance()->previewUrl());
+
+        $page->call('save');
+
+        $theme = app(ThemeManager::class)->find('default');
+        $options = app(ThemeOptions::class);
+        $this->assertSame('Doprava zdarma', $options->values($theme, 'sk')['announcement']);
+        $this->assertSame('Free shipping', $options->values($theme, 'en')['announcement']);
+        // Bez prekladu sa použije text v predvolenom jazyku.
+        $this->assertSame('Doprava zdarma', $options->values($theme, 'cs')['announcement']);
+
+        // Návrat do slovenčiny vráti rozpísaný slovenský text.
+        $page->call('switchTextLocale', 'sk')->assertSet('data.announcement', 'Doprava zdarma');
+
+        auth()->logout();
+        $this->get('/')->assertSee('Doprava zdarma');
+        $this->get('/en')->assertSee('Free shipping')->assertDontSee('Doprava zdarma');
     }
 }

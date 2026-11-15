@@ -99,13 +99,24 @@ class Availability
      */
     public function availableDays(BookingService $service, int $days = 14): array
     {
+        return array_keys($this->freeSlotCounts($service, $days));
+    }
+
+    /**
+     * Počet voľných termínov v jednotlivých dňoch (iba dni s aspoň jedným voľným termínom).
+     *
+     * @return array<string, int> Y-m-d => počet
+     */
+    public function freeSlotCounts(BookingService $service, int $days = 14): array
+    {
         $result = [];
 
         for ($i = 0; $i < min($days, $this->settings->horizon_days + 1); $i++) {
             $date = now()->startOfDay()->addDays($i);
+            $count = count($this->slots($service, $date));
 
-            if ($this->slots($service, $date) !== []) {
-                $result[] = $date->toDateString();
+            if ($count > 0) {
+                $result[$date->toDateString()] = $count;
             }
         }
 

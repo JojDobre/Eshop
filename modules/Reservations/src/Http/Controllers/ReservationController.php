@@ -23,7 +23,7 @@ class ReservationController extends Controller
 
     public function index(): View
     {
-        return view('reservations::index', ['services' => BookingService::query()->active()->get()]);
+        return view('reservations::index', ['services' => BookingService::query()->active()->orderBy('position')->orderBy('id')->get()]);
     }
 
     /**
@@ -33,12 +33,14 @@ class ReservationController extends Controller
     {
         abort_unless($service->is_active, 404);
 
-        $days = $this->availability->availableDays($service, 21);
+        $dayCounts = $this->availability->freeSlotCounts($service, 21);
+        $days = array_keys($dayCounts);
         $date = in_array($request->query('date'), $days, true) ? (string) $request->query('date') : ($days[0] ?? null);
 
         return view('reservations::service', [
             'service' => $service,
             'days' => $days,
+            'dayCounts' => $dayCounts,
             'date' => $date,
             'slots' => $date ? array_keys($this->availability->slots($service, Carbon::parse($date))) : [],
             'time' => $request->query('time'),

@@ -1,0 +1,1103 @@
+{
+    "name": "studio",
+    "version": "1.0.0",
+    "title": {
+        "sk": "Štúdio",
+        "cs": "Studio",
+        "en": "Studio"
+    },
+    "description": {
+        "sk": "Elegantná šablóna pre služby s online rezerváciou: kaderníctva, kozmetické salóny, masáže, nechty, fyzioterapia či lektori. Rezervačný panel v úvode, služby s fotkami a cenami, tím, kontakt s otváracími hodinami. S hotovým demom.",
+        "cs": "Elegantní šablona pro služby s online rezervací: kadeřnictví, kosmetické salony, masáže, nehty, fyzioterapie či lektoři. Rezervační panel v úvodu, služby s fotkami a cenami, tým, kontakt s otevírací dobou. S hotovým demem.",
+        "en": "An elegant theme for service businesses with online booking: hair and beauty salons, massage, nails, physiotherapy or tutors. Booking panel in the hero, services with photos and prices, team, contact with opening hours. Includes a demo."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "screenshot": "screenshot.jpg",
+    "requires": {
+        "eshop": "^1.8"
+    },
+    "vite": [
+        "themes/studio/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ],
+    "hide_settings": [
+        "font",
+        "header_layout",
+        "announcement",
+        "button_style",
+        "show_tagline"
+    ],
+    "settings": {
+        "home_sections": {
+            "type": "sections",
+            "group": "layout",
+            "label": {
+                "sk": "Sekcie úvodnej stránky",
+                "cs": "Sekce úvodní stránky",
+                "en": "Home page sections"
+            },
+            "default": [
+                "hero",
+                "stats",
+                "services",
+                "about",
+                "team",
+                "steps",
+                "offer",
+                "reviews",
+                "faq",
+                "contact",
+                "blocks"
+            ],
+            "help": {
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite košom. „Bloky z obsahu“ sú bloky z Obsah → Bloky.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte košem. „Bloky z obsahu“ jsou bloky z Obsah → Bloky.",
+                "en": "Reorder with the arrows, remove with the bin. “Content blocks” come from Content → Blocks."
+            },
+            "options": {
+                "hero": {
+                    "sk": "Úvod s rezerváciou",
+                    "cs": "Úvod s rezervací",
+                    "en": "Hero with booking"
+                },
+                "stats": {
+                    "sk": "Čísla",
+                    "cs": "Čísla",
+                    "en": "Figures"
+                },
+                "services": {
+                    "sk": "Služby a cenník",
+                    "cs": "Služby a ceník",
+                    "en": "Services and prices"
+                },
+                "about": {
+                    "sk": "O nás",
+                    "cs": "O nás",
+                    "en": "About"
+                },
+                "team": {
+                    "sk": "Tím",
+                    "cs": "Tým",
+                    "en": "Team"
+                },
+                "steps": {
+                    "sk": "Ako rezervovať",
+                    "cs": "Jak rezervovat",
+                    "en": "How to book"
+                },
+                "offer": {
+                    "sk": "Poukážka a obchod",
+                    "cs": "Poukaz a obchod",
+                    "en": "Voucher and shop"
+                },
+                "reviews": {
+                    "sk": "Recenzie",
+                    "cs": "Recenze",
+                    "en": "Reviews"
+                },
+                "faq": {
+                    "sk": "Časté otázky",
+                    "cs": "Časté dotazy",
+                    "en": "FAQ"
+                },
+                "contact": {
+                    "sk": "Kontakt a otváracie hodiny",
+                    "cs": "Kontakt a otevírací doba",
+                    "en": "Contact and opening hours"
+                },
+                "blocks": {
+                    "sk": "Bloky z obsahu",
+                    "cs": "Bloky z obsahu",
+                    "en": "Content blocks"
+                }
+            },
+            "layouts": {
+                "default": {
+                    "sk": "Predvolené",
+                    "cs": "Výchozí",
+                    "en": "Default"
+                },
+                "reverse": {
+                    "sk": "Obrátené",
+                    "cs": "Obrácené",
+                    "en": "Reversed"
+                },
+                "narrow": {
+                    "sk": "Užšie",
+                    "cs": "Užší",
+                    "en": "Narrow"
+                },
+                "full": {
+                    "sk": "Na celú šírku",
+                    "cs": "Na celou šířku",
+                    "en": "Full width"
+                }
+            }
+        },
+        "topbar_hours": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Horný pruh – vľavo (napr. otváracie hodiny)",
+                "cs": "Horní pruh – vlevo (např. otevírací doba)",
+                "en": "Top bar – left (e.g. opening hours)"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "notice_text": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Horný pruh – oznam v strede",
+                "cs": "Horní pruh – oznámení uprostřed",
+                "en": "Top bar – notice in the middle"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "topbar_phone": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Horný pruh – telefón obchodu vpravo",
+                "cs": "Horní pruh – telefon obchodu vpravo",
+                "en": "Top bar – shop phone on the right"
+            },
+            "default": true
+        },
+        "logo_text": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Text pod názvom (veľkými písmenami)",
+                "cs": "Text pod názvem (velkými písmeny)",
+                "en": "Line under the name (small caps)"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. „vlasy · pleť · relax“. Prázdne = nezobrazí sa.",
+                "cs": "Např. „vlasy · pleť · relax“. Prázdné = nezobrazí se.",
+                "en": "E.g. “hair · skin · relax”. Empty = hidden."
+            }
+        },
+        "show_shop_name": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Názov obchodu vedľa loga",
+                "cs": "Název obchodu vedle loga",
+                "en": "Shop name next to the logo"
+            },
+            "default": true
+        },
+        "book_button": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Tlačidlo rezervácie v hlavičke",
+                "cs": "Tlačítko rezervace v hlavičce",
+                "en": "Booking button in the header"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "book_link": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Odkaz tlačidla rezervácie",
+                "cs": "Odkaz tlačítka rezervace",
+                "en": "Booking button link"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = stránka rezervácií.",
+                "cs": "Prázdné = stránka rezervací.",
+                "en": "Empty = the booking page."
+            }
+        },
+        "hero_kicker": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – malý nadpis",
+                "cs": "Úvod – malý nadpis",
+                "en": "Hero – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – nadpis",
+                "cs": "Úvod – nadpis",
+                "en": "Hero – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Slovo v *hviezdičkách* bude kurzívou. Prázdne = predvolený text.",
+                "cs": "Slovo v *hvězdičkách* bude kurzívou. Prázdné = výchozí text.",
+                "en": "A word in *asterisks* is italic. Empty = default text."
+            }
+        },
+        "hero_text": {
+            "type": "textarea",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – text",
+                "cs": "Úvod – text",
+                "en": "Hero – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – fotka",
+                "cs": "Úvod – fotka",
+                "en": "Hero – photo"
+            },
+            "default": "",
+            "help": {
+                "sk": "Na šírku, aspoň 1400 px.",
+                "cs": "Na šířku, alespoň 1400 px.",
+                "en": "Landscape, at least 1400 px."
+            }
+        },
+        "hero_note": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – hodnotenie pod textom",
+                "cs": "Úvod – hodnocení pod textem",
+                "en": "Hero – rating line"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. „4,9 · 230 recenzií“. Prázdne = nezobrazí sa.",
+                "cs": "Např. „4,9 · 230 recenzí“. Prázdné = nezobrazí se.",
+                "en": "E.g. “4.9 · 230 reviews”. Empty = hidden."
+            }
+        },
+        "hero_note_2": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – druhá poznámka",
+                "cs": "Úvod – druhá poznámka",
+                "en": "Hero – second note"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "show_booking_panel": {
+            "type": "toggle",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – rezervačný panel (služba a deň)",
+                "cs": "Úvod – rezervační panel (služba a den)",
+                "en": "Hero – booking panel (service and day)"
+            },
+            "default": true
+        },
+        "stats": {
+            "type": "textarea",
+            "group": "home",
+            "label": {
+                "sk": "Čísla",
+                "cs": "Čísla",
+                "en": "Figures"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý riadok „hodnota | popis“, napr. „12 rokov | skúseností“. Prázdne = sekcia sa nezobrazí.",
+                "cs": "Každý řádek „hodnota | popis“, např. „12 let | zkušeností“. Prázdné = sekce se nezobrazí.",
+                "en": "One per line “value | label”. Empty = hidden."
+            }
+        },
+        "services_kicker": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Služby – malý nadpis",
+                "cs": "Služby – malý nadpis",
+                "en": "Services – eyebrow"
+            },
+            "default": ""
+        },
+        "services_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Služby – nadpis",
+                "cs": "Služby – nadpis",
+                "en": "Services – title"
+            },
+            "default": ""
+        },
+        "services_count": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Služby – počet na úvodnej stránke",
+                "cs": "Služby – počet na úvodní stránce",
+                "en": "Services – count on the home page"
+            },
+            "default": "6",
+            "options": {
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                },
+                "6": {
+                    "sk": "6",
+                    "cs": "6",
+                    "en": "6"
+                },
+                "8": {
+                    "sk": "8",
+                    "cs": "8",
+                    "en": "8"
+                },
+                "12": {
+                    "sk": "12",
+                    "cs": "12",
+                    "en": "12"
+                }
+            }
+        },
+        "about_kicker": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "O nás – malý nadpis",
+                "cs": "O nás – malý nadpis",
+                "en": "About – eyebrow"
+            },
+            "default": ""
+        },
+        "about_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "O nás – nadpis",
+                "cs": "O nás – nadpis",
+                "en": "About – title"
+            },
+            "default": ""
+        },
+        "about_text": {
+            "type": "richtext",
+            "group": "about",
+            "label": {
+                "sk": "O nás – text",
+                "cs": "O nás – text",
+                "en": "About – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "about_points": {
+            "type": "textarea",
+            "group": "about",
+            "label": {
+                "sk": "O nás – výhody",
+                "cs": "O nás – výhody",
+                "en": "About – highlights"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každá výhoda na samostatnom riadku.",
+                "cs": "Každá výhoda na samostatném řádku.",
+                "en": "One highlight per line."
+            }
+        },
+        "about_image_1": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "O nás – fotka 1",
+                "cs": "O nás – fotka 1",
+                "en": "About – photo 1"
+            },
+            "default": ""
+        },
+        "about_image_2": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "O nás – fotka 2",
+                "cs": "O nás – fotka 2",
+                "en": "About – photo 2"
+            },
+            "default": ""
+        },
+        "about_image_3": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "O nás – fotka 3",
+                "cs": "O nás – fotka 3",
+                "en": "About – photo 3"
+            },
+            "default": ""
+        },
+        "team_kicker": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Tím – malý nadpis",
+                "cs": "Tým – malý nadpis",
+                "en": "Team – eyebrow"
+            },
+            "default": ""
+        },
+        "team_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Tím – nadpis",
+                "cs": "Tým – nadpis",
+                "en": "Team – title"
+            },
+            "default": ""
+        },
+        "member_1_image": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 1 – fotka",
+                "cs": "Člen týmu 1 – fotka",
+                "en": "Team member 1 – photo"
+            },
+            "default": ""
+        },
+        "member_1_name": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 1 – meno",
+                "cs": "Člen týmu 1 – jméno",
+                "en": "Team member 1 – name"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne meno = člen sa nezobrazí.",
+                "cs": "Prázdné jméno = člen se nezobrazí.",
+                "en": "Empty name = hidden."
+            }
+        },
+        "member_1_role": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 1 – pozícia",
+                "cs": "Člen týmu 1 – pozice",
+                "en": "Team member 1 – role"
+            },
+            "default": ""
+        },
+        "member_2_image": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 2 – fotka",
+                "cs": "Člen týmu 2 – fotka",
+                "en": "Team member 2 – photo"
+            },
+            "default": ""
+        },
+        "member_2_name": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 2 – meno",
+                "cs": "Člen týmu 2 – jméno",
+                "en": "Team member 2 – name"
+            },
+            "default": ""
+        },
+        "member_2_role": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 2 – pozícia",
+                "cs": "Člen týmu 2 – pozice",
+                "en": "Team member 2 – role"
+            },
+            "default": ""
+        },
+        "member_3_image": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 3 – fotka",
+                "cs": "Člen týmu 3 – fotka",
+                "en": "Team member 3 – photo"
+            },
+            "default": ""
+        },
+        "member_3_name": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 3 – meno",
+                "cs": "Člen týmu 3 – jméno",
+                "en": "Team member 3 – name"
+            },
+            "default": ""
+        },
+        "member_3_role": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 3 – pozícia",
+                "cs": "Člen týmu 3 – pozice",
+                "en": "Team member 3 – role"
+            },
+            "default": ""
+        },
+        "member_4_image": {
+            "type": "image",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 4 – fotka",
+                "cs": "Člen týmu 4 – fotka",
+                "en": "Team member 4 – photo"
+            },
+            "default": ""
+        },
+        "member_4_name": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 4 – meno",
+                "cs": "Člen týmu 4 – jméno",
+                "en": "Team member 4 – name"
+            },
+            "default": ""
+        },
+        "member_4_role": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Člen tímu 4 – pozícia",
+                "cs": "Člen týmu 4 – pozice",
+                "en": "Team member 4 – role"
+            },
+            "default": ""
+        },
+        "steps_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Ako rezervovať – nadpis",
+                "cs": "Jak rezervovat – nadpis",
+                "en": "How to book – title"
+            },
+            "default": ""
+        },
+        "step_1_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 1 – nadpis",
+                "cs": "Krok 1 – nadpis",
+                "en": "Step 1 – title"
+            },
+            "default": ""
+        },
+        "step_1_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 1 – text",
+                "cs": "Krok 1 – text",
+                "en": "Step 1 – text"
+            },
+            "default": ""
+        },
+        "step_2_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 2 – nadpis",
+                "cs": "Krok 2 – nadpis",
+                "en": "Step 2 – title"
+            },
+            "default": ""
+        },
+        "step_2_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 2 – text",
+                "cs": "Krok 2 – text",
+                "en": "Step 2 – text"
+            },
+            "default": ""
+        },
+        "step_3_title": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 3 – nadpis",
+                "cs": "Krok 3 – nadpis",
+                "en": "Step 3 – title"
+            },
+            "default": ""
+        },
+        "step_3_text": {
+            "type": "text",
+            "group": "about",
+            "label": {
+                "sk": "Krok 3 – text",
+                "cs": "Krok 3 – text",
+                "en": "Step 3 – text"
+            },
+            "default": ""
+        },
+        "voucher_title": {
+            "type": "text",
+            "group": "offer",
+            "label": {
+                "sk": "Poukážka – nadpis",
+                "cs": "Poukaz – nadpis",
+                "en": "Voucher – title"
+            },
+            "default": ""
+        },
+        "voucher_text": {
+            "type": "textarea",
+            "group": "offer",
+            "label": {
+                "sk": "Poukážka – text",
+                "cs": "Poukaz – text",
+                "en": "Voucher – text"
+            },
+            "default": ""
+        },
+        "voucher_link": {
+            "type": "text",
+            "group": "offer",
+            "label": {
+                "sk": "Poukážka – odkaz",
+                "cs": "Poukaz – odkaz",
+                "en": "Voucher – link"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. produkt darčekovej poukážky. Prázdne = poukážka sa nezobrazí.",
+                "cs": "Např. produkt dárkového poukazu. Prázdné = poukaz se nezobrazí.",
+                "en": "E.g. the gift voucher product. Empty = hidden."
+            }
+        },
+        "voucher_image": {
+            "type": "image",
+            "group": "offer",
+            "label": {
+                "sk": "Poukážka – fotka",
+                "cs": "Poukaz – fotka",
+                "en": "Voucher – photo"
+            },
+            "default": ""
+        },
+        "shop_title": {
+            "type": "text",
+            "group": "offer",
+            "label": {
+                "sk": "Obchod – nadpis",
+                "cs": "Obchod – nadpis",
+                "en": "Shop – title"
+            },
+            "default": ""
+        },
+        "shop_link": {
+            "type": "text",
+            "group": "offer",
+            "label": {
+                "sk": "Obchod – odkaz",
+                "cs": "Obchod – odkaz",
+                "en": "Shop – link"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = prvá kategória.",
+                "cs": "Prázdné = první kategorie.",
+                "en": "Empty = first category."
+            }
+        },
+        "reviews_title": {
+            "type": "text",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzie – nadpis",
+                "cs": "Recenze – nadpis",
+                "en": "Reviews – title"
+            },
+            "default": ""
+        },
+        "reviews_summary": {
+            "type": "text",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzie – súhrn",
+                "cs": "Recenze – souhrn",
+                "en": "Reviews – summary"
+            },
+            "default": "",
+            "help": {
+                "sk": "Napr. „4,9 / 5 · 230 hodnotení“.",
+                "cs": "Např. „4,9 / 5 · 230 hodnocení“.",
+                "en": "E.g. “4.9 / 5 · 230 reviews”."
+            }
+        },
+        "review_1_text": {
+            "type": "textarea",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 1 – text",
+                "cs": "Recenze 1 – text",
+                "en": "Review 1 – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Ak sú všetky prázdne, zobrazia sa schválené hodnotenia produktov.",
+                "cs": "Pokud jsou všechny prázdné, zobrazí se schválená hodnocení produktů.",
+                "en": "If all are empty, approved product reviews are shown."
+            }
+        },
+        "review_1_author": {
+            "type": "text",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 1 – autor",
+                "cs": "Recenze 1 – autor",
+                "en": "Review 1 – author"
+            },
+            "default": ""
+        },
+        "review_2_text": {
+            "type": "textarea",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 2 – text",
+                "cs": "Recenze 2 – text",
+                "en": "Review 2 – text"
+            },
+            "default": ""
+        },
+        "review_2_author": {
+            "type": "text",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 2 – autor",
+                "cs": "Recenze 2 – autor",
+                "en": "Review 2 – author"
+            },
+            "default": ""
+        },
+        "review_3_text": {
+            "type": "textarea",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 3 – text",
+                "cs": "Recenze 3 – text",
+                "en": "Review 3 – text"
+            },
+            "default": ""
+        },
+        "review_3_author": {
+            "type": "text",
+            "group": "reviews",
+            "label": {
+                "sk": "Recenzia 3 – autor",
+                "cs": "Recenze 3 – autor",
+                "en": "Review 3 – author"
+            },
+            "default": ""
+        },
+        "faq_title": {
+            "type": "text",
+            "group": "faq",
+            "label": {
+                "sk": "Časté otázky – nadpis",
+                "cs": "Časté dotazy – nadpis",
+                "en": "FAQ – title"
+            },
+            "default": ""
+        },
+        "faq_1_q": {
+            "type": "text",
+            "group": "faq",
+            "label": {
+                "sk": "Otázka 1",
+                "cs": "Dotaz 1",
+                "en": "Question 1"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "faq_1_a": {
+            "type": "textarea",
+            "group": "faq",
+            "label": {
+                "sk": "Odpoveď 1",
+                "cs": "Odpověď 1",
+                "en": "Answer 1"
+            },
+            "default": ""
+        },
+        "faq_2_q": {
+            "type": "text",
+            "group": "faq",
+            "label": {
+                "sk": "Otázka 2",
+                "cs": "Dotaz 2",
+                "en": "Question 2"
+            },
+            "default": ""
+        },
+        "faq_2_a": {
+            "type": "textarea",
+            "group": "faq",
+            "label": {
+                "sk": "Odpoveď 2",
+                "cs": "Odpověď 2",
+                "en": "Answer 2"
+            },
+            "default": ""
+        },
+        "faq_3_q": {
+            "type": "text",
+            "group": "faq",
+            "label": {
+                "sk": "Otázka 3",
+                "cs": "Dotaz 3",
+                "en": "Question 3"
+            },
+            "default": ""
+        },
+        "faq_3_a": {
+            "type": "textarea",
+            "group": "faq",
+            "label": {
+                "sk": "Odpoveď 3",
+                "cs": "Odpověď 3",
+                "en": "Answer 3"
+            },
+            "default": ""
+        },
+        "faq_4_q": {
+            "type": "text",
+            "group": "faq",
+            "label": {
+                "sk": "Otázka 4",
+                "cs": "Dotaz 4",
+                "en": "Question 4"
+            },
+            "default": ""
+        },
+        "faq_4_a": {
+            "type": "textarea",
+            "group": "faq",
+            "label": {
+                "sk": "Odpoveď 4",
+                "cs": "Odpověď 4",
+                "en": "Answer 4"
+            },
+            "default": ""
+        },
+        "contact_title": {
+            "type": "text",
+            "group": "contact",
+            "label": {
+                "sk": "Kontakt – nadpis",
+                "cs": "Kontakt – nadpis",
+                "en": "Contact – title"
+            },
+            "default": ""
+        },
+        "contact_text": {
+            "type": "textarea",
+            "group": "contact",
+            "label": {
+                "sk": "Kontakt – text (adresa, parkovanie…)",
+                "cs": "Kontakt – text (adresa, parkování…)",
+                "en": "Contact – text (address, parking…)"
+            },
+            "default": ""
+        },
+        "contact_address": {
+            "type": "text",
+            "group": "contact",
+            "label": {
+                "sk": "Adresa na mape a navigáciu",
+                "cs": "Adresa na mapě a navigaci",
+                "en": "Address for map and navigation"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = adresa firmy z nastavení.",
+                "cs": "Prázdné = adresa firmy z nastavení.",
+                "en": "Empty = the company address from settings."
+            }
+        },
+        "opening_hours": {
+            "type": "textarea",
+            "group": "contact",
+            "label": {
+                "sk": "Otváracie hodiny",
+                "cs": "Otevírací doba",
+                "en": "Opening hours"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý riadok „deň | čas“, napr. „Pondelok – Piatok | 8:00 – 20:00“.",
+                "cs": "Každý řádek „den | čas“, např. „Pondělí – Pátek | 8:00 – 20:00“.",
+                "en": "One per line “day | time”, e.g. “Monday – Friday | 8:00 – 20:00”."
+            }
+        },
+        "color_background": {
+            "type": "color",
+            "group": "colors",
+            "label": {
+                "sk": "Farba pozadia",
+                "cs": "Barva pozadí",
+                "en": "Background colour"
+            },
+            "default": "#f6f2ec"
+        },
+        "color_stone": {
+            "type": "color",
+            "group": "colors",
+            "label": {
+                "sk": "Farba podkladu sekcií",
+                "cs": "Barva podkladu sekcí",
+                "en": "Section tint colour"
+            },
+            "default": "#ebe4da"
+        },
+        "color_blush": {
+            "type": "color",
+            "group": "colors",
+            "label": {
+                "sk": "Jemná doplnková farba",
+                "cs": "Jemná doplňková barva",
+                "en": "Soft accent colour"
+            },
+            "default": "#efe0d6"
+        },
+        "color_ink": {
+            "type": "color",
+            "group": "colors",
+            "label": {
+                "sk": "Farba textu a pätičky",
+                "cs": "Barva textu a patičky",
+                "en": "Text and footer colour"
+            },
+            "default": "#1f1c1a"
+        },
+        "color_gold": {
+            "type": "color",
+            "group": "colors",
+            "label": {
+                "sk": "Farba hviezdičiek a ozdôb",
+                "cs": "Barva hvězdiček a ozdob",
+                "en": "Stars and ornaments colour"
+            },
+            "default": "#b08d57"
+        },
+        "footer_text": {
+            "type": "textarea",
+            "group": "footer",
+            "label": {
+                "sk": "Pätička – text o podniku",
+                "cs": "Patička – text o podniku",
+                "en": "Footer – about text"
+            },
+            "default": ""
+        },
+        "social_instagram": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Instagram (adresa profilu)",
+                "cs": "Instagram (adresa profilu)",
+                "en": "Instagram (profile URL)"
+            },
+            "default": ""
+        },
+        "social_facebook": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Facebook (adresa stránky)",
+                "cs": "Facebook (adresa stránky)",
+                "en": "Facebook (page URL)"
+            },
+            "default": ""
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        }
+    }
+}

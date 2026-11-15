@@ -35,6 +35,9 @@ final class DemoSchema
         'pages' => [],
         'block_layouts' => [],
         'menu_items' => ['parent_id' => 'menu_items'],
+        // Rezervácie (iba keď je modul zapnutý).
+        'booking_resources' => [],
+        'booking_services' => [],
     ];
 
     /**
@@ -50,6 +53,7 @@ final class DemoSchema
         'blog_post_tag' => ['blog_post_id' => 'blog_posts', 'blog_tag_id' => 'blog_tags'],
         'blog_post_product' => ['blog_post_id' => 'blog_posts', 'product_id' => 'products'],
         'blog_post_catalog_category' => ['blog_post_id' => 'blog_posts', 'category_id' => 'categories'],
+        'booking_resource_service' => ['booking_resource_id' => 'booking_resources', 'booking_service_id' => 'booking_services'],
     ];
 
     /**
@@ -67,6 +71,7 @@ final class DemoSchema
         'post_ids' => 'blog_posts',
         // Nastavenie šablóny Dielňa: formulár v sekcii Výroba na mieru.
         'custom_form' => 'forms',
+        'service_ids' => 'booking_services',
     ];
 
     /** Stĺpce s blokmi alebo nastaveniami, v ktorých sa prepisujú ID. */
@@ -92,7 +97,7 @@ final class DemoSchema
     public const SETTINGS_GROUPS = ['branding'];
 
     /** Priečinky verejného disku, z ktorých sa berú obrázky. */
-    public const MEDIA_PATTERN = '#(?<![\w.-])((?:media|demo|products|categories|blog|blocks|theme|branding|variants)/[\w\-./]+?\.(?:jpe?g|png|webp|gif|svg|avif))#i';
+    public const MEDIA_PATTERN = '#(?<![\w.-])((?:media|demo|products|categories|blog|blocks|theme|branding|variants|services)/[\w\-./]+?\.(?:jpe?g|png|webp|gif|svg|avif))#i';
 
     /** Zástupný text za adresu priečinka s nahranými súbormi (v obsahu sa adresa obchodu líši). */
     public const UPLOADS_PLACEHOLDER = '{{uploads}}/';

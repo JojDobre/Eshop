@@ -4,6 +4,7 @@ namespace App\Core\Demo;
 
 use App\Core\Backup\BackupManager;
 use App\Core\Content\MediaLibrary;
+use App\Core\Modules\ModuleManager;
 use App\Core\Themes\ThemeManager;
 use App\Settings\GeneralSettings;
 use Illuminate\Support\Facades\Artisan;
@@ -51,7 +52,9 @@ class DemoImporter
     /** Či sa dá použiť režim „nahradiť“ (obchod ešte nemá objednávky). */
     public function canReplace(): bool
     {
-        return ! Schema::hasTable('orders') || ! DB::table('orders')->exists();
+        // Ani objednávky, ani rezervácie zákazníkov sa nesmú stratiť.
+        return (! Schema::hasTable('orders') || ! DB::table('orders')->exists())
+            && (! Schema::hasTable('bookings') || ! DB::table('bookings')->exists());
     }
 
     /**
@@ -72,6 +75,7 @@ class DemoImporter
         }
 
         @set_time_limit(0);
+        $this->enableModules((array) ($data['modules'] ?? []));
         $this->map = [];
         $this->uploadsUrl = rtrim(Storage::disk('public')->url(''), '/').'/';
         $counts = [];
@@ -181,6 +185,22 @@ class DemoImporter
         return [$json, $directory, $temporary];
     }
 
+    /**
+     * Zapne moduly, ktoré demo potrebuje (napr. Rezervácie), a vytvorí ich tabuľky.
+     *
+     * @param  list<string>  $modules
+     */
+    private function enableModules(array $modules): void
+    {
+        $manager = app(ModuleManager::class);
+
+        foreach ($modules as $module) {
+            if (is_string($module) && $manager->has($module) && ! $manager->isEnabled($module)) {
+                rescue(fn () => $manager->enable($module), report: true);
+            }
+        }
+    }
+
     private function copyMedia(string $directory): void
     {
         if (! is_dir($directory.'/media')) {
@@ -206,6 +226,7 @@ class DemoImporter
             'blog_post_catalog_category', 'product_prices', 'product_group_prices', 'product_quantity_discounts', 'product_price_history',
             'product_variants', 'product_option_values', 'product_options', 'product_files', 'product_reviews', 'stock_movements', 'stock_lots',
             'bundle_items', 'cart_items', 'products', 'categories', 'manufacturers', 'product_labels', 'addons', 'blog_comments',
+            'booking_resource_service', 'booking_closures', 'booking_services', 'booking_resources',
             'blog_post_versions', 'blog_posts', 'blog_categories', 'blog_tags', 'saved_blocks', 'block_layouts', 'menu_items',
         ];
 

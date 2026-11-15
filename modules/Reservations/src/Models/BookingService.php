@@ -7,6 +7,7 @@ use App\Core\Support\Currencies;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Rezervovateľná služba (napr. strihanie, masáž, konzultácia).
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name
  * @property string|null $description
+ * @property string|null $image
+ * @property string|null $category
  * @property int $duration_minutes
  * @property int $buffer_minutes
  * @property int $capacity
@@ -30,7 +33,7 @@ class BookingService extends Model
     protected $guarded = [];
 
     /** @var list<string> */
-    public array $translatable = ['name', 'description'];
+    public array $translatable = ['name', 'description', 'category'];
 
     protected $attributes = ['duration_minutes' => 60, 'buffer_minutes' => 0, 'capacity' => 1, 'price' => 0, 'payment_mode' => 'on_site', 'deposit' => 0, 'is_active' => true, 'position' => 0];
 
@@ -61,6 +64,12 @@ class BookingService extends Model
     }
 
     /** Suma, ktorú treba zaplatiť vopred (záloha alebo celá cena). */
+    /** Adresa fotky služby (alebo null). */
+    public function imageUrl(): ?string
+    {
+        return filled($this->image) ? Storage::disk('public')->url($this->image) : null;
+    }
+
     public function amountDue(): int
     {
         return match ($this->payment_mode) {

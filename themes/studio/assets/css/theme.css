@@ -1,0 +1,285 @@
+/*
+ * Šablóna Štúdio (služby a rezervácie): štýly Default + súbory tejto šablóny.
+ * Akcentová farba je farba značky obchodu (--brand-primary), ostatné farby sú v nastaveniach šablóny.
+ * Písma sú uložené na hostingu (Instrument Serif na nadpisy, Manrope na text).
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource/instrument-serif';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource-variable/manrope';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --studio-bg: #f6f2ec;
+    --studio-stone: #ebe4da;
+    --studio-blush: #efe0d6;
+    --studio-ink: #1f1c1a;
+    --studio-gold: #b08d57;
+    /* Tlmený text s kontrastom aspoň 4,5:1 na svetlom pozadí (WCAG AA). */
+    --studio-muted: color-mix(in srgb, var(--studio-ink) 66%, var(--studio-bg));
+    --studio-line: color-mix(in srgb, var(--studio-ink) 12%, var(--studio-bg));
+    /* Farba značky stmavená pre text na svetlom pozadí a pre stav hover. */
+    --studio-accent-text: color-mix(in srgb, var(--brand-primary) 88%, black);
+    --studio-accent-dark: color-mix(in srgb, var(--brand-primary) 80%, black);
+    --studio-on-accent: color-mix(in srgb, var(--brand-primary) 22%, white);
+    --theme-font: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+    --studio-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+}
+
+@utility font-serif {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+}
+
+@utility bg-ivory {
+    background-color: var(--studio-bg);
+}
+
+@utility bg-stone {
+    background-color: var(--studio-stone);
+}
+
+@utility bg-blush {
+    background-color: var(--studio-blush);
+}
+
+@utility bg-ink {
+    background-color: var(--studio-ink);
+}
+
+@utility bg-pine {
+    background-color: var(--brand-primary);
+}
+
+@utility text-ink {
+    color: var(--studio-ink);
+}
+
+@utility text-ivory {
+    color: var(--studio-bg);
+}
+
+@utility text-muted {
+    color: var(--studio-muted);
+}
+
+@utility text-pine {
+    color: var(--studio-accent-text);
+}
+
+@utility text-gold {
+    color: var(--studio-gold);
+}
+
+@utility text-on-pine {
+    color: var(--studio-on-accent);
+}
+
+@utility border-line {
+    border-color: var(--studio-line);
+}
+
+body {
+    background-color: var(--studio-bg);
+    color: var(--studio-ink);
+}
+
+main h1,
+main h2,
+.studio-heading {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+main h1 em,
+main h2 em {
+    font-style: italic;
+}
+
+@media (min-width: 64rem) {
+    main h1.text-3xl {
+        font-size: 3rem;
+        line-height: 1.05;
+    }
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold transition;
+    }
+
+    .btn-primary,
+    .btn-pine {
+        @apply bg-[var(--brand-primary)] text-[var(--brand-primary-foreground,#fff)] hover:bg-[var(--studio-accent-dark)];
+    }
+
+    .btn-secondary,
+    .btn-ghost {
+        @apply border border-[var(--studio-ink)] bg-transparent text-[var(--studio-ink)] hover:bg-[var(--studio-ink)] hover:text-[var(--studio-bg)];
+    }
+
+    .btn-light {
+        @apply bg-white text-[var(--studio-ink)] hover:bg-[var(--studio-bg)];
+    }
+
+    .input {
+        @apply rounded-2xl border-[var(--studio-line)] bg-white px-4 py-3 shadow-none;
+    }
+
+    .label {
+        @apply font-semibold;
+    }
+
+    /* Malý nadpis nad nadpisom sekcie. */
+    .eyebrow {
+        @apply block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--studio-accent-text)];
+    }
+
+    .studio-h2 {
+        font-family: var(--studio-serif);
+        font-weight: 400;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+    }
+
+    .studio-chip {
+        @apply rounded-full border border-[var(--studio-line)] bg-white px-4 py-2 text-sm font-semibold transition hover:border-[var(--studio-ink)];
+    }
+
+    .studio-chip.is-active,
+    .studio-chip[aria-pressed='true'] {
+        @apply border-[var(--studio-ink)] bg-[var(--studio-ink)] text-white;
+    }
+
+    /* Časový termín v rezervácii. */
+    .studio-slot {
+        @apply block rounded-full border border-[var(--studio-line)] bg-white px-4 py-2.5 text-center text-sm font-semibold transition hover:border-[var(--studio-ink)];
+    }
+
+    .studio-slot.is-active {
+        @apply border-[var(--brand-primary)] bg-[var(--brand-primary)] text-white;
+    }
+
+    .studio-card-shadow {
+        box-shadow: 0 25px 60px -30px color-mix(in srgb, var(--studio-ink) 40%, transparent);
+    }
+}
+
+.studio-zoom img {
+    transition: transform 0.7s ease;
+}
+
+.studio-zoom:hover img {
+    transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .studio-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny vo farbách Štúdia. */
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--studio-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--studio-stone);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--studio-muted);
+}
+
+main .rounded-2xl {
+    border-radius: 1.75rem;
+}
+
+/* Bloky (Obsah → Bloky, Prispôsobenie → Bloky) v štýle Štúdia. */
+.block-title {
+    font-family: var(--studio-serif);
+    font-size: 2.2rem;
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--studio-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 3.2rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-weight: 600;
+    color: var(--studio-accent-text);
+}
+
+.block-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 40rem) {
+    .block-section:has(> .block-title, > .block-header) {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--studio-stone);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--brand-primary);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+}
+
+.blog-chip.is-active {
+    background-color: var(--studio-ink);
+    border-color: var(--studio-ink);
+    color: #fff;
+}
+
+.prose :where(h2, h3) {
+    font-family: var(--studio-serif);
+    font-weight: 400;
+}

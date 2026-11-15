@@ -70,6 +70,10 @@ themes/mojasablona/
 Odvodená šablóna (`"parent": "default"`) obsahuje iba súbory, ktoré mení – napr. šablóna **Farma**
 prepisuje hlavičku, pätičku, kartu produktu a úvodnú stránku a zvyšok preberá z Default. Nastavenia
 z `theme.json` sú v šablóne cez `$themeOptions->get('kluc')`, obrázky cez `$themeOptions->imageUrl('kluc')`.
+Texty (typy text, textarea, richtext) sa dajú v Prispôsobení preložiť; `get()` vráti text v jazyku stránky a ak preklad
+chýba, text v predvolenom jazyku (preklady sú v uložených hodnotách pod kľúčom `_translations`).
+Šablóna môže prepísať aj zobrazenia modulov: `themes/<sablona>/modules/<modul>/<view>.blade.php` (napr. Štúdio
+prepisuje `reservations::index`, `service` a `booking`).
 Typy nastavení: `text`, `textarea`, `richtext`, `color`, `select`, `toggle`, `number`, `image` a `sections`
 (zoradenie sekcií s rozložením). Zdedené nastavenia, ktoré odvodená šablóna nepoužíva, skryjete zoznamom
 `"hide_settings": ["announcement"]`, aby v prispôsobení nemiatli.

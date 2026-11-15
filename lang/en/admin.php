@@ -594,6 +594,8 @@ return [
         'types' => ['url' => 'Custom address'],
     ],
     'themes' => [
+        'text_locale' => 'Text language',
+        'text_locale_help' => 'Texts, headings and paragraphs are saved for the selected language. An empty field in another language uses the text in the shop’s default language.',
         'create_child' => 'Create child theme',
         'create_child_help' => 'A child theme inherits everything from its parent. You change only what you need, and parent updates do not overwrite your changes.',
         'parent' => 'Parent theme',
@@ -654,6 +656,9 @@ return [
             'about' => 'About and benefits',
             'faq' => 'FAQ',
             'blog' => 'Blog',
+            'offer' => 'Voucher and shop',
+            'reviews' => 'Reviews',
+            'contact' => 'Contact and opening hours',
         ],
         'errors' => [
             'not_zip' => 'The file is not a valid ZIP.',
@@ -689,7 +694,7 @@ return [
         'mode_replace_help' => 'Deletes products, categories, blog, custom pages, blocks, forms and menus and imports the demo. Legal pages, shipping, payments and settings are kept.',
         'mode_add' => 'Add',
         'mode_add_help' => 'The demo is added to the current content (home page blocks and appearance settings are replaced).',
-        'replace_has_orders' => 'The shop already has orders, so content cannot be replaced – you can only add the demo.',
+        'replace_has_orders' => 'The shop already has orders or bookings, so content cannot be replaced – you can only add the demo.',
         'activate' => 'Activate the demo theme',
         'zip' => 'Demo package (ZIP)',
         'export' => 'Export content as demo',

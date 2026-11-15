@@ -1,5 +1,22 @@
 # Prehľad zmien
 
+## 1.8.0 – Šablóna Štúdio pre služby a rezervácie, preklady textov šablóny
+
+- **Nová šablóna Štúdio** pre kaderníctva, kozmetiku, masáže, nechtové štúdiá a ďalšie služby s online rezerváciou:
+  úvod s rezervačným panelom (služba + deň), čísla o štúdiu, služby s fotkami, dĺžkou a cenou s filtrom podľa
+  kategórie, o štúdiu, tím, ako funguje rezervácia, darčeková poukážka a kozmetika domov, recenzie, časté otázky
+  a kontakt s otváracími hodinami, navigáciou a tlačidlom Zavolať. Elegantné písmo Instrument Serif a Manrope.
+- **Nové rezervačné stránky v Štúdiu:** cenník zoskupený podľa kategórií, výber dňa s počtom voľných termínov,
+  časy rozdelené na doobeda / poobede / večer, súhrn rezervácie vedľa formulára a nové potvrdenie s pridaním do
+  kalendára a navigáciou.
+- **Rezervácie:** služby majú fotku a kategóriu (Rezervácie → Služby), počty voľných termínov v jednotlivých dňoch.
+- **Hotové demo „Štúdio Mira“:** 10 služieb v 4 kategóriách, 4 zamestnankyne s rozvrhom, darčeková poukážka
+  s hodnotami, kozmetika, storno podmienky, menu a nastavenia vzhľadu v troch jazykoch. Demo zapne modul Rezervácie.
+- **Preklady textov šablóny:** v Prispôsobení prepnete Jazyk textov a nadpisy či odseky úvodnej stránky preložíte
+  do každého jazyka obchodu; náhľad sa otvorí v danom jazyku. Demo Dielňa má teraz texty aj v češtine a angličtine.
+- Demo balíky ukladajú odkazy na stránky obchodu ako relatívne adresy (fungujú aj na inej doméne) a obsahujú fotky
+  služieb.
+
 ## 1.7.0 – Šablóna Dielňa a demo balíky
 
 - **Nová šablóna Dielňa** pre handmade a remeselné obchody: úvod s fotkou v oblúku, otáčajúcou sa pečiatkou a ručne

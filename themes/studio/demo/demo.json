@@ -1,0 +1,800 @@
+{
+    "format": 1,
+    "eshop": "1.7.0",
+    "title": {
+        "sk": "Štúdio Mira – kaderníctvo, kozmetika a masáže",
+        "cs": "Studio Mira – kadeřnictví, kosmetika a masáže",
+        "en": "Studio Mira – hair, beauty and massage"
+    },
+    "theme": "studio",
+    "modules": [
+        "reservations",
+        "forms"
+    ],
+    "created_at": "2026-11-15T16:19:56+00:00",
+    "tables": {
+        "manufacturers": [],
+        "product_labels": [],
+        "addons": [],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Kozmetika domov\",\"cs\":\"Kosmetika domů\",\"en\":\"Home care\"}",
+                "slug": "{\"sk\":\"kozmetika-domov\",\"cs\":\"kosmetika-domu\",\"en\":\"home-care\"}",
+                "description": "{\"sk\":\"<p>Produkty, s ktorými pracujeme v štúdiu – aby vám výsledok vydržal aj doma.</p>\",\"cs\":\"<p>Produkty, se kterými pracujeme ve studiu – aby vám výsledek vydržel i doma.</p>\",\"en\":\"<p>The products we use in the studio – so the results last at home too.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/studio/oil.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Darčekové poukážky\",\"cs\":\"Dárkové poukazy\",\"en\":\"Gift vouchers\"}",
+                "slug": "{\"sk\":\"darcekove-poukazky\",\"cs\":\"darkove-poukazy\",\"en\":\"gift-vouchers\"}",
+                "description": "{\"sk\":\"<p>Poukážku pošleme e-mailom ihneď po zaplatení. Platí 12 mesiacov na všetky služby aj kozmetiku.</p>\",\"cs\":\"<p>Poukaz pošleme e-mailem ihned po zaplacení. Platí 12 měsíců na všechny služby i kosmetiku.</p>\",\"en\":\"<p>We email the voucher right after payment. Valid for 12 months on all services and products.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/studio/lounge.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Darčeková poukážka Štúdio Mira\",\"cs\":\"Dárkový poukaz Studio Mira\",\"en\":\"Studio Mira gift voucher\"}",
+                "slug": "{\"sk\":\"darcekova-poukazka-studio-mira\",\"cs\":\"darkovy-poukaz-studio-mira\",\"en\":\"studio-mira-gift-voucher\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"na služby aj kozmetiku, platí 12 mesiacov\",\"cs\":\"na služby i kosmetiku, platí 12 měsíců\",\"en\":\"for services and products, valid 12 months\"}",
+                "description": "{\"sk\":\"<p>Darujte chvíľu pre seba. Poukážku s kódom pošleme e-mailom ihneď po zaplatení – môžete ju vytlačiť alebo poslať ďalej. Pri rezervácii stačí uviesť kód do poznámky.</p>\",\"cs\":\"<p>Darujte chvíli pro sebe. Poukaz s kódem pošleme e-mailem ihned po zaplacení – můžete ho vytisknout nebo poslat dál. Při rezervaci stačí uvést kód do poznámky.</p>\",\"en\":\"<p>Give the gift of time. We email the voucher code right after payment – print it or forward it. Just add the code to the note when booking.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/studio/lounge.webp\",\"demo/studio/interior.webp\"]",
+                "track_stock": 0,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": 0,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "darcekova poukazka studio mira darkovy poukaz studio mira studio mira gift voucher na sluzby aj kozmetiku, plati 12 mesiacov na sluzby i kosmetiku, plati 12 mesicu for services and products, valid 12 months",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 1,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pleťový olej Ruža\",\"cs\":\"Pleťový olej Růže\",\"en\":\"Rose facial oil\"}",
+                "slug": "{\"sk\":\"pletovy-olej-ruza\",\"cs\":\"pletovy-olej-ruze\",\"en\":\"rose-facial-oil\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"30 ml, pre suchú a citlivú pleť\",\"cs\":\"30 ml, pro suchou a citlivou pleť\",\"en\":\"30 ml, for dry and sensitive skin\"}",
+                "description": "{\"sk\":\"<p>Ľahký olej so šípkami a ružovou vodou. Pleť vyživí bez mastného lesku – stačia 2 – 3 kvapky večer.</p>\",\"cs\":\"<p>Lehký olej se šípky a růžovou vodou. Pleť vyživí bez mastného lesku – stačí 2–3 kapky večer.</p>\",\"en\":\"<p>A light oil with rosehip and rose water. Nourishes without a greasy shine – 2–3 drops in the evening are enough.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/studio/oil.webp\",\"demo/studio/facial.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 150,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pletovy olej ruza pletovy olej ruze rose facial oil 30 ml, pre suchu a citlivu plet 30 ml, pro suchou a citlivou plet 30 ml, for dry and sensitive skin",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Hydratačná pleťová maska\",\"cs\":\"Hydratační pleťová maska\",\"en\":\"Hydrating face mask\"}",
+                "slug": "{\"sk\":\"hydratacna-pletova-maska\",\"cs\":\"hydratacni-pletova-maska\",\"en\":\"hydrating-face-mask\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"50 ml, s kyselinou hyalurónovou\",\"cs\":\"50 ml, s kyselinou hyaluronovou\",\"en\":\"50 ml, with hyaluronic acid\"}",
+                "description": "{\"sk\":\"<p>Krémová maska, ktorú používame pri hydratačnom ošetrení. Doma ju naneste raz týždenne na 15 minút.</p>\",\"cs\":\"<p>Krémová maska, kterou používáme při hydratačním ošetření. Doma ji naneste jednou týdně na 15 minut.</p>\",\"en\":\"<p>The creamy mask we use in our hydrating facial. At home, apply once a week for 15 minutes.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/studio/mask.webp\",\"demo/studio/facial2.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 15,
+                "low_stock_threshold": null,
+                "weight": 150,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "hydratacna pletova maska hydratacni pletova maska hydrating face mask 50 ml, s kyselinou hyaluronovou 50 ml, s kyselinou hyaluronovou 50 ml, with hyaluronic acid",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Olej na nechty a kožičky\",\"cs\":\"Olej na nehty a kůžičku\",\"en\":\"Nail and cuticle oil\"}",
+                "slug": "{\"sk\":\"olej-na-nechty-a-kozicky\",\"cs\":\"olej-na-nehty-a-kuzicku\",\"en\":\"nail-and-cuticle-oil\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"10 ml, s mandľovým olejom\",\"cs\":\"10 ml, s mandlovým olejem\",\"en\":\"10 ml, with almond oil\"}",
+                "description": "{\"sk\":\"<p>Vyživuje kožičky a predlžuje výdrž gél laku. Praktické balenie so štetčekom do kabelky.</p>\",\"cs\":\"<p>Vyživuje kůžičku a prodlužuje výdrž gel laku. Praktické balení se štětečkem do kabelky.</p>\",\"en\":\"<p>Nourishes cuticles and helps gel polish last longer. A handy brush bottle for your bag.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/studio/nails3.webp\",\"demo/studio/nails.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 30,
+                "low_stock_threshold": null,
+                "weight": 150,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "olej na nechty a kozicky olej na nehty a kuzicku nail and cuticle oil 10 ml, s mandlovym olejom 10 ml, s mandlovym olejem 10 ml, with almond oil",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Hodnota\",\"cs\":\"Hodnota\",\"en\":\"Value\"}",
+                "position": 1
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"30 €\",\"cs\":\"750 Kč\",\"en\":\"€30\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"50 €\",\"cs\":\"1 250 Kč\",\"en\":\"€50\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"100 €\",\"cs\":\"2 500 Kč\",\"en\":\"€100\"}",
+                "color": null,
+                "position": 3
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 0,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 75000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "EUR",
+                "amount": 3000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "CZK",
+                "amount": 75000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "EUR",
+                "amount": 5000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 6,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "CZK",
+                "amount": 125000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 7,
+                "product_id": 1,
+                "product_variant_id": 3,
+                "currency": "EUR",
+                "amount": 10000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 8,
+                "product_id": 1,
+                "product_variant_id": 3,
+                "currency": "CZK",
+                "amount": 250000,
+                "compare_at_amount": null
+            },
+            {
+                "id": 9,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 62900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1850,
+                "compare_at_amount": null
+            },
+            {
+                "id": 12,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 46900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 13,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 24900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "saved_blocks": [],
+        "blog_categories": [],
+        "blog_tags": [],
+        "blog_posts": [],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"7a3eb2ff-f47f-4735-aaed-91d4ebdb17bc\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"Storno podmienky\",\"cs\":\"Storno podmínky\",\"en\":\"Cancellation policy\"}",
+                "slug": "{\"sk\":\"storno-podmienky\",\"cs\":\"storno-podminky\",\"en\":\"cancellation-policy\"}",
+                "content": "{\"sk\":\"<p>Termín môžete bezplatne zrušiť alebo presunúť najneskôr 24 hodín pred začiatkom – odkazom v potvrdzovacom e-maile alebo telefonicky.</p><h2>Neskoré zrušenie</h2><p>Pri zrušení menej ako 24 hodín vopred alebo pri neúčasti si môžeme pri ďalšej rezervácii vyžiadať zálohu.</p><h2>Zálohy a platby vopred</h2><p>Pri farbení žiadame zálohu 20 €, aromaterapeutická masáž sa platí vopred. Pri včasnom zrušení zálohu vrátime alebo ju presunieme na nový termín.</p>\",\"cs\":\"<p>Termín můžete bezplatně zrušit nebo přesunout nejpozději 24 hodin před začátkem – odkazem v potvrzovacím e-mailu nebo telefonicky.</p><h2>Pozdní zrušení</h2><p>Při zrušení méně než 24 hodin předem nebo při neúčasti si můžeme při další rezervaci vyžádat zálohu.</p><h2>Zálohy a platby předem</h2><p>U barvení žádáme zálohu 20 €, aromaterapeutická masáž se platí předem. Při včasném zrušení zálohu vrátíme nebo ji přesuneme na nový termín.</p>\",\"en\":\"<p>You can cancel or move your appointment free of charge up to 24 hours before it starts – via the link in the confirmation email or by phone.</p><h2>Late cancellation</h2><p>If you cancel less than 24 hours in advance or do not show up, we may ask for a deposit for your next booking.</p><h2>Deposits and prepayments</h2><p>Colouring requires a €20 deposit and the aromatherapy massage is paid in advance. If you cancel in time, we refund the deposit or move it to a new date.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 10,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":\"Služby a cenník\",\"cs\":\"Služby a ceník\",\"en\":\"Services & prices\"}",
+                "type": "url",
+                "target": "/rezervacia",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":\"Tím\",\"cs\":\"Tým\",\"en\":\"Team\"}",
+                "type": "url",
+                "target": "/#home-team",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":\"Poukážky\",\"cs\":\"Poukazy\",\"en\":\"Vouchers\"}",
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":\"Kozmetika\",\"cs\":\"Kosmetika\",\"en\":\"Products\"}",
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "page",
+                "target": "4",
+                "new_window": 0,
+                "position": 5
+            }
+        ],
+        "booking_resources": [
+            {
+                "id": 1,
+                "name": "Mira Kováčová",
+                "type": "staff",
+                "schedule": "{\"1\":[[\"08:00\",\"12:00\"],[\"12:30\",\"18:00\"]],\"2\":[[\"08:00\",\"12:00\"],[\"12:30\",\"18:00\"]],\"3\":[[\"08:00\",\"12:00\"],[\"12:30\",\"18:00\"]],\"4\":[[\"08:00\",\"12:00\"],[\"12:30\",\"18:00\"]],\"5\":[[\"08:00\",\"12:00\"],[\"12:30\",\"18:00\"]],\"6\":[[\"09:00\",\"14:00\"]]}",
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "Lea Nováková",
+                "type": "staff",
+                "schedule": "{\"1\":[[\"10:00\",\"14:00\"],[\"14:30\",\"20:00\"]],\"2\":[[\"10:00\",\"14:00\"],[\"14:30\",\"20:00\"]],\"3\":[[\"10:00\",\"14:00\"],[\"14:30\",\"20:00\"]],\"4\":[[\"10:00\",\"14:00\"],[\"14:30\",\"20:00\"]],\"5\":[[\"10:00\",\"14:00\"],[\"14:30\",\"20:00\"]]}",
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "name": "Sára Horváth",
+                "type": "staff",
+                "schedule": "{\"2\":[[\"12:00\",\"20:00\"]],\"3\":[[\"12:00\",\"20:00\"]],\"4\":[[\"12:00\",\"20:00\"]],\"5\":[[\"12:00\",\"20:00\"]],\"6\":[[\"09:00\",\"14:00\"]]}",
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "name": "Petra Vargová",
+                "type": "staff",
+                "schedule": "{\"1\":[[\"08:00\",\"16:00\"]],\"2\":[[\"08:00\",\"16:00\"]],\"3\":[[\"08:00\",\"16:00\"]],\"4\":[[\"08:00\",\"16:00\"]],\"5\":[[\"08:00\",\"16:00\"]]}",
+                "is_active": 1,
+                "position": 4
+            }
+        ],
+        "booking_services": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Strih a fúkaná\",\"cs\":\"Střih a foukaná\",\"en\":\"Cut and blow-dry\"}",
+                "description": "{\"sk\":\"Konzultácia, umytie s masážou hlavy, strih podľa tvaru tváre a styling. Poradíme, ako si účes udržať doma.\",\"cs\":\"Konzultace, mytí s masáží hlavy, střih podle tvaru obličeje a styling. Poradíme, jak si účes udržet doma.\",\"en\":\"Consultation, wash with a scalp massage, a cut that suits your face and styling. We will show you how to keep it at home.\"}",
+                "image": "demo/studio/blowdry.webp",
+                "category": "{\"sk\":\"Vlasy\",\"cs\":\"Vlasy\",\"en\":\"Hair\"}",
+                "duration_minutes": 60,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 3500,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Farbenie a melír\",\"cs\":\"Barvení a melír\",\"en\":\"Colour and highlights\"}",
+                "description": "{\"sk\":\"Šetrné farby bez amoniaku, ošetrujúca maska a fúkaná v cene.\",\"cs\":\"Šetrné barvy bez amoniaku, ošetřující maska a foukaná v ceně.\",\"en\":\"Gentle ammonia-free colours, a nourishing mask and blow-dry included.\"}",
+                "image": "demo/studio/curls.webp",
+                "category": "{\"sk\":\"Vlasy\",\"cs\":\"Vlasy\",\"en\":\"Hair\"}",
+                "duration_minutes": 150,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 6900,
+                "currency": "EUR",
+                "payment_mode": "deposit",
+                "deposit": 2000,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Umytie a styling\",\"cs\":\"Mytí a styling\",\"en\":\"Wash and style\"}",
+                "description": "{\"sk\":\"Rýchla návšteva pred oslavou alebo stretnutím – umytie, fúkaná a styling.\",\"cs\":\"Rychlá návštěva před oslavou nebo schůzkou – mytí, foukaná a styling.\",\"en\":\"A quick visit before a party or meeting – wash, blow-dry and styling.\"}",
+                "image": "demo/studio/wash.webp",
+                "category": "{\"sk\":\"Vlasy\",\"cs\":\"Vlasy\",\"en\":\"Hair\"}",
+                "duration_minutes": 45,
+                "buffer_minutes": 0,
+                "capacity": 1,
+                "price": 2500,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Hydratačné ošetrenie pleti\",\"cs\":\"Hydratační ošetření pleti\",\"en\":\"Hydrating facial\"}",
+                "description": "{\"sk\":\"Čistenie, peeling, maska a masáž tváre pre žiarivú a hydratovanú pleť.\",\"cs\":\"Čištění, peeling, maska a masáž obličeje pro zářivou a hydratovanou pleť.\",\"en\":\"Cleansing, exfoliation, a mask and a facial massage for glowing, hydrated skin.\"}",
+                "image": "demo/studio/facial.webp",
+                "category": "{\"sk\":\"Pleť\",\"cs\":\"Pleť\",\"en\":\"Skin\"}",
+                "duration_minutes": 75,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 5900,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Hĺbkové čistenie pleti\",\"cs\":\"Hloubkové čištění pleti\",\"en\":\"Deep cleansing facial\"}",
+                "description": "{\"sk\":\"Ultrazvuková špachtľa, extrakcia a upokojujúca maska pre problematickú pleť.\",\"cs\":\"Ultrazvuková špachtle, extrakce a zklidňující maska pro problematickou pleť.\",\"en\":\"Ultrasonic cleansing, extraction and a soothing mask for problem skin.\"}",
+                "image": "demo/studio/facial2.webp",
+                "category": "{\"sk\":\"Pleť\",\"cs\":\"Pleť\",\"en\":\"Skin\"}",
+                "duration_minutes": 60,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 4900,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 5
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"Masáž lávovými kameňmi\",\"cs\":\"Masáž lávovými kameny\",\"en\":\"Hot stone massage\"}",
+                "description": "{\"sk\":\"Hĺbkové uvoľnenie svalov teplom a aromatickými olejmi.\",\"cs\":\"Hloubkové uvolnění svalů teplem a aromatickými oleji.\",\"en\":\"Deep muscle relaxation with warmth and aromatic oils.\"}",
+                "image": "demo/studio/stones.webp",
+                "category": "{\"sk\":\"Masáže\",\"cs\":\"Masáže\",\"en\":\"Massage\"}",
+                "duration_minutes": 60,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 6500,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 6
+            },
+            {
+                "id": 7,
+                "name": "{\"sk\":\"Relaxačná masáž chrbta\",\"cs\":\"Relaxační masáž zad\",\"en\":\"Relaxing back massage\"}",
+                "description": "{\"sk\":\"Klasická masáž šije a chrbta proti stresu a napätiu.\",\"cs\":\"Klasická masáž šíje a zad proti stresu a napětí.\",\"en\":\"A classic neck and back massage against stress and tension.\"}",
+                "image": "demo/studio/massage.webp",
+                "category": "{\"sk\":\"Masáže\",\"cs\":\"Masáže\",\"en\":\"Massage\"}",
+                "duration_minutes": 45,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 3900,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 7
+            },
+            {
+                "id": 8,
+                "name": "{\"sk\":\"Aromaterapeutická masáž celého tela\",\"cs\":\"Aromaterapeutická masáž celého těla\",\"en\":\"Full body aromatherapy massage\"}",
+                "description": "{\"sk\":\"90 minút pokoja s olejom podľa vášho výberu. Platí sa vopred pri rezervácii.\",\"cs\":\"90 minut klidu s olejem podle vašeho výběru. Platí se předem při rezervaci.\",\"en\":\"90 minutes of calm with an oil of your choice. Paid in advance when booking.\"}",
+                "image": "demo/studio/massage2.webp",
+                "category": "{\"sk\":\"Masáže\",\"cs\":\"Masáže\",\"en\":\"Massage\"}",
+                "duration_minutes": 90,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 7900,
+                "currency": "EUR",
+                "payment_mode": "prepay",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 8
+            },
+            {
+                "id": 9,
+                "name": "{\"sk\":\"Gélová manikúra\",\"cs\":\"Gelová manikúra\",\"en\":\"Gel manicure\"}",
+                "description": "{\"sk\":\"Úprava nechtov a kožičiek, gél lak s výdržou až 3 týždne.\",\"cs\":\"Úprava nehtů a kůžičky, gel lak s výdrží až 3 týdny.\",\"en\":\"Nail and cuticle care with a gel polish that lasts up to 3 weeks.\"}",
+                "image": "demo/studio/nails.webp",
+                "category": "{\"sk\":\"Nechty\",\"cs\":\"Nehty\",\"en\":\"Nails\"}",
+                "duration_minutes": 60,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 3200,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 9
+            },
+            {
+                "id": 10,
+                "name": "{\"sk\":\"Manikúra s nail artom\",\"cs\":\"Manikúra s nail artem\",\"en\":\"Manicure with nail art\"}",
+                "description": "{\"sk\":\"Gél lak a jemné zdobenie podľa vašej predstavy – kvety, línie či trblietky.\",\"cs\":\"Gel lak a jemné zdobení podle vaší představy – květy, linie či třpytky.\",\"en\":\"Gel polish with delicate nail art of your choice – flowers, lines or glitter.\"}",
+                "image": "demo/studio/nails2.webp",
+                "category": "{\"sk\":\"Nechty\",\"cs\":\"Nehty\",\"en\":\"Nails\"}",
+                "duration_minutes": 90,
+                "buffer_minutes": 15,
+                "capacity": 1,
+                "price": 4500,
+                "currency": "EUR",
+                "payment_mode": "on_site",
+                "deposit": 0,
+                "is_active": 1,
+                "position": 10
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 1,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 3,
+                "product_option_value_id": 3
+            }
+        ],
+        "addon_product": [],
+        "product_label_product": [],
+        "blog_post_tag": [],
+        "blog_post_product": [],
+        "blog_post_catalog_category": [],
+        "booking_resource_service": [
+            {
+                "booking_resource_id": 1,
+                "booking_service_id": 1
+            },
+            {
+                "booking_resource_id": 1,
+                "booking_service_id": 2
+            },
+            {
+                "booking_resource_id": 1,
+                "booking_service_id": 3
+            },
+            {
+                "booking_resource_id": 2,
+                "booking_service_id": 4
+            },
+            {
+                "booking_resource_id": 2,
+                "booking_service_id": 5
+            },
+            {
+                "booking_resource_id": 3,
+                "booking_service_id": 6
+            },
+            {
+                "booking_resource_id": 3,
+                "booking_service_id": 7
+            },
+            {
+                "booking_resource_id": 3,
+                "booking_service_id": 8
+            },
+            {
+                "booking_resource_id": 4,
+                "booking_service_id": 9
+            },
+            {
+                "booking_resource_id": 4,
+                "booking_service_id": 10
+            }
+        ]
+    },
+    "theme_settings": "{\"topbar_hours\":\"Po – Pi 8:00 – 20:00 · So 9:00 – 14:00\",\"notice_text\":\"Novinka: hĺbkové čistenie pleti s 20 % zľavou do konca mesiaca\",\"logo_text\":\"vlasy · pleť · relax\",\"hero_kicker\":\"Kaderníctvo · Kozmetika · Masáže\",\"hero_text\":\"Strih, ošetrenie pleti alebo masáž v pokojnom štúdiu v centre mesta. Termín si rezervujete online za minútu – bez telefonovania.\",\"hero_image\":\"demo/studio/hero.webp\",\"hero_note\":\"4,9 · 230 recenzií\",\"stats\":\"12 rokov | skúseností\\n4 odborníčky | s certifikátmi\\n8 000+ | spokojných klientov\\nOnline | rezervácia 24/7\",\"about_kicker\":\"O štúdiu\",\"about_text\":\"<p>Štúdio sme otvorili s jednoduchou myšlienkou: každá návšteva má byť oddychom. Pracujeme s prírodnou kozmetikou, máme čas na konzultáciu a ku káve vždy pridáme úsmev.</p>\",\"about_points\":\"Prírodná a vegánska kozmetika\\nSterilizované nástroje\\nKáva a čaj počas návštevy\\nParkovanie pred štúdiom\",\"about_image_1\":\"demo/studio/interior.webp\",\"about_image_2\":\"demo/studio/lounge.webp\",\"about_image_3\":\"demo/studio/oil.webp\",\"team_title\":\"Odborníčky, ktorým sa môžete zveriť\",\"member_1_image\":\"demo/studio/team1.webp\",\"member_1_name\":\"Mira Kováčová\",\"member_1_role\":\"majiteľka · kaderníčka\",\"member_2_image\":\"demo/studio/team2.webp\",\"member_2_name\":\"Lea Nováková\",\"member_2_role\":\"kozmetička\",\"member_3_image\":\"demo/studio/team3.webp\",\"member_3_name\":\"Sára Horváth\",\"member_3_role\":\"masérka\",\"member_4_image\":\"demo/studio/team4.webp\",\"member_4_name\":\"Petra Vargová\",\"member_4_role\":\"nechtová dizajnérka\",\"voucher_link\":\"/kategoria/darcekove-poukazky\",\"voucher_image\":\"demo/studio/mask.webp\",\"shop_title\":\"Starostlivosť aj po návšteve\",\"shop_link\":\"/kategoria/kozmetika-domov\",\"reviews_title\":\"Čo hovoria klientky\",\"reviews_summary\":\"4,9 / 5 · 230 hodnotení\",\"review_1_text\":\"Najlepší strih, aký som kedy mala. A tá káva!\",\"review_1_author\":\"Jana · Strih a fúkaná\",\"review_2_text\":\"Masáž kameňmi je zážitok. Odchádzala som ako znovuzrodená.\",\"review_2_author\":\"Katarína · Masáž\",\"review_3_text\":\"Rezervácia online za pár sekúnd a pripomienka deň vopred. Super.\",\"review_3_author\":\"Lucia · Manikúra\",\"faq_1_a\":\"Bezplatne najneskôr 24 hodín vopred – odkazom v potvrdzovacom e-maile alebo telefonicky.\",\"faq_2_a\":\"Väčšinu služieb platíte na mieste kartou alebo v hotovosti. Pri farbení žiadame zálohu 20 €, aromaterapeutická masáž sa platí vopred.\",\"faq_4_q\":\"Môžem prísť s dieťaťom?\",\"faq_4_a\":\"Samozrejme. Detský strih robíme do 12 rokov za 15 € a v kútiku čakajú pastelky.\",\"contact_text\":\"Staré Mesto. Parkovanie priamo pred štúdiom, 3 minúty od zastávky MHD.\",\"contact_address\":\"Hlavná 12, Bratislava\",\"opening_hours\":\"Pondelok – Piatok | 8:00 – 20:00\\nSobota | 9:00 – 14:00\\nNedeľa | zatvorené\",\"footer_text\":\"Kaderníctvo, kozmetika a masáže v pokojnom prostredí v centre mesta.\",\"social_instagram\":\"https://www.instagram.com/\",\"social_facebook\":\"https://www.facebook.com/\",\"_translations\":{\"cs\":{\"topbar_hours\":\"Po – Pá 8:00 – 20:00 · So 9:00 – 14:00\",\"notice_text\":\"Novinka: hloubkové čištění pleti s 20% slevou do konce měsíce\",\"logo_text\":\"vlasy · pleť · relax\",\"hero_kicker\":\"Kadeřnictví · Kosmetika · Masáže\",\"hero_text\":\"Střih, ošetření pleti nebo masáž v klidném studiu v centru města. Termín si zarezervujete online za minutu – bez telefonování.\",\"hero_note\":\"4,9 · 230 recenzí\",\"stats\":\"12 let | zkušeností\\n4 odbornice | s certifikáty\\n8 000+ | spokojených klientů\\nOnline | rezervace 24/7\",\"about_kicker\":\"O studiu\",\"about_text\":\"<p>Studio jsme otevřeli s jednoduchou myšlenkou: každá návštěva má být odpočinkem. Pracujeme s přírodní kosmetikou, máme čas na konzultaci a ke kávě vždy přidáme úsměv.</p>\",\"about_points\":\"Přírodní a veganská kosmetika\\nSterilizované nástroje\\nKáva a čaj během návštěvy\\nParkování před studiem\",\"team_title\":\"Odbornice, kterým se můžete svěřit\",\"member_1_role\":\"majitelka · kadeřnice\",\"member_2_role\":\"kosmetička\",\"member_3_role\":\"masérka\",\"member_4_role\":\"nehtová designérka\",\"shop_title\":\"Péče i po návštěvě\",\"reviews_title\":\"Co říkají klientky\",\"reviews_summary\":\"4,9 / 5 · 230 hodnocení\",\"review_1_text\":\"Nejlepší střih, jaký jsem kdy měla. A ta káva!\",\"review_1_author\":\"Jana · Střih a foukaná\",\"review_2_text\":\"Masáž kameny je zážitek. Odcházela jsem jako znovuzrozená.\",\"review_2_author\":\"Kateřina · Masáž\",\"review_3_text\":\"Rezervace online za pár vteřin a připomínka den předem. Super.\",\"review_3_author\":\"Lucie · Manikúra\",\"faq_1_a\":\"Zdarma nejpozději 24 hodin předem – odkazem v potvrzovacím e-mailu nebo telefonicky.\",\"faq_2_a\":\"Většinu služeb platíte na místě kartou nebo v hotovosti. U barvení žádáme zálohu 20 €, aromaterapeutická masáž se platí předem.\",\"faq_4_q\":\"Mohu přijít s dítětem?\",\"faq_4_a\":\"Samozřejmě. Dětský střih děláme do 12 let za 15 € a v koutku čekají pastelky.\",\"contact_text\":\"Staré Město. Parkování přímo před studiem, 3 minuty od zastávky MHD.\",\"opening_hours\":\"Pondělí – Pátek | 8:00 – 20:00\\nSobota | 9:00 – 14:00\\nNeděle | zavřeno\",\"footer_text\":\"Kadeřnictví, kosmetika a masáže v klidném prostředí v centru města.\"},\"en\":{\"topbar_hours\":\"Mon – Fri 8:00 – 20:00 · Sat 9:00 – 14:00\",\"notice_text\":\"New: deep cleansing facial 20% off until the end of the month\",\"logo_text\":\"hair · skin · relax\",\"hero_kicker\":\"Hair · Beauty · Massage\",\"hero_text\":\"A haircut, a facial or a massage in a calm studio in the city centre. Book online in a minute – no phone calls.\",\"hero_note\":\"4.9 · 230 reviews\",\"stats\":\"12 years | of experience\\n4 specialists | certified\\n8,000+ | happy clients\\nOnline | booking 24/7\",\"about_kicker\":\"About the studio\",\"about_text\":\"<p>We opened the studio with a simple idea: every visit should feel like a break. We use natural products, take time to listen and always serve coffee with a smile.</p>\",\"about_points\":\"Natural and vegan products\\nSterilised tools\\nCoffee and tea during your visit\\nParking right outside\",\"team_title\":\"Specialists you can trust\",\"member_1_role\":\"owner · hairdresser\",\"member_2_role\":\"beautician\",\"member_3_role\":\"massage therapist\",\"member_4_role\":\"nail artist\",\"shop_title\":\"Care after your visit\",\"reviews_title\":\"What our clients say\",\"reviews_summary\":\"4.9 / 5 · 230 reviews\",\"review_1_text\":\"The best haircut I have ever had. And that coffee!\",\"review_1_author\":\"Jana · Cut and blow-dry\",\"review_2_text\":\"The hot stone massage is an experience. I left feeling reborn.\",\"review_2_author\":\"Katarína · Massage\",\"review_3_text\":\"Booked online in seconds and got a reminder the day before. Great.\",\"review_3_author\":\"Lucia · Manicure\",\"faq_1_a\":\"Free of charge up to 24 hours in advance – via the link in the confirmation email or by phone.\",\"faq_2_a\":\"Most services are paid on site by card or cash. Colouring requires a €20 deposit and the aromatherapy massage is paid in advance.\",\"faq_4_q\":\"Can I bring my child?\",\"faq_4_a\":\"Of course. Kids’ haircuts up to 12 years cost €15 and crayons are waiting in the corner.\",\"contact_text\":\"Old Town. Parking right outside the studio, 3 minutes from the tram stop.\",\"opening_hours\":\"Monday – Friday | 8:00 – 20:00\\nSaturday | 9:00 – 14:00\\nSunday | closed\",\"footer_text\":\"Hair, beauty and massage in a calm setting in the city centre.\"}}}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#2f4a3f\""
+        }
+    }
+}

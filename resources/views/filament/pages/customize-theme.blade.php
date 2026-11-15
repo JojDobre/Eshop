@@ -4,6 +4,17 @@
             @if (app(\App\Core\Themes\ThemeManager::class)->settingDefinitions($this->themeModel()) === [])
                 <x-filament::section>{{ __('admin.themes.no_settings') }}</x-filament::section>
             @else
+                @if ($this->textLocales() !== [])
+                    <x-filament::section compact>
+                        <div style="display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;">
+                            <span style="font-size: .875rem; font-weight: 600; margin-right: .25rem;">{{ __('admin.themes.text_locale') }}</span>
+                            @foreach ($this->textLocales() as $code => $label)
+                                <x-filament::button size="sm" :color="$code === $textLocale ? 'primary' : 'gray'" :outlined="$code !== $textLocale" wire:click="switchTextLocale('{{ $code }}')">{{ $label }}</x-filament::button>
+                            @endforeach
+                        </div>
+                        <p style="margin-top: .5rem; font-size: .8125rem; opacity: .75;">{{ __('admin.themes.text_locale_help') }}</p>
+                    </x-filament::section>
+                @endif
                 {{ $this->form }}
             @endif
         </div>
@@ -19,7 +30,7 @@
                     @endforeach
                 </select>
             </div>
-            <iframe x-ref="frame" src="{{ $this->previewUrl() }}" title="{{ __('admin.themes.preview') }}"
+            <iframe x-ref="frame" wire:key="preview-{{ $textLocale }}" src="{{ $this->previewUrl() }}" title="{{ __('admin.themes.preview') }}"
                     class="admin-customize-preview"></iframe>
         </div>
     </div>

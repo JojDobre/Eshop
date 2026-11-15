@@ -29,6 +29,8 @@ export default defineConfig(({ command }) => ({
                 'themes/esencia/assets/css/theme.css',
                 // Šablóna Butik (móda, odvodená od Default)
                 'themes/butik/assets/css/theme.css',
+                // Šablóna Lupeň (kvetinárstvo, odvodená od Default)
+                'themes/lupen/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

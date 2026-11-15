@@ -1,5 +1,17 @@
 # Prehľad zmien
 
+## 1.11.0 – Šablóna Lupeň pre kvetinárstva
+
+- **Nová šablóna Lupeň** pre kvetinárstva a predajne rastlín: tvar lupeňa na fotkách a blokoch, úvod s panelom
+  „Kedy chcete doručiť?“ a odpočtom do uzávierky doručenia v ten istý deň, príležitosti ako vysoké fotky, kytice
+  s veľkosťami a cenami priamo na karte (kliknutím na veľkosť sa pridá do košíka), výhody, predplatné, izbové
+  rastliny z vybranej kategórie, ako to funguje a recenzie s fotkami.
+- **Štyri palety vrátane tmavej** (Ruža, Lúka, Noc, Jemná) alebo farba značky a tri písma nadpisov. Tmavá paleta
+  prispôsobí aj detail produktu, košík a formuláre.
+- **Hotové demo „Margaréta“:** 12 produktov (kytice s veľkosťami, ruže podľa počtu kusov, rastliny), doplnkové
+  voľby kartička / váza / pralinky, dátum doručenia a príjemca v pokladni, predplatné s formulárom, texty v troch jazykoch.
+- **Demo balíky** prenášajú aj vlastné polia objednávky (pokladňa) a zapnú ich.
+
 ## 1.10.0 – Šablóna Butik pre módu
 
 - **Nová šablóna Butik** pre butiky a módne značky v štýle magazínu: veľké fotky na celú šírku, úzke verzálky,

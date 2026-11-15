@@ -216,6 +216,7 @@ class DemoImporter
             'product_types' => $products->contains(fn ($row) => ! empty($row['product_type_id'])),
             'addons' => ! empty($data['pivots']['addon_product'] ?? []),
             'preorders' => $products->contains(fn ($row) => ! empty($row['preorder_enabled'])),
+            'extra_custom_fields' => collect((array) ($data['tables']['custom_fields'] ?? []))->contains(fn ($row) => ($row['entity'] ?? null) === 'order'),
         ]);
 
         if ($needed === []) {
@@ -337,6 +338,19 @@ class DemoImporter
 
                 if ($existingType !== null) {
                     $this->map[$table][$oldId] = $existingType->id;
+
+                    continue;
+                }
+            }
+
+            // Vlastné pole objednávky s rovnakým kľúčom už existuje – ponechá sa obchodníkovo.
+            if ($table === 'custom_fields') {
+                if (($row['entity'] ?? null) !== 'order') {
+                    continue;
+                }
+
+                if ($existingField = DB::table('custom_fields')->where('entity', 'order')->where('key', $row['key'] ?? '')->value('id')) {
+                    $oldId !== null && $this->map[$table][$oldId] = $existingField;
 
                     continue;
                 }

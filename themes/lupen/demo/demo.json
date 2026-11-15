@@ -1,0 +1,1931 @@
+{
+    "format": 1,
+    "eshop": "1.11.0",
+    "title": {
+        "sk": "Margaréta – kvetinárstvo s doručením",
+        "cs": "Margaréta – květinářství s doručením",
+        "en": "Margaréta – florist with delivery"
+    },
+    "theme": "lupen",
+    "modules": [
+        "forms"
+    ],
+    "created_at": "2026-11-15T21:19:24+00:00",
+    "tables": {
+        "manufacturers": [],
+        "product_labels": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Bestseller\",\"cs\":\"Bestseller\",\"en\":\"Bestseller\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Sezónne\",\"cs\":\"Sezónní\",\"en\":\"Seasonal\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 2
+            }
+        ],
+        "addons": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kartička s vaším textom\",\"cs\":\"Kartička s vaším textem\",\"en\":\"Card with your message\"}",
+                "description": "{\"sk\":\"Ručne ju prepíšeme a vložíme do kytice.\",\"cs\":\"Ručně ji přepíšeme a vložíme do kytice.\",\"en\":\"Handwritten and tucked into the bouquet.\"}",
+                "price": 0,
+                "currency": "EUR",
+                "needs_text": 1,
+                "text_label": "{\"sk\":\"Text na kartičku\",\"cs\":\"Text na kartičku\",\"en\":\"Card message\"}",
+                "text_max_length": 200,
+                "position": 1,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Sklenená váza\",\"cs\":\"Skleněná váza\",\"en\":\"Glass vase\"}",
+                "description": "{\"sk\":\"Kytica príde rovno vo váze s vodou.\",\"cs\":\"Kytice přijde rovnou ve váze s vodou.\",\"en\":\"The bouquet arrives in a vase with water.\"}",
+                "price": 1200,
+                "currency": "EUR",
+                "needs_text": 0,
+                "text_label": null,
+                "text_max_length": 50,
+                "position": 2,
+                "is_active": 1
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Belgické pralinky\",\"cs\":\"Belgické pralinky\",\"en\":\"Belgian chocolates\"}",
+                "description": "{\"sk\":\"Krabička 9 praliniek.\",\"cs\":\"Krabička 9 pralinek.\",\"en\":\"A box of 9 chocolates.\"}",
+                "price": 900,
+                "currency": "EUR",
+                "needs_text": 0,
+                "text_label": null,
+                "text_max_length": 50,
+                "position": 3,
+                "is_active": 1
+            }
+        ],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Kytice\",\"cs\":\"Kytice\",\"en\":\"Bouquets\"}",
+                "slug": "{\"sk\":\"kytice\",\"cs\":\"kytice\",\"en\":\"bouquets\"}",
+                "description": "{\"sk\":\"<p>Kytice viazané ručne každé ráno z čerstvých kvetov.</p>\",\"cs\":\"<p>Kytice vázané ručně každé ráno z čerstvých květin.</p>\",\"en\":\"<p>Bouquets hand-tied every morning from fresh flowers.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/lupen/bouquet.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Ruže\",\"cs\":\"Růže\",\"en\":\"Roses\"}",
+                "slug": "{\"sk\":\"ruze\",\"cs\":\"ruze\",\"en\":\"roses\"}",
+                "description": "{\"sk\":\"<p>Ruže od slovenských pestovateľov v 11, 21 alebo 41 kusoch.</p>\",\"cs\":\"<p>Růže od slovenských pěstitelů v 11, 21 nebo 41 kusech.</p>\",\"en\":\"<p>Roses from Slovak growers in 11, 21 or 41 stems.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/lupen/roses.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "parent_id": null,
+                "name": "{\"sk\":\"Sezónne\",\"cs\":\"Sezónní\",\"en\":\"Seasonal\"}",
+                "slug": "{\"sk\":\"sezonne\",\"cs\":\"sezonni\",\"en\":\"seasonal\"}",
+                "description": "{\"sk\":\"<p>Pivónie, tulipány a kvety, ktoré sú práve v sezóne.</p>\",\"cs\":\"<p>Pivoňky, tulipány a květiny, které jsou právě v sezóně.</p>\",\"en\":\"<p>Peonies, tulips and whatever is in season right now.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/lupen/whitebq.webp",
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "parent_id": null,
+                "name": "{\"sk\":\"Rastliny\",\"cs\":\"Rostliny\",\"en\":\"Plants\"}",
+                "slug": "{\"sk\":\"rastliny\",\"cs\":\"rostliny\",\"en\":\"plants\"}",
+                "description": "{\"sk\":\"<p>Izbové rastliny v kvetináčoch, ktoré vydržia roky.</p>\",\"cs\":\"<p>Pokojové rostliny v květináčích, které vydrží roky.</p>\",\"en\":\"<p>Potted houseplants that last for years.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/lupen/monstera.webp",
+                "position": 4,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "product_types": [],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kytica Ružová záhrada\",\"cs\":\"Kytice Růžová zahrada\",\"en\":\"Pink Garden bouquet\"}",
+                "slug": "{\"sk\":\"kytica-ruzova-zahrada\",\"cs\":\"kytice-ruzova-zahrada\",\"en\":\"pink-garden-bouquet\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"ruže, karafiáty, gypsomilka\",\"cs\":\"růže, karafiáty, gypsomilka\",\"en\":\"roses, carnations, gypsophila\"}",
+                "description": "{\"sk\":\"<p>Ružové ruže, karafiáty, gypsomilka a eukalyptus zviazané do vzdušnej kytice v papieri. Malá má cca 25 cm a 9 kvetov, stredná 35 cm a 15 kvetov, veľká 45 cm a 25 kvetov.</p>\",\"cs\":\"<p>Růžové růže, karafiáty, gypsomilka a eukalyptus svázané do vzdušné kytice v papíru. Malá má cca 25 cm a 9 květů, střední 35 cm a 15 květů, velká 45 cm a 25 květů.</p>\",\"en\":\"<p>Pink roses, carnations, gypsophila and eucalyptus tied into an airy bouquet in paper. Small is about 25 cm with 9 flowers, medium 35 cm with 15, large 45 cm with 25.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/pinkwhite.webp\",\"demo/lupen/roses.webp\",\"demo/lupen/holding.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kytica ruzova zahrada kytice ruzova zahrada pink garden bouquet ruze, karafiaty, gypsomilka ruze, karafiaty, gypsomilka roses, carnations, gypsophila",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kytica Slnečné leto\",\"cs\":\"Kytice Sluneční léto\",\"en\":\"Sunny Summer bouquet\"}",
+                "slug": "{\"sk\":\"kytica-slnecne-leto\",\"cs\":\"kytice-slunecni-leto\",\"en\":\"sunny-summer-bouquet\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"slnečnice, hortenzie, ruže\",\"cs\":\"slunečnice, hortenzie, růže\",\"en\":\"sunflowers, hydrangeas, roses\"}",
+                "description": "{\"sk\":\"<p>Veselá kytica so slnečnicami, hortenziami a ružami, ktorá rozžiari každú izbu.</p>\",\"cs\":\"<p>Veselá kytice se slunečnicemi, hortenziemi a růžemi, která rozzáří každý pokoj.</p>\",\"en\":\"<p>A cheerful bouquet of sunflowers, hydrangeas and roses to brighten any room.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/sunflowers.webp\",\"demo/lupen/vase.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kytica slnecne leto kytice slunecni leto sunny summer bouquet slnecnice, hortenzie, ruze slunecnice, hortenzie, ruze sunflowers, hydrangeas, roses",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Biele pivónie\",\"cs\":\"Bílé pivoňky\",\"en\":\"White peonies\"}",
+                "slug": "{\"sk\":\"biele-pivonie\",\"cs\":\"bile-pivonky\",\"en\":\"white-peonies\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"sezónne, voňavé\",\"cs\":\"sezónní, voňavé\",\"en\":\"seasonal, fragrant\"}",
+                "description": "{\"sk\":\"<p>Plné biele pivónie, ktoré sa postupne otvárajú do veľkých kvetov. Dostupné iba v sezóne.</p>\",\"cs\":\"<p>Plné bílé pivoňky, které se postupně otevírají do velkých květů. Dostupné jen v sezóně.</p>\",\"en\":\"<p>Full white peonies that slowly open into big blooms. Only available in season.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/whitebq.webp\",\"demo/lupen/whitebeige.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "biele pivonie bile pivonky white peonies sezonne, vonave sezonni, vonave seasonal, fragrant",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Červené ruže s eukalyptom\",\"cs\":\"Červené růže s eukalyptem\",\"en\":\"Red roses with eucalyptus\"}",
+                "slug": "{\"sk\":\"cervene-ruze-s-eukalyptom\",\"cs\":\"cervene-ruze-s-eukalyptem\",\"en\":\"red-roses-with-eucalyptus\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"na výročie aj vyznanie\",\"cs\":\"na výročí i vyznání\",\"en\":\"for anniversaries and declarations\"}",
+                "description": "{\"sk\":\"<p>Klasika, ktorá nikdy nesklame: červené ruže s vetvičkami eukalyptu.</p>\",\"cs\":\"<p>Klasika, která nikdy nezklame: červené růže s větvičkami eukalyptu.</p>\",\"en\":\"<p>A classic that never fails: red roses with sprigs of eucalyptus.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/redroses.webp\",\"demo/lupen/redarr.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "cervene ruze s eukalyptom cervene ruze s eukalyptem red roses with eucalyptus na vyrocie aj vyznanie na vyroci i vyznani for anniversaries and declarations",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 5,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Ružové ruže Pastel\",\"cs\":\"Růžové růže Pastel\",\"en\":\"Pastel pink roses\"}",
+                "slug": "{\"sk\":\"ruzove-ruze-pastel\",\"cs\":\"ruzove-ruze-pastel\",\"en\":\"pastel-pink-roses\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"jemné a romantické\",\"cs\":\"jemné a romantické\",\"en\":\"soft and romantic\"}",
+                "description": "{\"sk\":\"<p>Pastelovo ružové ruže s plnými kvetmi v jednoduchom papierovom obale.</p>\",\"cs\":\"<p>Pastelově růžové růže s plnými květy v jednoduchém papírovém obalu.</p>\",\"en\":\"<p>Pastel pink roses with full blooms in simple paper wrap.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/roses.webp\",\"demo/lupen/peony.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "ruzove ruze pastel ruzove ruze pastel pastel pink roses jemne a romanticke jemne a romanticke soft and romantic",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 6,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Tulipány vo váze\",\"cs\":\"Tulipány ve váze\",\"en\":\"Tulips in a vase\"}",
+                "slug": "{\"sk\":\"tulipany-vo-vaze\",\"cs\":\"tulipany-ve-vaze\",\"en\":\"tulips-in-a-vase\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"jarná radosť\",\"cs\":\"jarní radost\",\"en\":\"a spring joy\"}",
+                "description": "{\"sk\":\"<p>Ružovo-biele tulipány, ktoré prinesú jar aj uprostred zimy.</p>\",\"cs\":\"<p>Růžovo-bílé tulipány, které přinesou jaro i uprostřed zimy.</p>\",\"en\":\"<p>Pink and white tulips that bring spring even in midwinter.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/pinkvase.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "tulipany vo vaze tulipany ve vaze tulips in a vase jarna radost jarni radost a spring joy",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 7,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Lúčna kytica\",\"cs\":\"Luční kytice\",\"en\":\"Meadow bouquet\"}",
+                "slug": "{\"sk\":\"lucna-kytica\",\"cs\":\"lucni-kytice\",\"en\":\"meadow-bouquet\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"voľne viazaná, prírodná\",\"cs\":\"volně vázaná, přírodní\",\"en\":\"loosely tied, natural\"}",
+                "description": "{\"sk\":\"<p>Voľne viazaná kytica s levkojmi, šalviou a sezónnymi kvetmi, akoby ste ju práve natrhali.</p>\",\"cs\":\"<p>Volně vázaná kytice s levkoji, šalvějí a sezónními květinami, jako byste ji právě natrhali.</p>\",\"en\":\"<p>A loosely tied bouquet with stock, sage and seasonal flowers, as if freshly picked.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/vibrant.webp\",\"demo/lupen/centerpiece.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "lucna kytica lucni kytice meadow bouquet volne viazana, prirodna volne vazana, prirodni loosely tied, natural",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 8,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Biele maky\",\"cs\":\"Bílé máky\",\"en\":\"White poppies\"}",
+                "slug": "{\"sk\":\"biele-maky\",\"cs\":\"bile-maky\",\"en\":\"white-poppies\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"minimalistické, 7 stoniek\",\"cs\":\"minimalistické, 7 stonků\",\"en\":\"minimal, 7 stems\"}",
+                "description": "{\"sk\":\"<p>Sedem stoniek bielych makov v jantárovej váze. Jednoduchá elegancia.</p>\",\"cs\":\"<p>Sedm stonků bílých máků v jantarové váze. Jednoduchá elegance.</p>\",\"en\":\"<p>Seven stems of white poppies in an amber vase. Simple elegance.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/poppies.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "biele maky bile maky white poppies minimalisticke, 7 stoniek minimalisticke, 7 stonku minimal, 7 stems",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 9,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Monstera deliciosa\",\"cs\":\"Monstera deliciosa\",\"en\":\"Monstera deliciosa\"}",
+                "slug": "{\"sk\":\"monstera-deliciosa\",\"cs\":\"monstera-deliciosa\",\"en\":\"monstera-deliciosa\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"v terakotovom kvetináči\",\"cs\":\"v terakotovém květináči\",\"en\":\"in a terracotta pot\"}",
+                "description": "{\"sk\":\"<p>Obľúbená izbová rastlina s veľkými vykrajovanými listami. Nenáročná na starostlivosť.</p>\",\"cs\":\"<p>Oblíbená pokojová rostlina s velkými vykrajovanými listy. Nenáročná na péči.</p>\",\"en\":\"<p>A popular houseplant with large split leaves. Easy to care for.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/monstera.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "monstera deliciosa monstera deliciosa monstera deliciosa v terakotovom kvetinaci v terakotovem kvetinaci in a terracotta pot",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 10,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Olivovník\",\"cs\":\"Olivovník\",\"en\":\"Olive tree\"}",
+                "slug": "{\"sk\":\"olivovnik\",\"cs\":\"olivovnik\",\"en\":\"olive-tree\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"pre slnečné miesta\",\"cs\":\"pro slunná místa\",\"en\":\"for sunny spots\"}",
+                "description": "{\"sk\":\"<p>Malý olivovník v bielom kvetináči. Miluje slnko a občasné zalievanie.</p>\",\"cs\":\"<p>Malý olivovník v bílém květináči. Miluje slunce a občasnou zálivku.</p>\",\"en\":\"<p>A small olive tree in a white pot. Loves sun and occasional watering.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/olive.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "olivovnik olivovnik olive tree pre slnecne miesta pro slunna mista for sunny spots",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 11,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Alokázia\",\"cs\":\"Alokázie\",\"en\":\"Alocasia\"}",
+                "slug": "{\"sk\":\"alokazia\",\"cs\":\"alokazie\",\"en\":\"alocasia\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"nenáročná na svetlo\",\"cs\":\"nenáročná na světlo\",\"en\":\"tolerates low light\"}",
+                "description": "{\"sk\":\"<p>Výrazné listy s bielymi žilkami, ktoré oživia každý kút.</p>\",\"cs\":\"<p>Výrazné listy s bílými žilkami, které oživí každý kout.</p>\",\"en\":\"<p>Striking leaves with white veins to brighten any corner.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/alocasia.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "alokazia alokazie alocasia nenarocna na svetlo nenarocna na svetlo tolerates low light",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 12,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Sukulenty, sada 6 ks\",\"cs\":\"Sukulenty, sada 6 ks\",\"en\":\"Succulents, set of 6\"}",
+                "slug": "{\"sk\":\"sukulenty-sada-6-ks\",\"cs\":\"sukulenty-sada-6-ks\",\"en\":\"succulents-set-of-6\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"do kancelárie\",\"cs\":\"do kanceláře\",\"en\":\"for the office\"}",
+                "description": "{\"sk\":\"<p>Šesť malých sukulentov v terakotových kvetináčoch. Stačí ich poliať raz za dva týždne.</p>\",\"cs\":\"<p>Šest malých sukulentů v terakotových květináčích. Stačí je zalít jednou za dva týdny.</p>\",\"en\":\"<p>Six small succulents in terracotta pots. Water once every two weeks.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/lupen/succulents.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 20,
+                "low_stock_threshold": null,
+                "weight": 1200,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "sukulenty, sada 6 ks sukulenty, sada 6 ks succulents, set of 6 do kancelarie do kancelare for the office",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 2,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            },
+            {
+                "id": 3,
+                "product_id": 3,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            },
+            {
+                "id": 4,
+                "product_id": 4,
+                "name": "{\"sk\":\"Počet kusov\",\"cs\":\"Počet kusů\",\"en\":\"Stems\"}",
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_id": 5,
+                "name": "{\"sk\":\"Počet kusov\",\"cs\":\"Počet kusů\",\"en\":\"Stems\"}",
+                "position": 1
+            },
+            {
+                "id": 6,
+                "product_id": 6,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            },
+            {
+                "id": 7,
+                "product_id": 7,
+                "name": "{\"sk\":\"Veľkosť\",\"cs\":\"Velikost\",\"en\":\"Size\"}",
+                "position": 1
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Malá\",\"cs\":\"Malá\",\"en\":\"Small\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Stredná\",\"cs\":\"Střední\",\"en\":\"Medium\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Veľká\",\"cs\":\"Velká\",\"en\":\"Large\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"Malá\",\"cs\":\"Malá\",\"en\":\"Small\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"Stredná\",\"cs\":\"Střední\",\"en\":\"Medium\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 6,
+                "product_option_id": 2,
+                "value": "{\"sk\":\"Veľká\",\"cs\":\"Velká\",\"en\":\"Large\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 7,
+                "product_option_id": 3,
+                "value": "{\"sk\":\"Malá\",\"cs\":\"Malá\",\"en\":\"Small\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 8,
+                "product_option_id": 3,
+                "value": "{\"sk\":\"Stredná\",\"cs\":\"Střední\",\"en\":\"Medium\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 9,
+                "product_option_id": 3,
+                "value": "{\"sk\":\"Veľká\",\"cs\":\"Velká\",\"en\":\"Large\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 10,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"11 ks\",\"cs\":\"11 ks\",\"en\":\"11 stems\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 11,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"21 ks\",\"cs\":\"21 ks\",\"en\":\"21 stems\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 12,
+                "product_option_id": 4,
+                "value": "{\"sk\":\"41 ks\",\"cs\":\"41 ks\",\"en\":\"41 stems\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 13,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"11 ks\",\"cs\":\"11 ks\",\"en\":\"11 stems\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 14,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"21 ks\",\"cs\":\"21 ks\",\"en\":\"21 stems\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 15,
+                "product_option_id": 5,
+                "value": "{\"sk\":\"41 ks\",\"cs\":\"41 ks\",\"en\":\"41 stems\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 16,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"Malá\",\"cs\":\"Malá\",\"en\":\"Small\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 17,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"Stredná\",\"cs\":\"Střední\",\"en\":\"Medium\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 18,
+                "product_option_id": 6,
+                "value": "{\"sk\":\"Veľká\",\"cs\":\"Velká\",\"en\":\"Large\"}",
+                "color": null,
+                "position": 3
+            },
+            {
+                "id": 19,
+                "product_option_id": 7,
+                "value": "{\"sk\":\"Malá\",\"cs\":\"Malá\",\"en\":\"Small\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 20,
+                "product_option_id": 7,
+                "value": "{\"sk\":\"Stredná\",\"cs\":\"Střední\",\"en\":\"Medium\"}",
+                "color": null,
+                "position": 2
+            },
+            {
+                "id": 21,
+                "product_option_id": 7,
+                "value": "{\"sk\":\"Veľká\",\"cs\":\"Velká\",\"en\":\"Large\"}",
+                "color": null,
+                "position": 3
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 5,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 6,
+                "product_id": 2,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 7,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 8,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 9,
+                "product_id": 3,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 10,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 11,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 12,
+                "product_id": 4,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 13,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 14,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 15,
+                "product_id": 5,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 16,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 17,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 18,
+                "product_id": 6,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            },
+            {
+                "id": 19,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 20,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            },
+            {
+                "id": 21,
+                "product_id": 7,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 3
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 72900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "EUR",
+                "amount": 2900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "CZK",
+                "amount": 72900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "EUR",
+                "amount": 3900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 6,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "CZK",
+                "amount": 97900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 7,
+                "product_id": 1,
+                "product_variant_id": 3,
+                "currency": "EUR",
+                "amount": 5500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 8,
+                "product_id": 1,
+                "product_variant_id": 3,
+                "currency": "CZK",
+                "amount": 137900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 9,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3200,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 79900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 2,
+                "product_variant_id": 4,
+                "currency": "EUR",
+                "amount": 3200,
+                "compare_at_amount": null
+            },
+            {
+                "id": 12,
+                "product_id": 2,
+                "product_variant_id": 4,
+                "currency": "CZK",
+                "amount": 79900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 13,
+                "product_id": 2,
+                "product_variant_id": 5,
+                "currency": "EUR",
+                "amount": 4400,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 2,
+                "product_variant_id": 5,
+                "currency": "CZK",
+                "amount": 109900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 15,
+                "product_id": 2,
+                "product_variant_id": 6,
+                "currency": "EUR",
+                "amount": 5900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 16,
+                "product_id": 2,
+                "product_variant_id": 6,
+                "currency": "CZK",
+                "amount": 147900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 17,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 18,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 87900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 19,
+                "product_id": 3,
+                "product_variant_id": 7,
+                "currency": "EUR",
+                "amount": 3500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 20,
+                "product_id": 3,
+                "product_variant_id": 7,
+                "currency": "CZK",
+                "amount": 87900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 21,
+                "product_id": 3,
+                "product_variant_id": 8,
+                "currency": "EUR",
+                "amount": 4900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 22,
+                "product_id": 3,
+                "product_variant_id": 8,
+                "currency": "CZK",
+                "amount": 122900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 23,
+                "product_id": 3,
+                "product_variant_id": 9,
+                "currency": "EUR",
+                "amount": 6500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 24,
+                "product_id": 3,
+                "product_variant_id": 9,
+                "currency": "CZK",
+                "amount": 162900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 25,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 26,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 97900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 27,
+                "product_id": 4,
+                "product_variant_id": 10,
+                "currency": "EUR",
+                "amount": 3900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 28,
+                "product_id": 4,
+                "product_variant_id": 10,
+                "currency": "CZK",
+                "amount": 97900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 29,
+                "product_id": 4,
+                "product_variant_id": 11,
+                "currency": "EUR",
+                "amount": 6500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 30,
+                "product_id": 4,
+                "product_variant_id": 11,
+                "currency": "CZK",
+                "amount": 162900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 31,
+                "product_id": 4,
+                "product_variant_id": 12,
+                "currency": "EUR",
+                "amount": 11900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 32,
+                "product_id": 4,
+                "product_variant_id": 12,
+                "currency": "CZK",
+                "amount": 297900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 33,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3600,
+                "compare_at_amount": null
+            },
+            {
+                "id": 34,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 89900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 35,
+                "product_id": 5,
+                "product_variant_id": 13,
+                "currency": "EUR",
+                "amount": 3600,
+                "compare_at_amount": null
+            },
+            {
+                "id": 36,
+                "product_id": 5,
+                "product_variant_id": 13,
+                "currency": "CZK",
+                "amount": 89900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 37,
+                "product_id": 5,
+                "product_variant_id": 14,
+                "currency": "EUR",
+                "amount": 5900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 38,
+                "product_id": 5,
+                "product_variant_id": 14,
+                "currency": "CZK",
+                "amount": 147900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 39,
+                "product_id": 5,
+                "product_variant_id": 15,
+                "currency": "EUR",
+                "amount": 10900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 40,
+                "product_id": 5,
+                "product_variant_id": 15,
+                "currency": "CZK",
+                "amount": 272900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 41,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 42,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 62900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 43,
+                "product_id": 6,
+                "product_variant_id": 16,
+                "currency": "EUR",
+                "amount": 2500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 44,
+                "product_id": 6,
+                "product_variant_id": 16,
+                "currency": "CZK",
+                "amount": 62900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 45,
+                "product_id": 6,
+                "product_variant_id": 17,
+                "currency": "EUR",
+                "amount": 3400,
+                "compare_at_amount": null
+            },
+            {
+                "id": 46,
+                "product_id": 6,
+                "product_variant_id": 17,
+                "currency": "CZK",
+                "amount": 84900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 47,
+                "product_id": 6,
+                "product_variant_id": 18,
+                "currency": "EUR",
+                "amount": 4500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 48,
+                "product_id": 6,
+                "product_variant_id": 18,
+                "currency": "CZK",
+                "amount": 112900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 49,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 50,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 69900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 51,
+                "product_id": 7,
+                "product_variant_id": 19,
+                "currency": "EUR",
+                "amount": 2800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 52,
+                "product_id": 7,
+                "product_variant_id": 19,
+                "currency": "CZK",
+                "amount": 69900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 53,
+                "product_id": 7,
+                "product_variant_id": 20,
+                "currency": "EUR",
+                "amount": 3800,
+                "compare_at_amount": null
+            },
+            {
+                "id": 54,
+                "product_id": 7,
+                "product_variant_id": 20,
+                "currency": "CZK",
+                "amount": 94900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 55,
+                "product_id": 7,
+                "product_variant_id": 21,
+                "currency": "EUR",
+                "amount": 5200,
+                "compare_at_amount": null
+            },
+            {
+                "id": 56,
+                "product_id": 7,
+                "product_variant_id": 21,
+                "currency": "CZK",
+                "amount": 129900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 57,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 58,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 72900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 59,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 4500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 60,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 112900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 61,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 5900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 62,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 147900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 63,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 3500,
+                "compare_at_amount": null
+            },
+            {
+                "id": 64,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 87900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 65,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 66,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 72900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Predplatné kvetov\",\"cs\":\"Předplatné květin\",\"en\":\"Flower subscription\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Ako často?\",\"type\":\"select\",\"required\":true,\"width\":\"half\",\"options\":\"Každý týždeň\\nKaždé 2 týždne\\nMesačne\"},{\"label\":\"Adresa doručenia\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"Obľúbené farby alebo kvety\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Jak často?\",\"type\":\"select\",\"required\":true,\"width\":\"half\",\"options\":\"Každý týden\\nKaždé 2 týdny\\nMěsíčně\"},{\"label\":\"Adresa doručení\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"Oblíbené barvy nebo květiny\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"How often?\",\"type\":\"select\",\"required\":true,\"width\":\"half\",\"options\":\"Every week\\nEvery 2 weeks\\nMonthly\"},{\"label\":\"Delivery address\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"Favourite colours or flowers\",\"type\":\"textarea\",\"required\":false,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Chcem predplatné\",\"cs\":\"Chci předplatné\",\"en\":\"Start my subscription\"}",
+                "success_message": "{\"sk\":\"Ďakujeme! Ozveme sa do 24 hodín a dohodneme prvé doručenie.\",\"cs\":\"Děkujeme! Ozveme se do 24 hodin a domluvíme první doručení.\",\"en\":\"Thank you! We will be in touch within 24 hours to arrange the first delivery.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "custom_fields": [
+            {
+                "id": 1,
+                "entity": "order",
+                "key": "delivery_date",
+                "name": "{\"sk\":\"Dátum doručenia\",\"cs\":\"Datum doručení\",\"en\":\"Delivery date\"}",
+                "help": "{\"sk\":\"Doručujeme Po – So. Ešte v ten istý deň pri objednávke do 14:00.\",\"cs\":\"Doručujeme Po – So. Ještě týž den při objednávce do 14:00.\",\"en\":\"We deliver Mon – Sat. Same day for orders before 2 pm.\"}",
+                "type": "date",
+                "unit": null,
+                "options": null,
+                "is_required": 1,
+                "is_filterable": 0,
+                "is_visible": 1,
+                "is_translatable": 0,
+                "position": 1,
+                "group": null,
+                "compare_best": null,
+                "display": "parameters"
+            },
+            {
+                "id": 2,
+                "entity": "order",
+                "key": "recipient",
+                "name": "{\"sk\":\"Meno a telefón príjemcu\",\"cs\":\"Jméno a telefon příjemce\",\"en\":\"Recipient name and phone\"}",
+                "help": "{\"sk\":\"Ak kytica nie je pre vás.\",\"cs\":\"Pokud kytice není pro vás.\",\"en\":\"If the bouquet is not for you.\"}",
+                "type": "text",
+                "unit": null,
+                "options": null,
+                "is_required": 0,
+                "is_filterable": 0,
+                "is_visible": 1,
+                "is_translatable": 0,
+                "position": 2,
+                "group": null,
+                "compare_best": null,
+                "display": "parameters"
+            }
+        ],
+        "saved_blocks": [],
+        "blog_categories": [],
+        "blog_tags": [],
+        "blog_posts": [],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"c33db16b-6250-46dc-b7c8-50e3c9b44659\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "name": "{\"sk\":\"Predplatné kvetov\",\"cs\":\"Předplatné květin\",\"en\":\"Flower subscription\"}",
+                "slug": "{\"sk\":\"predplatne-kvetov\",\"cs\":\"predplatne-kvetin\",\"en\":\"flower-subscription\"}",
+                "content": "{\"sk\":\"<p>Čerstvá kytica každý týždeň, každé dva týždne alebo raz mesačne. Domov, do kancelárie či ako darček. Platíte vždy až po doručení a zrušiť môžete kedykoľvek.</p>\",\"cs\":\"<p>Čerstvá kytice každý týden, každé dva týdny nebo jednou měsíčně. Domů, do kanceláře či jako dárek. Platíte vždy až po doručení a zrušit můžete kdykoli.</p>\",\"en\":\"<p>A fresh bouquet every week, every two weeks or once a month. For your home, office or as a gift. You always pay after delivery and can cancel anytime.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": null,
+                "show_in_footer": 1,
+                "position": 10,
+                "is_visible": 1,
+                "blocks": "{\"sk\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"cs\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}],\"en\":[{\"type\":\"form\",\"data\":{\"form_id\":2,\"visibility\":\"all\"}}]}",
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "3",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "4",
+                "new_window": 0,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "page",
+                "target": "6",
+                "new_window": 0,
+                "position": 5
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 8,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 9,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 10,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 12,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 2
+            },
+            {
+                "product_variant_id": 3,
+                "product_option_value_id": 3
+            },
+            {
+                "product_variant_id": 4,
+                "product_option_value_id": 4
+            },
+            {
+                "product_variant_id": 5,
+                "product_option_value_id": 5
+            },
+            {
+                "product_variant_id": 6,
+                "product_option_value_id": 6
+            },
+            {
+                "product_variant_id": 7,
+                "product_option_value_id": 7
+            },
+            {
+                "product_variant_id": 8,
+                "product_option_value_id": 8
+            },
+            {
+                "product_variant_id": 9,
+                "product_option_value_id": 9
+            },
+            {
+                "product_variant_id": 10,
+                "product_option_value_id": 10
+            },
+            {
+                "product_variant_id": 11,
+                "product_option_value_id": 11
+            },
+            {
+                "product_variant_id": 12,
+                "product_option_value_id": 12
+            },
+            {
+                "product_variant_id": 13,
+                "product_option_value_id": 13
+            },
+            {
+                "product_variant_id": 14,
+                "product_option_value_id": 14
+            },
+            {
+                "product_variant_id": 15,
+                "product_option_value_id": 15
+            },
+            {
+                "product_variant_id": 16,
+                "product_option_value_id": 16
+            },
+            {
+                "product_variant_id": 17,
+                "product_option_value_id": 17
+            },
+            {
+                "product_variant_id": 18,
+                "product_option_value_id": 18
+            },
+            {
+                "product_variant_id": 19,
+                "product_option_value_id": 19
+            },
+            {
+                "product_variant_id": 20,
+                "product_option_value_id": 20
+            },
+            {
+                "product_variant_id": 21,
+                "product_option_value_id": 21
+            }
+        ],
+        "addon_product": [
+            {
+                "addon_id": 1,
+                "product_id": 1
+            },
+            {
+                "addon_id": 1,
+                "product_id": 2
+            },
+            {
+                "addon_id": 1,
+                "product_id": 3
+            },
+            {
+                "addon_id": 1,
+                "product_id": 4
+            },
+            {
+                "addon_id": 1,
+                "product_id": 5
+            },
+            {
+                "addon_id": 1,
+                "product_id": 6
+            },
+            {
+                "addon_id": 1,
+                "product_id": 7
+            },
+            {
+                "addon_id": 1,
+                "product_id": 8
+            },
+            {
+                "addon_id": 2,
+                "product_id": 1
+            },
+            {
+                "addon_id": 2,
+                "product_id": 2
+            },
+            {
+                "addon_id": 2,
+                "product_id": 3
+            },
+            {
+                "addon_id": 2,
+                "product_id": 4
+            },
+            {
+                "addon_id": 2,
+                "product_id": 5
+            },
+            {
+                "addon_id": 2,
+                "product_id": 6
+            },
+            {
+                "addon_id": 2,
+                "product_id": 7
+            },
+            {
+                "addon_id": 2,
+                "product_id": 8
+            },
+            {
+                "addon_id": 3,
+                "product_id": 1
+            },
+            {
+                "addon_id": 3,
+                "product_id": 2
+            },
+            {
+                "addon_id": 3,
+                "product_id": 3
+            },
+            {
+                "addon_id": 3,
+                "product_id": 4
+            },
+            {
+                "addon_id": 3,
+                "product_id": 5
+            },
+            {
+                "addon_id": 3,
+                "product_id": 6
+            },
+            {
+                "addon_id": 3,
+                "product_id": 7
+            },
+            {
+                "addon_id": 3,
+                "product_id": 8
+            }
+        ],
+        "product_label_product": [
+            {
+                "product_label_id": 1,
+                "product_id": 1
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 3
+            }
+        ],
+        "blog_post_tag": [],
+        "blog_post_product": [],
+        "blog_post_catalog_category": []
+    },
+    "theme_settings": "{\"palette\":\"ruza\",\"cutoff_time\":\"14:00\",\"notice_text\":\"Objednajte do :time a kvety doručíme ešte dnes po Bratislave\",\"logo_text\":\"kvetinárstvo\",\"hero_badge\":\"Čerstvé kvety od slovenských pestovateľov\",\"hero_image\":\"demo/lupen/bouquet.webp\",\"delivery_link\":\"/kategoria/kytice\",\"delivery_area\":\"po Bratislave\",\"occasions_title\":\"Pre akú príležitosť?\",\"occasion_1\":\"Narodeniny\",\"occasion_1_link\":\"/kategoria/kytice\",\"occasion_1_image\":\"demo/lupen/vibrant.webp\",\"occasion_2\":\"Láska\",\"occasion_2_link\":\"/kategoria/ruze\",\"occasion_2_image\":\"demo/lupen/redroses.webp\",\"occasion_3\":\"Poďakovanie\",\"occasion_3_link\":\"/produkt/kytica-slnecne-leto\",\"occasion_3_image\":\"demo/lupen/sunflowers.webp\",\"occasion_4\":\"Novorodenec\",\"occasion_4_link\":\"/produkt/tulipany-vo-vaze\",\"occasion_4_image\":\"demo/lupen/pinkvase.webp\",\"occasion_5\":\"Sústrasť\",\"occasion_5_link\":\"/produkt/biele-pivonie\",\"occasion_5_image\":\"demo/lupen/whitebeige.webp\",\"occasion_6\":\"Svadba\",\"occasion_6_link\":\"/kategoria/sezonne\",\"occasion_6_image\":\"demo/lupen/whitebq.webp\",\"benefit_3_title\":\"Doručenie ešte dnes\",\"benefit_3_text\":\"Po Bratislave pri objednávke do 14:00.\",\"sub_title\":\"Čerstvé kvety každý týždeň\",\"sub_plans\":\"Každé 2 týždne | 35 € | za kyticu\\nKaždý týždeň | 29 € | za kyticu\\nMesačne | 39 € | za kyticu\",\"sub_button\":\"Vybrať predplatné\",\"sub_link\":\"/stranka/predplatne-kvetov\",\"sub_image\":\"demo/lupen/peony.webp\",\"plants_category\":4,\"steps_image\":\"demo/lupen/florist.webp\",\"reviews_summary\":\"4,9 z 1 860 hodnotení\",\"review_1_text\":\"Mama sa rozplakala od radosti. Kytica bola krajšia ako na fotke.\",\"review_1_author\":\"Lucia · Narodeniny\",\"review_1_image\":\"demo/lupen/pinkwhite.webp\",\"review_2_text\":\"Fotka pred odoslaním je skvelý nápad, presne som vedel, čo príde.\",\"review_2_author\":\"Martin · Výročie\",\"review_2_image\":\"demo/lupen/redarr.webp\",\"review_3_text\":\"Predplatné do kancelárie – každý pondelok nová radosť.\",\"review_3_author\":\"Studio Hrana · Predplatné\",\"review_3_image\":\"demo/lupen/poppies.webp\",\"footer_text\":\"Kvetinárstvo v srdci Bratislavy. Viažeme z čerstvých kvetov od slovenských pestovateľov.\",\"footer_delivery\":\"Bratislava ešte dnes\\nCelé Slovensko do 24 hodín\\nOsobný odber na predajni\",\"footer_hours\":\"Obchodná 24, Bratislava\\nPo – So 8:00 – 19:00\",\"_translations\":{\"cs\":{\"logo_text\":\"květinářství\",\"notice_text\":\"Objednejte do :time a květiny doručíme ještě dnes po Bratislavě\",\"hero_badge\":\"Čerstvé květiny od slovenských pěstitelů\",\"delivery_area\":\"po Bratislavě\",\"occasions_title\":\"Pro jakou příležitost?\",\"occasion_1\":\"Narozeniny\",\"occasion_2\":\"Láska\",\"occasion_3\":\"Poděkování\",\"occasion_4\":\"Miminko\",\"occasion_5\":\"Soustrast\",\"occasion_6\":\"Svatba\",\"benefit_3_title\":\"Doručení ještě dnes\",\"benefit_3_text\":\"Po Bratislavě při objednávce do 14:00.\",\"sub_title\":\"Čerstvé květiny každý týden\",\"sub_plans\":\"Každé 2 týdny | 35 € | za kytici\\nKaždý týden | 29 € | za kytici\\nMěsíčně | 39 € | za kytici\",\"sub_button\":\"Vybrat předplatné\",\"reviews_summary\":\"4,9 z 1 860 hodnocení\",\"review_1_text\":\"Maminka se rozplakala radostí. Kytice byla krásnější než na fotce.\",\"review_1_author\":\"Lucie · Narozeniny\",\"review_2_text\":\"Fotka před odesláním je skvělý nápad, přesně jsem věděl, co přijde.\",\"review_2_author\":\"Martin · Výročí\",\"review_3_text\":\"Předplatné do kanceláře – každé pondělí nová radost.\",\"review_3_author\":\"Studio Hrana · Předplatné\",\"footer_text\":\"Květinářství v srdci Bratislavy. Vážeme z čerstvých květin od slovenských pěstitelů.\",\"footer_delivery\":\"Bratislava ještě dnes\\nCelé Slovensko do 24 hodin\\nOsobní odběr na prodejně\",\"footer_hours\":\"Obchodná 24, Bratislava\\nPo – So 8:00 – 19:00\"},\"en\":{\"logo_text\":\"florist\",\"notice_text\":\"Order by :time for same-day delivery in Bratislava\",\"hero_badge\":\"Fresh flowers from Slovak growers\",\"delivery_area\":\"in Bratislava\",\"occasions_title\":\"For which occasion?\",\"occasion_1\":\"Birthday\",\"occasion_2\":\"Love\",\"occasion_3\":\"Thank you\",\"occasion_4\":\"New baby\",\"occasion_5\":\"Sympathy\",\"occasion_6\":\"Wedding\",\"benefit_3_title\":\"Same-day delivery\",\"benefit_3_text\":\"In Bratislava for orders before 2 pm.\",\"sub_title\":\"Fresh flowers every week\",\"sub_plans\":\"Every 2 weeks | €35 | per bouquet\\nEvery week | €29 | per bouquet\\nMonthly | €39 | per bouquet\",\"sub_button\":\"Choose a plan\",\"reviews_summary\":\"4.9 from 1,860 reviews\",\"review_1_text\":\"My mum cried with joy. The bouquet was even prettier than in the photo.\",\"review_1_author\":\"Lucia · Birthday\",\"review_2_text\":\"The photo before dispatch is a great idea, I knew exactly what would arrive.\",\"review_2_author\":\"Martin · Anniversary\",\"review_3_text\":\"A subscription for our office – a new joy every Monday.\",\"review_3_author\":\"Studio Hrana · Subscription\",\"footer_text\":\"A florist in the heart of Bratislava. We tie bouquets from fresh flowers grown in Slovakia.\",\"footer_delivery\":\"Bratislava same day\\nAll of Slovakia within 24 hours\\nPick-up in store\",\"footer_hours\":\"Obchodná 24, Bratislava\\nMon – Sat 8:00 – 19:00\"}}}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#c8175f\""
+        }
+    }
+}

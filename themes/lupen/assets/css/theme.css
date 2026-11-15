@@ -1,0 +1,323 @@
+/*
+ * Šablóna Lupeň (kvetinárstvo): štýly Default + súbory tejto šablóny.
+ * Farby a písmo nadpisov určuje paleta z Prispôsobenia (partials/palette.blade.php), tu sú predvolené hodnoty.
+ * Písma sú uložené na hostingu: Young Serif, Fraunces a Plus Jakarta Sans (SIL Open Font License).
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource/young-serif';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --lp-bg: #ffffff;
+    --lp-card: #ffffff;
+    --lp-ac: #c8175f;
+    --lp-acd: #a8104e;
+    --lp-actext: #c8175f;
+    --lp-onac: #ffffff;
+    --lp-ac2: #ffd84d;
+    --lp-onac2: #2a0f1c;
+    --lp-ink: #2a0f1c;
+    --lp-muted: #6a5260;
+    --lp-line: #f0e4e9;
+    --lp-soft: #fde8f0;
+    --lp-soft2: #eef6ec;
+    --lp-head: 'Young Serif', Georgia, serif;
+    --lp-head-weight: 400;
+    --lp-head-spacing: -0.01em;
+    --theme-font: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility font-head {
+    font-family: var(--lp-head);
+    font-weight: var(--lp-head-weight);
+    letter-spacing: var(--lp-head-spacing);
+}
+
+@utility bg-page {
+    background-color: var(--lp-bg);
+}
+
+@utility bg-card {
+    background-color: var(--lp-card);
+}
+
+@utility bg-ac {
+    background-color: var(--lp-ac);
+}
+
+@utility text-onac {
+    color: var(--lp-onac);
+}
+
+@utility bg-ac2 {
+    background-color: var(--lp-ac2);
+}
+
+@utility text-onac2 {
+    color: var(--lp-onac2);
+}
+
+@utility text-ac {
+    color: var(--lp-actext);
+}
+
+@utility bg-ink {
+    background-color: var(--lp-ink);
+}
+
+@utility text-ink {
+    color: var(--lp-ink);
+}
+
+@utility text-page {
+    color: var(--lp-bg);
+}
+
+@utility text-muted {
+    color: var(--lp-muted);
+}
+
+@utility border-line {
+    border-color: var(--lp-line);
+}
+
+@utility ring-line {
+    --tw-ring-color: var(--lp-line);
+}
+
+@utility bg-soft {
+    background-color: var(--lp-soft);
+}
+
+@utility bg-soft2 {
+    background-color: var(--lp-soft2);
+}
+
+/* Tvar lupeňa: dva protiľahlé rohy silno zaoblené, druhé dva jemne. */
+@utility leaf {
+    border-radius: 6rem 1.25rem 6rem 1.25rem;
+}
+
+@utility leaf-r {
+    border-radius: 1.25rem 6rem 1.25rem 6rem;
+}
+
+@utility leaf-sm {
+    border-radius: 3rem 0.9rem 3rem 0.9rem;
+}
+
+@utility leaf-sm-r {
+    border-radius: 0.9rem 3rem 0.9rem 3rem;
+}
+
+/* Okvetný lístok (nálepka). */
+@utility petal {
+    border-radius: 50% 50% 50% 12% / 50% 50% 50% 12%;
+}
+
+body {
+    background-color: var(--lp-bg);
+    color: var(--lp-ink);
+}
+
+main h1,
+main h2,
+.lp-heading {
+    font-family: var(--lp-head);
+    font-weight: var(--lp-head-weight);
+    letter-spacing: var(--lp-head-spacing);
+}
+
+@media (max-width: 40rem) {
+    .leaf {
+        border-radius: 4rem 1rem 4rem 1rem;
+    }
+
+    .leaf-r {
+        border-radius: 1rem 4rem 1rem 4rem;
+    }
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-semibold transition;
+    }
+
+    .btn-primary,
+    .btn-ac {
+        @apply bg-[var(--lp-ac)] text-[var(--lp-onac)] hover:bg-[var(--lp-acd)];
+    }
+
+    .btn-ink {
+        @apply bg-[var(--lp-ink)] text-[var(--lp-bg)] hover:opacity-90;
+    }
+
+    .btn-ac2 {
+        @apply bg-[var(--lp-ac2)] text-[var(--lp-onac2)] hover:brightness-95;
+    }
+
+    .btn-secondary {
+        @apply border-[1.5px] border-current bg-transparent;
+    }
+
+    .input {
+        @apply rounded-2xl border-[var(--lp-line)] bg-[var(--lp-card)] px-4 py-3 text-[var(--lp-ink)] shadow-none;
+    }
+
+    .label {
+        @apply font-semibold;
+    }
+
+    .lp-h2 {
+        font-family: var(--lp-head);
+        font-weight: var(--lp-head-weight);
+        letter-spacing: var(--lp-head-spacing);
+        font-size: clamp(2.1rem, 4vw, 3rem);
+        line-height: 1.05;
+    }
+
+    .lp-chip {
+        @apply whitespace-nowrap rounded-full border-[1.5px] border-[var(--lp-line)] bg-[var(--lp-card)] px-4 py-2 text-sm font-semibold transition hover:border-[var(--lp-ink)];
+    }
+
+    .lp-link {
+        @apply font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--lp-actext)];
+    }
+}
+
+.lp-zoom img {
+    transition: transform 0.6s ease;
+}
+
+.lp-zoom:hover img {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny vo farbách Lupeňa. */
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--lp-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--lp-soft);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--lp-muted);
+}
+
+main .rounded-2xl {
+    border-radius: 1.75rem 0.75rem 1.75rem 0.75rem;
+}
+
+/* Tmavá paleta Noc: biele plochy a texty predvolenej šablóny sa prispôsobia. */
+body:has([data-lp-dark]) {
+    color-scheme: dark;
+}
+
+body:has([data-lp-dark]) :is(.bg-white, .bg-zinc-50, .bg-white\/95) {
+    background-color: var(--lp-card);
+}
+
+body:has([data-lp-dark]) :is(.text-zinc-900, .text-zinc-800, .text-zinc-700, .label, label) {
+    color: var(--lp-ink);
+}
+
+body:has([data-lp-dark]) :is(.text-zinc-500, .text-zinc-600, .text-zinc-400) {
+    color: var(--lp-muted);
+}
+
+body:has([data-lp-dark]) :is(.border-zinc-200, .border-zinc-300, .border-zinc-100) {
+    border-color: var(--lp-line);
+}
+
+body:has([data-lp-dark]) :is(input, select, textarea):not([type='checkbox'], [type='radio']) {
+    background-color: var(--lp-card);
+    color: var(--lp-ink);
+    border-color: var(--lp-line);
+}
+
+/* Bloky (Obsah → Bloky) v štýle Lupeňa. */
+.block-title {
+    font-family: var(--lp-head);
+    font-weight: var(--lp-head-weight);
+    letter-spacing: var(--lp-head-spacing);
+    font-size: 2.1rem;
+    line-height: 1.05;
+    color: var(--lp-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 3rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--lp-soft);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--lp-ac);
+    color: var(--lp-onac);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title,
+.prose :where(h2, h3) {
+    font-family: var(--lp-head);
+    font-weight: var(--lp-head-weight);
+}
+
+.prose {
+    color: var(--lp-ink);
+}
+
+.blog-chip.is-active {
+    background-color: var(--lp-ink);
+    border-color: var(--lp-ink);
+    color: var(--lp-bg);
+}

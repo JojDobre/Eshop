@@ -30,6 +30,8 @@ final class DemoSchema
         'product_variants' => ['product_id' => 'products'],
         'product_prices' => ['product_id' => 'products', 'product_variant_id' => 'product_variants'],
         'forms' => [],
+        // Vlastné polia objednávky v pokladni (napr. deň doručenia, text kartičky); polia produktov sa neprenášajú.
+        'custom_fields' => [],
         'saved_blocks' => [],
         'blog_categories' => [],
         'blog_tags' => [],
@@ -78,6 +80,8 @@ final class DemoSchema
         'routine_product_1' => 'products',
         'routine_product_2' => 'products',
         'routine_product_3' => 'products',
+        // Nastavenie šablóny Lupeň: kategória v sekcii Izbové rastliny.
+        'plants_category' => 'categories',
         // Nastavenie šablóny Butik: produkty v sekcii Shop the look.
         'look_product_1' => 'products',
         'look_product_2' => 'products',

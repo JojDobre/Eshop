@@ -14,6 +14,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
+use Modules\Catalog\CustomFields\CustomField;
+use Modules\Catalog\Models\Category;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductType;
 use Modules\Catalog\VariantGenerator;
@@ -42,7 +44,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik', 'lupen'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -415,5 +417,76 @@ class BundledThemesTest extends ShopTestCase
         $this->get(Page::query()->where('name->sk', 'Tabuľka veľkostí')->sole()->url())->assertOk()->assertSee('Hrudník');
 
         Storage::disk('public')->deleteDirectory('demo/butik');
+    }
+
+    public function test_lupen_theme_renders_delivery_sizes_and_dark_palette(): void
+    {
+        $this->travelTo(Carbon::parse('2027-05-11 10:30'));
+        $bouquets = $this->category('Kytice');
+        $plants = $this->category('Rastliny');
+        $bouquet = $this->product('Ružová záhrada', '29.00', category: $bouquets);
+        $this->product('Monstera', '45.00', category: $plants);
+        $size = $bouquet->options()->create(['name' => ['sk' => 'Veľkosť'], 'position' => 1]);
+        $size->values()->createMany([['value' => ['sk' => 'Malá'], 'position' => 1], ['value' => ['sk' => 'Veľká'], 'position' => 2]]);
+        app(VariantGenerator::class)->generate($bouquet);
+        foreach ($bouquet->variants()->with('values')->get() as $variant) {
+            $variant->update(['stock_quantity' => 5]);
+            $variant->setPrice('EUR', $variant->values->first()->value === 'Veľká' ? 5500 : 2900);
+        }
+        $this->activate('lupen');
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('lupen'), [
+            'cutoff_time' => '14:00', 'hero_image' => 'theme/hero.jpg', 'plants_category' => $plants->id,
+            'occasion_1' => 'Narodeniny', 'occasion_1_image' => 'theme/occasion.jpg', 'sub_link' => '/stranka/predplatne',
+            'sub_plans' => 'Každý týždeň | 29 € | za kyticu',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('--lp-ac: #c8175f', false)
+            ->assertSee(__('theme::lupen.notice_text', ['time' => '14:00']))
+            ->assertSee(__('theme::lupen.delivery_today'))
+            ->assertSee(__('theme::lupen.time_left', ['hours' => 3, 'minutes' => 30]))
+            ->assertSee('Narodeniny')
+            ->assertSee(__('theme::lupen.add_size', ['size' => 'Veľká']), false)
+            ->assertSee('55,00')
+            ->assertSee('Monstera')
+            ->assertSee('Každý týždeň')
+            ->assertDontSee('data-lp-dark', false);
+
+        // Po uzávierke: doručenie zajtra; tmavá paleta.
+        $this->travelTo(Carbon::parse('2027-05-11 15:00'));
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('lupen'), ['cutoff_time' => '14:00', 'hero_image' => 'theme/hero.jpg', 'palette' => 'noc', 'heading_font' => 'jakarta']);
+        $this->get('/')->assertOk()
+            ->assertSee(__('theme::lupen.delivery_tomorrow'))
+            ->assertSee('--lp-bg: #0f1c15', false)
+            ->assertSee('data-lp-dark', false)
+            ->assertSee("--lp-head: 'Plus Jakarta Sans Variable'", false);
+
+        $this->get($bouquet->url())->assertOk();
+        $this->get($plants->url())->assertOk()->assertSee('Monstera');
+    }
+
+    public function test_lupen_bundled_demo_imports_with_addons_and_checkout_fields(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/lupen-demo-'.uniqid()]);
+        app(CatalogSettings::class)->fill(['feature_addons' => false, 'feature_extra_custom_fields' => false])->save();
+        $theme = app(ThemeManager::class)->find('lupen');
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(12, $counts['products']);
+        $this->assertSame('lupen', app(GeneralSettings::class)->theme);
+        $catalog = app(CatalogSettings::class);
+        $this->assertTrue($catalog->feature_addons);
+        $this->assertTrue($catalog->feature_extra_custom_fields);
+        $this->assertTrue(CustomField::query()->where('entity', 'order')->where('key', 'delivery_date')->exists());
+        $plants = Category::query()->where('name->sk', 'Rastliny')->sole();
+        $this->assertSame($plants->id, (int) app(ThemeOptions::class)->values($theme)['plants_category']);
+
+        $this->activate('lupen');
+        $this->get('/')->assertOk()->assertSee('Kvety, ktoré povedia viac než slová')->assertSee('Kytica Ružová záhrada')->assertSee('Monstera deliciosa');
+        $this->get(Product::query()->where('name->sk', 'Kytica Ružová záhrada')->sole()->url())->assertOk()->assertSee('Sklenená váza');
+
+        Storage::disk('public')->deleteDirectory('demo/lupen');
     }
 }

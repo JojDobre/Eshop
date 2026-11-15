@@ -70,6 +70,11 @@ class DemoExporter
                     $query->whereIn('id', DB::table('products')->whereNotNull('product_type_id')->distinct()->pluck('product_type_id'));
                 }
 
+                // Vlastné polia iba pre objednávku (polia produktov závisia od typov a hodnôt v obchode).
+                if ($table === 'custom_fields') {
+                    $query->where('entity', 'order');
+                }
+
                 $tables[$table] = $this->rows($query->get());
             }
         }

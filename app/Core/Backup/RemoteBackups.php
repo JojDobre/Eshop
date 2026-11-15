@@ -7,15 +7,19 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Kópie záloh na externé úložisko (FTP, SFTP alebo S3-kompatibilné) cez Laravel Filesystem.
+ * Kópie záloh na externé úložisko: Google Disk (OAuth), FTP, SFTP alebo S3-kompatibilné cez Laravel Filesystem.
  * Záloha na tom istom webhostingu nepomôže, keď sa pokazí celý hosting.
  */
 class RemoteBackups
 {
-    public function __construct(private readonly SystemSettings $settings) {}
+    public function __construct(private readonly SystemSettings $settings, private readonly GoogleDrive $drive) {}
 
     public function enabled(): bool
     {
+        if ($this->usesGoogleDrive()) {
+            return $this->drive->isConnected();
+        }
+
         return in_array($this->settings->backups_remote, ['ftp', 'sftp', 's3'], true) && filled($this->settings->backups_remote_host ?: $this->settings->backups_remote_bucket);
     }
 
@@ -24,6 +28,16 @@ class RemoteBackups
      */
     public function upload(string $localPath): void
     {
+        if ($this->usesGoogleDrive()) {
+            $this->drive->upload($localPath);
+
+            foreach (array_slice($this->driveBackups(), max(1, $this->settings->backups_remote_keep)) as $old) {
+                $this->drive->delete($old['id']);
+            }
+
+            return;
+        }
+
         $disk = $this->disk();
         $handle = fopen($localPath, 'rb');
 
@@ -45,6 +59,13 @@ class RemoteBackups
      */
     public function test(): void
     {
+        if ($this->usesGoogleDrive()) {
+            // Zoznam súborov overí token aj prístup k priečinku (a priečinok prípadne vytvorí).
+            $this->drive->files();
+
+            return;
+        }
+
         $disk = $this->disk();
         $file = 'eshop-connection-test.txt';
 
@@ -60,6 +81,10 @@ class RemoteBackups
      */
     public function files(): array
     {
+        if ($this->usesGoogleDrive()) {
+            return array_column($this->driveBackups(), 'name');
+        }
+
         return collect($this->disk()->files())
             ->filter(fn (string $file) => (bool) preg_match('/^eshop-[0-9-]+\.zip$/', basename($file)))
             ->sortDesc()
@@ -83,6 +108,19 @@ class RemoteBackups
         };
 
         return Storage::build($config);
+    }
+
+    public function usesGoogleDrive(): bool
+    {
+        return $this->settings->backups_remote === 'gdrive';
+    }
+
+    /**
+     * @return list<array{id: string, name: string, size: int}>
+     */
+    private function driveBackups(): array
+    {
+        return array_values(array_filter($this->drive->files(), fn (array $file) => (bool) preg_match('/^eshop-[0-9-]+\.zip$/', $file['name'])));
     }
 
     private function prune(Filesystem $disk): void

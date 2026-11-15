@@ -6,12 +6,15 @@ use App\Core\Backup\BackupManager;
 use App\Core\Backup\BackupRestorer;
 use App\Core\Backup\BackupRunner;
 use App\Core\Backup\BackupVerifier;
+use App\Core\Backup\GoogleDrive;
 use App\Core\Backup\RemoteBackups;
 use App\Filament\AdminGroup;
+use App\Http\Controllers\Admin\GoogleDriveCallbackController;
 use App\Settings\SystemSettings;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -25,7 +28,9 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Number;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Throwable;
 use UnitEnum;
@@ -61,6 +66,16 @@ class Backups extends Page implements HasTable
     }
 
     public function getSubheading(): ?string
+    {
+        $settings = app(SystemSettings::class);
+        $drive = $settings->backups_remote === 'gdrive'
+            ? ' '.(filled($settings->backups_gdrive_refresh_token) ? __('admin.backups.gdrive_status_connected', ['account' => $settings->backups_gdrive_account ?: 'Google']) : __('admin.backups.gdrive_status_disconnected'))
+            : '';
+
+        return $this->checkSubheading().$drive;
+    }
+
+    private function checkSubheading(): string
     {
         $check = app(SystemSettings::class)->backups_last_check;
 
@@ -137,7 +152,7 @@ class Backups extends Page implements HasTable
                 ->label($t('settings'))
                 ->icon(Heroicon::OutlinedCog6Tooth)
                 ->color('gray')
-                ->fillForm(fn () => collect(app(SystemSettings::class)->toArray())->except(['backups_last_check', 'backups_password', 'backups_remote_password'])->all())
+                ->fillForm(fn () => collect(app(SystemSettings::class)->toArray())->except(['backups_last_check', 'backups_password', 'backups_remote_password', 'backups_gdrive_client_secret', 'backups_gdrive_refresh_token'])->all())
                 ->schema([
                     Section::make()->columns(2)->schema([
                         Toggle::make('backups_enabled')->label($t('enabled'))->helperText($t('enabled_help'))->columnSpanFull(),
@@ -149,28 +164,42 @@ class Backups extends Page implements HasTable
                     ]),
                     Section::make($t('remote'))->description($t('remote_help'))->columns(2)->schema([
                         Select::make('backups_remote')->label($t('remote_type'))->selectablePlaceholder(false)->live()
-                            ->options(['none' => $t('remote_none'), 'ftp' => 'FTP', 'sftp' => 'SFTP', 's3' => $t('remote_s3')]),
+                            ->options(['none' => $t('remote_none'), 'gdrive' => 'Google Disk', 'ftp' => 'FTP', 'sftp' => 'SFTP', 's3' => $t('remote_s3')]),
                         TextInput::make('backups_remote_keep')->label($t('keep'))->integer()->minValue(1)->maxValue(365),
+                        Placeholder::make('gdrive_guide')->hiddenLabel()->columnSpanFull()
+                            ->content(fn () => new HtmlString(__('admin.backups.gdrive_guide', ['uri' => e(GoogleDrive::redirectUri())])))
+                            ->visible(fn ($get) => $get('backups_remote') === 'gdrive'),
+                        TextInput::make('backups_gdrive_client_id')->label('Client ID')->columnSpanFull()->visible(fn ($get) => $get('backups_remote') === 'gdrive'),
+                        TextInput::make('backups_gdrive_client_secret')->label('Client Secret')->helperText($t('secret_keep'))->password()->revealable()
+                            ->columnSpanFull()->visible(fn ($get) => $get('backups_remote') === 'gdrive'),
                         TextInput::make('backups_remote_host')->label($t('remote_host'))->visible(fn ($get) => in_array($get('backups_remote'), ['ftp', 'sftp'], true)),
                         TextInput::make('backups_remote_port')->label($t('remote_port'))->integer()->visible(fn ($get) => in_array($get('backups_remote'), ['ftp', 'sftp'], true)),
                         TextInput::make('backups_remote_bucket')->label($t('remote_bucket'))->visible(fn ($get) => $get('backups_remote') === 's3'),
                         TextInput::make('backups_remote_region')->label($t('remote_region'))->placeholder('eu-central-1')->visible(fn ($get) => $get('backups_remote') === 's3'),
                         TextInput::make('backups_remote_endpoint')->label($t('remote_endpoint'))->helperText($t('remote_endpoint_help'))->url()->visible(fn ($get) => $get('backups_remote') === 's3'),
-                        TextInput::make('backups_remote_username')->label(fn ($get) => $t($get('backups_remote') === 's3' ? 'remote_key' : 'remote_username'))->visible(fn ($get) => $get('backups_remote') !== 'none'),
+                        TextInput::make('backups_remote_username')->label(fn ($get) => $t($get('backups_remote') === 's3' ? 'remote_key' : 'remote_username'))->visible(fn ($get) => ! in_array($get('backups_remote'), ['none', 'gdrive'], true)),
                         TextInput::make('backups_remote_password')->label(fn ($get) => $t($get('backups_remote') === 's3' ? 'remote_secret' : 'remote_password'))->helperText($t('secret_keep'))
-                            ->password()->revealable()->visible(fn ($get) => $get('backups_remote') !== 'none'),
-                        TextInput::make('backups_remote_root')->label($t('remote_root'))->placeholder('zalohy/eshop')->visible(fn ($get) => $get('backups_remote') !== 'none'),
+                            ->password()->revealable()->visible(fn ($get) => ! in_array($get('backups_remote'), ['none', 'gdrive'], true)),
+                        TextInput::make('backups_remote_root')->label(fn ($get) => $t($get('backups_remote') === 'gdrive' ? 'gdrive_folder' : 'remote_root'))
+                            ->placeholder(fn ($get) => $get('backups_remote') === 'gdrive' ? 'eshop-zalohy' : 'zalohy/eshop')->visible(fn ($get) => $get('backups_remote') !== 'none'),
                     ]),
                 ])
                 ->action(function (array $data) use ($t): void {
                     $settings = app(SystemSettings::class);
 
                     // Prázdne heslo znamená „ponechať uložené“ (heslá sa do formulára nevypisujú).
-                    foreach (['backups_password', 'backups_remote_password'] as $secret) {
+                    foreach (['backups_password', 'backups_remote_password', 'backups_gdrive_client_secret'] as $secret) {
                         if (blank($data[$secret] ?? null)) {
                             unset($data[$secret]);
                         }
                     }
+
+                    // Zmena priečinka alebo klienta vytvorí na Disku nový priečinok.
+                    if (($data['backups_remote_root'] ?? null) !== $settings->backups_remote_root || ($data['backups_gdrive_client_id'] ?? null) !== $settings->backups_gdrive_client_id) {
+                        $data['backups_gdrive_folder_id'] = null;
+                    }
+
+                    unset($data['backups_gdrive_refresh_token'], $data['backups_gdrive_account']);
 
                     $settings->fill([
                         ...collect($data)->only(array_keys($settings->toArray()))->all(),
@@ -181,6 +210,27 @@ class Backups extends Page implements HasTable
                         'backups_remote_port' => filled($data['backups_remote_port'] ?? null) ? (int) $data['backups_remote_port'] : null,
                     ])->save();
                     Notification::make()->success()->title($t('settings_saved'))->send();
+                }),
+            Action::make('connectGoogle')
+                ->label(fn () => app(GoogleDrive::class)->isConnected() ? $t('gdrive_reconnect') : $t('gdrive_connect'))
+                ->icon(Heroicon::OutlinedLink)
+                ->color(fn () => app(GoogleDrive::class)->isConnected() ? 'gray' : 'primary')
+                ->visible(fn (): bool => app(RemoteBackups::class)->usesGoogleDrive() && app(GoogleDrive::class)->hasCredentials())
+                ->action(function (): void {
+                    $state = Str::random(40);
+                    session()->put(GoogleDriveCallbackController::STATE_KEY, $state);
+                    $this->redirect(app(GoogleDrive::class)->authorizationUrl($state));
+                }),
+            Action::make('disconnectGoogle')
+                ->label($t('gdrive_disconnect'))
+                ->icon(Heroicon::OutlinedXMark)
+                ->color('danger')
+                ->visible(fn (): bool => app(RemoteBackups::class)->usesGoogleDrive() && app(GoogleDrive::class)->isConnected())
+                ->requiresConfirmation()
+                ->modalDescription(fn () => $t('gdrive_disconnect_confirm'))
+                ->action(function () use ($t): void {
+                    app(GoogleDrive::class)->disconnect();
+                    Notification::make()->success()->title($t('gdrive_disconnected'))->send();
                 }),
             Action::make('testRemote')
                 ->label($t('remote_test'))

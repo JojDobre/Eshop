@@ -7,6 +7,7 @@ use App\Core\Modules\ModuleManager;
 use App\Filament\AdminGroup;
 use App\Filament\BrandPalette;
 use App\Filament\Pages\Auth\EditProfile;
+use App\Http\Controllers\Admin\GoogleDriveCallbackController;
 use App\Http\Middleware\EnsureInstalled;
 use App\Http\Middleware\SetAdminLocale;
 use App\Settings\BrandingSettings;
@@ -28,6 +29,7 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Throwable;
@@ -43,6 +45,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->path('admin')
             ->login()
+            // Návrat z prihlásenia do Google (zálohy na Google Disk).
+            ->authenticatedRoutes(fn () => Route::get('backups/google/callback', GoogleDriveCallbackController::class)->name('backups.google.callback'))
             ->passwordReset()
             ->profile(EditProfile::class, isSimple: false)
             // Dvojfaktorové prihlásenie si každý používateľ zapne v profile (nepovinné).

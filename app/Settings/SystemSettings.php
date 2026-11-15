@@ -21,7 +21,7 @@ class SystemSettings extends Settings
     /** Heslo na šifrovanie zálohy (prázdne = bez šifrovania). */
     public ?string $backups_password;
 
-    /** Externé úložisko: none, ftp, sftp, s3. */
+    /** Externé úložisko: none, gdrive, ftp, sftp, s3. */
     public string $backups_remote;
 
     public ?string $backups_remote_host;
@@ -46,6 +46,20 @@ class SystemSettings extends Settings
 
     public int $backups_remote_keep;
 
+    /** Google Disk: OAuth klient z Google Cloud Console. */
+    public ?string $backups_gdrive_client_id;
+
+    public ?string $backups_gdrive_client_secret;
+
+    /** Obnovovací token prepojeného Google účtu. */
+    public ?string $backups_gdrive_refresh_token;
+
+    /** Priečinok so zálohami na Disku (vytvorí sa automaticky). */
+    public ?string $backups_gdrive_folder_id;
+
+    /** E-mail prepojeného Google účtu (na zobrazenie). */
+    public ?string $backups_gdrive_account;
+
     /** Výsledok poslednej kontroly zálohy: name, ok, message, checked_at. */
     public ?array $backups_last_check;
 
@@ -65,6 +79,6 @@ class SystemSettings extends Settings
 
     public static function encrypted(): array
     {
-        return ['backups_password', 'backups_remote_password'];
+        return ['backups_password', 'backups_remote_password', 'backups_gdrive_client_secret', 'backups_gdrive_refresh_token'];
     }
 }

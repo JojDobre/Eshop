@@ -44,7 +44,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik', 'lupen'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik', 'lupen', 'kapitola'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -488,5 +488,74 @@ class BundledThemesTest extends ShopTestCase
         $this->get(Product::query()->where('name->sk', 'Kytica Ružová záhrada')->sole()->url())->assertOk()->assertSee('Sklenená váza');
 
         Storage::disk('public')->deleteDirectory('demo/lupen');
+    }
+
+    public function test_kapitola_theme_renders_bookshop_sections_and_dark_palette(): void
+    {
+        app(CatalogSettings::class)->fill(['feature_digital' => true])->save();
+        $fiction = $this->category('Beletria');
+        $ebooks = $this->category('E-knihy');
+        $stationery = $this->category('Papiernictvo');
+        $book = $this->product('Ticho pod horami', '17.90', category: $fiction, attributes: ['short_description' => ['sk' => 'Mária Kováčová'], 'images' => ['theme/cover.jpg']]);
+        $this->product('Plánovač 2027', '6.90', category: $ebooks, attributes: ['is_digital' => true, 'track_stock' => false, 'images' => ['theme/planner.jpg']]);
+        $this->product('Zápisník A5', '14.90', category: $stationery);
+        $this->activate('kapitola');
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('kapitola'), [
+            'hero_image' => 'theme/hero.jpg', 'hero_genres' => "Romány | /kategoria/beletria\nPre deti",
+            'month_product' => $book->id, 'month_quote' => 'Čítala som ju jedným dychom.',
+            'shelf_category' => $fiction->id, 'digital_category' => $ebooks->id, 'stationery_category' => $stationery->id,
+            'pick_1_product' => $book->id, 'pick_1_text' => 'Plakala som v električke.', 'pick_1_author' => 'Zuzana',
+            'event_title' => 'Čítačka s autorkou', 'picks_image' => 'theme/store.jpg',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('--kp-ac: #7a1f2b', false)
+            ->assertSee('<em>'.e('obľúbenú').'</em>', false)
+            ->assertSee(__('theme::kapitola.month'))
+            ->assertSee('Čítala som ju jedným dychom.')
+            ->assertSee('Romány')
+            ->assertSee(__('theme::kapitola.shelf_title'))
+            ->assertSee(__('theme::kapitola.digital_title'))
+            ->assertSee(__('theme::kapitola.download'))
+            ->assertSee('Zápisník A5')
+            ->assertSee('Plakala som v električke.')
+            ->assertSee('Čítačka s autorkou')
+            ->assertDontSee('data-kp-dark', false);
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('kapitola'), ['palette' => 'vecer', 'heading_font' => 'fraunces']);
+        $this->get('/')->assertOk()
+            ->assertSee('--kp-bg: #14161f', false)
+            ->assertSee('data-kp-dark', false)
+            ->assertSee("--kp-head: 'Fraunces Variable'", false);
+
+        $this->get($book->url())->assertOk()->assertSee('Mária Kováčová');
+        $this->get($ebooks->url())->assertOk()->assertSee('Plánovač 2027')->assertSee(__('theme::kapitola.download'));
+    }
+
+    public function test_kapitola_bundled_demo_imports_with_digital_products(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/kapitola-demo-'.uniqid()]);
+        app(CatalogSettings::class)->fill(['feature_addons' => false, 'feature_digital' => false])->save();
+        $theme = app(ThemeManager::class)->find('kapitola');
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(19, $counts['products']);
+        $this->assertSame('kapitola', app(GeneralSettings::class)->theme);
+        $catalog = app(CatalogSettings::class);
+        $this->assertTrue($catalog->feature_addons);
+        $this->assertTrue($catalog->feature_digital);
+        $this->assertSame(4, Product::query()->where('is_digital', true)->count());
+        $month = Product::query()->where('name->sk', 'Ticho pod horami')->sole();
+        $this->assertSame($month->id, (int) app(ThemeOptions::class)->values($theme)['month_product']);
+        $this->assertSame('Bookshop & café', app(ThemeOptions::class)->values($theme, 'en')['hero_kicker']);
+
+        $this->activate('kapitola');
+        $this->get('/')->assertOk()->assertSee('Ticho pod horami')->assertSee('Romány na dlhé večery')->assertSee('Zápisník A5 bodkovaný');
+        $this->get($month->url())->assertOk()->assertSee('Pevná väzba')->assertSee('Darčekové balenie');
+        $this->get(Product::query()->where('name->sk', 'Plánovač 2027')->sole()->url())->assertOk();
+
+        Storage::disk('public')->deleteDirectory('demo/kapitola');
     }
 }

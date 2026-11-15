@@ -31,6 +31,8 @@ export default defineConfig(({ command }) => ({
                 'themes/butik/assets/css/theme.css',
                 // Šablóna Lupeň (kvetinárstvo, odvodená od Default)
                 'themes/lupen/assets/css/theme.css',
+                // Šablóna Kapitola (kníhkupectvo, odvodená od Default)
+                'themes/kapitola/assets/css/theme.css',
             ],
             refresh: ['resources/views/**', 'themes/**/*.blade.php', 'modules/**/*.blade.php'],
         }),

@@ -1,0 +1,336 @@
+/*
+ * Šablóna Kapitola (kníhkupectvo a papiernictvo): štýly Default + súbory tejto šablóny.
+ * Farby a písmo nadpisov určuje paleta z Prispôsobenia (partials/palette.blade.php), tu sú predvolené hodnoty.
+ * Písma sú uložené na hostingu: Playfair Display, Fraunces, Young Serif a Nunito Sans (SIL Open Font License).
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource/young-serif';
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/playfair-display';
+@import '@fontsource-variable/playfair-display/wght-italic.css';
+@import '@fontsource-variable/nunito-sans';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --kp-bg: #ffffff;
+    --kp-card: #ffffff;
+    --kp-ac: #7a1f2b;
+    --kp-acd: #62161f;
+    --kp-actext: #7a1f2b;
+    --kp-onac: #ffffff;
+    --kp-ac2: #e9a23b;
+    --kp-onac2: #2a1608;
+    --kp-ink: #24161a;
+    --kp-muted: #675659;
+    --kp-line: #efe6e7;
+    --kp-soft: #f8eef0;
+    --kp-soft2: #fde4bf;
+    --kp-head: 'Playfair Display Variable', Georgia, serif;
+    --kp-head-weight: 600;
+    --kp-shelf: #6b3e26;
+    --kp-head-spacing: -0.01em;
+    --theme-font: 'Nunito Sans Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility font-head {
+    font-family: var(--kp-head);
+    font-weight: var(--kp-head-weight);
+    letter-spacing: var(--kp-head-spacing);
+}
+
+@utility bg-page {
+    background-color: var(--kp-bg);
+}
+
+@utility bg-card {
+    background-color: var(--kp-card);
+}
+
+@utility bg-ac {
+    background-color: var(--kp-ac);
+}
+
+@utility text-onac {
+    color: var(--kp-onac);
+}
+
+@utility bg-ac2 {
+    background-color: var(--kp-ac2);
+}
+
+@utility text-onac2 {
+    color: var(--kp-onac2);
+}
+
+@utility text-ac {
+    color: var(--kp-actext);
+}
+
+@utility bg-ink {
+    background-color: var(--kp-ink);
+}
+
+@utility text-ink {
+    color: var(--kp-ink);
+}
+
+@utility text-page {
+    color: var(--kp-bg);
+}
+
+@utility text-muted {
+    color: var(--kp-muted);
+}
+
+@utility border-line {
+    border-color: var(--kp-line);
+}
+
+@utility ring-line {
+    --tw-ring-color: var(--kp-line);
+}
+
+@utility bg-soft {
+    background-color: var(--kp-soft);
+}
+
+@utility bg-soft2 {
+    background-color: var(--kp-soft2);
+}
+
+/* Obálka knihy: tieň chrbta vľavo a jemný tieň pod knihou. */
+@utility book {
+    border-radius: 2px 5px 5px 2px;
+    box-shadow: inset 5px 0 7px -4px rgb(0 0 0 / 0.4), 0 14px 22px -12px rgb(0 0 0 / 0.5);
+}
+
+/* Drevená polička pod knihami. */
+@utility shelfbar {
+    height: 14px;
+    border-radius: 3px;
+    background-color: var(--kp-shelf);
+    box-shadow: 0 10px 18px -8px rgb(0 0 0 / 0.45);
+}
+
+@utility kp-card {
+    border-radius: 1.25rem;
+    background-color: var(--kp-card);
+    box-shadow: 0 1px 0 var(--kp-line), 0 18px 40px -30px rgb(40 20 10 / 0.45);
+}
+
+body {
+    background-color: var(--kp-bg);
+    color: var(--kp-ink);
+}
+
+main h1,
+main h2,
+.kp-heading {
+    font-family: var(--kp-head);
+    font-weight: var(--kp-head-weight);
+    letter-spacing: var(--kp-head-spacing);
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-[0.95rem] font-semibold transition;
+    }
+
+    .btn-primary,
+    .btn-ac {
+        @apply bg-[var(--kp-ac)] text-[var(--kp-onac)] hover:bg-[var(--kp-acd)];
+    }
+
+    .btn-ink {
+        @apply bg-[var(--kp-ink)] text-[var(--kp-bg)] hover:opacity-90;
+    }
+
+    .btn-ac2 {
+        @apply bg-[var(--kp-ac2)] text-[var(--kp-onac2)] hover:brightness-95;
+    }
+
+    .btn-secondary {
+        @apply border-[1.5px] border-current bg-transparent;
+    }
+
+    .input {
+        @apply rounded-2xl border-[var(--kp-line)] bg-[var(--kp-card)] px-4 py-3 text-[var(--kp-ink)] shadow-none;
+    }
+
+    .label {
+        @apply font-semibold;
+    }
+
+    .kp-h2 {
+        font-family: var(--kp-head);
+        font-weight: var(--kp-head-weight);
+        letter-spacing: var(--kp-head-spacing);
+        font-size: clamp(2.1rem, 4vw, 3rem);
+        line-height: 1.05;
+    }
+
+    .kp-chip {
+        @apply whitespace-nowrap rounded-full bg-[var(--kp-soft)] px-4 py-2 text-sm font-bold transition hover:bg-[var(--kp-ac)] hover:text-[var(--kp-onac)];
+    }
+
+    .kp-link {
+        @apply font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--kp-actext)];
+    }
+}
+
+.kp-zoom img {
+    transition: transform 0.6s ease;
+}
+
+.kp-zoom:hover img {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kp-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny vo farbách Kapitoly. */
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--kp-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--kp-soft);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--kp-muted);
+}
+
+main .rounded-2xl {
+    border-radius: 1.25rem;
+}
+
+/* Tmavá paleta Večer: biele plochy a texty predvolenej šablóny sa prispôsobia. */
+body:has([data-kp-dark]) {
+    color-scheme: dark;
+}
+
+body:has([data-kp-dark]) :is(.bg-white, .bg-zinc-50, .bg-white\/95) {
+    background-color: var(--kp-card);
+}
+
+body:has([data-kp-dark]) :is(.text-zinc-900, .text-zinc-800, .text-zinc-700, .label, label) {
+    color: var(--kp-ink);
+}
+
+body:has([data-kp-dark]) :is(.text-zinc-500, .text-zinc-600, .text-zinc-400) {
+    color: var(--kp-muted);
+}
+
+body:has([data-kp-dark]) :is(.border-zinc-200, .border-zinc-300, .border-zinc-100) {
+    border-color: var(--kp-line);
+}
+
+body:has([data-kp-dark]) :is(input, select, textarea):not([type='checkbox'], [type='radio']) {
+    background-color: var(--kp-card);
+    color: var(--kp-ink);
+    border-color: var(--kp-line);
+}
+
+/* Bloky (Obsah → Bloky) v štýle Kapitoly. */
+.block-title {
+    font-family: var(--kp-head);
+    font-weight: var(--kp-head-weight);
+    letter-spacing: var(--kp-head-spacing);
+    font-size: 2.1rem;
+    line-height: 1.05;
+    color: var(--kp-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 3rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--kp-soft);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--kp-ac);
+    color: var(--kp-onac);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title,
+.prose :where(h2, h3) {
+    font-family: var(--kp-head);
+    font-weight: var(--kp-head-weight);
+}
+
+.prose {
+    color: var(--kp-ink);
+}
+
+.blog-chip.is-active {
+    background-color: var(--kp-ink);
+    border-color: var(--kp-ink);
+    color: var(--kp-bg);
+}
+
+/* Detail produktu: obálka knihy celá (bez orezania) na jemnom podklade s tieňom. */
+main [x-data*='srcsets'] > .aspect-square {
+    background: var(--kp-soft);
+}
+
+main [x-data*='srcsets'] > .aspect-square img {
+    object-fit: contain;
+    padding: 6%;
+    filter: drop-shadow(0 18px 22px rgb(0 0 0 / 0.22));
+}
+
+/* Tmavá paleta: tmavé štítky a tlačidlo zväčšenia fotky by na tmavom pozadí zanikli. */
+body:has([data-kp-dark]) .bg-zinc-900 {
+    background: var(--kp-ac2);
+    color: var(--kp-onac2);
+}
+
+body:has([data-kp-dark]) main .bg-white\/90 {
+    background: var(--kp-card);
+    color: var(--kp-ink);
+}

@@ -216,6 +216,7 @@ class DemoImporter
             'product_types' => $products->contains(fn ($row) => ! empty($row['product_type_id'])),
             'addons' => ! empty($data['pivots']['addon_product'] ?? []),
             'preorders' => $products->contains(fn ($row) => ! empty($row['preorder_enabled'])),
+            'digital' => $products->contains(fn ($row) => ! empty($row['is_digital'])),
             'extra_custom_fields' => collect((array) ($data['tables']['custom_fields'] ?? []))->contains(fn ($row) => ($row['entity'] ?? null) === 'order'),
         ]);
 

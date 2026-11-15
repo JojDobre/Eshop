@@ -665,6 +665,8 @@ return [
             'occasions' => 'Occasions',
             'subscription' => 'Subscription',
             'steps' => 'How it works',
+            'digital' => 'E-books and stationery',
+            'picks' => 'Staff picks',
             'reviews' => 'Reviews',
             'contact' => 'Contact and opening hours',
         ],

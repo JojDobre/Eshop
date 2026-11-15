@@ -664,6 +664,8 @@ return [
             'occasions' => 'Príležitosti',
             'subscription' => 'Predplatné',
             'steps' => 'Ako to funguje',
+            'digital' => 'E-knihy a papiernictvo',
+            'picks' => 'Odporúčania',
             'reviews' => 'Recenzie',
             'contact' => 'Kontakt a otváracie hodiny',
         ],

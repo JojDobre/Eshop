@@ -38,13 +38,13 @@ Reklamácie a odstúpenia sú v **Predaj → Reklamácie** (protokol v PDF, dobr
 
 ## Vzhľad obchodu
 
-**Vzhľad → Šablóny:** výber šablóny s náhľadom (Default, Fresh, Farma, Dielňa, Štúdio, Esencia, Butik, Lupeň). **Prispôsobiť** mení farby,
+**Vzhľad → Šablóny:** výber šablóny s náhľadom (Default, Fresh, Farma, Dielňa, Štúdio, Esencia, Butik, Lupeň, Kapitola). **Prispôsobiť** mení farby,
 písmo, banery, oznam v hornom pruhu a texty úvodnej stránky so živým náhľadom. Vo viacjazyčnom obchode prepnete
 hore **Jazyk textov** a texty šablóny preložíte do každého jazyka (prázdne pole použije text v predvolenom jazyku). Úvodnú stránku,
 stránky aj kategórie môžete poskladať z blokov (**Vzhľad → Bloky**). Ponuky v hlavičke a pätičke
 upravíte v **Obsah → Ponuky**.
 
-**Demo:** šablóny s demom (Dielňa, Štúdio, Esencia, Butik, Lupeň) majú tlačidlo **Nahrať demo** – nahrá ukážkové produkty, kategórie,
+**Demo:** šablóny s demom (Dielňa, Štúdio, Esencia, Butik, Lupeň, Kapitola) majú tlačidlo **Nahrať demo** – nahrá ukážkové produkty, kategórie,
 stránky, blog, formuláre, menu a nastavenia vzhľadu s fotkami, aby obchod hneď vyzeral hotový. Režim **Nahradiť**
 (iba v obchode bez objednávok) zmaže doterajší obsah, **Pridať** demo doplní. Pred nahratím sa vytvorí záloha,
 právne stránky, doprava, platby a nastavenia ostanú. **Exportovať obsah ako demo** stiahne obsah obchodu ako ZIP,

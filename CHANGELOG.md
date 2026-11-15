@@ -1,5 +1,18 @@
 # Prehľad zmien
 
+## 1.12.0 – Šablóna Kapitola pre kníhkupectvá
+
+- **Nová šablóna Kapitola** pre kníhkupectvá, papiernictvá a predaj e-kníh v štýle útulného kníhkupectva: úvod
+  s fotkou cez celú šírku, vyhľadávaním podľa názvu či autora, žánrami a kartou „Kniha mesiaca“ s citátom,
+  bestsellery na poličke s poradím, nové vydania, nálady ako veľké fotky, sekcia e-kníh a tlačiteľných súborov,
+  papiernictvo a „Čo práve čítame“ s odporúčaniami kníhkupcov a pozvánkou na podujatie.
+- **Karty pre knihy:** celá obálka s tieňom ako kniha, autor pod názvom, pri digitálnych produktoch označenie
+  „Na stiahnutie“. Aj na detaile produktu sa obálka zobrazí celá, bez orezania.
+- **Štyri palety vrátane tmavej** (Bordó, Les, Večer, Jemná) alebo farba značky a tri písma nadpisov.
+- **Hotové demo:** 19 produktov – knihy (jedna vo väzbách pevná / brožovaná), e-knihy, plánovač a šablóna na
+  stiahnutie, papiernictvo, darčekové balenie a záložka ako doplnkové voľby, texty v troch jazykoch.
+- **Demo balíky** pri digitálnych produktoch zapnú funkciu Digitálne produkty.
+
 ## 1.11.0 – Šablóna Lupeň pre kvetinárstva
 
 - **Nová šablóna Lupeň** pre kvetinárstva a predajne rastlín: tvar lupeňa na fotkách a blokoch, úvod s panelom

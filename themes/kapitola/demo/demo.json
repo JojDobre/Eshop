@@ -1,0 +1,1539 @@
+{
+    "format": 1,
+    "eshop": "1.12.0",
+    "title": {
+        "sk": "Kapitola – kníhkupectvo, e-knihy a papiernictvo",
+        "cs": "Kapitola – knihkupectví, e-knihy a papírnictví",
+        "en": "Kapitola – bookshop, e-books and stationery"
+    },
+    "theme": "kapitola",
+    "modules": [
+        "forms"
+    ],
+    "created_at": "2026-11-15T22:02:07+00:00",
+    "tables": {
+        "manufacturers": [],
+        "product_labels": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Bestseller\",\"cs\":\"Bestseller\",\"en\":\"Bestseller\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Novinka\",\"cs\":\"Novinka\",\"en\":\"New\"}",
+                "color": "#e8772a",
+                "text_color": "#ffffff",
+                "position": 2
+            }
+        ],
+        "addons": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Darčekové balenie\",\"cs\":\"Dárkové balení\",\"en\":\"Gift wrapping\"}",
+                "description": "{\"sk\":\"Zabalíme do papiera so stužkou a pridáme kartičku.\",\"cs\":\"Zabalíme do papíru se stužkou a přidáme kartičku.\",\"en\":\"Wrapped in paper with a ribbon and a card.\"}",
+                "price": 0,
+                "currency": "EUR",
+                "needs_text": 1,
+                "text_label": "{\"sk\":\"Text na kartičku\",\"cs\":\"Text na kartičku\",\"en\":\"Card message\"}",
+                "text_max_length": 200,
+                "position": 1,
+                "is_active": 1
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Kožená záložka\",\"cs\":\"Kožená záložka\",\"en\":\"Leather bookmark\"}",
+                "description": "{\"sk\":\"Ručne šitá záložka z pravej kože.\",\"cs\":\"Ručně šitá záložka z pravé kůže.\",\"en\":\"A hand-stitched genuine leather bookmark.\"}",
+                "price": 490,
+                "currency": "EUR",
+                "needs_text": 0,
+                "text_label": null,
+                "text_max_length": 50,
+                "position": 2,
+                "is_active": 1
+            }
+        ],
+        "categories": [
+            {
+                "id": 1,
+                "parent_id": null,
+                "name": "{\"sk\":\"Beletria\",\"cs\":\"Beletrie\",\"en\":\"Fiction\"}",
+                "slug": "{\"sk\":\"beletria\",\"cs\":\"beletrie\",\"en\":\"fiction\"}",
+                "description": "{\"sk\":\"<p>Romány a príbehy, pri ktorých zabudnete na čas.</p>\",\"cs\":\"<p>Romány a příběhy, u kterých zapomenete na čas.</p>\",\"en\":\"<p>Novels and stories that make you forget the time.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/readred.webp",
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "parent_id": null,
+                "name": "{\"sk\":\"Pre deti\",\"cs\":\"Pro děti\",\"en\":\"Children\"}",
+                "slug": "{\"sk\":\"pre-deti\",\"cs\":\"pro-deti\",\"en\":\"children\"}",
+                "description": "{\"sk\":\"<p>Rozprávky a knihy na spoločné čítanie.</p>\",\"cs\":\"<p>Pohádky a knihy na společné čtení.</p>\",\"en\":\"<p>Fairy tales and books to read together.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/coffee.webp",
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "parent_id": null,
+                "name": "{\"sk\":\"Náučné\",\"cs\":\"Naučné\",\"en\":\"Non-fiction\"}",
+                "slug": "{\"sk\":\"naucne\",\"cs\":\"naucne\",\"en\":\"non-fiction\"}",
+                "description": "{\"sk\":\"<p>Varenie, záhrada, cestovanie a pomalé čítanie.</p>\",\"cs\":\"<p>Vaření, zahrada, cestování a pomalé čtení.</p>\",\"en\":\"<p>Cooking, gardening, travel and slow reading.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/floor.webp",
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "parent_id": null,
+                "name": "{\"sk\":\"E-knihy\",\"cs\":\"E-knihy\",\"en\":\"E-books\"}",
+                "slug": "{\"sk\":\"e-knihy\",\"cs\":\"e-knihy\",\"en\":\"e-books\"}",
+                "description": "{\"sk\":\"<p>E-knihy, tlačiteľné plánovače a šablóny. Stiahnete ich hneď po zaplatení.</p>\",\"cs\":\"<p>E-knihy, tisknutelné plánovače a šablony. Stáhnete je hned po zaplacení.</p>\",\"en\":\"<p>E-books, printable planners and templates. Download right after payment.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/cover-planovac.webp",
+                "position": 4,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 5,
+                "parent_id": null,
+                "name": "{\"sk\":\"Papiernictvo\",\"cs\":\"Papírnictví\",\"en\":\"Stationery\"}",
+                "slug": "{\"sk\":\"papiernictvo\",\"cs\":\"papirnictvi\",\"en\":\"stationery\"}",
+                "description": "{\"sk\":\"<p>Zápisníky, zošity a ceruzky, pri ktorých sa chce písať.</p>\",\"cs\":\"<p>Zápisníky, sešity a tužky, se kterými se chce psát.</p>\",\"en\":\"<p>Notebooks and pencils that make you want to write.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/pen.webp",
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 6,
+                "parent_id": null,
+                "name": "{\"sk\":\"Bestsellery\",\"cs\":\"Bestsellery\",\"en\":\"Bestsellers\"}",
+                "slug": "{\"sk\":\"bestsellery\",\"cs\":\"bestsellery\",\"en\":\"bestsellers\"}",
+                "description": "{\"sk\":\"<p>Knihy, ktoré si čitatelia u nás kupujú najčastejšie.</p>\",\"cs\":\"<p>Knihy, které si čtenáři u nás kupují nejčastěji.</p>\",\"en\":\"<p>The books our readers buy most often.</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "image": "demo/kapitola/cozy.webp",
+                "position": 6,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "product_types": [],
+        "products": [
+            {
+                "id": 1,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Ticho pod horami\",\"cs\":\"Ticho pod horami\",\"en\":\"Ticho pod horami\"}",
+                "slug": "{\"sk\":\"ticho-pod-horami\",\"cs\":\"ticho-pod-horami\",\"en\":\"ticho-pod-horami\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Mária Kováčová\",\"cs\":\"Mária Kováčová\",\"en\":\"Mária Kováčová\"}",
+                "description": "{\"sk\":\"<p>Rodinný príbeh z podhorskej dediny, kde sa po rokoch stretnú tri sestry. Tichá, krásne napísaná kniha o tom, čo si nevieme povedať.</p>\",\"cs\":\"<p>Rodinný příběh z podhorské vesnice, kde se po letech setkají tři sestry. Tichá, krásně napsaná kniha o tom, co si nedokážeme říct.</p>\",\"en\":\"<p>A family story from a mountain village where three sisters meet again after years. A quiet, beautifully written book about what we cannot say.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-ticho.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "ticho pod horami ticho pod horami ticho pod horami maria kovacova maria kovacova maria kovacova",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 2,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Mesto zo skla\",\"cs\":\"Mesto zo skla\",\"en\":\"Mesto zo skla\"}",
+                "slug": "{\"sk\":\"mesto-zo-skla\",\"cs\":\"mesto-zo-skla\",\"en\":\"mesto-zo-skla\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Tomáš Hrdý\",\"cs\":\"Tomáš Hrdý\",\"en\":\"Tomáš Hrdý\"}",
+                "description": "{\"sk\":\"<p>Detektív Hrdý vyšetruje zmiznutie architektky v meste, kde je všetko zo skla a nič nie je priehľadné.</p>\",\"cs\":\"<p>Detektiv Hrdý vyšetřuje zmizení architektky ve městě, kde je všechno ze skla a nic není průhledné.</p>\",\"en\":\"<p>Detective Hrdý investigates the disappearance of an architect in a city made of glass where nothing is transparent.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-mesto.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "mesto zo skla mesto zo skla mesto zo skla tomas hrdy tomas hrdy tomas hrdy",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 3,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Leto, keď sme odišli\",\"cs\":\"Leto, keď sme odišli\",\"en\":\"Leto, keď sme odišli\"}",
+                "slug": "{\"sk\":\"leto-ked-sme-odisli\",\"cs\":\"leto-ked-sme-odisli\",\"en\":\"leto-ked-sme-odisli\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Eva Nová\",\"cs\":\"Eva Nová\",\"en\":\"Eva Nová\"}",
+                "description": "{\"sk\":\"<p>Štyria priatelia, jedno leto pri mori a rozhodnutie, ktoré im zmení život. Kniha na pláž aj na dlhé večery.</p>\",\"cs\":\"<p>Čtyři přátelé, jedno léto u moře a rozhodnutí, které jim změní život. Kniha na pláž i na dlouhé večery.</p>\",\"en\":\"<p>Four friends, one summer by the sea and a decision that changes their lives. For the beach and long evenings.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-leto.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "leto, ked sme odisli leto, ked sme odisli leto, ked sme odisli eva nova eva nova eva nova",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 4,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Návrat domov\",\"cs\":\"Návrat domov\",\"en\":\"Návrat domov\"}",
+                "slug": "{\"sk\":\"navrat-domov\",\"cs\":\"navrat-domov\",\"en\":\"navrat-domov\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Peter Lukáč\",\"cs\":\"Peter Lukáč\",\"en\":\"Peter Lukáč\"}",
+                "description": "{\"sk\":\"<p>Po dvadsiatich rokoch v cudzine sa Tomáš vracia do rodného mesta. Kniha o domove, odpúšťaní a druhých šanciach.</p>\",\"cs\":\"<p>Po dvaceti letech v cizině se Tomáš vrací do rodného města. Kniha o domově, odpouštění a druhých šancích.</p>\",\"en\":\"<p>After twenty years abroad, Tomáš returns to his hometown. A book about home, forgiveness and second chances.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-navrat.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "navrat domov navrat domov navrat domov peter lukac peter lukac peter lukac",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 5,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Malá kniha veľkých otázok\",\"cs\":\"Malá kniha veľkých otázok\",\"en\":\"Malá kniha veľkých otázok\"}",
+                "slug": "{\"sk\":\"mala-kniha-velkych-otazok\",\"cs\":\"mala-kniha-velkych-otazok\",\"en\":\"mala-kniha-velkych-otazok\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Pavol Šťastný\",\"cs\":\"Pavol Šťastný\",\"en\":\"Pavol Šťastný\"}",
+                "description": "{\"sk\":\"<p>Prečo je nebo modré? Kam ide slnko v noci? Ilustrovaná kniha pre zvedavé deti od 5 rokov.</p>\",\"cs\":\"<p>Proč je nebe modré? Kam jde slunce v noci? Ilustrovaná kniha pro zvídavé děti od 5 let.</p>\",\"en\":\"<p>Why is the sky blue? Where does the sun go at night? An illustrated book for curious children aged 5+.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-otazky.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "mala kniha velkych otazok mala kniha velkych otazok mala kniha velkych otazok pavol stastny pavol stastny pavol stastny",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 6,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Hviezdy nad Tatrami\",\"cs\":\"Hviezdy nad Tatrami\",\"en\":\"Hviezdy nad Tatrami\"}",
+                "slug": "{\"sk\":\"hviezdy-nad-tatrami\",\"cs\":\"hviezdy-nad-tatrami\",\"en\":\"hviezdy-nad-tatrami\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Juraj Vrba\",\"cs\":\"Juraj Vrba\",\"en\":\"Juraj Vrba\"}",
+                "description": "{\"sk\":\"<p>Rozprávkové putovanie po tatranských štítoch so súhvezdiami, ktoré deti naučí pozerať sa na nočnú oblohu.</p>\",\"cs\":\"<p>Pohádkové putování po tatranských štítech se souhvězdími, které děti naučí dívat se na noční oblohu.</p>\",\"en\":\"<p>A fairy-tale journey across the Tatra peaks and constellations that teaches children to look at the night sky.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-hviezdy.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "hviezdy nad tatrami hviezdy nad tatrami hviezdy nad tatrami juraj vrba juraj vrba juraj vrba",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 7,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Kuchyňa našich babičiek\",\"cs\":\"Kuchyňa našich babičiek\",\"en\":\"Kuchyňa našich babičiek\"}",
+                "slug": "{\"sk\":\"kuchyna-nasich-babiciek\",\"cs\":\"kuchyna-nasich-babiciek\",\"en\":\"kuchyna-nasich-babiciek\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Anna Benková\",\"cs\":\"Anna Benková\",\"en\":\"Anna Benková\"}",
+                "description": "{\"sk\":\"<p>120 receptov zo zošitov našich babičiek: polievky, koláče aj nedeľné obedy, vyskúšané v dnešnej kuchyni.</p>\",\"cs\":\"<p>120 receptů ze sešitů našich babiček: polévky, koláče i nedělní obědy, vyzkoušené v dnešní kuchyni.</p>\",\"en\":\"<p>120 recipes from our grandmothers' notebooks: soups, cakes and Sunday lunches, tested in a modern kitchen.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-kuchyna.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kuchyna nasich babiciek kuchyna nasich babiciek kuchyna nasich babiciek anna benkova anna benkova anna benkova",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 8,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Pomalé ráno\",\"cs\":\"Pomalé ráno\",\"en\":\"Pomalé ráno\"}",
+                "slug": "{\"sk\":\"pomale-rano\",\"cs\":\"pomale-rano\",\"en\":\"pomale-rano\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Lucia Malá\",\"cs\":\"Lucia Malá\",\"en\":\"Lucia Malá\"}",
+                "description": "{\"sk\":\"<p>Jednoduché rituály na pokojnejší začiatok dňa: káva, pár strán, krátka prechádzka. Bez aplikácií a bez stresu.</p>\",\"cs\":\"<p>Jednoduché rituály pro klidnější začátek dne: káva, pár stran, krátká procházka. Bez aplikací a bez stresu.</p>\",\"en\":\"<p>Simple rituals for a calmer start to the day: coffee, a few pages, a short walk. No apps, no stress.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-rano.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "pomale rano pomale rano pomale rano lucia mala lucia mala lucia mala",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 9,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Zelený rok\",\"cs\":\"Zelený rok\",\"en\":\"Zelený rok\"}",
+                "slug": "{\"sk\":\"zeleny-rok\",\"cs\":\"zeleny-rok\",\"en\":\"zeleny-rok\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Zuzana Horská\",\"cs\":\"Zuzana Horská\",\"en\":\"Zuzana Horská\"}",
+                "description": "{\"sk\":\"<p>Záhradný kalendár na celý rok: čo kedy siať, presádzať a zbierať. S ilustráciami a miestom na poznámky.</p>\",\"cs\":\"<p>Zahradní kalendář na celý rok: co kdy sít, přesazovat a sklízet. S ilustracemi a místem na poznámky.</p>\",\"en\":\"<p>A garden calendar for the whole year: what to sow, transplant and harvest. Illustrated, with space for notes.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-zeleny.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "zeleny rok zeleny rok zeleny rok zuzana horska zuzana horska zuzana horska",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 10,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Atlas zabudnutých miest\",\"cs\":\"Atlas zabudnutých miest\",\"en\":\"Atlas zabudnutých miest\"}",
+                "slug": "{\"sk\":\"atlas-zabudnutych-miest\",\"cs\":\"atlas-zabudnutych-miest\",\"en\":\"atlas-zabudnutych-miest\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Martin Dub\",\"cs\":\"Martin Dub\",\"en\":\"Martin Dub\"}",
+                "description": "{\"sk\":\"<p>Opustené hrady, zabudnuté kúpele a tajomné jaskyne Slovenska a Česka. Sprievodca s mapami a fotografiami.</p>\",\"cs\":\"<p>Opuštěné hrady, zapomenuté lázně a tajemné jeskyně Slovenska a Česka. Průvodce s mapami a fotografiemi.</p>\",\"en\":\"<p>Abandoned castles, forgotten spas and mysterious caves of Slovakia and Czechia. A guide with maps and photos.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-atlas.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 25,
+                "low_stock_threshold": null,
+                "weight": 450,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "atlas zabudnutych miest atlas zabudnutych miest atlas zabudnutych miest martin dub martin dub martin dub",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 11,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Ticho pod horami – e-kniha\",\"cs\":\"Ticho pod horami – e-kniha\",\"en\":\"Ticho pod horami – e-book\"}",
+                "slug": "{\"sk\":\"ticho-pod-horami-e-kniha\",\"cs\":\"ticho-pod-horami-e-kniha\",\"en\":\"ticho-pod-horami-e-book\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Mária Kováčová · EPUB, PDF\",\"cs\":\"Mária Kováčová · EPUB, PDF\",\"en\":\"Mária Kováčová · EPUB, PDF\"}",
+                "description": "{\"sk\":\"<p>Rodinný príbeh z podhorskej dediny, kde sa po rokoch stretnú tri sestry. Tichá, krásne napísaná kniha o tom, čo si nevieme povedať.</p>\",\"cs\":\"<p>Rodinný příběh z podhorské vesnice, kde se po letech setkají tři sestry. Tichá, krásně napsaná kniha o tom, co si nedokážeme říct.</p>\",\"en\":\"<p>A family story from a mountain village where three sisters meet again after years. A quiet, beautifully written book about what we cannot say.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-ticho.webp\"]",
+                "track_stock": 0,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": null,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "ticho pod horami - e-kniha ticho pod horami - e-kniha ticho pod horami - e-book maria kovacova epub, pdf maria kovacova epub, pdf maria kovacova epub, pdf",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 1,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 12,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Leto, keď sme odišli – e-kniha\",\"cs\":\"Leto, keď sme odišli – e-kniha\",\"en\":\"Leto, keď sme odišli – e-book\"}",
+                "slug": "{\"sk\":\"leto-ked-sme-odisli-e-kniha\",\"cs\":\"leto-ked-sme-odisli-e-kniha\",\"en\":\"leto-ked-sme-odisli-e-book\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"Eva Nová · EPUB, PDF\",\"cs\":\"Eva Nová · EPUB, PDF\",\"en\":\"Eva Nová · EPUB, PDF\"}",
+                "description": "{\"sk\":\"<p>Štyria priatelia, jedno leto pri mori a rozhodnutie, ktoré im zmení život. Kniha na pláž aj na dlhé večery.</p>\",\"cs\":\"<p>Čtyři přátelé, jedno léto u moře a rozhodnutí, které jim změní život. Kniha na pláž i na dlouhé večery.</p>\",\"en\":\"<p>Four friends, one summer by the sea and a decision that changes their lives. For the beach and long evenings.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-leto.webp\"]",
+                "track_stock": 0,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": null,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "leto, ked sme odisli - e-kniha leto, ked sme odisli - e-kniha leto, ked sme odisli - e-book eva nova epub, pdf eva nova epub, pdf eva nova epub, pdf",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 1,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 13,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Plánovač 2027\",\"cs\":\"Plánovač 2027\",\"en\":\"Planner 2027\"}",
+                "slug": "{\"sk\":\"planovac-2027\",\"cs\":\"planovac-2027\",\"en\":\"planner-2027\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"tlačiteľné PDF, 120 strán\",\"cs\":\"tisknutelné PDF, 120 stran\",\"en\":\"printable PDF, 120 pages\"}",
+                "description": "{\"sk\":\"<p>Ročný, mesačný a týždenný plánovač vo formáte A4 aj A5. Vytlačte si iba strany, ktoré potrebujete.</p>\",\"cs\":\"<p>Roční, měsíční a týdenní plánovač ve formátu A4 i A5. Vytiskněte si jen stránky, které potřebujete.</p>\",\"en\":\"<p>Yearly, monthly and weekly planner in A4 and A5. Print only the pages you need.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-planovac.webp\"]",
+                "track_stock": 0,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": null,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "planovac 2027 planovac 2027 planner 2027 tlacitelne pdf, 120 stran tisknutelne pdf, 120 stran printable pdf, 120 pages",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 1,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 14,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Rodinný rozpočet\",\"cs\":\"Rodinný rozpočet\",\"en\":\"Family budget\"}",
+                "slug": "{\"sk\":\"rodinny-rozpocet\",\"cs\":\"rodinny-rozpocet\",\"en\":\"family-budget\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"šablóna pre tabuľky\",\"cs\":\"šablona pro tabulky\",\"en\":\"spreadsheet template\"}",
+                "description": "{\"sk\":\"<p>Prehľadná šablóna pre Excel aj Google Tabuľky: príjmy, výdavky, sporenie a grafy na jeden pohľad.</p>\",\"cs\":\"<p>Přehledná šablona pro Excel i Google Tabulky: příjmy, výdaje, spoření a grafy na jeden pohled.</p>\",\"en\":\"<p>A clear template for Excel and Google Sheets: income, expenses, savings and charts at a glance.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/cover-rozpocet.webp\"]",
+                "track_stock": 0,
+                "stock_quantity": 0,
+                "low_stock_threshold": null,
+                "weight": null,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "rodinny rozpocet rodinny rozpocet family budget sablona pre tabulky sablona pro tabulky spreadsheet template",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 1,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 15,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Zápisník A5 bodkovaný\",\"cs\":\"Zápisník A5 tečkovaný\",\"en\":\"Dotted A5 notebook\"}",
+                "slug": "{\"sk\":\"zapisnik-a5-bodkovany\",\"cs\":\"zapisnik-a5-teckovany\",\"en\":\"dotted-a5-notebook\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"160 strán, šitá väzba\",\"cs\":\"160 stran, šitá vazba\",\"en\":\"160 pages, sewn binding\"}",
+                "description": "{\"sk\":\"<p>Kvalitný papier, ktorý neprepíja atrament. Skvelý ako darček k obľúbenej knihe.</p>\",\"cs\":\"<p>Kvalitní papír, který nepropíjí inkoust. Skvělý jako dárek k oblíbené knize.</p>\",\"en\":\"<p>Quality paper that does not bleed. A great gift with a favourite book.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/pen.webp\",\"demo/kapitola/pad.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 300,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "zapisnik a5 bodkovany zapisnik a5 teckovany dotted a5 notebook 160 stran, sita vazba 160 stran, sita vazba 160 pages, sewn binding",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 16,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Zápisník Smaragd\",\"cs\":\"Zápisník Smaragd\",\"en\":\"Emerald notebook\"}",
+                "slug": "{\"sk\":\"zapisnik-smaragd\",\"cs\":\"zapisnik-smaragd\",\"en\":\"emerald-notebook\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"pevná väzba, linajkový\",\"cs\":\"pevná vazba, linkovaný\",\"en\":\"hardcover, lined\"}",
+                "description": "{\"sk\":\"<p>Kvalitný papier, ktorý neprepíja atrament. Skvelý ako darček k obľúbenej knihe.</p>\",\"cs\":\"<p>Kvalitní papír, který nepropíjí inkoust. Skvělý jako dárek k oblíbené knize.</p>\",\"en\":\"<p>Quality paper that does not bleed. A great gift with a favourite book.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/greenbook.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 300,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "zapisnik smaragd zapisnik smaragd emerald notebook pevna vazba, linajkovy pevna vazba, linkovany hardcover, lined",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 17,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Zošity pastel, sada 4 ks\",\"cs\":\"Sešity pastel, sada 4 ks\",\"en\":\"Pastel notebooks, set of 4\"}",
+                "slug": "{\"sk\":\"zosity-pastel-sada-4-ks\",\"cs\":\"sesity-pastel-sada-4-ks\",\"en\":\"pastel-notebooks-set-of-4\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"A5, linajkové\",\"cs\":\"A5, linkované\",\"en\":\"A5, lined\"}",
+                "description": "{\"sk\":\"<p>Kvalitný papier, ktorý neprepíja atrament. Skvelý ako darček k obľúbenej knihe.</p>\",\"cs\":\"<p>Kvalitní papír, který nepropíjí inkoust. Skvělý jako dárek k oblíbené knize.</p>\",\"en\":\"<p>Quality paper that does not bleed. A great gift with a favourite book.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/greenhand.webp\",\"demo/kapitola/pinknb.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 300,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "zosity pastel, sada 4 ks sesity pastel, sada 4 ks pastel notebooks, set of 4 a5, linajkove a5, linkovane a5, lined",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 18,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Ceruzky na kreslenie\",\"cs\":\"Tužky na kreslení\",\"en\":\"Drawing pencils\"}",
+                "slug": "{\"sk\":\"ceruzky-na-kreslenie\",\"cs\":\"tuzky-na-kresleni\",\"en\":\"drawing-pencils\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"sada 6 tvrdostí\",\"cs\":\"sada 6 tvrdostí\",\"en\":\"set of 6 grades\"}",
+                "description": "{\"sk\":\"<p>Kvalitný papier, ktorý neprepíja atrament. Skvelý ako darček k obľúbenej knihe.</p>\",\"cs\":\"<p>Kvalitní papír, který nepropíjí inkoust. Skvělý jako dárek k oblíbené knize.</p>\",\"en\":\"<p>Quality paper that does not bleed. A great gift with a favourite book.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/desk.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 300,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "ceruzky na kreslenie tuzky na kresleni drawing pencils sada 6 tvrdosti sada 6 tvrdosti set of 6 grades",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            },
+            {
+                "id": 19,
+                "product_type_id": null,
+                "name": "{\"sk\":\"Krúžkový blok\",\"cs\":\"Kroužkový blok\",\"en\":\"Spiral notepad\"}",
+                "slug": "{\"sk\":\"kruzkovy-blok\",\"cs\":\"krouzkovy-blok\",\"en\":\"spiral-notepad\"}",
+                "sku": null,
+                "ean": null,
+                "short_description": "{\"sk\":\"A5, štvorčekový\",\"cs\":\"A5, čtverečkovaný\",\"en\":\"A5, squared\"}",
+                "description": "{\"sk\":\"<p>Kvalitný papier, ktorý neprepíja atrament. Skvelý ako darček k obľúbenej knihe.</p>\",\"cs\":\"<p>Kvalitní papír, který nepropíjí inkoust. Skvělý jako dárek k oblíbené knize.</p>\",\"en\":\"<p>Quality paper that does not bleed. A great gift with a favourite book.</p>\"}",
+                "safety_info": null,
+                "images": "[\"demo/kapitola/spiral.webp\",\"demo/kapitola/bluenb.webp\"]",
+                "track_stock": 1,
+                "stock_quantity": 40,
+                "low_stock_threshold": null,
+                "weight": 300,
+                "unit_amount": null,
+                "tax_rate_id": null,
+                "manufacturer_id": null,
+                "is_visible": 1,
+                "is_bundle": 0,
+                "search_text": "kruzkovy blok krouzkovy blok spiral notepad a5, stvorcekovy a5, ctvereckovany a5, squared",
+                "meta_title": null,
+                "meta_description": null,
+                "preorder_enabled": 0,
+                "preorder_available_at": null,
+                "preorder_limit": null,
+                "is_digital": 0,
+                "is_gift_voucher": 0,
+                "packaging": null,
+                "availability_status_id": null
+            }
+        ],
+        "product_options": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "name": "{\"sk\":\"Väzba\",\"cs\":\"Vazba\",\"en\":\"Binding\"}",
+                "position": 1
+            }
+        ],
+        "product_option_values": [
+            {
+                "id": 1,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Pevná väzba\",\"cs\":\"Pevná vazba\",\"en\":\"Hardcover\"}",
+                "color": null,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_option_id": 1,
+                "value": "{\"sk\":\"Brožovaná\",\"cs\":\"Brožovaná\",\"en\":\"Paperback\"}",
+                "color": null,
+                "position": 2
+            }
+        ],
+        "product_variants": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "sku": null,
+                "ean": null,
+                "stock_quantity": 15,
+                "weight": null,
+                "images": null,
+                "is_active": 1,
+                "position": 2
+            }
+        ],
+        "product_prices": [
+            {
+                "id": 1,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1790,
+                "compare_at_amount": null
+            },
+            {
+                "id": 2,
+                "product_id": 1,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 44900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 3,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "EUR",
+                "amount": 2190,
+                "compare_at_amount": null
+            },
+            {
+                "id": 4,
+                "product_id": 1,
+                "product_variant_id": 1,
+                "currency": "CZK",
+                "amount": 54900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 5,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "EUR",
+                "amount": 1790,
+                "compare_at_amount": null
+            },
+            {
+                "id": 6,
+                "product_id": 1,
+                "product_variant_id": 2,
+                "currency": "CZK",
+                "amount": 44900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 7,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1890,
+                "compare_at_amount": null
+            },
+            {
+                "id": 8,
+                "product_id": 2,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 47900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 9,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 10,
+                "product_id": 3,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 42900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 11,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 12,
+                "product_id": 4,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 49900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 13,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 14,
+                "product_id": 5,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 37900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 15,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2190,
+                "compare_at_amount": null
+            },
+            {
+                "id": 16,
+                "product_id": 6,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 54900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 17,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 18,
+                "product_id": 7,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 62900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 19,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1590,
+                "compare_at_amount": null
+            },
+            {
+                "id": 20,
+                "product_id": 8,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 39900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 21,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2290,
+                "compare_at_amount": null
+            },
+            {
+                "id": 22,
+                "product_id": 9,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 57900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 23,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 2690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 24,
+                "product_id": 10,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 67900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 25,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1190,
+                "compare_at_amount": null
+            },
+            {
+                "id": 26,
+                "product_id": 11,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 29900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 27,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 28,
+                "product_id": 12,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 24900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 29,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 30,
+                "product_id": 13,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 17900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 31,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 32,
+                "product_id": 14,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 12900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 33,
+                "product_id": 15,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1490,
+                "compare_at_amount": null
+            },
+            {
+                "id": 34,
+                "product_id": 15,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 37900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 35,
+                "product_id": 16,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 1690,
+                "compare_at_amount": null
+            },
+            {
+                "id": 36,
+                "product_id": 16,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 42900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 37,
+                "product_id": 17,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 990,
+                "compare_at_amount": null
+            },
+            {
+                "id": 38,
+                "product_id": 17,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 24900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 39,
+                "product_id": 18,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 790,
+                "compare_at_amount": null
+            },
+            {
+                "id": 40,
+                "product_id": 18,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 19900,
+                "compare_at_amount": null
+            },
+            {
+                "id": 41,
+                "product_id": 19,
+                "product_variant_id": null,
+                "currency": "EUR",
+                "amount": 590,
+                "compare_at_amount": null
+            },
+            {
+                "id": 42,
+                "product_id": 19,
+                "product_variant_id": null,
+                "currency": "CZK",
+                "amount": 14900,
+                "compare_at_amount": null
+            }
+        ],
+        "forms": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Kontakt\",\"cs\":\"Kontakt\",\"en\":\"Contact\"}",
+                "fields": "{\"sk\":[{\"label\":\"Meno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefón\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Správa\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"cs\":[{\"label\":\"Jméno\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Telefon\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Zpráva\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}],\"en\":[{\"label\":\"Name\",\"type\":\"text\",\"required\":true,\"width\":\"half\"},{\"label\":\"E-mail\",\"type\":\"email\",\"required\":true,\"width\":\"half\"},{\"label\":\"Phone\",\"type\":\"tel\",\"required\":false,\"width\":\"full\"},{\"label\":\"Message\",\"type\":\"textarea\",\"required\":true,\"width\":\"full\"}]}",
+                "submit_label": "{\"sk\":\"Odoslať správu\",\"cs\":\"Odeslat zprávu\",\"en\":\"Send message\"}",
+                "success_message": "{\"sk\":\"Ďakujeme, správu sme dostali. Ozveme sa vám čo najskôr.\",\"cs\":\"Děkujeme, zprávu jsme obdrželi. Ozveme se vám co nejdříve.\",\"en\":\"Thank you, we have received your message and will get back to you soon.\"}",
+                "recipient": null,
+                "is_active": 1
+            }
+        ],
+        "custom_fields": [],
+        "saved_blocks": [],
+        "blog_categories": [],
+        "blog_tags": [],
+        "blog_posts": [],
+        "pages": [
+            {
+                "id": 1,
+                "name": "{\"sk\":\"Obchodné podmienky\"}",
+                "slug": "{\"sk\":\"obchodne-podmienky\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>1. Úvodné ustanovenia</h2><p>Predávajúci: [obchodné meno, sídlo, IČO, zápis v registri].</p><h2>2. Objednávka a uzavretie zmluvy</h2><p>[Doplňte.]</p><h2>3. Cena a platobné podmienky</h2><p>[Doplňte.]</p><h2>4. Dodanie tovaru</h2><p>[Doplňte.]</p><h2>5. Odstúpenie od zmluvy</h2><p>Spotrebiteľ má právo odstúpiť od zmluvy bez udania dôvodu do 14 dní od prevzatia tovaru. [Doplňte postup.]</p><h2>6. Reklamácie</h2><p>[Doplňte reklamačný poriadok.]</p><h2>7. Alternatívne riešenie sporov</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "terms",
+                "show_in_footer": 1,
+                "position": 1,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 2,
+                "name": "{\"sk\":\"Ochrana osobných údajov\"}",
+                "slug": "{\"sk\":\"ochrana-osobnych-udajov\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Prevádzkovateľ</h2><p>[Doplňte.]</p><h2>Aké údaje spracúvame a prečo</h2><p>[Doplňte.]</p><h2>Ako dlho údaje uchovávame</h2><p>[Doplňte.]</p><h2>Vaše práva</h2><p>[Doplňte.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "privacy",
+                "show_in_footer": 1,
+                "position": 2,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 3,
+                "name": "{\"sk\":\"Doprava a platba\"}",
+                "slug": "{\"sk\":\"doprava-a-platba\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Popíšte spôsoby dopravy, ich ceny a možnosti platby.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "shipping",
+                "show_in_footer": 1,
+                "position": 3,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            },
+            {
+                "id": 4,
+                "name": "{\"sk\":\"Kontakt\"}",
+                "slug": "{\"sk\":\"kontakt\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><p>[Doplňte adresu, telefón, e-mail a otváracie hodiny.]</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "contact",
+                "show_in_footer": 1,
+                "position": 4,
+                "is_visible": 1,
+                "blocks": "{\"sk\":{\"d24edc6c-3052-4ee6-91ba-edd2bb70ccc9\":{\"type\":\"form\",\"data\":{\"form_id\":1}}}}",
+                "display": null
+            },
+            {
+                "id": 5,
+                "name": "{\"sk\":\"Vyhlásenie o prístupnosti\"}",
+                "slug": "{\"sk\":\"vyhlasenie-o-pristupnosti\"}",
+                "content": "{\"sk\":\"<p><strong>Toto je iba vzorová kostra. Doplňte vlastný text a nechajte ho skontrolovať právnikom.</strong></p><h2>Náš záväzok</h2><p>Chceme, aby náš obchod mohli používať všetci vrátane ľudí so zdravotným postihnutím. Obchod sa snažíme prevádzkovať v súlade s normou EN 301 549 a pravidlami WCAG 2.1 na úrovni AA.</p><h2>Stav súladu</h2><p>Obchod je čiastočne v súlade. Ovládanie je možné klávesnicou, obrázky majú textové popisy, formuláre majú popisky a texty spĺňajú požiadavky na kontrast.</p><h2>Nedostupný obsah</h2><p>[Doplňte, napr. staršie PDF dokumenty alebo obsah tretích strán.]</p><h2>Spätná väzba a kontakt</h2><p>Ak narazíte na problém s prístupnosťou, napíšte nám na [e-mail]. Odpovieme do [počet] dní.</p><h2>Dozorný orgán</h2><p>Ak nie ste spokojní s odpoveďou, môžete sa obrátiť na Slovenskú obchodnú inšpekciu (www.soi.sk).</p><p>Vyhlásenie bolo vypracované dňa [dátum].</p>\"}",
+                "meta_title": null,
+                "meta_description": null,
+                "role": "accessibility",
+                "show_in_footer": 1,
+                "position": 5,
+                "is_visible": 1,
+                "blocks": null,
+                "display": null
+            }
+        ],
+        "block_layouts": [],
+        "menu_items": [
+            {
+                "id": 1,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "1",
+                "new_window": 0,
+                "position": 1
+            },
+            {
+                "id": 2,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "2",
+                "new_window": 0,
+                "position": 2
+            },
+            {
+                "id": 3,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "3",
+                "new_window": 0,
+                "position": 3
+            },
+            {
+                "id": 4,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "4",
+                "new_window": 0,
+                "position": 4
+            },
+            {
+                "id": 5,
+                "location": "header",
+                "parent_id": null,
+                "label": "{\"sk\":null}",
+                "type": "category",
+                "target": "5",
+                "new_window": 0,
+                "position": 5
+            }
+        ]
+    },
+    "pivots": {
+        "category_product": [
+            {
+                "category_id": 1,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 2,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 1,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 2,
+                "product_id": 6,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 8,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 9,
+                "position": 0
+            },
+            {
+                "category_id": 3,
+                "product_id": 10,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 11,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 12,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 13,
+                "position": 0
+            },
+            {
+                "category_id": 4,
+                "product_id": 14,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 15,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 16,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 17,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 18,
+                "position": 0
+            },
+            {
+                "category_id": 5,
+                "product_id": 19,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 1,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 3,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 4,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 5,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 7,
+                "position": 0
+            },
+            {
+                "category_id": 6,
+                "product_id": 9,
+                "position": 0
+            }
+        ],
+        "product_variant_values": [
+            {
+                "product_variant_id": 1,
+                "product_option_value_id": 1
+            },
+            {
+                "product_variant_id": 2,
+                "product_option_value_id": 2
+            }
+        ],
+        "addon_product": [
+            {
+                "addon_id": 1,
+                "product_id": 1
+            },
+            {
+                "addon_id": 1,
+                "product_id": 2
+            },
+            {
+                "addon_id": 1,
+                "product_id": 3
+            },
+            {
+                "addon_id": 1,
+                "product_id": 4
+            },
+            {
+                "addon_id": 1,
+                "product_id": 5
+            },
+            {
+                "addon_id": 1,
+                "product_id": 6
+            },
+            {
+                "addon_id": 1,
+                "product_id": 7
+            },
+            {
+                "addon_id": 1,
+                "product_id": 8
+            },
+            {
+                "addon_id": 1,
+                "product_id": 9
+            },
+            {
+                "addon_id": 1,
+                "product_id": 10
+            },
+            {
+                "addon_id": 1,
+                "product_id": 15
+            },
+            {
+                "addon_id": 1,
+                "product_id": 16
+            },
+            {
+                "addon_id": 1,
+                "product_id": 17
+            },
+            {
+                "addon_id": 1,
+                "product_id": 18
+            },
+            {
+                "addon_id": 1,
+                "product_id": 19
+            },
+            {
+                "addon_id": 2,
+                "product_id": 1
+            },
+            {
+                "addon_id": 2,
+                "product_id": 2
+            },
+            {
+                "addon_id": 2,
+                "product_id": 3
+            },
+            {
+                "addon_id": 2,
+                "product_id": 4
+            },
+            {
+                "addon_id": 2,
+                "product_id": 5
+            },
+            {
+                "addon_id": 2,
+                "product_id": 6
+            },
+            {
+                "addon_id": 2,
+                "product_id": 7
+            },
+            {
+                "addon_id": 2,
+                "product_id": 8
+            },
+            {
+                "addon_id": 2,
+                "product_id": 9
+            },
+            {
+                "addon_id": 2,
+                "product_id": 10
+            }
+        ],
+        "product_label_product": [
+            {
+                "product_label_id": 1,
+                "product_id": 1
+            },
+            {
+                "product_label_id": 1,
+                "product_id": 7
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 4
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 6
+            },
+            {
+                "product_label_id": 2,
+                "product_id": 10
+            }
+        ],
+        "blog_post_tag": [],
+        "blog_post_product": [],
+        "blog_post_catalog_category": []
+    },
+    "theme_settings": "{\"products_per_row\":\"4\",\"blog_index_sections\":[{\"section\":\"header\",\"layout\":\"default\"},{\"section\":\"categories\",\"layout\":\"default\"},{\"section\":\"posts\",\"layout\":\"default\"}],\"blog_list_layout\":\"grid\",\"blog_columns\":\"3\",\"blog_sidebar\":\"none\",\"blog_show_excerpt\":true,\"blog_show_meta\":true,\"blog_post_layout\":\"classic\",\"blog_post_width\":\"narrow\",\"blog_post_sections\":[{\"section\":\"toc\",\"layout\":\"default\"},{\"section\":\"content\",\"layout\":\"default\"},{\"section\":\"products\",\"layout\":\"default\"},{\"section\":\"tags\",\"layout\":\"default\"},{\"section\":\"comments\",\"layout\":\"default\"},{\"section\":\"related\",\"layout\":\"default\"}],\"home_sections\":[{\"section\":\"hero\",\"layout\":\"default\"},{\"section\":\"benefits\",\"layout\":\"default\"},{\"section\":\"shelf\",\"layout\":\"default\"},{\"section\":\"new\",\"layout\":\"default\"},{\"section\":\"moods\",\"layout\":\"default\"},{\"section\":\"digital\",\"layout\":\"default\"},{\"section\":\"stationery\",\"layout\":\"default\"},{\"section\":\"picks\",\"layout\":\"default\"},{\"section\":\"blocks\",\"layout\":\"default\"}],\"palette\":\"bordo\",\"heading_font\":\"playfair\",\"notice_items\":\"Doprava zdarma od 30 €\\nE-knihy na stiahnutie ihneď po zaplatení\\nDarčekové balenie zadarmo\",\"logo_text\":\"kníhkupectvo a kaviareň\",\"show_shop_name\":true,\"hero_kicker\":\"Kníhkupectvo a kaviareň\",\"hero_title\":\"\",\"hero_text\":\"\",\"hero_image\":\"demo/kapitola/window.webp\",\"hero_genres\":\"Beletria | /kategoria/beletria\\nPre deti | /kategoria/pre-deti\\nKuchárky | /kategoria/naucne\\nE-knihy | /kategoria/e-knihy\\nPlánovače | /produkt/planovac-2027\\nPapiernictvo | /kategoria/papiernictvo\",\"month_product\":1,\"month_quote\":\"Najkrajšia slovenská kniha roka. Čítala som ju jedným dychom.\",\"month_quote_author\":\"Zuzana, kníhkupkyňa\",\"benefit_1\":\"Doprava zdarma od 30 €\",\"benefit_1_icon\":\"truck\",\"benefit_2\":\"\",\"benefit_2_icon\":\"download\",\"benefit_3\":\"\",\"benefit_3_icon\":\"gift\",\"benefit_4\":\"Káva a čítanie na predajni\",\"benefit_4_icon\":\"cup\",\"shelf_kicker\":\"Najpredávanejšie\",\"shelf_title\":\"\",\"shelf_category\":6,\"new_title\":\"\",\"new_count\":\"4\",\"mood_1_title\":\"Romány na dlhé večery\",\"mood_1_text\":\"Príbehy, pri ktorých zabudnete na čas\",\"mood_1_link\":\"/kategoria/beletria\",\"mood_1_image\":\"demo/kapitola/readred.webp\",\"mood_2_title\":\"Knihy ku káve\",\"mood_2_text\":\"Eseje, recepty a pomalé čítanie\",\"mood_2_link\":\"/kategoria/naucne\",\"mood_2_image\":\"demo/kapitola/floor.webp\",\"mood_3_title\":\"Pre najmenších\",\"mood_3_text\":\"Rozprávky a knihy na spoločné čítanie\",\"mood_3_link\":\"/kategoria/pre-deti\",\"mood_3_image\":\"demo/kapitola/coffee.webp\",\"digital_kicker\":\"\",\"digital_title\":\"\",\"digital_text\":\"\",\"digital_points\":\"\",\"digital_category\":4,\"digital_button\":\"\",\"stationery_title\":\"\",\"stationery_category\":5,\"picks_kicker\":\"\",\"picks_title\":\"\",\"picks_image\":\"demo/kapitola/cozy.webp\",\"event_title\":\"Čítačka s autorkou\",\"event_text\":\"Štvrtok 18:00 · Mária Kováčová · vstup voľný\",\"pick_1_product\":4,\"pick_1_text\":\"Tichá kniha o tom, čo znamená vrátiť sa. Plakala som v električke.\",\"pick_1_author\":\"Zuzana, kníhkupkyňa\",\"pick_2_product\":10,\"pick_2_text\":\"Ideálny darček pre každého, kto rád blúdi.\",\"pick_2_author\":\"Marek, majiteľ\",\"pick_3_product\":9,\"pick_3_text\":\"Konečne viem, čo kedy siať. A ešte ma to bavilo.\",\"pick_3_author\":\"Eva, papiernictvo\",\"newsletter_title\":\"\",\"newsletter_text\":\"\",\"newsletter_image\":\"demo/kapitola/flowersnb.webp\",\"footer_text\":\"Malé kníhkupectvo s kaviarňou v centre Bratislavy. Knihy, ktoré sme naozaj čítali.\",\"footer_hours\":\"Panská 12, Bratislava\\nPo – Pi 9:00 – 19:00, So 10:00 – 16:00\",\"_translations\":{\"cs\":{\"logo_text\":\"knihkupectví a kavárna\",\"notice_items\":\"Doprava zdarma od 30 €\\nE-knihy ke stažení hned po zaplacení\\nDárkové balení zdarma\",\"hero_kicker\":\"Knihkupectví a kavárna\",\"hero_genres\":\"Beletrie | /kategoria/beletria\\nPro děti | /kategoria/pre-deti\\nKuchařky | /kategoria/naucne\\nE-knihy | /kategoria/e-knihy\\nPlánovače | /produkt/planovac-2027\\nPapírnictví | /kategoria/papiernictvo\",\"month_quote\":\"Nejkrásnější slovenská kniha roku. Přečetla jsem ji jedním dechem.\",\"month_quote_author\":\"Zuzana, knihkupkyně\",\"benefit_1\":\"Doprava zdarma od 30 €\",\"benefit_4\":\"Káva a čtení na prodejně\",\"mood_1_title\":\"Romány na dlouhé večery\",\"mood_1_text\":\"Příběhy, u kterých zapomenete na čas\",\"mood_2_title\":\"Knihy ke kávě\",\"mood_2_text\":\"Eseje, recepty a pomalé čtení\",\"mood_3_title\":\"Pro nejmenší\",\"mood_3_text\":\"Pohádky a knihy na společné čtení\",\"event_title\":\"Čtení s autorkou\",\"event_text\":\"Čtvrtek 18:00 · Mária Kováčová · vstup volný\",\"pick_1_text\":\"Tichá kniha o tom, co znamená vrátit se. Plakala jsem v tramvaji.\",\"pick_1_author\":\"Zuzana, knihkupkyně\",\"pick_2_text\":\"Ideální dárek pro každého, kdo rád bloudí.\",\"pick_2_author\":\"Marek, majitel\",\"pick_3_text\":\"Konečně vím, co kdy sít. A ještě mě to bavilo.\",\"pick_3_author\":\"Eva, papírnictví\",\"footer_text\":\"Malé knihkupectví s kavárnou v centru Bratislavy. Knihy, které jsme opravdu četli.\",\"footer_hours\":\"Panská 12, Bratislava\\nPo – Pá 9:00 – 19:00, So 10:00 – 16:00\"},\"en\":{\"logo_text\":\"bookshop & café\",\"notice_items\":\"Free shipping over €30\\nE-books ready to download right after payment\\nFree gift wrapping\",\"hero_kicker\":\"Bookshop & café\",\"hero_genres\":\"Fiction | /kategoria/beletria\\nChildren | /kategoria/pre-deti\\nCookbooks | /kategoria/naucne\\nE-books | /kategoria/e-knihy\\nPlanners | /produkt/planovac-2027\\nStationery | /kategoria/papiernictvo\",\"month_quote\":\"The most beautiful Slovak book of the year. I read it in one sitting.\",\"month_quote_author\":\"Zuzana, bookseller\",\"benefit_1\":\"Free shipping over €30\",\"benefit_4\":\"Coffee and reading in store\",\"mood_1_title\":\"Novels for long evenings\",\"mood_1_text\":\"Stories that make you forget the time\",\"mood_2_title\":\"Books with coffee\",\"mood_2_text\":\"Essays, recipes and slow reading\",\"mood_3_title\":\"For the little ones\",\"mood_3_text\":\"Fairy tales and books to read together\",\"event_title\":\"Reading with the author\",\"event_text\":\"Thursday 6 pm · Mária Kováčová · free entry\",\"pick_1_text\":\"A quiet book about what it means to come back. I cried on the tram.\",\"pick_1_author\":\"Zuzana, bookseller\",\"pick_2_text\":\"The perfect gift for anyone who loves to wander.\",\"pick_2_author\":\"Marek, owner\",\"pick_3_text\":\"Finally I know what to sow and when. And I enjoyed it.\",\"pick_3_author\":\"Eva, stationery\",\"footer_text\":\"A small bookshop with a café in the centre of Bratislava. Books we have actually read.\",\"footer_hours\":\"Panská 12, Bratislava\\nMon – Fri 9:00 – 19:00, Sat 10:00 – 16:00\"}}}",
+    "settings": {
+        "branding": {
+            "favicon": "null",
+            "logo": "null",
+            "logo_dark": "null",
+            "primary_color": "\"#7a1f2b\""
+        }
+    }
+}

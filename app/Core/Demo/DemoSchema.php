@@ -82,6 +82,14 @@ final class DemoSchema
         'routine_product_3' => 'products',
         // Nastavenie šablóny Lupeň: kategória v sekcii Izbové rastliny.
         'plants_category' => 'categories',
+        // Nastavenia šablóny Kapitola: kniha mesiaca, kategórie sekcií a odporúčané knihy.
+        'month_product' => 'products',
+        'shelf_category' => 'categories',
+        'digital_category' => 'categories',
+        'stationery_category' => 'categories',
+        'pick_1_product' => 'products',
+        'pick_2_product' => 'products',
+        'pick_3_product' => 'products',
         // Nastavenie šablóny Butik: produkty v sekcii Shop the look.
         'look_product_1' => 'products',
         'look_product_2' => 'products',

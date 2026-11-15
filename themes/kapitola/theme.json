@@ -1,0 +1,1168 @@
+{
+    "name": "kapitola",
+    "version": "1.0.0",
+    "title": {
+        "sk": "Kapitola",
+        "cs": "Kapitola",
+        "en": "Kapitola"
+    },
+    "description": {
+        "sk": "Útulná šablóna pre kníhkupectvá, papiernictvá a predaj e-kníh: úvod s fotkou a knihou mesiaca, polička bestsellerov, nové vydania, fotky s náladou, e-knihy na stiahnutie, papiernictvo a odporúčania kníhkupcov. Štyri palety vrátane tmavej. S hotovým demom.",
+        "cs": "Útulná šablona pro knihkupectví, papírnictví a prodej e-knih: úvod s fotkou a knihou měsíce, polička bestsellerů, nová vydání, fotky s náladou, e-knihy ke stažení, papírnictví a doporučení knihkupců. Čtyři palety včetně tmavé. S hotovým demem.",
+        "en": "A cosy theme for bookshops, stationers and e-book sellers: photo hero with book of the month, bestseller shelf, new releases, mood photos, downloadable e-books, stationery and staff picks. Four palettes including a dark one. Includes a demo."
+    },
+    "author": "E-shop",
+    "parent": "default",
+    "screenshot": "screenshot.jpg",
+    "requires": {
+        "eshop": "^1.12"
+    },
+    "vite": [
+        "themes/kapitola/assets/css/theme.css",
+        "themes/default/assets/js/theme.js"
+    ],
+    "hide_settings": [
+        "font",
+        "header_layout",
+        "announcement",
+        "button_style",
+        "show_tagline"
+    ],
+    "settings": {
+        "home_sections": {
+            "type": "sections",
+            "group": "layout",
+            "label": {
+                "sk": "Sekcie úvodnej stránky",
+                "cs": "Sekce úvodní stránky",
+                "en": "Home page sections"
+            },
+            "default": [
+                "hero",
+                "benefits",
+                "shelf",
+                "new",
+                "moods",
+                "digital",
+                "stationery",
+                "picks",
+                "blocks"
+            ],
+            "help": {
+                "sk": "Poradie zmeníte šípkami, sekciu odstránite košom. „Bloky z obsahu“ sú bloky z Obsah → Bloky.",
+                "cs": "Pořadí změníte šipkami, sekci odstraníte košem. „Bloky z obsahu“ jsou bloky z Obsah → Bloky.",
+                "en": "Reorder with the arrows, remove with the bin. “Content blocks” come from Content → Blocks."
+            },
+            "options": {
+                "hero": {
+                    "sk": "Úvod s knihou mesiaca",
+                    "cs": "Úvod s knihou měsíce",
+                    "en": "Hero with book of the month"
+                },
+                "benefits": {
+                    "sk": "Výhody",
+                    "cs": "Výhody",
+                    "en": "Benefits"
+                },
+                "shelf": {
+                    "sk": "Polička bestsellerov",
+                    "cs": "Polička bestsellerů",
+                    "en": "Bestseller shelf"
+                },
+                "new": {
+                    "sk": "Nové vydania",
+                    "cs": "Nová vydání",
+                    "en": "New releases"
+                },
+                "moods": {
+                    "sk": "Fotky s náladou",
+                    "cs": "Fotky s náladou",
+                    "en": "Mood photos"
+                },
+                "digital": {
+                    "sk": "E-knihy a na stiahnutie",
+                    "cs": "E-knihy a ke stažení",
+                    "en": "E-books and downloads"
+                },
+                "stationery": {
+                    "sk": "Papiernictvo",
+                    "cs": "Papírnictví",
+                    "en": "Stationery"
+                },
+                "picks": {
+                    "sk": "Čo práve čítame",
+                    "cs": "Co právě čteme",
+                    "en": "What we are reading"
+                },
+                "blocks": {
+                    "sk": "Bloky z obsahu",
+                    "cs": "Bloky z obsahu",
+                    "en": "Content blocks"
+                }
+            },
+            "layouts": {
+                "default": {
+                    "sk": "Predvolené",
+                    "cs": "Výchozí",
+                    "en": "Default"
+                },
+                "reverse": {
+                    "sk": "Obrátené",
+                    "cs": "Obrácené",
+                    "en": "Reversed"
+                }
+            }
+        },
+        "palette": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Farebná paleta",
+                "cs": "Barevná paleta",
+                "en": "Colour palette"
+            },
+            "default": "bordo",
+            "help": {
+                "sk": "Farby celého obchodu vrátane košíka a pokladne. Večer je tmavá paleta.",
+                "cs": "Barvy celého obchodu včetně košíku a pokladny. Večer je tmavá paleta.",
+                "en": "Colours of the whole shop including cart and checkout. Evening is a dark palette."
+            },
+            "options": {
+                "bordo": {
+                    "sk": "Bordó – vínová s jantárovou",
+                    "cs": "Bordó – vínová s jantarovou",
+                    "en": "Burgundy – wine and amber"
+                },
+                "les": {
+                    "sk": "Les – tmavozelená s terakotovou",
+                    "cs": "Les – tmavě zelená s terakotovou",
+                    "en": "Forest – dark green and terracotta"
+                },
+                "vecer": {
+                    "sk": "Večer – tmavá s jantárovou",
+                    "cs": "Večer – tmavá s jantarovou",
+                    "en": "Evening – dark with amber"
+                },
+                "jemna": {
+                    "sk": "Jemná – staroružová so šalviovou",
+                    "cs": "Jemná – starorůžová se šalvějovou",
+                    "en": "Soft – dusty rose and sage"
+                },
+                "brand": {
+                    "sk": "Farba značky obchodu",
+                    "cs": "Barva značky obchodu",
+                    "en": "Shop brand colour"
+                }
+            }
+        },
+        "heading_font": {
+            "type": "select",
+            "group": "style",
+            "label": {
+                "sk": "Písmo nadpisov",
+                "cs": "Písmo nadpisů",
+                "en": "Heading font"
+            },
+            "default": "playfair",
+            "options": {
+                "playfair": {
+                    "sk": "Playfair Display – klasické knižné",
+                    "cs": "Playfair Display – klasické knižní",
+                    "en": "Playfair Display – classic bookish"
+                },
+                "fraunces": {
+                    "sk": "Fraunces – mäkké pätkové",
+                    "cs": "Fraunces – měkké patkové",
+                    "en": "Fraunces – soft serif"
+                },
+                "young": {
+                    "sk": "Young Serif – zaoblené",
+                    "cs": "Young Serif – zaoblené",
+                    "en": "Young Serif – rounded"
+                }
+            }
+        },
+        "notice_items": {
+            "type": "textarea",
+            "group": "header",
+            "label": {
+                "sk": "Horný pruh – výhody",
+                "cs": "Horní pruh – výhody",
+                "en": "Top bar – benefits"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každá výhoda na samostatnom riadku. Prázdne = pruh sa nezobrazí.",
+                "cs": "Každá výhoda na samostatném řádku. Prázdné = pruh se nezobrazí.",
+                "en": "One per line. Empty = hidden."
+            }
+        },
+        "logo_text": {
+            "type": "text",
+            "group": "header",
+            "label": {
+                "sk": "Text pod názvom",
+                "cs": "Text pod názvem",
+                "en": "Line under the name"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "show_shop_name": {
+            "type": "toggle",
+            "group": "header",
+            "label": {
+                "sk": "Názov obchodu vedľa loga",
+                "cs": "Název obchodu vedle loga",
+                "en": "Shop name next to the logo"
+            },
+            "default": true
+        },
+        "hero_kicker": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – malý nadpis",
+                "cs": "Úvod – malý nadpis",
+                "en": "Hero – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_title": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – nadpis",
+                "cs": "Úvod – nadpis",
+                "en": "Hero – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Slovo v *hviezdičkách* bude kurzívou. Prázdne = predvolený text.",
+                "cs": "Slovo v *hvězdičkách* bude kurzívou.",
+                "en": "A word in *asterisks* is italic. Empty = default text."
+            }
+        },
+        "hero_text": {
+            "type": "textarea",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – text",
+                "cs": "Úvod – text",
+                "en": "Hero – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "hero_image": {
+            "type": "image",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – fotka na pozadí",
+                "cs": "Úvod – fotka na pozadí",
+                "en": "Hero – background photo"
+            },
+            "default": "",
+            "help": {
+                "sk": "Na šírku, aspoň 1800 px. Text je na tmavom prekrytí.",
+                "cs": "Na šířku, alespoň 1800 px.",
+                "en": "Landscape, at least 1800 px."
+            }
+        },
+        "hero_genres": {
+            "type": "textarea",
+            "group": "home",
+            "label": {
+                "sk": "Úvod – rýchle odkazy",
+                "cs": "Úvod – rychlé odkazy",
+                "en": "Hero – quick links"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý riadok „text | odkaz“, napr. „Romány | /kategoria/romany“.",
+                "cs": "Každý řádek „text | odkaz“.",
+                "en": "One per line “label | link”."
+            }
+        },
+        "month_product": {
+            "type": "number",
+            "group": "home",
+            "label": {
+                "sk": "Kniha mesiaca – ID produktu",
+                "cs": "Kniha měsíce – ID produktu",
+                "en": "Book of the month – product ID"
+            },
+            "default": "",
+            "help": {
+                "sk": "ID nájdete v adrese produktu v administrácii. Prázdne = karta sa nezobrazí.",
+                "cs": "ID najdete v adrese produktu v administraci. Prázdné = karta se nezobrazí.",
+                "en": "The ID is in the product URL in admin. Empty = hidden."
+            }
+        },
+        "month_quote": {
+            "type": "textarea",
+            "group": "home",
+            "label": {
+                "sk": "Kniha mesiaca – citát",
+                "cs": "Kniha měsíce – citát",
+                "en": "Book of the month – quote"
+            },
+            "default": ""
+        },
+        "month_quote_author": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Kniha mesiaca – autor citátu",
+                "cs": "Kniha měsíce – autor citátu",
+                "en": "Book of the month – quote author"
+            },
+            "default": ""
+        },
+        "benefit_1": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 1",
+                "cs": "Výhoda 1",
+                "en": "Benefit 1"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "benefit_1_icon": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 1 – ikona",
+                "cs": "Výhoda 1 – ikona",
+                "en": "Benefit 1 – icon"
+            },
+            "default": "truck",
+            "options": {
+                "truck": {
+                    "sk": "Doprava",
+                    "cs": "Doprava",
+                    "en": "Truck"
+                },
+                "download": {
+                    "sk": "Stiahnutie",
+                    "cs": "Stažení",
+                    "en": "Download"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                },
+                "cup": {
+                    "sk": "Šálka",
+                    "cs": "Šálek",
+                    "en": "Cup"
+                },
+                "book": {
+                    "sk": "Kniha",
+                    "cs": "Kniha",
+                    "en": "Book"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                }
+            }
+        },
+        "benefit_2": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 2",
+                "cs": "Výhoda 2",
+                "en": "Benefit 2"
+            },
+            "default": ""
+        },
+        "benefit_2_icon": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 2 – ikona",
+                "cs": "Výhoda 2 – ikona",
+                "en": "Benefit 2 – icon"
+            },
+            "default": "download",
+            "options": {
+                "truck": {
+                    "sk": "Doprava",
+                    "cs": "Doprava",
+                    "en": "Truck"
+                },
+                "download": {
+                    "sk": "Stiahnutie",
+                    "cs": "Stažení",
+                    "en": "Download"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                },
+                "cup": {
+                    "sk": "Šálka",
+                    "cs": "Šálek",
+                    "en": "Cup"
+                },
+                "book": {
+                    "sk": "Kniha",
+                    "cs": "Kniha",
+                    "en": "Book"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                }
+            }
+        },
+        "benefit_3": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 3",
+                "cs": "Výhoda 3",
+                "en": "Benefit 3"
+            },
+            "default": ""
+        },
+        "benefit_3_icon": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 3 – ikona",
+                "cs": "Výhoda 3 – ikona",
+                "en": "Benefit 3 – icon"
+            },
+            "default": "gift",
+            "options": {
+                "truck": {
+                    "sk": "Doprava",
+                    "cs": "Doprava",
+                    "en": "Truck"
+                },
+                "download": {
+                    "sk": "Stiahnutie",
+                    "cs": "Stažení",
+                    "en": "Download"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                },
+                "cup": {
+                    "sk": "Šálka",
+                    "cs": "Šálek",
+                    "en": "Cup"
+                },
+                "book": {
+                    "sk": "Kniha",
+                    "cs": "Kniha",
+                    "en": "Book"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                }
+            }
+        },
+        "benefit_4": {
+            "type": "text",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 4",
+                "cs": "Výhoda 4",
+                "en": "Benefit 4"
+            },
+            "default": ""
+        },
+        "benefit_4_icon": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Výhoda 4 – ikona",
+                "cs": "Výhoda 4 – ikona",
+                "en": "Benefit 4 – icon"
+            },
+            "default": "cup",
+            "options": {
+                "truck": {
+                    "sk": "Doprava",
+                    "cs": "Doprava",
+                    "en": "Truck"
+                },
+                "download": {
+                    "sk": "Stiahnutie",
+                    "cs": "Stažení",
+                    "en": "Download"
+                },
+                "gift": {
+                    "sk": "Darček",
+                    "cs": "Dárek",
+                    "en": "Gift"
+                },
+                "cup": {
+                    "sk": "Šálka",
+                    "cs": "Šálek",
+                    "en": "Cup"
+                },
+                "book": {
+                    "sk": "Kniha",
+                    "cs": "Kniha",
+                    "en": "Book"
+                },
+                "heart": {
+                    "sk": "Srdce",
+                    "cs": "Srdce",
+                    "en": "Heart"
+                },
+                "star": {
+                    "sk": "Hviezda",
+                    "cs": "Hvězda",
+                    "en": "Star"
+                },
+                "leaf": {
+                    "sk": "List",
+                    "cs": "List",
+                    "en": "Leaf"
+                }
+            }
+        },
+        "shelf_kicker": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Polička – malý nadpis",
+                "cs": "Polička – malý nadpis",
+                "en": "Shelf – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "shelf_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Polička – nadpis",
+                "cs": "Polička – nadpis",
+                "en": "Shelf – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "shelf_category": {
+            "type": "number",
+            "group": "catalog",
+            "label": {
+                "sk": "Polička – kategória",
+                "cs": "Polička – kategorie",
+                "en": "Shelf – category"
+            },
+            "default": "",
+            "help": {
+                "sk": "ID kategórie (nájdete v adrese kategórie v administrácii). Prázdne = najnovšie produkty.",
+                "cs": "ID kategorie (najdete v adrese kategorie v administraci). Prázdné = nejnovější produkty.",
+                "en": "Category ID (from the category URL in admin). Empty = newest products."
+            }
+        },
+        "new_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Nové vydania – nadpis",
+                "cs": "Nová vydání – nadpis",
+                "en": "New releases – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "new_count": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Nové vydania – počet",
+                "cs": "Nová vydání – počet",
+                "en": "New releases – count"
+            },
+            "default": "4",
+            "options": {
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                },
+                "8": {
+                    "sk": "8",
+                    "cs": "8",
+                    "en": "8"
+                }
+            }
+        },
+        "products_per_row": {
+            "type": "select",
+            "group": "catalog",
+            "label": {
+                "sk": "Produktov v riadku",
+                "cs": "Produktů v řádku",
+                "en": "Products per row"
+            },
+            "default": "4",
+            "options": {
+                "3": {
+                    "sk": "3",
+                    "cs": "3",
+                    "en": "3"
+                },
+                "4": {
+                    "sk": "4",
+                    "cs": "4",
+                    "en": "4"
+                }
+            }
+        },
+        "mood_1_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 1 – nadpis",
+                "cs": "Fotka 1 – nadpis",
+                "en": "Photo 1 – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdny nadpis = fotka sa nezobrazí.",
+                "cs": "Prázdný nadpis = fotka se nezobrazí.",
+                "en": "Empty title = hidden."
+            }
+        },
+        "mood_1_text": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 1 – text",
+                "cs": "Fotka 1 – text",
+                "en": "Photo 1 – text"
+            },
+            "default": ""
+        },
+        "mood_1_link": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 1 – odkaz",
+                "cs": "Fotka 1 – odkaz",
+                "en": "Photo 1 – link"
+            },
+            "default": ""
+        },
+        "mood_1_image": {
+            "type": "image",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 1",
+                "cs": "Fotka 1",
+                "en": "Photo 1"
+            },
+            "default": ""
+        },
+        "mood_2_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 2 – nadpis",
+                "cs": "Fotka 2 – nadpis",
+                "en": "Photo 2 – title"
+            },
+            "default": ""
+        },
+        "mood_2_text": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 2 – text",
+                "cs": "Fotka 2 – text",
+                "en": "Photo 2 – text"
+            },
+            "default": ""
+        },
+        "mood_2_link": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 2 – odkaz",
+                "cs": "Fotka 2 – odkaz",
+                "en": "Photo 2 – link"
+            },
+            "default": ""
+        },
+        "mood_2_image": {
+            "type": "image",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 2",
+                "cs": "Fotka 2",
+                "en": "Photo 2"
+            },
+            "default": ""
+        },
+        "mood_3_title": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 3 – nadpis",
+                "cs": "Fotka 3 – nadpis",
+                "en": "Photo 3 – title"
+            },
+            "default": ""
+        },
+        "mood_3_text": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 3 – text",
+                "cs": "Fotka 3 – text",
+                "en": "Photo 3 – text"
+            },
+            "default": ""
+        },
+        "mood_3_link": {
+            "type": "text",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 3 – odkaz",
+                "cs": "Fotka 3 – odkaz",
+                "en": "Photo 3 – link"
+            },
+            "default": ""
+        },
+        "mood_3_image": {
+            "type": "image",
+            "group": "catalog",
+            "label": {
+                "sk": "Fotka 3",
+                "cs": "Fotka 3",
+                "en": "Photo 3"
+            },
+            "default": ""
+        },
+        "digital_kicker": {
+            "type": "text",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – malý nadpis",
+                "cs": "Ke stažení – malý nadpis",
+                "en": "Downloads – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "digital_title": {
+            "type": "text",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – nadpis",
+                "cs": "Ke stažení – nadpis",
+                "en": "Downloads – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "digital_text": {
+            "type": "textarea",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – text",
+                "cs": "Ke stažení – text",
+                "en": "Downloads – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "digital_points": {
+            "type": "textarea",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – body",
+                "cs": "Ke stažení – body",
+                "en": "Downloads – points"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý bod na samostatnom riadku. Prázdne = predvolené body.",
+                "cs": "Každý bod na samostatném řádku.",
+                "en": "One per line. Empty = default points."
+            }
+        },
+        "digital_category": {
+            "type": "number",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – kategória",
+                "cs": "Ke stažení – kategorie",
+                "en": "Downloads – category"
+            },
+            "default": "",
+            "help": {
+                "sk": "ID kategórie s e-knihami. Prázdne = digitálne produkty z celého obchodu.",
+                "cs": "ID kategorie s e-knihami. Prázdné = digitální produkty z celého obchodu.",
+                "en": "Category ID with e-books. Empty = digital products from the whole shop."
+            }
+        },
+        "digital_button": {
+            "type": "text",
+            "group": "digital",
+            "label": {
+                "sk": "Na stiahnutie – tlačidlo",
+                "cs": "Ke stažení – tlačítko",
+                "en": "Downloads – button"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "stationery_title": {
+            "type": "text",
+            "group": "digital",
+            "label": {
+                "sk": "Papiernictvo – nadpis",
+                "cs": "Papírnictví – nadpis",
+                "en": "Stationery – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "stationery_category": {
+            "type": "number",
+            "group": "digital",
+            "label": {
+                "sk": "Papiernictvo – kategória",
+                "cs": "Papírnictví – kategorie",
+                "en": "Stationery – category"
+            },
+            "default": "",
+            "help": {
+                "sk": "ID kategórie. Prázdne = sekcia sa nezobrazí.",
+                "cs": "ID kategorie. Prázdné = sekce se nezobrazí.",
+                "en": "Category ID. Empty = hidden."
+            }
+        },
+        "picks_kicker": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčame – malý nadpis",
+                "cs": "Doporučujeme – malý nadpis",
+                "en": "Picks – eyebrow"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "picks_title": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčame – nadpis",
+                "cs": "Doporučujeme – nadpis",
+                "en": "Picks – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "picks_image": {
+            "type": "image",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčame – fotka",
+                "cs": "Doporučujeme – fotka",
+                "en": "Picks – photo"
+            },
+            "default": ""
+        },
+        "event_title": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Pozvánka – nadpis (napr. čítačka)",
+                "cs": "Pozvánka – nadpis (např. čtení)",
+                "en": "Event – title (e.g. reading)"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = nezobrazí sa.",
+                "cs": "Prázdné = nezobrazí se.",
+                "en": "Empty = hidden."
+            }
+        },
+        "event_text": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Pozvánka – text (dátum, miesto)",
+                "cs": "Pozvánka – text (datum, místo)",
+                "en": "Event – text (date, place)"
+            },
+            "default": ""
+        },
+        "pick_1_product": {
+            "type": "number",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 1 – ID produktu",
+                "cs": "Doporučení 1 – ID produktu",
+                "en": "Pick 1 – product ID"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = odporúčanie sa nezobrazí.",
+                "cs": "Prázdné = doporučení se nezobrazí.",
+                "en": "Empty = hidden."
+            }
+        },
+        "pick_1_text": {
+            "type": "textarea",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 1 – text",
+                "cs": "Doporučení 1 – text",
+                "en": "Pick 1 – text"
+            },
+            "default": ""
+        },
+        "pick_1_author": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 1 – kto odporúča",
+                "cs": "Doporučení 1 – kdo doporučuje",
+                "en": "Pick 1 – recommended by"
+            },
+            "default": ""
+        },
+        "pick_2_product": {
+            "type": "number",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 2 – ID produktu",
+                "cs": "Doporučení 2 – ID produktu",
+                "en": "Pick 2 – product ID"
+            },
+            "default": ""
+        },
+        "pick_2_text": {
+            "type": "textarea",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 2 – text",
+                "cs": "Doporučení 2 – text",
+                "en": "Pick 2 – text"
+            },
+            "default": ""
+        },
+        "pick_2_author": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 2 – kto odporúča",
+                "cs": "Doporučení 2 – kdo doporučuje",
+                "en": "Pick 2 – recommended by"
+            },
+            "default": ""
+        },
+        "pick_3_product": {
+            "type": "number",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 3 – ID produktu",
+                "cs": "Doporučení 3 – ID produktu",
+                "en": "Pick 3 – product ID"
+            },
+            "default": ""
+        },
+        "pick_3_text": {
+            "type": "textarea",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 3 – text",
+                "cs": "Doporučení 3 – text",
+                "en": "Pick 3 – text"
+            },
+            "default": ""
+        },
+        "pick_3_author": {
+            "type": "text",
+            "group": "picks",
+            "label": {
+                "sk": "Odporúčanie 3 – kto odporúča",
+                "cs": "Doporučení 3 – kdo doporučuje",
+                "en": "Pick 3 – recommended by"
+            },
+            "default": ""
+        },
+        "newsletter_title": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Odber noviniek – nadpis",
+                "cs": "Odběr novinek – nadpis",
+                "en": "Newsletter – title"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "newsletter_text": {
+            "type": "text",
+            "group": "footer",
+            "label": {
+                "sk": "Odber noviniek – text",
+                "cs": "Odběr novinek – text",
+                "en": "Newsletter – text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "newsletter_image": {
+            "type": "image",
+            "group": "footer",
+            "label": {
+                "sk": "Odber noviniek – fotka na pozadí",
+                "cs": "Odběr novinek – fotka na pozadí",
+                "en": "Newsletter – background photo"
+            },
+            "default": ""
+        },
+        "footer_text": {
+            "type": "textarea",
+            "group": "footer",
+            "label": {
+                "sk": "Pätička – text o obchode",
+                "cs": "Patička – text o obchodě",
+                "en": "Footer – about text"
+            },
+            "default": "",
+            "help": {
+                "sk": "Prázdne = predvolený text šablóny v jazyku obchodu.",
+                "cs": "Prázdné = výchozí text šablony v jazyce obchodu.",
+                "en": "Empty = the theme default text in the shop language."
+            }
+        },
+        "footer_hours": {
+            "type": "textarea",
+            "group": "footer",
+            "label": {
+                "sk": "Pätička – adresa a otváracie hodiny",
+                "cs": "Patička – adresa a otevírací doba",
+                "en": "Footer – address and opening hours"
+            },
+            "default": "",
+            "help": {
+                "sk": "Každý riadok jedna informácia.",
+                "cs": "Každý řádek jedna informace.",
+                "en": "One line per item."
+            }
+        }
+    }
+}

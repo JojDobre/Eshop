@@ -58,7 +58,7 @@ class BackupRestoreTest extends InstalledTestCase
         {
             public function __construct(SystemSettings $settings, private Filesystem $fake)
             {
-                parent::__construct($settings);
+                parent::__construct($settings, app(\App\Core\Backup\GoogleDrive::class));
             }
 
             public function disk(): Filesystem

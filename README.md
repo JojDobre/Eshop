@@ -131,6 +131,11 @@ Postup krok za krokom: [`docs/INSTALL.md`](docs/INSTALL.md). Stručne:
 2. Rozbaľte ho a nahrajte cez FTP na webhosting.
 3. Otvorte adresu webu a prejdite sprievodcom inštalácie.
 
+## Lokálne v Dockeri
+
+`docker compose up -d --build` a potom `http://localhost:8080` – postup a údaje pre inštalátor sú v
+[`docs/DOCKER.md`](docs/DOCKER.md).
+
 ## Vývoj
 
 ```bash

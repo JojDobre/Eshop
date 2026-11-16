@@ -40,7 +40,7 @@ rm -rf node_modules
 APP_KEY="base64:$(head -c 32 /dev/urandom | base64)" APP_ENV=production php artisan filament:assets --quiet
 
 # 5. Odstránenie súborov, ktoré na webhostingu nepatria.
-rm -rf tests scripts .github .editorconfig .gitattributes phpunit.xml package.json package-lock.json \
+rm -rf tests scripts docker .github .editorconfig .gitattributes phpunit.xml package.json package-lock.json compose.yaml .dockerignore \
        vite.config.js .npmrc CLAUDE.md
 rm -f storage/logs/*.log bootstrap/cache/*.php
 find storage -name '*.json' -path '*eshop*' -delete

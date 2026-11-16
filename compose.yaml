@@ -1,0 +1,35 @@
+# Lokálne spustenie e-shopu v Dockeri: docker compose up -d --build, potom http://localhost:8080
+# Celý adresár aplikácie je v zväzku „app“: inštalácia (.env), nahraté obrázky, nastavenia aj aktualizácie
+# z administrácie zostanú aj po reštarte. Návod: docs/DOCKER.md
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      # Predvyplní údaje databázy v inštalátore (heslo zadáte v inštalátore: eshop).
+      DB_HOST: db
+      DB_DATABASE: eshop
+      DB_USERNAME: eshop
+    volumes:
+      - app:/var/www/html
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: eshop
+      MARIADB_USER: eshop
+      MARIADB_PASSWORD: eshop
+      MARIADB_ROOT_PASSWORD: eshop-root
+    volumes:
+      - db:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  app:
+  db:

@@ -1,0 +1,421 @@
+/*
+ * Šablóna Dvor (farma a farmárske produkty): štýly Default + súbory tejto šablóny.
+ * Farby a písmo nadpisov určuje paleta z Prispôsobenia (partials/palette.blade.php), tu sú predvolené hodnoty.
+ * Písma sú uložené na hostingu: Fredoka, Outfit, Young Serif a Figtree (SIL Open Font License).
+ */
+@import '../../../default/assets/css/theme.css';
+@import '@fontsource-variable/fredoka';
+@import '@fontsource-variable/outfit';
+@import '@fontsource/young-serif';
+@import '@fontsource-variable/figtree';
+
+@source '../../**/*.blade.php';
+
+:where(:root) {
+    --dv-bg: #ffffff;
+    --dv-card: #ffffff;
+    --dv-ac: #1c8a4a;
+    --dv-acd: #16733d;
+    --dv-actext: #167a40;
+    --dv-ac2text: #c9361b;
+    --dv-onac: #ffffff;
+    --dv-ac2: #e8472a;
+    --dv-onac2: #ffffff;
+    --dv-ink: #13261a;
+    --dv-muted: #536659;
+    --dv-line: #e3eee6;
+    --dv-soft: #ecf7ef;
+    --dv-soft2: #fff3cc;
+    --dv-sun: #ffc83d;
+    --dv-onsun: #2a1d00;
+    --dv-deep: #0f3d24;
+    --dv-head: 'Fredoka Variable', ui-rounded, system-ui, sans-serif;
+    --dv-head-weight: 600;
+    --dv-head-spacing: -0.01em;
+    --theme-font: 'Figtree Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility font-head {
+    font-family: var(--dv-head);
+    font-weight: var(--dv-head-weight);
+    letter-spacing: var(--dv-head-spacing);
+}
+
+@utility bg-page {
+    background-color: var(--dv-bg);
+}
+
+@utility bg-card {
+    background-color: var(--dv-card);
+}
+
+@utility bg-ac {
+    background-color: var(--dv-ac);
+}
+
+@utility text-onac {
+    color: var(--dv-onac);
+}
+
+@utility bg-ac2 {
+    background-color: var(--dv-ac2);
+}
+
+@utility text-onac2 {
+    color: var(--dv-onac2);
+}
+
+@utility text-ac {
+    color: var(--dv-actext);
+}
+
+@utility bg-ink {
+    background-color: var(--dv-ink);
+}
+
+@utility text-ink {
+    color: var(--dv-ink);
+}
+
+@utility text-page {
+    color: var(--dv-bg);
+}
+
+@utility text-muted {
+    color: var(--dv-muted);
+}
+
+@utility border-line {
+    border-color: var(--dv-line);
+}
+
+@utility ring-line {
+    --tw-ring-color: var(--dv-line);
+}
+
+@utility bg-soft {
+    background-color: var(--dv-soft);
+}
+
+@utility bg-soft2 {
+    background-color: var(--dv-soft2);
+}
+
+@utility dv-card {
+    border-radius: 1.5rem;
+    background-color: var(--dv-card);
+    box-shadow: 0 0 0 1px var(--dv-line), 0 22px 40px -34px rgb(10 40 20 / 0.5);
+}
+
+@utility bg-sun {
+    background-color: var(--dv-sun);
+}
+
+@utility text-onsun {
+    color: var(--dv-onsun);
+}
+
+@utility bg-deep {
+    background-color: var(--dv-deep);
+}
+
+/* Podpisové tvary šablóny: vajíčko a stodola. */
+@utility egg {
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+@utility barn {
+    clip-path: polygon(50% 0, 100% 22%, 100% 100%, 0 100%, 0 22%);
+}
+
+@utility barn-sm {
+    clip-path: polygon(50% 0, 100% 14%, 100% 100%, 0 100%, 0 14%);
+}
+
+/* Lístok s polkruhovými výrezmi po stranách. */
+@utility ticket {
+    --dv-notch: 12px;
+    -webkit-mask: radial-gradient(circle var(--dv-notch) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--dv-notch) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+    mask: radial-gradient(circle var(--dv-notch) at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle var(--dv-notch) at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat;
+}
+
+/* Cenovka so zrezaným koncom a dierkou. */
+@utility pricetag {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    padding: 0.3rem 0.75rem 0.3rem 1.3rem;
+    border-radius: 0.55rem;
+    background-color: var(--dv-soft2);
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        width: 5px;
+        height: 5px;
+        margin-top: -2.5px;
+        border-radius: 9999px;
+        background-color: var(--dv-bg);
+    }
+}
+
+/* Vlnka pod sekciou debničky (prechod z jemnej farby do pozadia). */
+@utility dv-wave {
+    background: radial-gradient(14px 14px at 14px 0, var(--dv-soft2) 98%, transparent) 0 0 / 28px 28px repeat-x;
+}
+
+/* Plot z latiek nad pätičkou. */
+@utility fence {
+    background-image: repeating-linear-gradient(90deg, var(--dv-line) 0 10px, transparent 10px 34px);
+}
+
+body {
+    background-color: var(--dv-bg);
+    color: var(--dv-ink);
+}
+
+main h1,
+main h2,
+.dv-heading {
+    font-family: var(--dv-head);
+    font-weight: var(--dv-head-weight);
+    letter-spacing: var(--dv-head-spacing);
+}
+
+@layer components {
+    .container-shop {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.95rem] font-extrabold transition;
+    }
+
+    .btn-primary,
+    .btn-ac {
+        @apply bg-[var(--dv-ac)] text-[var(--dv-onac)] hover:bg-[var(--dv-acd)];
+    }
+
+    .btn-ink {
+        @apply bg-[var(--dv-ink)] text-[var(--dv-bg)] hover:opacity-90;
+    }
+
+    .btn-sun {
+        @apply bg-[var(--dv-sun)] text-[var(--dv-onsun)] hover:brightness-95;
+    }
+
+    .btn-line {
+        @apply text-[var(--dv-actext)] shadow-[inset_0_0_0_2px_currentColor] hover:bg-[var(--dv-soft)];
+    }
+
+    .btn-ac2 {
+        @apply bg-[var(--dv-ac2)] text-[var(--dv-onac2)] hover:brightness-95;
+    }
+
+    .btn-secondary {
+        @apply bg-transparent shadow-[inset_0_0_0_2px_currentColor];
+    }
+
+    .input {
+        @apply rounded-full border-[var(--dv-line)] bg-[var(--dv-card)] px-5 py-3 text-[var(--dv-ink)] shadow-none;
+    }
+
+    .label {
+        @apply font-semibold;
+    }
+
+    .dv-h2 {
+        font-family: var(--dv-head);
+        font-weight: var(--dv-head-weight);
+        letter-spacing: var(--dv-head-spacing);
+        font-size: clamp(2.2rem, 4vw, 3.1rem);
+        line-height: 1.02;
+    }
+
+    .dv-chip {
+        @apply whitespace-nowrap rounded-full bg-[var(--dv-soft)] px-4 py-2 text-sm font-bold transition hover:bg-[var(--dv-ac)] hover:text-[var(--dv-onac)];
+    }
+
+    .dv-link {
+        @apply font-extrabold text-[var(--dv-actext)] hover:underline;
+    }
+
+    .dv-kicker {
+        @apply text-sm font-extrabold uppercase tracking-[0.16em] text-[var(--dv-ac2text)];
+    }
+}
+
+.dv-zoom img {
+    transition: transform 0.6s ease;
+}
+
+.dv-zoom:hover img {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dv-zoom img {
+        transition: none !important;
+    }
+}
+
+/* Prvky predvolenej šablóny vo farbách Dvora. */
+main .border-zinc-200,
+main .border-zinc-100,
+main .divide-zinc-200 > * {
+    border-color: var(--dv-line);
+}
+
+main .bg-zinc-50,
+main .bg-zinc-100 {
+    background-color: var(--dv-soft);
+}
+
+main .text-zinc-500,
+main .text-zinc-600 {
+    color: var(--dv-muted);
+}
+
+main .rounded-2xl {
+    border-radius: 1.5rem;
+}
+
+/* Tmavá paleta Noc: biele plochy a texty predvolenej šablóny sa prispôsobia. */
+body:has([data-dv-dark]) {
+    color-scheme: dark;
+}
+
+body:has([data-dv-dark]) :is(.bg-white, .bg-zinc-50, .bg-white\/95) {
+    background-color: var(--dv-card);
+}
+
+body:has([data-dv-dark]) :is(.text-zinc-900, .text-zinc-800, .text-zinc-700, .label, label) {
+    color: var(--dv-ink);
+}
+
+body:has([data-dv-dark]) :is(.text-zinc-500, .text-zinc-600, .text-zinc-400) {
+    color: var(--dv-muted);
+}
+
+body:has([data-dv-dark]) :is(.border-zinc-200, .border-zinc-300, .border-zinc-100) {
+    border-color: var(--dv-line);
+}
+
+body:has([data-dv-dark]) :is(input, select, textarea):not([type='checkbox'], [type='radio']) {
+    background-color: var(--dv-card);
+    color: var(--dv-ink);
+    border-color: var(--dv-line);
+}
+
+/* Bloky (Obsah → Bloky) v štýle Dvora. */
+.block-title {
+    font-family: var(--dv-head);
+    font-weight: var(--dv-head-weight);
+    letter-spacing: var(--dv-head-spacing);
+    font-size: 2.1rem;
+    line-height: 1.05;
+    color: var(--dv-ink);
+}
+
+@media (min-width: 40rem) {
+    .block-title {
+        font-size: 3rem;
+    }
+}
+
+.block-header .block-title {
+    margin: 0;
+}
+
+.block-link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.block-section:has(> .block-title, > .block-header) {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+}
+
+.block-grid-section.section-bg-light {
+    background-color: var(--dv-soft);
+}
+
+.block-grid-section.section-bg-dark,
+.block-grid-section.is-dark {
+    background-color: var(--dv-ac);
+    color: var(--dv-onac);
+}
+
+.block-columns .block-section:has(> .block-title, > .block-header) {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.block-grid-section.is-dark .block-title {
+    color: inherit;
+}
+
+.blog-card-title,
+.blog-featured-title,
+.prose :where(h2, h3) {
+    font-family: var(--dv-head);
+    font-weight: var(--dv-head-weight);
+}
+
+.prose {
+    color: var(--dv-ink);
+}
+
+.blog-chip.is-active {
+    background-color: var(--dv-ink);
+    border-color: var(--dv-ink);
+    color: var(--dv-bg);
+}
+
+/* Tmavá paleta: tmavé štítky a tlačidlo zväčšenia fotky by na tmavom pozadí zanikli. */
+body:has([data-dv-dark]) .bg-zinc-900 {
+    background: var(--dv-sun);
+    color: var(--dv-onsun);
+}
+
+body:has([data-dv-dark]) main .bg-white\/90 {
+    background: var(--dv-card);
+    color: var(--dv-ink);
+}
+
+/* Detail produktu: fotka v zaoblenom ráme farby palety. */
+main [x-data*='srcsets'] > .aspect-square {
+    border-radius: 2rem;
+    background: var(--dv-soft);
+}
+
+/* Na pohyb citliví návštevníci: bez animácií. */
+@media (prefers-reduced-motion: reduce) {
+    .dv-zoom img,
+    .dv-zoom {
+        transition: none !important;
+    }
+}
+
+/* Tmavá paleta: akcent je slnečná žltá, preto druhé tlačidlá a tlačidlo noviniek dostanú inú farbu. */
+body:has([data-dv-dark]) .btn-sun {
+    background-color: var(--dv-ac2);
+    color: var(--dv-onac2);
+}
+
+body:has([data-dv-dark]) .dv-news .btn {
+    background-color: var(--dv-deep);
+    color: #ffffff;
+}
+
+body:has([data-dv-dark]) main .bg-white\/90 {
+    background: var(--dv-card);
+    color: var(--dv-ink);
+}

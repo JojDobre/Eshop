@@ -44,7 +44,7 @@ class BundledThemesTest extends ShopTestCase
 
     public function test_bundled_themes_pass_the_check(): void
     {
-        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik', 'lupen', 'kapitola'] as $name) {
+        foreach (['default', 'fresh', 'starter', 'farma', 'dielna', 'studio', 'esencia', 'butik', 'lupen', 'kapitola', 'dvor'] as $name) {
             $theme = app(ThemeManager::class)->find($name);
             $this->assertNotNull($theme, $name);
             $errors = collect(app(ThemeChecker::class)->check($theme))->where('level', 'error');
@@ -557,5 +557,78 @@ class BundledThemesTest extends ShopTestCase
         $this->get(Product::query()->where('name->sk', 'Plánovač 2027')->sole()->url())->assertOk();
 
         Storage::disk('public')->deleteDirectory('demo/kapitola');
+    }
+
+    public function test_dvor_theme_renders_farm_sections_pack_sizes_and_dark_palette(): void
+    {
+        app(CatalogSettings::class)->fill(['feature_product_types' => true])->save();
+        $eggsCategory = $this->category('Vajcia');
+        $animals = $this->category('Adopcia');
+        $pieces = ProductType::query()->create(['name' => ['sk' => 'Na kusy'], 'unit' => 'pcs', 'requires_shipping' => true, 'is_unique' => false]);
+        $weight = ProductType::query()->create(['name' => ['sk' => 'Na váhu'], 'unit' => 'kg', 'requires_shipping' => true, 'is_unique' => false]);
+        $eggs = $this->product('Vajcia z výbehu', '3.20', category: $eggsCategory, attributes: ['short_description' => ['sk' => 'od sliepok na tráve'], 'product_type_id' => $pieces->id, 'unit_amount' => 10]);
+        $this->product('Kravský syr', '5.90', category: $eggsCategory, attributes: ['product_type_id' => $weight->id, 'unit_amount' => 0.25]);
+        $this->product('Koza Bella', '9.00', category: $animals, attributes: ['short_description' => ['sk' => 'miluje jablká'], 'description' => ['sk' => '<p>Fotky každý mesiac.</p>']]);
+        $this->activate('dvor');
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('dvor'), [
+            'notice_items' => "Najbližší rozvoz: štvrtok\nObjednávky do stredy", 'hero_image' => 'theme/hero.jpg', 'hero_note_title' => 'Dnes ráno: 34 vajec',
+            'hero_stats' => '40 | sliepok na výbehu', 'delivery_days' => "Utorok | Bratislava | truck\nSobota | odber na farme | barn",
+            'box_plans' => "Malá | pre 1 – 2 osoby | 14 €\nRodinná | pre 3 – 4 osoby | 22 €", 'box_link' => '/produkt/debnicka',
+            'animals_category' => $animals->id, 'event_title' => 'Deň otvorených dverí', 'event_points' => 'Kŕmenie zvieratiek',
+            'review_1_text' => 'Vajcia majú žĺtok ako slnko.', 'review_1_author' => 'Katarína',
+        ]);
+
+        $this->get('/')->assertOk()
+            ->assertSee('--dv-ac: #1a7f44', false)
+            ->assertSee('Najbližší rozvoz: štvrtok')
+            ->assertSee('<span class="text-ac">'.e('rovno').'</span>', false)
+            ->assertSee('Dnes ráno: 34 vajec')
+            ->assertSee('sliepok na výbehu')
+            ->assertSee('odber na farme')
+            ->assertSee(__('theme::dvor.categories_title'))
+            ->assertSee('Vajcia z výbehu')
+            ->assertSee('/ 10 ks')
+            ->assertSee('/ 250 g')
+            ->assertSee('Rodinná')
+            ->assertSee('Koza Bella')
+            ->assertSee(__('theme::dvor.adopt'))
+            ->assertSee('Deň otvorených dverí')
+            ->assertSee('Vajcia majú žĺtok ako slnko.')
+            ->assertDontSee('data-dv-dark', false);
+
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('dvor'), ['palette' => 'noc', 'heading_font' => 'outfit']);
+        $this->get('/')->assertOk()
+            ->assertSee('--dv-bg: #0e1712', false)
+            ->assertSee('data-dv-dark', false)
+            ->assertSee("--dv-head: 'Outfit Variable'", false);
+
+        $this->get($eggs->url())->assertOk()->assertSee('od sliepok na tráve');
+        $this->get($eggsCategory->url())->assertOk()->assertSee('/ 10 ks');
+    }
+
+    public function test_dvor_bundled_demo_imports_with_product_types_and_adoption(): void
+    {
+        config(['eshop.backup_path' => sys_get_temp_dir().'/dvor-demo-'.uniqid()]);
+        app(CatalogSettings::class)->fill(['feature_product_types' => false])->save();
+        $theme = app(ThemeManager::class)->find('dvor');
+
+        $counts = app(DemoImporter::class)->import($theme->demoPath(), replace: true, backup: false);
+
+        $this->assertSame(17, $counts['products']);
+        $this->assertSame('dvor', app(GeneralSettings::class)->theme);
+        $this->assertTrue(app(CatalogSettings::class)->feature_product_types);
+        $animals = Category::query()->where('name->sk', 'Adopcia zvieratiek')->sole();
+        $this->assertSame($animals->id, (int) app(ThemeOptions::class)->values($theme)['animals_category']);
+        $this->assertSame('Open day at the farm', app(ThemeOptions::class)->values($theme, 'en')['event_title']);
+        $goat = Product::query()->where('name->sk', 'Koza Bella')->sole();
+        $this->assertFalse($goat->requiresShipping());
+
+        $this->activate('dvor');
+        $this->get('/')->assertOk()->assertSee('Čerstvé vajcia z voľného výbehu')->assertSee('/ 10 ks')->assertSee('Koza Bella')->assertSee('Deň otvorených dverí na farme');
+        $this->get(Product::query()->where('name->sk', 'Debnička z dvora')->sole()->url())->assertOk()->assertSee('Rodinná');
+        $this->get(Page::query()->where('name->sk', 'Deň otvorených dverí')->sole()->url())->assertOk()->assertSee('Počet dospelých');
+
+        Storage::disk('public')->deleteDirectory('demo/dvor');
     }
 }

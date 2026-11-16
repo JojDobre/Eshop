@@ -90,6 +90,9 @@ final class DemoSchema
         'pick_1_product' => 'products',
         'pick_2_product' => 'products',
         'pick_3_product' => 'products',
+        // Nastavenia šablóny Dvor: kategória produktov a zvieratiek na adopciu.
+        'products_category' => 'categories',
+        'animals_category' => 'categories',
         // Nastavenie šablóny Butik: produkty v sekcii Shop the look.
         'look_product_1' => 'products',
         'look_product_2' => 'products',

@@ -1,5 +1,20 @@
 # Prehľad zmien
 
+## 1.13.0 – Šablóna Dvor pre farmy
+
+- **Nová šablóna Dvor** pre farmy a predaj farmárskych produktov: fotky v tvare vajíčka, kategórie v tvare
+  stodoly, dni rozvozu a odberu ako lístky, produkty s cenovkou a balením, týždenná debnička s veľkosťami,
+  adopcia zvieratiek, pozvánka na deň otvorených dverí a príbeh farmy s recenziami.
+- **Balenie na karte produktu** (napr. „3,20 € / 10 ks“, „5,90 € / 250 g“) sa berie z typu produktu a množstva –
+  netreba ho písať do názvu.
+- **Adopcia zvieratiek** sú bežné produkty z vybranej kategórie (cena = mesačný príspevok); s typom produktu bez
+  dopravy sa v pokladni nepýta doprava.
+- **Päť paliet vrátane tmavej** (Lúka, Paradajka, Obloha, Noc, Jemná) alebo farba značky a tri písma nadpisov.
+- **Hotové demo „Dvor Hrabovec“:** 17 produktov s typmi produktov (vajcia, mlieko, syry, zelenina, med),
+  debnička vo veľkostiach, štyri zvieratká na adopciu, stránka s rezerváciou na deň otvorených dverí, texty v troch jazykoch.
+- **Oprava dema Kapitola:** po importe sa v Nových vydaniach ukážu knihy (import dema nezachováva čas vytvorenia,
+  poradie určuje ID).
+
 ## 1.12.0 – Šablóna Kapitola pre kníhkupectvá
 
 - **Nová šablóna Kapitola** pre kníhkupectvá, papiernictvá a predaj e-kníh v štýle útulného kníhkupectva: úvod

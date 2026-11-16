@@ -4,6 +4,7 @@ namespace Tests\Feature\Shop;
 
 use Livewire\Livewire;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
+use Modules\Catalog\Filament\Resources\Products\RelationManagers\OptionsRelationManager;
 use Modules\Catalog\Filament\Resources\Products\RelationManagers\VariantsRelationManager;
 use Modules\Catalog\Models\Product;
 use Modules\Catalog\Models\ProductVariant;
@@ -134,5 +135,31 @@ class VariantsTest extends ShopTestCase
 
         $this->assertSame(2, $product->variants()->count());
         $this->get('/admin/products/'.$product->id.'/edit')->assertOk();
+    }
+
+    public function test_saving_options_in_admin_creates_variants_shown_on_product_page(): void
+    {
+        $product = $this->product('Tričko', stock: 7);
+        $this->actingAs($this->superAdmin());
+
+        Livewire::test(OptionsRelationManager::class, ['ownerRecord' => $product, 'pageClass' => EditProduct::class])
+            ->callTableAction('create', data: ['name' => 'Farba', 'values' => [['value' => 'Modrá'], ['value' => 'Zelená']]])
+            ->assertHasNoTableActionErrors();
+
+        $this->assertSame(2, $product->variants()->count());
+        $this->assertSame([7, 7], $product->variants()->pluck('stock_quantity')->all());
+
+        $this->get($product->url())->assertOk()->assertSee('Vyberte variant');
+    }
+
+    public function test_migration_creates_variants_for_products_with_options_only(): void
+    {
+        $product = $this->product('Mikina');
+        $option = $product->options()->create(['name' => 'Veľkosť']);
+        $option->values()->createMany([['value' => 'L'], ['value' => 'XL']]);
+
+        (require base_path('modules/Catalog/database/migrations/2026_12_24_000000_generate_missing_variants.php'))->up();
+
+        $this->assertSame(2, $product->variants()->count());
     }
 }

@@ -1,5 +1,13 @@
 # Prehľad zmien
 
+## 1.13.1 – Varianty sa vytvoria samé
+
+- **Možnosti variantov sa zobrazia v obchode hneď:** po uložení možnosti (napr. Farba s hodnotami) sa varianty
+  vytvoria samé. Predtým bolo treba kliknúť aj na „Vygenerovať varianty“ a bez toho sa možnosti na stránke produktu
+  neukázali v žiadnej šablóne.
+- Pri aktualizácii sa varianty doplnia aj existujúcim produktom, ktoré majú možnosti, ale žiadne varianty.
+- Prvé varianty dostanú sklad produktu, aby po vytvorení neboli vypredané. Ceny a sklad upravíte pri variantoch.
+
 ## 1.13.0 – Šablóna Dvor pre farmy
 
 - **Nová šablóna Dvor** pre farmy a predaj farmárskych produktov: fotky v tvare vajíčka, kategórie v tvare

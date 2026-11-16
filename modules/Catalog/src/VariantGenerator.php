@@ -55,14 +55,16 @@ class VariantGenerator
 
         $created = 0;
         $position = (int) $product->variants->max('position');
+        // Prvé varianty dostanú sklad produktu, aby po vytvorení neboli hneď vypredané (sklad sa potom upraví pri variantoch).
+        $initialStock = $product->variants->isEmpty() ? max(0, (int) $product->stock_quantity) : 0;
 
-        DB::transaction(function () use ($combinations, $existing, $product, &$created, &$position): void {
+        DB::transaction(function () use ($combinations, $existing, $product, $initialStock, &$created, &$position): void {
             foreach ($combinations as $combination) {
                 if (in_array($this->key($combination), $existing, true)) {
                     continue;
                 }
 
-                $variant = $product->variants()->create(['position' => ++$position, 'stock_quantity' => 0]);
+                $variant = $product->variants()->create(['position' => ++$position, 'stock_quantity' => $initialStock]);
                 $variant->values()->attach($combination);
                 $created++;
             }

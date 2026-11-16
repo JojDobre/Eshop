@@ -26,6 +26,8 @@ jednotlivo. Moduly (kuriéri, blog, rezervácie, hodnotenia, účtovné exporty�
 
 - **Katalóg → Produkty:** názov, popis, fotky, cena (aj v ďalších menách a pre zákaznícke skupiny),
   sklad, varianty (veľkosť, farba), doplnkové voľby, vlastné polia, údaje o výrobcovi (GPSR) a SEO.
+  Varianty: v záložke **Možnosti variantov** pridajte možnosť (napr. Farba) s hodnotami – po uložení sa varianty
+  vytvoria samé a v záložke **Varianty** im upravíte cenu a sklad.
 - **Kategórie** môžu mať obrázok, popis a vlastné bloky. Pri zmene adresy sa stará adresa presmeruje.
 - **Typy produktov** určujú, či tovar potrebuje dopravu, či je to jedinečný kus alebo digitálny produkt.
 - **Import a export** (Katalóg → Import / Export): CSV a XLSX vrátane variantov a kategórií.

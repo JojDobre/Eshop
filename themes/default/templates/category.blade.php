@@ -16,8 +16,13 @@
     @php($categoryHeroImage = ! empty($categoryDisplay['hero_image']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($categoryDisplay['hero_image']) : $category->imageUrl())
     @php($categoryShowDescription = ($categoryDisplay['show_description'] ?? true) && $category->description)
 
-    @if ($categoryHeader === 'hero')
-        @include('theme::partials.page-hero', ['heroTitle' => $category->name, 'heroText' => $categoryDisplay['hero_text'] ?? null, 'heroImage' => $categoryHeroImage, 'heroHeight' => $categoryDisplay['hero_height'] ?? 'medium'])
+    @php($categoryBlocksBelow = ($categoryDisplay['blocks_position'] ?? 'above') === 'below')
+    @if ($categoryHeader === 'image' && ! $categoryHeroImage)
+        @php($categoryHeader = 'title')
+    @endif
+
+    @if (in_array($categoryHeader, ['hero', 'image'], true))
+        @include('theme::partials.page-hero', ['heroTitle' => $category->name, 'heroText' => $categoryDisplay['hero_text'] ?? null, 'heroImage' => $categoryHeroImage, 'heroHeight' => $categoryDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $categoryHeader === 'image'])
     @endif
 
     <div class="container-shop py-8">
@@ -43,7 +48,7 @@
             </header>
         @endif
 
-        @if ($subcategories->isNotEmpty())
+        @if ($subcategories->isNotEmpty() && ($categoryDisplay['show_subcategories'] ?? true))
             <ul class="mt-6 flex flex-wrap gap-2">
                 @foreach ($subcategories as $subcategory)
                     <li><a href="{{ $subcategory->url() }}" class="inline-block rounded-full border border-zinc-200 px-4 py-1.5 text-sm hover:border-zinc-400">{{ $subcategory->name }}</a></li>
@@ -51,8 +56,8 @@
             </ul>
         @endif
 
-        {{-- Bloky kategórie (Katalóg → Kategórie → Bloky) nad zoznamom produktov, na celú šírku. --}}
-        @if (! empty($category->blocks))
+        {{-- Bloky kategórie (Katalóg → Kategórie → Bloky) nad zoznamom produktov, na celú šírku (alebo pod ním podľa Vzhľadu). --}}
+        @if (! empty($category->blocks) && ! $categoryBlocksBelow)
             </div>
             {!! render_blocks($category->blocks) !!}
             <div class="container-shop pb-8">
@@ -88,5 +93,8 @@
             </div>
         </div>
     </div>
+    @if (! empty($category->blocks) && $categoryBlocksBelow)
+        {!! render_blocks($category->blocks) !!}
+    @endif
     @include('theme::partials.related-posts', ['relatedPosts' => $relatedPosts ?? null])
 @endsection

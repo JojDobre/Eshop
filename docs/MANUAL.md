@@ -29,6 +29,8 @@ jednotlivo. Moduly (kuriéri, blog, rezervácie, hodnotenia, účtovné exporty�
   Varianty: v záložke **Možnosti variantov** pridajte možnosť (napr. Farba) s hodnotami – po uložení sa varianty
   vytvoria samé a v záložke **Varianty** im upravíte cenu a sklad.
 - **Kategórie** môžu mať obrázok, popis a vlastné bloky. Pri zmene adresy sa stará adresa presmeruje.
+  V sekcii **Vzhľad** pri kategórii zvolíte nadpis, banner s nadpisom alebo len obrázok (banner bez nadpisu),
+  vypnete odkazy na podkategórie a navigáciu a určíte, či sú bloky kategórie nad produktmi alebo pod nimi.
 - **Typy produktov** určujú, či tovar potrebuje dopravu, či je to jedinečný kus alebo digitálny produkt.
 - **Import a export** (Katalóg → Import / Export): CSV a XLSX vrátane variantov a kategórií.
 
@@ -43,8 +45,8 @@ Reklamácie a odstúpenia sú v **Predaj → Reklamácie** (protokol v PDF, dobr
 **Vzhľad → Šablóny:** výber šablóny s náhľadom (Default, Fresh, Farma, Dielňa, Štúdio, Esencia, Butik, Lupeň, Kapitola, Dvor). **Prispôsobiť** mení farby,
 písmo, banery, oznam v hornom pruhu a texty úvodnej stránky so živým náhľadom. Vo viacjazyčnom obchode prepnete
 hore **Jazyk textov** a texty šablóny preložíte do každého jazyka (prázdne pole použije text v predvolenom jazyku). Úvodnú stránku,
-stránky aj kategórie môžete poskladať z blokov (**Vzhľad → Bloky**). Ponuky v hlavičke a pätičke
-upravíte v **Obsah → Ponuky**.
+stránky aj kategórie môžete poskladať z blokov (**Vzhľad → Bloky**), vrátane bloku **Časté otázky**. Ponuky v hlavičke a pätičke
+upravíte v **Obsah → Ponuky**. V blogu môžete článok **pripnúť** – zobrazí sa ako veľký banner nad ostatnými článkami.
 
 **Demo:** šablóny s demom (Dielňa, Štúdio, Esencia, Butik, Lupeň, Kapitola, Dvor) majú tlačidlo **Nahrať demo** – nahrá ukážkové produkty, kategórie,
 stránky, blog, formuláre, menu a nastavenia vzhľadu s fotkami, aby obchod hneď vyzeral hotový. Režim **Nahradiť**
@@ -63,6 +65,8 @@ kupóny, darčekové poukážky, hodnotenia produktov a porovnávač.
 - **Súhlasy a cookies:** lišta cookies s výberom kategórií, záznam súhlasu s obchodnými podmienkami.
 - **Ochrana údajov (GDPR):** **Nastavenia → Ochrana údajov** – ako dlho sa uchovávajú logy, IP adresy,
   košíky, objednávky a ďalšie údaje. Zákazník si môže účet zrušiť sám.
+- **Zákaznícky účet:** zoznam objednávok s farebným stavom (napr. Pripravená na vyzdvihnutie) a tlačidlom
+  **Objednať znova** – položky sa pridajú do košíka v aktuálnych cenách, nedostupné produkty sa preskočia.
 - **DPH a OSS:** sadzby podľa krajín, prenesenie daňovej povinnosti s overením IČ DPH (VIES).
 - **Omnibus:** najnižšia cena za posledných 30 dní pri zľave.
 - **Evidencia obalov (EPR):** **Predaj → Evidencia obalov** – hmotnosť obalov pri produktoch a zásielkach,

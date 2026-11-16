@@ -20,7 +20,13 @@ class BlogController extends Controller
     {
         app(AlternateUrls::class)->using(fn () => route('blog.index'));
 
-        return $this->listing(Post::query()->published());
+        // Pripnutý článok je banner na vrchu blogu; v zozname pod ním sa neopakuje.
+        $pinnedPost = Post::query()->published()->where('is_pinned', true)->latest('published_at')->first();
+
+        return $this->listing(
+            Post::query()->published()->when($pinnedPost, fn ($query) => $query->whereKeyNot($pinnedPost->id)),
+            ['pinnedPost' => $pinnedPost],
+        );
     }
 
     public function category(string $slug): View

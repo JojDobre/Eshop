@@ -15,7 +15,15 @@
             <p class="mt-3 text-zinc-600">{{ __('theme::shop.order_received', ['number' => $order->number, 'email' => $order->email]) }}</p>
         @else
             <h1 class="text-3xl font-semibold tracking-tight">{{ __('theme::shop.order_number', ['number' => $order->number]) }}</h1>
-            <p class="mt-3 text-zinc-600">{{ __('theme::shop.order_status') }}: <strong>{{ $order->status->getLabel() }}</strong></p>
+            <div class="mt-3 flex flex-wrap items-center gap-3">
+                <p class="flex items-center gap-2 text-zinc-600">{{ __('theme::shop.order_status') }}: @include('theme::partials.order-status', ['order' => $order])</p>
+                @if (! empty($customer) && $order->customer_id === $customer->id && Route::has('customer.orders.reorder') && Route::has('cart.show'))
+                    <form method="POST" action="{{ route('customer.orders.reorder', $order) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary !px-4 !py-2 text-sm">{{ __('theme::account.reorder') }}</button>
+                    </form>
+                @endif
+            </div>
         @endif
 
         @if (session('payment_error'))

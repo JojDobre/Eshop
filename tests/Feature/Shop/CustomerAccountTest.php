@@ -6,9 +6,11 @@ use App\Core\Mail\TemplateMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Livewire\Livewire;
+use Modules\Cart\CartManager;
 use Modules\Customers\Filament\Resources\Customers\Pages\EditCustomer;
 use Modules\Customers\Models\Customer;
 use Modules\Orders\Models\Order;
+use Modules\Orders\OrderStatus;
 
 class CustomerAccountTest extends ShopTestCase
 {
@@ -201,5 +203,34 @@ class CustomerAccountTest extends ShopTestCase
 
         Livewire::test(EditCustomer::class, ['record' => $customer->id])->callAction('delete');
         $this->assertSame(0, Customer::query()->count());
+    }
+
+    public function test_customer_can_reorder_and_sees_coloured_status(): void
+    {
+        $customer = $this->customer();
+        $this->actingAs($customer, 'customer');
+        $coffee = $this->product('Etiópia', '12.90');
+        $tea = $this->product('Sencha', '8.90');
+        $this->post(route('cart.add'), ['product_id' => $coffee->id, 'quantity' => 2]);
+        $this->post(route('cart.add'), ['product_id' => $tea->id]);
+        $this->post(route('checkout.store'), $this->checkoutData(['email' => 'jana@example.com']));
+        $order = Order::query()->firstOrFail();
+        $order->update(['status' => OrderStatus::ReadyForPickup]);
+        $tea->update(['is_visible' => false]);
+
+        $this->get(route('customer.account'))->assertOk()
+            ->assertSee('order-status', false)
+            ->assertSee(OrderStatus::ReadyForPickup->getLabel())
+            ->assertSee(__('theme::account.reorder'));
+
+        $this->post(route('customer.orders.reorder', $order))
+            ->assertRedirect(route('cart.show'))
+            ->assertSessionHas('success')
+            ->assertSessionHas('error', __('customers::messages.reorder_skipped', ['products' => 'Sencha']));
+        $this->assertSame(2, app(CartManager::class)->itemCount());
+
+        // Cudzia objednávka sa zopakovať nedá.
+        $this->actingAs($this->customer(['email' => 'iny@example.com']), 'customer');
+        $this->post(route('customer.orders.reorder', $order))->assertNotFound();
     }
 }

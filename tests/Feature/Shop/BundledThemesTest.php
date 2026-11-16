@@ -137,6 +137,18 @@ class BundledThemesTest extends ShopTestCase
         // Baner iba s obrázkom (bez nadpisu a textu).
         app(ThemeOptions::class)->save(app(ThemeManager::class)->find('farma'), ['home_sections' => ['banner'], 'banner_image' => 'theme/banner.jpg', 'banner_link' => '/akcia']);
         $this->get('/')->assertOk()->assertSee('uploads/theme/banner.jpg', false)->assertSee('href="/akcia"', false);
+
+        // Vzhľady sekcie O nás.
+        foreach (['overlay' => 'shadow-xl sm:p-9', 'card' => 'rounded-[20px] bg-white p-5', 'centered' => 'mx-auto max-w-3xl text-center', 'split' => 'farma-link mt-7'] as $style => $marker) {
+            app(ThemeOptions::class)->save(app(ThemeManager::class)->find('farma'), [
+                'home_sections' => ['about'], 'about_title' => 'Rodinná farma', 'about_image' => 'theme/about.jpg', 'about_link' => '/o-nas', 'about_style' => $style,
+            ]);
+            $this->get('/')->assertOk()->assertSee('Rodinná farma')->assertSee($marker, false)->assertSee('uploads/theme/about.jpg', false);
+        }
+
+        // Fotka na pozadí bez fotky sa zobrazí ako farebná karta.
+        app(ThemeOptions::class)->save(app(ThemeManager::class)->find('farma'), ['home_sections' => ['about'], 'about_title' => 'Rodinná farma', 'about_style' => 'overlay']);
+        $this->get('/')->assertOk()->assertSee('rounded-[28px] bg-soft p-6', false);
     }
 
     public function test_starter_theme_loads_plain_stylesheet_and_page_template(): void

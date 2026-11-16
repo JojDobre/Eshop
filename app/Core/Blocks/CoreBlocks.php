@@ -84,6 +84,19 @@ final class CoreBlocks
             self::hidden(),
         ], icon: 'heroicon-o-chat-bubble-bottom-center-text'));
 
+        $types->register(new BlockType('faq', fn () => $t('types.faq'), fn () => [
+            TextInput::make('title')->label($t('title'))->maxLength(160),
+            Textarea::make('text')->label($t('text'))->rows(2)->maxLength(500),
+            Select::make('layout')->label($t('faq_layout'))
+                ->options(['side' => $t('faq_layout_side'), 'stacked' => $t('faq_layout_stacked')])->default('side')->selectablePlaceholder(false),
+            Repeater::make('items')->label($t('faq_items'))->schema([
+                TextInput::make('question')->label($t('faq_question'))->required()->maxLength(200),
+                RichText::make('answer', 'blocks')->label($t('faq_answer'))->required(),
+            ])->minItems(1)->maxItems(30)->defaultItems(3)->collapsible()
+                ->itemLabel(fn (array $state) => $state['question'] ?? null),
+            self::hidden(),
+        ], icon: 'heroicon-o-question-mark-circle'));
+
         $types->register(new BlockType('gallery', fn () => $t('types.gallery'), fn () => [
             TextInput::make('title')->label($t('title'))->maxLength(160),
             self::image('images')->multiple()->reorderable()->maxFiles(24)->required(),

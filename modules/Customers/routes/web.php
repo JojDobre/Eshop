@@ -22,6 +22,7 @@ Route::middleware(SetStorefrontLocale::class)->prefix('ucet')->name('customer.')
 
     Route::middleware(AuthenticateCustomer::class)->group(function (): void {
         Route::get('/', [AccountController::class, 'orders'])->name('account');
+        Route::post('/objednavky/{order}/znova', [AccountController::class, 'reorder'])->name('orders.reorder')->middleware('throttle:20,1,reorder');
         Route::get('/udaje', [AccountController::class, 'profile'])->name('profile');
         Route::put('/udaje', [AccountController::class, 'updateProfile'])->name('profile.update');
         Route::put('/heslo', [AccountController::class, 'updatePassword'])->name('profile.password');

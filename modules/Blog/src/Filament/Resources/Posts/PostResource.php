@@ -108,6 +108,7 @@ class PostResource extends Resource
                         ->options(fn () => User::query()->orderBy('name')->pluck('name', 'id')->all())
                         ->default(fn () => auth()->id()),
                     Toggle::make('comments_enabled')->label($t('comments_enabled'))->default(true),
+                    Toggle::make('is_pinned')->label($t('is_pinned'))->helperText($t('is_pinned_help'))->default(false),
                     FileUpload::make('cover_image')->label($t('cover_image'))
                         ->disk('public')->directory('blog')->visibility('public')
                         ->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
@@ -126,7 +127,8 @@ class PostResource extends Resource
             ->columns([
                 ImageColumn::make('cover_image')->label('')->disk('public')->square()->size(40),
                 TextColumn::make('name')->label($t('name'))->searchable(query: fn ($query, string $search) => $query->where('name', 'like', '%'.$search.'%'))
-                    ->description(fn (Post $record) => $record->category?->name),
+                    ->description(fn (Post $record) => $record->category?->name)
+                    ->icon(fn (Post $record) => $record->is_pinned ? Heroicon::OutlinedMapPin : null)->iconColor('primary'),
                 MissingTranslationsColumn::make(),
                 TextColumn::make('status')->label($t('status'))->badge()
                     ->state(fn (Post $record) => $record->isScheduled() ? 'scheduled' : $record->status)

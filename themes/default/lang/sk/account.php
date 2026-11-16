@@ -25,6 +25,8 @@ return [
     'no_orders' => 'Zatiaľ nemáte žiadnu objednávku.',
     'order_number' => 'Číslo',
     'date' => 'Dátum',
+    'reorder' => 'Objednať znova',
+    'reorder_label' => 'Objednať znova objednávku :number',
     'awaiting_payment' => 'čaká na platbu',
     'address_help' => 'Adresy sa automaticky predvyplnia v pokladni. Po každom nákupe sa uložia tie posledné.',
     'save' => 'Uložiť zmeny',

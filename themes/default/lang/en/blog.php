@@ -4,6 +4,8 @@ return [
     'title' => 'Blog',
     'categories' => 'Blog categories',
     'all_posts' => 'All articles',
+    'pinned' => 'Pinned',
+    'read_post' => 'Read the post',
     'featured' => 'Featured post',
     'tags' => 'Tags',
     'latest' => 'Latest articles',

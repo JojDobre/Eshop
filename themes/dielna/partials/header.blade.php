@@ -82,7 +82,7 @@
                 <a href="{{ route('cart.show') }}" class="relative grid size-10 place-items-center rounded-full bg-ink text-cream">
                     <span class="sr-only">{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}</span>
                     <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linejoin="round" d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z" /><path stroke-linecap="round" d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
-                    <span class="absolute -right-1 -top-1 grid size-5 place-items-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
+                    <span class="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full px-1 tabular-nums bg-primary text-[11px] font-semibold text-primary-foreground" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
                 </a>
             @endif
         </div>

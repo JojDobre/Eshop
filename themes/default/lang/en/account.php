@@ -25,6 +25,8 @@ return [
     'no_orders' => 'You have no orders yet.',
     'order_number' => 'Number',
     'date' => 'Date',
+    'reorder' => 'Order again',
+    'reorder_label' => 'Order :number again',
     'awaiting_payment' => 'awaiting payment',
     'address_help' => 'Addresses are prefilled at checkout. The latest ones are saved after each purchase.',
     'save' => 'Save changes',

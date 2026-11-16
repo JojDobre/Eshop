@@ -22,6 +22,9 @@
 
 @section('content')
     <div class="container-shop py-10">
+        @if (! empty($pinnedPost) && $posts->currentPage() === 1)
+            <div class="mb-10">@include('theme::partials.blog-pinned', ['pinnedPost' => $pinnedPost])</div>
+        @endif
         <div @class([
             'grid gap-10',
             'lg:grid-cols-[minmax(0,1fr)_17rem]' => $blogSidebar === 'right',

@@ -10,7 +10,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Modules\Customers\Actions\DeleteCustomer;
+use Modules\Customers\Actions\ReorderOrder;
 use Modules\Customers\Models\Customer;
+use Modules\Orders\Models\Order;
 
 class AccountController extends Controller
 {
@@ -19,6 +21,26 @@ class AccountController extends Controller
         return view('theme::templates.account.orders', [
             'orders' => $this->customer()->orders()->paginate(20),
         ]);
+    }
+
+    /**
+     * Zopakovanie objednávky: položky sa pridajú do košíka (len vlastné objednávky zákazníka).
+     */
+    public function reorder(Order $order, ReorderOrder $reorder): RedirectResponse
+    {
+        abort_unless($order->customer_id === $this->customer()->id, 404);
+
+        $result = $reorder->handle($order);
+
+        if ($result['added'] === 0) {
+            return back()->with('error', __('customers::messages.reorder_nothing'));
+        }
+
+        $redirect = redirect()->route('cart.show')->with('success', trans_choice('customers::messages.reorder_added', $result['added'], ['count' => $result['added']]));
+
+        return $result['skipped'] === []
+            ? $redirect
+            : $redirect->with('error', __('customers::messages.reorder_skipped', ['products' => implode(', ', $result['skipped'])]));
     }
 
     public function profile(): View

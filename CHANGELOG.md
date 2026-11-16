@@ -1,5 +1,20 @@
 # Prehľad zmien
 
+## 1.14.0 – Objednať znova, pripnuté články a blok Časté otázky
+
+- **Zákaznícky účet:** tlačidlo **Objednať znova** v zozname objednávok aj na detaile objednávky (položky sa pridajú
+  do košíka v aktuálnych cenách, nedostupné sa preskočia). Stavy objednávok majú farebné štítky, napr. fialová
+  „Pripravená na vyzdvihnutie“. Na mobile sú objednávky kartičky namiesto tabuľky.
+- **Pripnutý článok v blogu:** prepínač pri článku, článok sa zobrazí ako veľký banner s fotkou nad zoznamom článkov.
+- **Blok Časté otázky:** rozbaľovacie otázky s odpoveďami, rozloženie vedľa seba alebo pod sebou, s údajmi
+  FAQPage pre vyhľadávače. Dá sa vložiť na úvodnú stránku, do stránok aj kategórií.
+- **Vzhľad kategórie (aj stránky):** banner len s obrázkom bez nadpisu, vypnutie odkazov na podkategórie a bloky
+  kategórie nad produktmi alebo pod nimi.
+- **Šablóna Farma:** sekcia O nás má štyri vzhľady – fotka vedľa textu, fotka na pozadí s kartou, farebná karta
+  s výhodami a text na stred so širokou fotkou.
+- **Opravy:** pole s počtom kusov v košíku a na produkte je širšie (dvoj- a trojciferné čísla sa už neorezávajú),
+  počítadlo košíka v hlavičke šablón sa pri väčších číslach rozšíri.
+
 ## 1.13.1 – Varianty sa vytvoria samé
 
 - **Možnosti variantov sa zobrazia v obchode hneď:** po uložení možnosti (napr. Farba s hodnotami) sa varianty

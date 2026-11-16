@@ -16,15 +16,19 @@
         $pageHeroImage = ! empty($pageDisplay['hero_image']) ? \Illuminate\Support\Facades\Storage::disk('public')->url($pageDisplay['hero_image']) : null;
     @endphp
 
-    @if ($pageHeader === 'hero')
-        @include('theme::partials.page-hero', ['heroTitle' => $page->name, 'heroText' => $pageDisplay['hero_text'] ?? null, 'heroImage' => $pageHeroImage, 'heroHeight' => $pageDisplay['hero_height'] ?? 'medium'])
+    @if ($pageHeader === 'image' && ! $pageHeroImage)
+        @php($pageHeader = 'title')
+    @endif
+
+    @if (in_array($pageHeader, ['hero', 'image'], true))
+        @include('theme::partials.page-hero', ['heroTitle' => $page->name, 'heroText' => $pageDisplay['hero_text'] ?? null, 'heroImage' => $pageHeroImage, 'heroHeight' => $pageDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $pageHeader === 'image'])
     @endif
 
     @if ($pageHeader === 'none')
         <h1 class="sr-only">{{ $page->name }}</h1>
     @endif
 
-    @if (isset($version) || filled(strip_tags((string) $page->content)) || $pageHeader === 'title' || ($pageBreadcrumbs && $pageHeader !== 'hero'))
+    @if (isset($version) || filled(strip_tags((string) $page->content)) || $pageHeader === 'title' || ($pageBreadcrumbs && ! in_array($pageHeader, ['hero', 'image'], true)))
         <article class="container-shop {{ $pageWidth }} py-10">
             @if ($pageBreadcrumbs)
                 @include('theme::partials.breadcrumbs', ['items' => [[$page->name, null]]])

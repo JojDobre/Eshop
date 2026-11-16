@@ -43,7 +43,7 @@
                                         <label for="qty-{{ $line->item->id }}" class="sr-only">{{ __('theme::shop.quantity') }}</label>
                                         <input id="qty-{{ $line->item->id }}" type="number" name="quantity" value="{{ $line->quantity }}" min="0"
                                                @if ($line->maxQuantity() !== null) max="{{ $line->maxQuantity() }}" @endif
-                                               class="input w-16 py-1.5 text-center" onchange="this.form.submit()">
+                                               class="input w-20 !px-2 py-1.5 text-center tabular-nums" onchange="this.form.submit()">
                                         <noscript><button class="text-sm underline">{{ __('theme::shop.update') }}</button></noscript>
                                     </form>
                                     <span class="w-24 text-right font-medium">{{ format_price($line->total()) }}</span>

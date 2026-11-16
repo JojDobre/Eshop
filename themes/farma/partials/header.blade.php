@@ -103,7 +103,7 @@
                     <a href="{{ route('cart.show') }}" class="flex items-center gap-2 rounded-full bg-soft px-3.5 py-2.5 text-sm font-black text-accent hover:brightness-95">
                         <span class="sr-only">{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}</span>
                         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linejoin="round" d="M5 8h14l-1 12H6z" /><path stroke-linecap="round" d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
-                        <span class="grid size-5 place-items-center rounded-full bg-primary text-[11px] text-primary-foreground" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
+                        <span class="grid h-5 min-w-5 place-items-center rounded-full px-1 tabular-nums bg-primary text-[11px] text-primary-foreground" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
                     </a>
                 @endif
 

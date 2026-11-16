@@ -24,6 +24,8 @@ return [
     'tags' => 'Štítky',
     'author' => 'Autor',
     'comments_enabled' => 'Povolit komentáře',
+    'is_pinned' => 'Připnout nahoru blogu',
+    'is_pinned_help' => 'Článek se zobrazí jako velký banner nad ostatními články. Při více připnutých se ukáže nejnovější.',
     'cover_image' => 'Titulní obrázek',
     'description' => 'Popis',
     'pending_comments' => 'Ke schválení',

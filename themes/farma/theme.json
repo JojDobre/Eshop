@@ -441,6 +441,43 @@
             },
             "default": ""
         },
+        "about_style": {
+            "type": "select",
+            "group": "about",
+            "label": {
+                "sk": "O nás – vzhľad",
+                "cs": "O nás – vzhled",
+                "en": "About – style"
+            },
+            "default": "split",
+            "help": {
+                "sk": "Ako sa zobrazí sekcia O nás na úvodnej stránke.",
+                "cs": "Jak se zobrazí sekce O nás na úvodní stránce.",
+                "en": "How the About section looks on the home page."
+            },
+            "options": {
+                "split": {
+                    "sk": "Fotka vedľa textu",
+                    "cs": "Fotka vedle textu",
+                    "en": "Photo beside text"
+                },
+                "overlay": {
+                    "sk": "Fotka na pozadí, text na karte",
+                    "cs": "Fotka na pozadí, text na kartě",
+                    "en": "Background photo, text on a card"
+                },
+                "card": {
+                    "sk": "Farebná karta s fotkou a výhodami pod textom",
+                    "cs": "Barevná karta s fotkou a výhodami pod textem",
+                    "en": "Coloured card with photo and benefits below"
+                },
+                "centered": {
+                    "sk": "Text na stred, široká fotka a výhody v riadku",
+                    "cs": "Text na střed, široká fotka a výhody v řádku",
+                    "en": "Centred text, wide photo and benefits in a row"
+                }
+            }
+        },
         "show_benefits": {
             "type": "toggle",
             "group": "about",

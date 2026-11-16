@@ -183,4 +183,17 @@ class BlogTest extends ShopTestCase
         // Súvisiace články pred textom článku (podľa poradia sekcií).
         $this->assertLessThan(strpos($postHtml, 'blog-post-content'), strpos($postHtml, 'related-posts'));
     }
+
+    public function test_pinned_post_is_a_banner_on_top_of_the_blog(): void
+    {
+        $this->article(['name' => 'Novší článok', 'slug' => 'novsi', 'published_at' => now()->subHour()]);
+        $pinned = $this->article(['name' => 'Jarná ochutnávka', 'slug' => 'jarna', 'is_pinned' => true, 'published_at' => now()->subDays(5)]);
+
+        $this->get(route('blog.index'))->assertOk()
+            ->assertSee('blog-pinned', false)
+            ->assertSeeInOrder(['Jarná ochutnávka', 'Novší článok'])
+            ->assertSee(__('theme::blog.pinned'));
+        // V zozname pod bannerom sa pripnutý článok neopakuje.
+        $this->assertSame(1, substr_count($this->get(route('blog.index'))->getContent(), '>'.$pinned->name.'</a>'));
+    }
 }

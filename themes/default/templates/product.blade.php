@@ -312,7 +312,7 @@
 
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
-                            <input id="quantity" type="number" name="quantity" value="1" min="1" :max="variant && variant.max !== null ? variant.max : null" class="input w-20 text-center">
+                            <input id="quantity" type="number" name="quantity" value="1" min="1" :max="variant && variant.max !== null ? variant.max : null" class="input w-24 !px-2 text-center tabular-nums">
                             <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10" :disabled="! variant || ! variant.available">
                                 <span x-text="variant ? (variant.preorder ? '{{ __('theme::shop.preorder_button') }}' : '{{ __('theme::shop.add_to_cart') }}') : '{{ __('theme::shop.choose_variant') }}'">{{ __('theme::shop.add_to_cart') }}</span>
                             </button>
@@ -325,7 +325,7 @@
                         @include('theme::partials.product-addons')
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
-                            <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-20 text-center">
+                            <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-24 !px-2 text-center tabular-nums">
                             <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ $preorder ? __('theme::shop.preorder_button') : __('theme::shop.add_to_cart') }}</button>
                         </div>
                     </form>

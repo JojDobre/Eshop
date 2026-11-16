@@ -4,6 +4,8 @@ return [
     'title' => 'Blog',
     'categories' => 'Kategorie blogu',
     'all_posts' => 'Všechny články',
+    'pinned' => 'Připnuto',
+    'read_post' => 'Číst článek',
     'featured' => 'Doporučený článek',
     'tags' => 'Štítky',
     'latest' => 'Nejnovější články',

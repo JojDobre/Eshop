@@ -12,4 +12,7 @@ return [
     'password_changed' => 'Heslo bylo změněno.',
     'deleted' => 'Účet byl zrušen.',
     'blocked' => 'Váš účet je zablokovaný. Kontaktujte nás, prosím.',
+    'reorder_added' => '{1} Do košíku jsme přidali :count položku z objednávky.|[2,4] Do košíku jsme přidali :count položky z objednávky.|[5,*] Do košíku jsme přidali :count položek z objednávky.',
+    'reorder_skipped' => 'Tyto produkty už nejsou dostupné: :products',
+    'reorder_nothing' => 'Žádný produkt z této objednávky už není dostupný.',
 ];

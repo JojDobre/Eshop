@@ -80,7 +80,7 @@
                     @if ($themeOptions->get('cart_total', true))
                         <span @class(['hidden', 'sm:inline' => $cartSummary !== null]) aria-hidden="true" data-cart-total="sm:inline">{{ $cartSummary ? format_price($cartSummary->subtotal(), $cartSummary->currency) : '' }}</span>
                     @endif
-                    <span @class(['es-sticker grid size-5 place-items-center rounded-full text-[11px]', 'hidden' => ($cartCount ?? 0) === 0]) aria-hidden="true" data-cart-count="grid">{{ $cartCount ?? 0 }}</span>
+                    <span @class(['es-sticker grid h-5 min-w-5 place-items-center rounded-full px-1 tabular-nums text-[11px]', 'hidden' => ($cartCount ?? 0) === 0]) aria-hidden="true" data-cart-count="grid">{{ $cartCount ?? 0 }}</span>
                 </a>
             @endif
         </div>

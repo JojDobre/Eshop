@@ -131,4 +131,35 @@ class BlocksTest extends ShopTestCase
             ->assertSee('<h1 class="sr-only">Klietky</h1>', false)
             ->assertDontSee('<p>Popis klietok</p>', false);
     }
+
+    public function test_faq_block_renders_questions_and_structured_data(): void
+    {
+        $page = Page::query()->create(['name' => 'Pomoc', 'is_visible' => true]);
+        $page->setTranslation('blocks', 'sk', [['type' => 'faq', 'data' => ['title' => 'Časté otázky', 'layout' => 'side', 'items' => [
+            ['question' => 'Kedy doručíte?', 'answer' => '<p>Do 2 dní.</p>'],
+            ['question' => 'Dá sa platiť kartou?', 'answer' => '<p>Áno.</p>'],
+        ]]]])->save();
+
+        $this->get($page->url())->assertOk()
+            ->assertSee('Časté otázky')
+            ->assertSee('Kedy doručíte?')
+            ->assertSee('<p>Do 2 dní.</p>', false)
+            ->assertSee('"@type":"FAQPage"', false);
+    }
+
+    public function test_category_display_image_banner_hidden_subcategories_and_blocks_below(): void
+    {
+        $category = $this->category('Čaje');
+        $this->category('Zelené', $category);
+        $this->product('Sencha', category: $category);
+        $category->update(['image' => 'categories/caj.jpg', 'display' => ['header' => 'image', 'show_subcategories' => false, 'blocks_position' => 'below']]);
+        $category->setTranslation('blocks', 'sk', [['type' => 'banner', 'data' => ['title' => 'Čajový banner']]])->save();
+
+        $html = $this->get($category->url())->assertOk()
+            ->assertSee('page-hero-image', false)
+            ->assertSee('<h1 class="sr-only">Čaje</h1>', false)
+            ->assertDontSee('>Zelené</a>', false)
+            ->getContent();
+        $this->assertGreaterThan(strpos($html, 'Sencha'), strpos($html, 'Čajový banner'));
+    }
 }

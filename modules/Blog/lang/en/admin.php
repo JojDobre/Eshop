@@ -24,6 +24,8 @@ return [
     'tags' => 'Tags',
     'author' => 'Author',
     'comments_enabled' => 'Allow comments',
+    'is_pinned' => 'Pin to the top of the blog',
+    'is_pinned_help' => 'The post is shown as a large banner above the other posts. If several are pinned, the newest one is shown.',
     'cover_image' => 'Cover image',
     'description' => 'Description',
     'pending_comments' => 'Pending',

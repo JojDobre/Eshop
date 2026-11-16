@@ -59,7 +59,7 @@ class Post extends Model
 
     protected function casts(): array
     {
-        return ['published_at' => 'datetime', 'comments_enabled' => 'boolean'];
+        return ['published_at' => 'datetime', 'comments_enabled' => 'boolean', 'is_pinned' => 'boolean'];
     }
 
     protected static function booted(): void

@@ -72,7 +72,7 @@
                     <span class="sr-only">{{ trans_choice('theme::shop.cart_with_count', $cartCount ?? 0, ['count' => $cartCount ?? 0]) }}</span>
                     <span class="hidden sm:inline" aria-hidden="true">{{ __('theme::butik.cart') }}</span>
                     <svg class="size-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>
-                    <span class="grid size-6 place-items-center rounded-full bg-ac text-[11px] text-onac" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
+                    <span class="grid h-6 min-w-6 place-items-center rounded-full px-1.5 tabular-nums bg-ac text-[11px] text-onac" aria-hidden="true" data-cart-count>{{ $cartCount ?? 0 }}</span>
                 </a>
             @endif
         </div>

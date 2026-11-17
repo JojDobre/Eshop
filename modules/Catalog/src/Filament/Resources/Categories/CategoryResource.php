@@ -99,6 +99,10 @@ class CategoryResource extends Resource
                             ->sort())
                         ->searchable(),
                     TextInput::make('position')->label($t('position'))->numeric()->default(0)->minValue(0),
+                    // Spoločné minimum pre všetky produkty kategórie a jej podkategórií (druhy sa dajú kombinovať).
+                    TextInput::make('min_quantity')->label(__('catalog::admin.min_quantity.label'))
+                        ->helperText(__('catalog::admin.min_quantity.category_help'))
+                        ->integer()->minValue(1)->maxValue(9999)->suffix(__('catalog::admin.min_quantity.suffix')),
                     FileUpload::make('image')->label($t('image'))
                         ->disk('public')->directory('categories')->visibility('public')
                         ->image()->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])

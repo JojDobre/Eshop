@@ -9,4 +9,8 @@ return [
     'removed' => 'Položka byla odstraněna z košíku.',
     'addon_unavailable' => 'Tato doplňková volba už není dostupná.',
     'addon_text_required' => 'Vyplňte text pro „:addon“.',
+    'min_product' => '„:name“: minimálně :minimum ks, v košíku je :quantity ks. Přidejte ještě :missing ks.',
+    'min_category' => ':name: celkem minimálně :minimum ks (druhy můžete kombinovat), v košíku je :quantity ks. Přidejte ještě :missing ks.',
+    'min_product_hint' => 'Minimální množství na objednávku: :minimum ks.',
+    'min_category_hint' => 'Minimální množství na objednávku: :minimum ks celkem z kategorie :category. Jednotlivé druhy můžete libovolně kombinovat.',
 ];

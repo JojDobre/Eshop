@@ -145,6 +145,13 @@
 
                     @if ($summary->canCheckout())
                         <a href="{{ route('checkout.show') }}" class="btn btn-primary mt-6 w-full">{{ __('theme::shop.checkout') }}</a>
+                    @elseif ($summary->minimumViolations() !== [] && collect($summary->lines)->every(fn ($line) => $line->isAvailable))
+                        {{-- Nesplnené minimálne množstvo: čo a koľko kusov ešte chýba. --}}
+                        <div class="mt-6 space-y-1 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert" data-minimum-violations>
+                            @foreach ($summary->minimumViolations() as $violation)
+                                <p>{{ __('cart::messages.min_'.$violation['type'], $violation) }}</p>
+                            @endforeach
+                        </div>
                     @else
                         <p class="mt-6 text-sm text-red-600">{{ __('theme::shop.cart_has_unavailable') }}</p>
                     @endif

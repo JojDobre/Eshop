@@ -16,6 +16,9 @@
     $netPrices = $product::showsNetPrices();
     $show = fn (?int $gross) => $product->displayPrice($gross);
     $quantityDiscounts = $product->applicableQuantityDiscounts();
+    // Minimálne množstvo produktu alebo spoločné minimum jeho kategórie (druhy sa dajú kombinovať).
+    $minimumRule = app(\Modules\Cart\MinimumQuantities::class)->forProduct($product);
+    $startQuantity = $minimumRule !== null && $minimumRule['category'] === null ? $minimumRule['minimum'] : 1;
     $manufacturer = $product->manufacturer;
     $safetyInfo = $product->safety_info ?: $manufacturer?->safety_info;
     // SEO šablóny (Nastavenia → SEO), ak produkt nemá vlastný titulok a popis.
@@ -223,6 +226,14 @@
                     </div>
                 @endif
 
+                @if ($minimumRule !== null)
+                    <p class="mt-4 rounded-lg border border-zinc-200 p-3 text-sm text-zinc-700" data-minimum-quantity>
+                        {{ $minimumRule['category'] === null
+                            ? __('cart::messages.min_product_hint', ['minimum' => $minimumRule['minimum']])
+                            : __('cart::messages.min_category_hint', ['minimum' => $minimumRule['minimum'], 'category' => $minimumRule['category']->name]) }}
+                    </p>
+                @endif
+
                 @if ($availability)
                     <p class="mt-4 inline-flex items-center gap-2 text-sm font-medium" style="color: color-mix(in srgb, {{ $availability['color'] }} 70%, black)" @if ($variantData) x-data x-show="false" @endif>
                         <span class="size-2 rounded-full" style="background: {{ $availability['color'] }}" aria-hidden="true"></span>
@@ -312,7 +323,7 @@
 
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
-                            <input id="quantity" type="number" name="quantity" value="1" min="1" :max="variant && variant.max !== null ? variant.max : null" class="input w-24 !px-2 text-center tabular-nums">
+                            <input id="quantity" type="number" name="quantity" value="{{ $startQuantity }}" min="1" :max="variant && variant.max !== null ? variant.max : null" class="input w-24 !px-2 text-center tabular-nums">
                             <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10" :disabled="! variant || ! variant.available">
                                 <span x-text="variant ? (variant.preorder ? '{{ __('theme::shop.preorder_button') }}' : '{{ __('theme::shop.add_to_cart') }}') : '{{ __('theme::shop.choose_variant') }}'">{{ __('theme::shop.add_to_cart') }}</span>
                             </button>
@@ -325,7 +336,7 @@
                         @include('theme::partials.product-addons')
                         <div class="flex gap-3">
                             <label for="quantity" class="sr-only">{{ __('theme::shop.quantity') }}</label>
-                            <input id="quantity" type="number" name="quantity" value="1" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-24 !px-2 text-center tabular-nums">
+                            <input id="quantity" type="number" name="quantity" value="{{ $startQuantity }}" min="1" @if ($maxQuantity !== null) max="{{ $maxQuantity }}" @endif class="input w-24 !px-2 text-center tabular-nums">
                             <button type="submit" class="btn btn-primary flex-1 sm:flex-none sm:px-10">{{ $preorder ? __('theme::shop.preorder_button') : __('theme::shop.add_to_cart') }}</button>
                         </div>
                     </form>

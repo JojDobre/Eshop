@@ -32,6 +32,11 @@ jednotlivo. Moduly (kuriéri, blog, rezervácie, hodnotenia, účtovné exporty�
   V sekcii **Vzhľad** pri kategórii zvolíte nadpis, banner s nadpisom alebo len obrázok (banner bez nadpisu),
   banner môže byť na celú šírku alebo v šírke stránky so zaoblenými rohmi,
   vypnete odkazy na podkategórie a navigáciu a určíte, či sú bloky kategórie nad produktmi alebo pod nimi.
+- **Minimálne množstvo v objednávke:** pri produkte (sekcia Sklad) – zákazník musí objednať aspoň toľko kusov
+  tohto produktu, všetky varianty spolu. Pri kategórii – spoločné minimum pre všetky produkty kategórie a jej
+  podkategórií, kusy sa sčítajú (napr. minimum 10 vajec: 3 ks jedného druhu + 7 ks iného). Produkty mimo
+  kategórie, napr. klietka, sa do minima nerátajú. Kým minimum nie je splnené, košík ukáže, koľko kusov chýba,
+  a do pokladne sa nedá pokračovať. Na stránke produktu sa minimum zobrazí ako upozornenie.
 - **Typy produktov** určujú, či tovar potrebuje dopravu, či je to jedinečný kus alebo digitálny produkt.
 - **Import a export** (Katalóg → Import / Export): CSV a XLSX vrátane variantov a kategórií.
 

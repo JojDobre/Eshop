@@ -282,6 +282,10 @@ class ProductResource extends Resource
                         ->visible(fn (Get $get, ?Product $record) => (bool) $get('track_stock') && (bool) $record?->hasVariants()),
                     TextInput::make('low_stock_threshold')->label($t('low_stock_threshold'))->helperText($t('low_stock_threshold_help'))
                         ->integer()->minValue(0)->visible(fn (Get $get) => (bool) $get('track_stock')),
+                    // Minimálne množstvo: všetky kusy produktu v košíku spolu (aj rôzne varianty).
+                    TextInput::make('min_quantity')->label(__('catalog::admin.min_quantity.label'))
+                        ->helperText(__('catalog::admin.min_quantity.product_help'))
+                        ->integer()->minValue(1)->maxValue(9999)->suffix(__('catalog::admin.min_quantity.suffix')),
                     Toggle::make('preorder_enabled')->label(__('catalog::admin.preorder.enabled'))->helperText(__('catalog::admin.preorder.enabled_help'))->live()
                         ->visible(fn (Get $get) => (bool) $get('track_stock') && CatalogFeatures::enabled('preorders')),
                     DatePicker::make('preorder_available_at')->label(__('catalog::admin.preorder.available_at'))->helperText(__('catalog::admin.preorder.available_at_help'))

@@ -10,6 +10,9 @@ final class CartSummary
     /**
      * @param  list<CartLine>  $lines
      */
+    /** @var list<array{name: string, minimum: int, quantity: int, missing: int, type: 'product'|'category'}>|null */
+    private ?array $minimumViolations = null;
+
     public function __construct(
         public readonly array $lines,
         public readonly string $currency,
@@ -45,7 +48,17 @@ final class CartSummary
             }
         }
 
-        return true;
+        return $this->minimumViolations() === [];
+    }
+
+    /**
+     * Nesplnené minimálne množstvá (produkt alebo kategória, pozri MinimumQuantities).
+     *
+     * @return list<array{name: string, minimum: int, quantity: int, missing: int, type: 'product'|'category'}>
+     */
+    public function minimumViolations(): array
+    {
+        return $this->minimumViolations ??= app(MinimumQuantities::class)->violations($this);
     }
 
     /**

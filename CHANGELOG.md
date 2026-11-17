@@ -1,5 +1,17 @@
 # Prehľad zmien
 
+## 1.15.0 – Minimálne množstvo a animované menu
+
+- **Minimálne množstvo v objednávke** (Katalóg → Produkty → Sklad a Katalóg → Kategórie):
+  - pri produkte: najmenej X kusov tohto produktu (varianty sa sčítajú),
+  - pri kategórii: spoločné minimum pre produkty kategórie a podkategórií – druhy sa dajú kombinovať
+    (napr. 3 + 7 vajec = 10 ks); produkty mimo kategórie (napr. klietka) sa nerátajú.
+  Košík presne napíše, koľko kusov chýba, a pokladňu pustí až po splnení minima. Stránka produktu minimum
+  ukáže vopred a pri vlastnom minime produktu predvyplní množstvo.
+- **Farma: animované menu.** Mobilná ponuka sa plynulo vysunie, položky nabehnú postupne a ikona sa zmení na krížik
+  (zatvára sa aj klávesom Esc). Podponuky na počítači sa jemne rozbalia. Pri vypnutých animáciách v systéme
+  (prefers-reduced-motion) sa zobrazujú bez pohybu.
+
 ## 1.14.3 – Preklady bez prekvapení
 
 - **Vymazaný text v predvolenom jazyku ostane prázdny.** Predtým sa namiesto neho zobrazil text iného jazyka

@@ -201,6 +201,87 @@ main h1 {
     }
 }
 
+/* Animované menu: mobilná ponuka sa vysunie zhora, položky nabehnú postupne, ikona sa zmení na krížik. */
+.farma-menu-enter {
+    transition: clip-path 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.farma-menu-leave {
+    transition: clip-path 0.22s ease-in;
+}
+
+.farma-menu-hidden {
+    clip-path: inset(0 0 100% 0);
+}
+
+.farma-menu-shown {
+    clip-path: inset(0 0 -2rem 0);
+}
+
+.farma-menu-items > li {
+    animation: farma-menu-item 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.farma-menu-items > li:nth-child(2) { animation-delay: 40ms; }
+.farma-menu-items > li:nth-child(3) { animation-delay: 80ms; }
+.farma-menu-items > li:nth-child(4) { animation-delay: 120ms; }
+.farma-menu-items > li:nth-child(5) { animation-delay: 160ms; }
+.farma-menu-items > li:nth-child(n + 6) { animation-delay: 200ms; }
+
+@keyframes farma-menu-item {
+    from {
+        opacity: 0;
+        transform: translateX(-0.75rem);
+    }
+}
+
+.farma-burger span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1.125rem;
+    height: 2px;
+    margin-left: -0.5625rem;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.farma-burger span:nth-child(1) { transform: translateY(-6px); }
+.farma-burger span:nth-child(3) { transform: translateY(6px); }
+.farma-burger[aria-expanded='true'] span:nth-child(1) { transform: rotate(45deg); }
+.farma-burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.farma-burger[aria-expanded='true'] span:nth-child(3) { transform: rotate(-45deg); }
+
+/* Rozbaľovacie podponuky na počítači. */
+.farma-dropdown-enter {
+    transition: opacity 0.2s ease, transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.farma-dropdown-leave {
+    transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.farma-dropdown-hidden {
+    opacity: 0;
+    transform: translateY(0.5rem);
+}
+
+.farma-dropdown-shown {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .farma-menu-enter, .farma-menu-leave, .farma-dropdown-enter, .farma-dropdown-leave, .farma-burger span {
+        transition: none;
+    }
+
+    .farma-menu-items > li {
+        animation: none;
+    }
+}
+
 /*
  * Bloky (Obsah → Úvodná stránka a bloky, Prispôsobenie → Bloky) v štýle Farmy: nadpis a odkaz „Zobraziť všetko“
  * rovnako ako vlastné sekcie šablóny. Mimo vrstiev, aby mali prednosť pred triedami Tailwindu v blokoch.

@@ -107,9 +107,10 @@
                     </a>
                 @endif
 
-                <button type="button" class="-mr-1 grid size-10 shrink-0 place-items-center rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
-                        :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
-                    <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg>
+                <button type="button" class="farma-burger relative -mr-1 size-10 shrink-0 rounded-full border border-line text-zinc-700 md:hidden" @click="menu = ! menu"
+                        aria-expanded="false" :aria-expanded="menu.toString()" aria-controls="mobile-menu" aria-label="{{ __('theme::shop.menu') }}">
+                    {{-- Tri čiarky sa po otvorení animovane zmenia na krížik (theme.css). --}}
+                    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
                 </button>
             </div>
         </div>
@@ -132,14 +133,17 @@
         </div>
     @endif
 
-    <div id="mobile-menu" x-show="menu" x-cloak class="border-b border-line bg-white md:hidden">
+    <div id="mobile-menu" x-show="menu" x-cloak @keydown.escape.window="menu = false"
+         x-transition:enter="farma-menu-enter" x-transition:enter-start="farma-menu-hidden" x-transition:enter-end="farma-menu-shown"
+         x-transition:leave="farma-menu-leave" x-transition:leave-start="farma-menu-shown" x-transition:leave-end="farma-menu-hidden"
+         class="absolute inset-x-0 top-full max-h-[calc(100dvh-100%)] overflow-y-auto border-b border-line bg-white shadow-lg md:hidden">
         @if (Route::has('catalog.search'))
             <form action="{{ route('catalog.search') }}" method="GET" role="search" class="container-shop pt-3">
                 <label for="mobile-search" class="sr-only">{{ __('theme::shop.search') }}</label>
                 <input id="mobile-search" type="search" name="q" value="{{ request('q') }}" placeholder="{{ __('theme::shop.search_placeholder') }}" class="input rounded-full">
             </form>
         @endif
-        <ul class="container-shop divide-y divide-[var(--farma-line)] py-2 font-bold">
+        <ul class="farma-menu-items container-shop divide-y divide-[var(--farma-line)] py-2 font-bold">
             @foreach ($navItems as $navItem)
                 <li>
                     <a href="{{ $navItem['url'] }}" class="block py-3">{{ $navItem['label'] }}</a>

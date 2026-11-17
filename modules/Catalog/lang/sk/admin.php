@@ -439,4 +439,10 @@ return [
         'under_stock' => 'Zvýraznene pod stavom dostupnosti',
         'hidden' => 'Nezobrazovať',
     ],
+    'min_quantity' => [
+        'label' => 'Minimálne množstvo v objednávke',
+        'suffix' => 'ks',
+        'product_help' => 'Zákazník musí objednať aspoň toľko kusov tohto produktu (všetky varianty spolu). Prázdne = bez obmedzenia.',
+        'category_help' => 'Spoločné minimum pre produkty tejto kategórie a jej podkategórií – kusy rôznych produktov sa sčítajú (napr. 3 + 7 = 10). Produkty mimo kategórie (napr. príslušenstvo) sa nerátajú. Prázdne = bez obmedzenia.',
+    ],
 ];

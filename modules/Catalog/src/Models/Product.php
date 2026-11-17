@@ -86,6 +86,7 @@ class Product extends Model
             'preorder_limit' => 'integer',
             'is_visible' => 'boolean',
             'low_stock_threshold' => 'integer',
+            'min_quantity' => 'integer',
         ];
     }
 

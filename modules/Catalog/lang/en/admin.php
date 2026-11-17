@@ -439,4 +439,10 @@ return [
         'under_stock' => 'Highlighted below availability',
         'hidden' => 'Do not show',
     ],
+    'min_quantity' => [
+        'label' => 'Minimum order quantity',
+        'suffix' => 'pcs',
+        'product_help' => 'Customers must order at least this many pieces of the product (all variants together). Empty = no limit.',
+        'category_help' => 'Shared minimum for products in this category and its subcategories – pieces of different products add up (e.g. 3 + 7 = 10). Products outside the category (e.g. accessories) do not count. Empty = no limit.',
+    ],
 ];

@@ -59,7 +59,7 @@ class SubmitForm
         foreach ($form->formFields() as $field) {
             $value = $input[$field['key']] ?? null;
             $value = $field['type'] === 'checkbox' ? (filter_var($value, FILTER_VALIDATE_BOOL) ? __('forms::shop.yes') : __('forms::shop.no')) : trim((string) $value);
-            $data[] = ['label' => $field['label'], 'value' => $value];
+            $data[] = ['label' => $field['label'], 'value' => $value, 'type' => $field['type']];
 
             if ($field['type'] === 'email' && $email === null && $value !== '') {
                 $email = $value;

@@ -31,6 +31,12 @@ return [
     'read' => 'Prečítané',
     'reply' => 'Odpovedať',
     'mark_read' => 'Označiť ako prečítané',
+    'submission_title' => 'Správa z formulára',
+    'received_on' => 'Prijaté :date',
+    'close' => 'Zavrieť',
+    'mark_unread' => 'Označiť ako neprečítané',
+    'sender' => 'Odosielateľ',
+    'anonymous' => 'Bez mena',
     'types' => [
         'text' => 'Text',
         'email' => 'E-mail',

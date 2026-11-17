@@ -31,6 +31,12 @@ return [
     'read' => 'Read',
     'reply' => 'Reply',
     'mark_read' => 'Mark as read',
+    'submission_title' => 'Form message',
+    'received_on' => 'Received :date',
+    'close' => 'Close',
+    'mark_unread' => 'Mark as unread',
+    'sender' => 'Sender',
+    'anonymous' => 'No name',
     'types' => [
         'text' => 'Text',
         'email' => 'E-mail',

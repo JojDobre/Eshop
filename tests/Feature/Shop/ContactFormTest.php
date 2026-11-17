@@ -3,11 +3,13 @@
 namespace Tests\Feature\Shop;
 
 use App\Core\Mail\TemplateMail;
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 use Modules\Forms\DefaultForm;
 use Modules\Forms\Filament\Resources\Forms\Pages\CreateForm;
+use Modules\Forms\Filament\Resources\Submissions\Pages\ManageFormSubmissions;
 use Modules\Forms\Models\Form;
 use Modules\Forms\Models\FormSubmission;
 use Modules\Pages\Models\Page;
@@ -42,7 +44,7 @@ class ContactFormTest extends ShopTestCase
 
         $submission = FormSubmission::query()->sole();
         $this->assertSame('jana@example.com', $submission->email);
-        $this->assertSame(['label' => 'Správa', 'value' => 'Máte čerstvé vajcia?'], $submission->data[3]);
+        $this->assertSame(['label' => 'Správa', 'value' => 'Máte čerstvé vajcia?', 'type' => 'textarea'], $submission->data[3]);
         Mail::assertSent(TemplateMail::class, fn (TemplateMail $mail) => $mail->templateKey === 'forms.submission' && $mail->hasReplyTo('jana@example.com'));
     }
 
@@ -75,5 +77,29 @@ class ContactFormTest extends ShopTestCase
         $form->submissions()->create(['data' => [['label' => 'Termín', 'value' => '2026-12-01']]]);
         $this->get('/admin/forms')->assertOk()->assertSee('Objednávka služby');
         $this->get('/admin/form-submissions')->assertOk()->assertSee('2026-12-01');
+    }
+
+    public function test_message_detail_shows_sender_contacts_and_marks_read(): void
+    {
+        $this->actingAs($this->superAdmin());
+        $form = Form::query()->create(['name' => 'Kontakt', 'fields' => [
+            ['label' => 'Meno', 'type' => 'text'], ['label' => 'E-mail', 'type' => 'email'],
+            ['label' => 'Telefón', 'type' => 'tel'], ['label' => 'Správa', 'type' => 'textarea'],
+        ]]);
+        // Staršia správa bez typov polí – typy sa doplnia z formulára.
+        $submission = $form->submissions()->create(['email' => 'jana@example.com', 'data' => [
+            ['label' => 'Meno', 'value' => 'Jana Nováková'], ['label' => 'E-mail', 'value' => 'jana@example.com'],
+            ['label' => 'Telefón', 'value' => '+421 900 123 456'], ['label' => 'Správa', 'value' => "Dobrý deň,\nmáte vajcia?"],
+        ]]);
+
+        $this->assertSame('Jana Nováková', $submission->senderName());
+        $this->assertSame('Dobrý deň, máte vajcia?', $submission->preview());
+
+        Livewire::test(ManageFormSubmissions::class)
+            ->mountAction(TestAction::make('view')->table($submission))
+            ->assertMountedActionModalSee(['Jana Nováková', 'Dobrý deň', 'Označiť ako neprečítané'])
+            ->assertMountedActionModalSeeHtml(['mailto:jana@example.com', 'tel:+421900123456']);
+
+        $this->assertNotNull($submission->fresh()->read_at);
     }
 }

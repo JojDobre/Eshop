@@ -9,8 +9,8 @@ use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -71,12 +71,9 @@ class FormSubmissionResource extends Resource
 
     public static function infolist(Schema $schema): Schema
     {
+        // Vlastné zobrazenie: odosielateľ a kontakty hore, krátke polia v mriežke, text správy v rámčeku.
         return $schema->columns(1)->components(fn (?FormSubmission $record) => [
-            TextEntry::make('form.name')->label(__('forms::admin.form')),
-            TextEntry::make('created_at')->label(__('forms::admin.received_at'))->dateTime(),
-            ...collect($record?->data ?? [])->map(fn (array $row, int $index) => TextEntry::make('row_'.$index)
-                ->label($row['label'])->state($row['value'] !== '' ? $row['value'] : '—')
-                ->copyable()->extraAttributes(['class' => 'whitespace-pre-line']))->all(),
+            View::make('forms::filament.submission')->viewData(['submission' => $record]),
         ]);
     }
 
@@ -89,11 +86,15 @@ class FormSubmissionResource extends Resource
                 IconColumn::make('read_at')->label('')->width('1%')
                     ->icon(fn (FormSubmission $record) => $record->read_at ? Heroicon::OutlinedEnvelopeOpen : Heroicon::Envelope)
                     ->color(fn (FormSubmission $record) => $record->read_at ? 'gray' : 'primary'),
-                TextColumn::make('form.name')->label($t('form')),
-                TextColumn::make('summary')->label($t('message'))->state(fn (FormSubmission $record) => $record->summary())
-                    ->limit(90)->weight(fn (FormSubmission $record) => $record->read_at ? null : 'bold')
+                TextColumn::make('sender')->label($t('sender'))
+                    ->state(fn (FormSubmission $record) => $record->senderName() ?? $record->email ?? '—')
+                    ->description(fn (FormSubmission $record) => $record->senderName() !== null ? $record->email : null)
+                    ->weight(fn (FormSubmission $record) => $record->read_at ? null : 'bold'),
+                TextColumn::make('form.name')->label($t('form'))->badge()->color('gray'),
+                TextColumn::make('summary')->label($t('message'))->state(fn (FormSubmission $record) => $record->preview())
+                    ->limit(70)->color(fn (FormSubmission $record) => $record->read_at ? 'gray' : null)->weight(fn (FormSubmission $record) => $record->read_at ? null : 'bold')
                     ->searchable(query: fn (Builder $query, string $search) => $query->where('data', 'like', '%'.$search.'%')),
-                TextColumn::make('email')->label($t('email'))->copyable()->toggleable(),
+                TextColumn::make('email')->label($t('email'))->copyable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')->label($t('received_at'))->dateTime()->sortable(),
             ])
             ->filters([
@@ -103,14 +104,26 @@ class FormSubmissionResource extends Resource
             ])
             ->recordActions([
                 // Otvorením sa správa označí ako prečítaná.
-                ViewAction::make()->mutateRecordDataUsing(function (array $data, FormSubmission $record): array {
-                    $record->read_at ?? $record->update(['read_at' => now()]);
+                ViewAction::make()
+                    ->modalHeading(fn (FormSubmission $record) => $record->form?->name ?? $t('submission_title'))
+                    ->modalDescription(fn (FormSubmission $record) => $t('received_on', ['date' => $record->created_at?->translatedFormat('j. n. Y, H:i')]))
+                    ->modalIcon(Heroicon::OutlinedEnvelopeOpen)
+                    ->modalWidth('2xl')
+                    ->modalCancelActionLabel($t('close'))
+                    ->extraModalFooterActions(fn (FormSubmission $record) => [
+                        Action::make('replyFromDetail')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)
+                            ->visible(filled($record->email))->url(self::replyUrl($record)),
+                        Action::make('markUnread')->label($t('mark_unread'))->icon(Heroicon::OutlinedEnvelope)->color('gray')
+                            ->action(fn () => $record->update(['read_at' => null]))->cancelParentActions(),
+                    ])
+                    ->mutateRecordDataUsing(function (array $data, FormSubmission $record): array {
+                        $record->read_at ?? $record->update(['read_at' => now()]);
 
-                    return $data;
-                }),
+                        return $data;
+                    }),
                 Action::make('reply')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)->color('gray')
                     ->visible(fn (FormSubmission $record) => filled($record->email))
-                    ->url(fn (FormSubmission $record) => 'mailto:'.$record->email),
+                    ->url(fn (FormSubmission $record) => self::replyUrl($record)),
                 DeleteAction::make(),
             ])
             ->recordAction('view')
@@ -121,6 +134,12 @@ class FormSubmissionResource extends Resource
                 DeleteBulkAction::make(),
             ])
             ->defaultSort('created_at', 'desc');
+    }
+
+    /** Odpoveď e-mailom s predvyplneným predmetom „Re: názov formulára“. */
+    public static function replyUrl(FormSubmission $record): string
+    {
+        return 'mailto:'.$record->email.'?subject='.rawurlencode('Re: '.($record->form?->name ?? __('forms::admin.submission_title')));
     }
 
     public static function getPages(): array

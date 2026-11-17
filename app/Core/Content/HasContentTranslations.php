@@ -12,7 +12,9 @@ use Spatie\Translatable\HasTranslations;
  */
 trait HasContentTranslations
 {
-    use HasTranslations;
+    use HasTranslations {
+        filterTranslations as spatieFilterTranslations;
+    }
 
     public function getLocale(): string
     {
@@ -45,5 +47,18 @@ trait HasContentTranslations
         $this->translationLocale = $locale;
 
         return $this;
+    }
+
+    /**
+     * Prázdny text v predvolenom jazyku obchodu je zámerne prázdny (obchodník ho vymazal) a nenahradí sa textom
+     * z iného jazyka. V ostatných jazykoch prázdny text naďalej znamená „použiť predvolený jazyk“.
+     */
+    protected function filterTranslations(mixed $value = null, ?string $locale = null, ?array $allowedLocales = null, bool $allowNull = false, bool $allowEmptyString = false): bool
+    {
+        if ($value === '' && $locale !== null && $locale === app(ContentLocale::class)->default()) {
+            $allowEmptyString = true;
+        }
+
+        return $this->spatieFilterTranslations($value, $locale, $allowedLocales, $allowNull, $allowEmptyString);
     }
 }

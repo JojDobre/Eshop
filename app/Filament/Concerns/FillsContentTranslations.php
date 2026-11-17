@@ -132,7 +132,7 @@ trait FillsContentTranslations
         $record->useContentLocale($this->currentEditingLocale());
 
         foreach ($this->translatableAttributes() as $attribute) {
-            if (array_key_exists($attribute, $data) && blank($data[$attribute])) {
+            if (array_key_exists($attribute, $data) && self::isBlankTranslation($data[$attribute])) {
                 $locale = $this->currentEditingLocale();
 
                 // Zmazané všetky bloky: uloží sa prázdny zoznam. Inak by sa namiesto nich zobrazili bloky iného
@@ -144,7 +144,16 @@ trait FillsContentTranslations
                     continue;
                 }
 
-                // Prázdny preklad sa odstráni (zobrazí sa predvolený jazyk), nie uloží ako prázdny text.
+                // Vymazaný text v predvolenom jazyku sa uloží ako prázdny, ak má iný jazyk text. Inak by sa namiesto
+                // neho v obchode zobrazil text iného jazyka (napr. slovenský popis v českom obchode).
+                if ($attribute !== 'slug' && $locale === app(ShopLocales::class)->default() && array_diff($record->getTranslatedLocales($attribute), [$locale]) !== []) {
+                    $record->setTranslation($attribute, $locale, is_array($record->getTranslation($attribute, $locale)) ? [] : '');
+                    unset($data[$attribute]);
+
+                    continue;
+                }
+
+                // V ostatných jazykoch sa prázdny preklad odstráni (zobrazí sa predvolený jazyk), nie uloží ako prázdny text.
                 $record->forgetTranslation($attribute, $locale);
                 unset($data[$attribute]);
             }
@@ -233,5 +242,20 @@ trait FillsContentTranslations
         }
 
         return blank($record->getTranslation('name', $locale, false));
+    }
+
+    /**
+     * Prázdna hodnota prekladu: nič, prázdny zoznam alebo formátovaný text bez obsahu (editor nechá napr. „<p></p>“).
+     */
+    public static function isBlankTranslation(mixed $value): bool
+    {
+        if (blank($value)) {
+            return true;
+        }
+
+        return is_string($value)
+            && str_contains($value, '<')
+            && ! preg_match('/<(img|iframe|video|hr|table)\b/i', $value)
+            && trim(html_entity_decode(strip_tags($value), ENT_QUOTES | ENT_HTML5), " \t\n\r\0\x0B\u{a0}") === '';
     }
 }

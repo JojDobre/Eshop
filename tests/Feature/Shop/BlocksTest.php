@@ -198,4 +198,27 @@ class BlocksTest extends ShopTestCase
         $this->assertEmpty(BlockLayout::blocksFor(BlockLayout::HOME));
         $this->assertSame([], BlockLayout::query()->where('key', BlockLayout::HOME)->first()->getTranslation('blocks', 'sk', false));
     }
+
+    public function test_cleared_text_in_default_language_is_not_replaced_by_another_language(): void
+    {
+        app(GeneralSettings::class)->fill(['locales' => ['sk', 'cs']])->save();
+        $page = Page::query()->create(['name' => ['sk' => 'Doprava', 'cs' => 'Doprava'], 'content' => ['sk' => '<p>Slovenský text</p>', 'cs' => '<p>Český text</p>'], 'is_visible' => true]);
+        $this->actingAs($this->superAdmin());
+
+        // Predvolený jazyk (sk): vymazaný text ostane prázdny, nezobrazí sa český.
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->set('data.content', '')
+            ->call('save')
+            ->assertHasNoErrors();
+        $this->get($page->fresh()->url())->assertOk()->assertDontSee('Český text')->assertDontSee('Slovenský text');
+
+        // Iný jazyk (cs): vymazaný preklad znamená „použiť predvolený jazyk“.
+        $page->refresh()->setTranslation('content', 'sk', '<p>Slovenský text</p>')->setTranslation('content', 'cs', '<p>Český text</p>')->save();
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->call('switchEditingLocale', 'cs')
+            ->set('data.content', '')
+            ->call('save')
+            ->assertHasNoErrors();
+        $this->assertSame('<p>Slovenský text</p>', $page->fresh()->getTranslation('content', 'cs'));
+    }
 }

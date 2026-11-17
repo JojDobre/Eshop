@@ -1,5 +1,15 @@
 # Prehľad zmien
 
+## 1.14.3 – Preklady bez prekvapení
+
+- **Vymazaný text v predvolenom jazyku ostane prázdny.** Predtým sa namiesto neho zobrazil text iného jazyka
+  (napr. slovenský popis v českom obchode). V ostatných jazykoch prázdny preklad naďalej znamená „použiť predvolený jazyk“.
+- **Prázdny formátovaný text** (editor po vymazaní nechá „<p></p>“) sa berie ako prázdny – v inom jazyku sa teda
+  zobrazí text predvoleného jazyka, nie prázdne miesto.
+- **Kontrola prekladov:** jazykové súbory jadra, modulov a šablón majú v slovenčine, češtine aj angličtine rovnaké texty
+  (doplnený preklad šablóny Starter, zjednotené kroky aktualizácie). Nové automatické testy zastavia vydanie, ak by
+  niektorý preklad chýbal alebo bol prázdny – aj v nastaveniach šablón a modulov.
+
 ## 1.14.2 – Mazanie blokov a výber z knižnice
 
 - **Oprava: zmazaný blok ostával na stránke.** Po zmazaní posledného bloku (napr. obrázka) v stránke, kategórii

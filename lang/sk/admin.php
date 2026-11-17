@@ -369,7 +369,8 @@ return [
         'how' => 'Ako aktualizovať',
         'steps' => [
             'Kliknite na Skontrolovať aktualizácie a potom na Aktualizovať – balík sa stiahne a overí automaticky.',
-            'Alebo si stiahnite balík eshop-update-<verzia>.zip, kliknite na Nahrať a nainštalovať a vyberte súbor.',
+            'Alebo si stiahnite balík eshop-update-<verzia>.zip a nahrajte ho:',
+            'Kliknite na Nahrať a nainštalovať a vyberte súbor.',
             'Počkajte na dokončenie – obchod je počas aktualizácie v režime údržby.',
             'Ak sa niečo pokazí, kliknite na Vrátiť aktualizáciu. Ak nefunguje ani administrácia, použite záchranný skript /rescue.php (pozri dokumentáciu).',
         ],

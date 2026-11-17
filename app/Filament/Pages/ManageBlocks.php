@@ -118,7 +118,8 @@ class ManageBlocks extends Page implements HasSchemas
     private function load(): void
     {
         $layout = BlockLayout::query()->where('key', $this->layoutKey)->first();
-        $blocks = $layout?->getTranslation('blocks', $this->locale, false);
+        // S náhradným jazykom: formulár ukazuje presne bloky, ktoré sú na stránke.
+        $blocks = $layout?->getTranslation('blocks', $this->locale, true);
 
         $this->data = ['blocks' => is_array($blocks) ? $blocks : []];
         $this->form->fill(['layoutKey' => $this->layoutKey, 'locale' => $this->locale, 'data' => $this->data]);
@@ -130,7 +131,10 @@ class ManageBlocks extends Page implements HasSchemas
         $blocks = array_values($state['data']['blocks'] ?? $state['blocks'] ?? []);
 
         $layout = BlockLayout::query()->firstOrNew(['key' => $this->layoutKey]);
-        $blocks === [] ? $layout->forgetTranslation('blocks', $this->locale) : $layout->setTranslation('blocks', $this->locale, $blocks);
+        // Zmazané všetky bloky sa uložia ako prázdny zoznam (inak by sa zobrazili bloky iného jazyka).
+        $blocks === [] && $layout->getTranslatedLocales('blocks') === []
+            ? $layout->forgetTranslation('blocks', $this->locale)
+            : $layout->setTranslation('blocks', $this->locale, $blocks);
         $layout->save();
 
         Notification::make()->success()->title(__('admin.blocks.saved'))->send();

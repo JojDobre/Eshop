@@ -6,7 +6,6 @@ use App\Core\Content\MediaLibrary;
 use App\Core\Media\ResponsiveImage;
 use App\Models\MediaFile;
 use Filament\Actions\Action;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Support\Icons\Heroicon;
@@ -72,13 +71,13 @@ final class MediaPicker
             ->modalHeading(__('admin.media.pick_heading'))
             ->modalWidth('5xl')
             ->modalSubmitActionLabel(__('admin.media.use_selected'))
+            // Hlavička a tlačidlo „Použiť vybrané“ ostanú viditeľné aj pri dlhom zozname obrázkov.
+            ->stickyModalHeader()
+            ->stickyModalFooter()
             ->schema(fn (FileUpload $component) => [
-                CheckboxList::make('files')->hiddenLabel()
-                    ->options(fn () => self::options())
-                    ->allowHtml()
-                    ->searchable()
-                    ->columns(['default' => 2, 'sm' => 3, 'lg' => 5])
-                    ->maxItems($component->isMultiple() ? null : 1)
+                MediaLibraryField::make('files')->hiddenLabel()
+                    ->items(fn () => self::items())
+                    ->multiple($component->isMultiple())
                     ->helperText(__('admin.media.pick_help'))
                     ->required(),
             ])
@@ -103,18 +102,17 @@ final class MediaPicker
     }
 
     /**
-     * @return array<int, string>
+     * Obrázky knižnice od najnovších (mriežka ich stránkuje po 24).
+     *
+     * @return list<array{id: int, url: string, name: string}>
      */
-    private static function options(): array
+    private static function items(): array
     {
         app(MediaLibrary::class)->syncOccasionally();
 
-        return MediaFile::query()->where('mime_type', 'like', 'image/%')->latest('id')->limit(500)->get()
-            ->mapWithKeys(fn (MediaFile $file) => [$file->id => sprintf(
-                '<span class="block"><img src="%s" alt="" loading="lazy" style="width:100%%;aspect-ratio:1;object-fit:cover;border-radius:.5rem"><span class="mt-1 block truncate text-xs">%s</span></span>',
-                e($file->url()),
-                e($file->name),
-            )])
+        return MediaFile::query()->where('mime_type', 'like', 'image/%')->latest('id')->limit(2000)->get()
+            ->map(fn (MediaFile $file) => ['id' => $file->id, 'url' => $file->url(), 'name' => (string) $file->name])
+            ->values()
             ->all();
     }
 }

@@ -154,7 +154,7 @@ class CustomizeTheme extends Page implements HasSchemas
     private function homeBlocks(): array
     {
         $blocks = BlockLayout::query()->where('key', BlockLayout::HOME)->first()
-            ?->getTranslation('blocks', app(ShopLocales::class)->default(), false);
+            ?->getTranslation('blocks', app(ShopLocales::class)->default(), true);
 
         return is_array($blocks) ? $blocks : [];
     }
@@ -281,7 +281,10 @@ class CustomizeTheme extends Page implements HasSchemas
     {
         $locale = app(ShopLocales::class)->default();
         $layout = BlockLayout::query()->firstOrNew(['key' => BlockLayout::HOME]);
-        $blocks === [] ? $layout->forgetTranslation('blocks', $locale) : $layout->setTranslation('blocks', $locale, $blocks);
+        // Zmazané všetky bloky sa uložia ako prázdny zoznam (inak by sa zobrazili bloky iného jazyka).
+        $blocks === [] && $layout->getTranslatedLocales('blocks') === []
+            ? $layout->forgetTranslation('blocks', $locale)
+            : $layout->setTranslation('blocks', $locale, $blocks);
         $layout->save();
     }
 

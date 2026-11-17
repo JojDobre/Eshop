@@ -1,5 +1,13 @@
 # Prehľad zmien
 
+## 1.14.2 – Mazanie blokov a výber z knižnice
+
+- **Oprava: zmazaný blok ostával na stránke.** Po zmazaní posledného bloku (napr. obrázka) v stránke, kategórii
+  alebo na úvodnej stránke sa namiesto neho zobrazili bloky iného jazyka (napr. pôvodné z dema). Teraz sa uloží
+  „bez blokov“ a v administrácii vidíte presne tie bloky, ktoré sú na stránke, aj keď pochádzajú z iného jazyka.
+- **Výber obrázkov z knižnice:** mriežka po 24 obrázkoch so stránkovaním a hľadaním podľa názvu, vybrané obrázky
+  sú hore nad mriežkou a tlačidlo „Použiť vybrané“ je stále viditeľné – netreba posúvať na koniec zoznamu.
+
 ## 1.14.1 – Banner so zaoblenými rohmi
 
 - **Banner kategórie a stránky** sa dá zobraziť v šírke stránky so zaoblenými rohmi, rovnako ako obrázok na úvodnej

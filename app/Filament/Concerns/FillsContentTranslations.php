@@ -56,7 +56,9 @@ trait FillsContentTranslations
     {
         if (method_exists($record, 'getTranslatableAttributes')) {
             foreach ($record->getTranslatableAttributes() as $attribute) {
-                $data[$attribute] = $record->getTranslation($attribute, $locale ?? $record->getLocale(), false) ?: null;
+                // Bloky sa načítajú aj z náhradného jazyka: formulár ukazuje presne to, čo je na stránke,
+                // a zmazaný blok tak naozaj zmizne (inak by sa ukázal blok z iného jazyka).
+                $data[$attribute] = $record->getTranslation($attribute, $locale ?? $record->getLocale(), $attribute === 'blocks') ?: null;
             }
         }
 
@@ -131,8 +133,19 @@ trait FillsContentTranslations
 
         foreach ($this->translatableAttributes() as $attribute) {
             if (array_key_exists($attribute, $data) && blank($data[$attribute])) {
+                $locale = $this->currentEditingLocale();
+
+                // Zmazané všetky bloky: uloží sa prázdny zoznam. Inak by sa namiesto nich zobrazili bloky iného
+                // jazyka (napr. pôvodné z dema) a zmazaný blok by na stránke ostal.
+                if ($attribute === 'blocks' && $record->getTranslatedLocales($attribute) !== []) {
+                    $record->setTranslation($attribute, $locale, []);
+                    unset($data[$attribute]);
+
+                    continue;
+                }
+
                 // Prázdny preklad sa odstráni (zobrazí sa predvolený jazyk), nie uloží ako prázdny text.
-                $record->forgetTranslation($attribute, $this->currentEditingLocale());
+                $record->forgetTranslation($attribute, $locale);
                 unset($data[$attribute]);
             }
         }

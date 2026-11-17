@@ -5,7 +5,9 @@ namespace Tests\Feature\Shop;
 use App\Core\Blocks\CoreBlocks;
 use App\Filament\Pages\ManageBlocks;
 use App\Models\BlockLayout;
+use App\Settings\GeneralSettings;
 use Livewire\Livewire;
+use Modules\Pages\Filament\Resources\Pages\Pages\EditPage;
 use Modules\Pages\Models\Page;
 
 class BlocksTest extends ShopTestCase
@@ -165,5 +167,35 @@ class BlocksTest extends ShopTestCase
         // Banner v šírke stránky so zaoblenými rohmi (ako obrázok na úvodnej stránke).
         $category->update(['display' => ['header' => 'image', 'hero_width' => 'rounded']]);
         $this->get($category->url())->assertOk()->assertSee('page-hero-rounded', false);
+    }
+
+    public function test_deleting_the_last_block_does_not_show_blocks_of_another_language(): void
+    {
+        app(GeneralSettings::class)->fill(['locales' => ['sk', 'cs']])->save();
+        $page = Page::query()->create(['name' => ['sk' => 'O nás', 'cs' => 'O nás'], 'is_visible' => true]);
+        $page->setTranslation('blocks', 'sk', [['type' => 'text', 'data' => ['content' => '<p>Starý obrázok</p>']]])->save();
+        $this->actingAs($this->superAdmin());
+
+        // Český formulár ukazuje bloky, ktoré sú na stránke (z náhradného jazyka), a zmazanie ich naozaj odstráni.
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->call('switchEditingLocale', 'cs')
+            ->assertSet('data.blocks', fn ($blocks) => count((array) $blocks) === 1)
+            ->set('data.blocks', [])
+            ->call('save')
+            ->assertHasNoErrors();
+        $this->assertSame([], $page->fresh()->getTranslation('blocks', 'cs', false));
+
+        // Aj v predvolenom jazyku: po zmazaní posledného bloku sa neukáže iný jazyk.
+        Livewire::test(EditPage::class, ['record' => $page->getRouteKey()])
+            ->set('data.blocks', [])
+            ->call('save')
+            ->assertHasNoErrors();
+        $this->get($page->fresh()->url())->assertOk()->assertDontSee('Starý obrázok');
+
+        // Úvodná stránka (Vzhľad → Bloky).
+        BlockLayout::query()->updateOrCreate(['key' => BlockLayout::HOME], ['blocks' => ['sk' => [['type' => 'text', 'data' => ['content' => '<p>Starý banner</p>']]]]]);
+        Livewire::test(ManageBlocks::class)->set('data.blocks', [])->call('save')->assertHasNoErrors();
+        $this->assertEmpty(BlockLayout::blocksFor(BlockLayout::HOME));
+        $this->assertSame([], BlockLayout::query()->where('key', BlockLayout::HOME)->first()->getTranslation('blocks', 'sk', false));
     }
 }

@@ -28,6 +28,9 @@ final class DisplayOptions
             ->schema(array_values(array_filter([
                 Select::make('header')->label($t('header'))->live()->selectablePlaceholder(false)->default('title')
                     ->options(['title' => $t('header_title'), 'hero' => $t('header_hero'), 'image' => $t('header_image'), 'none' => $t('header_none')]),
+                Select::make('hero_width')->label($t('hero_width'))->selectablePlaceholder(false)->default('full')
+                    ->options(['full' => $t('hero_width_full'), 'rounded' => $t('hero_width_rounded')])
+                    ->visible(fn (Get $get) => in_array($get('header'), ['hero', 'image'], true)),
                 Select::make('hero_height')->label($t('hero_height'))->selectablePlaceholder(false)->default('medium')
                     ->options(['small' => $t('height_small'), 'medium' => $t('height_medium'), 'large' => $t('height_large')])
                     ->visible(fn (Get $get) => in_array($get('header'), ['hero', 'image'], true)),

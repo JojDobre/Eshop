@@ -1,5 +1,10 @@
 # Prehľad zmien
 
+## 1.14.1 – Banner so zaoblenými rohmi
+
+- **Banner kategórie a stránky** sa dá zobraziť v šírke stránky so zaoblenými rohmi, rovnako ako obrázok na úvodnej
+  stránke (Vzhľad → Šírka banneru). V šablóne Farma má rovnaké zaoblenie ako jej úvodný banner.
+
 ## 1.14.0 – Objednať znova, pripnuté články a blok Časté otázky
 
 - **Zákaznícky účet:** tlačidlo **Objednať znova** v zozname objednávok aj na detaile objednávky (položky sa pridajú

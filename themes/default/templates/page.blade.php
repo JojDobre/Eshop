@@ -21,7 +21,7 @@
     @endif
 
     @if (in_array($pageHeader, ['hero', 'image'], true))
-        @include('theme::partials.page-hero', ['heroTitle' => $page->name, 'heroText' => $pageDisplay['hero_text'] ?? null, 'heroImage' => $pageHeroImage, 'heroHeight' => $pageDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $pageHeader === 'image'])
+        @include('theme::partials.page-hero', ['heroTitle' => $page->name, 'heroText' => $pageDisplay['hero_text'] ?? null, 'heroImage' => $pageHeroImage, 'heroHeight' => $pageDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $pageHeader === 'image', 'heroRounded' => ($pageDisplay['hero_width'] ?? 'full') === 'rounded'])
     @endif
 
     @if ($pageHeader === 'none')

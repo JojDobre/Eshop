@@ -1,10 +1,16 @@
 {{--
     Banner s obrázkom (Vzhľad stránky → Banner s obrázkom). Parametre: $heroTitle, $heroText, $heroImage, $heroHeight
     a $heroImageOnly – samotný obrázok bez nadpisu a stmavenia (nadpis zostane len pre čítačky a vyhľadávače).
+    $heroRounded – banner v šírke stránky so zaoblenými rohmi (polomer podľa šablóny: --hero-radius).
 --}}
 @php($heroImageOnly = ($heroImageOnly ?? false) && ! empty($heroImage))
+@php($heroRounded = $heroRounded ?? false)
+@if ($heroRounded)
+    <div class="container-shop pt-4 sm:pt-6">
+@endif
 <section @class([
     'page-hero relative isolate flex items-end overflow-hidden',
+    'page-hero-rounded rounded-[var(--hero-radius-sm,var(--hero-radius,1.25rem))] sm:rounded-[var(--hero-radius,1.5rem)]' => $heroRounded,
     'bg-zinc-900 text-white' => ! $heroImageOnly,
     'page-hero-image' => $heroImageOnly,
     'min-h-[14rem] sm:min-h-[18rem]' => ($heroHeight ?? 'medium') === 'small',
@@ -20,7 +26,7 @@
     @if ($heroImageOnly)
         <h1 class="sr-only">{{ $heroTitle }}</h1>
     @else
-        <div class="container-shop w-full py-10 sm:py-14">
+        <div @class(['w-full py-10 sm:py-14', 'container-shop' => ! $heroRounded, 'px-6 sm:px-10' => $heroRounded])>
             <h1 class="page-hero-title max-w-3xl text-3xl font-semibold tracking-tight sm:text-5xl">{{ $heroTitle }}</h1>
             @if (! empty($heroText))
                 <p class="mt-4 max-w-2xl whitespace-pre-line text-lg text-white/90">{{ $heroText }}</p>
@@ -28,3 +34,6 @@
         </div>
     @endif
 </section>
+@if ($heroRounded)
+    </div>
+@endif

@@ -161,5 +161,9 @@ class BlocksTest extends ShopTestCase
             ->assertDontSee('>Zelené</a>', false)
             ->getContent();
         $this->assertGreaterThan(strpos($html, 'Sencha'), strpos($html, 'Čajový banner'));
+
+        // Banner v šírke stránky so zaoblenými rohmi (ako obrázok na úvodnej stránke).
+        $category->update(['display' => ['header' => 'image', 'hero_width' => 'rounded']]);
+        $this->get($category->url())->assertOk()->assertSee('page-hero-rounded', false);
     }
 }

@@ -8,6 +8,9 @@
 @source '../../**/*.blade.php';
 
 :where(:root) {
+    /* Zaoblenie bannera stránky a kategórie (rovnaké ako obrázok na úvodnej stránke). */
+    --hero-radius: 28px;
+    --hero-radius-sm: 20px;
     --farma-cream: #faf6ef;
     --farma-cream-dark: #f3e9da;
     --farma-soft: color-mix(in srgb, var(--brand-primary) 12%, white);

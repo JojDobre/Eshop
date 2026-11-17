@@ -30,6 +30,7 @@ jednotlivo. Moduly (kuriéri, blog, rezervácie, hodnotenia, účtovné exporty�
   vytvoria samé a v záložke **Varianty** im upravíte cenu a sklad.
 - **Kategórie** môžu mať obrázok, popis a vlastné bloky. Pri zmene adresy sa stará adresa presmeruje.
   V sekcii **Vzhľad** pri kategórii zvolíte nadpis, banner s nadpisom alebo len obrázok (banner bez nadpisu),
+  banner môže byť na celú šírku alebo v šírke stránky so zaoblenými rohmi,
   vypnete odkazy na podkategórie a navigáciu a určíte, či sú bloky kategórie nad produktmi alebo pod nimi.
 - **Typy produktov** určujú, či tovar potrebuje dopravu, či je to jedinečný kus alebo digitálny produkt.
 - **Import a export** (Katalóg → Import / Export): CSV a XLSX vrátane variantov a kategórií.

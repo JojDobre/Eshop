@@ -22,7 +22,7 @@
     @endif
 
     @if (in_array($categoryHeader, ['hero', 'image'], true))
-        @include('theme::partials.page-hero', ['heroTitle' => $category->name, 'heroText' => $categoryDisplay['hero_text'] ?? null, 'heroImage' => $categoryHeroImage, 'heroHeight' => $categoryDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $categoryHeader === 'image'])
+        @include('theme::partials.page-hero', ['heroTitle' => $category->name, 'heroText' => $categoryDisplay['hero_text'] ?? null, 'heroImage' => $categoryHeroImage, 'heroHeight' => $categoryDisplay['hero_height'] ?? 'medium', 'heroImageOnly' => $categoryHeader === 'image', 'heroRounded' => ($categoryDisplay['hero_width'] ?? 'full') === 'rounded'])
     @endif
 
     <div class="container-shop py-8">

@@ -1,5 +1,23 @@
 # Prehľad zmien
 
+## 1.16.0 – Nová administrácia
+
+- **Nový vzhľad administrácie** (denný aj nočný režim): pokojné povrchy, jemné linky, štítky namiesto prepínačov.
+  Prepínač denného a nočného režimu je v hornej lište, voľba sa pamätá.
+- **Produkty:** záložky Všetky / V obchode / Dochádza / Vypredané / Skryté s počtami, prehľad pod nadpisom,
+  pod názvom SKU alebo počet variantov, kategórie ako štítky, sklad slovami s farebnou bodkou
+  („Posledné 3 ks“, „Vypredané“), stav „V obchode“ / „Skrytý“. Akcie (upraviť, zobraziť/skryť, otvoriť v obchode,
+  zmazať) sú v menu „…“, kliknutím na riadok sa produkt otvorí.
+- **Všetky zoznamy** majú akcie v menu „…“ a záložky stavov tam, kde dávajú zmysel: objednávky, reklamácie,
+  hodnotenia, články blogu, rezervácie, odberatelia newslettera a správy z formulárov.
+- **Šablóny:** aktívna šablóna veľká hore s tlačidlom Prispôsobiť, ostatné ako karty s náhľadom; menej časté
+  akcie (kontrola, export, demo, súbory) v menu „…“.
+- **Prispôsobenie šablóny** úplne nanovo: horná lišta (stránka náhľadu, jazyk, uloženie – aj Ctrl+S), vľavo
+  zoznam sekcií s preklikom do nastavení, vpravo živý náhľad v šírke počítača, tabletu alebo mobilu.
+  Na mobile a tablete sa medzi nastaveniami a náhľadom prepína záložkami.
+- **Správy z formulárov:** prehľadný detail (odosielateľ, e-mail a telefón na kliknutie, text správy v rámčeku),
+  odpoveď s predvyplneným predmetom a označenie ako neprečítané.
+
 ## 1.15.0 – Minimálne množstvo a animované menu
 
 - **Minimálne množstvo v objednávke** (Katalóg → Produkty → Sklad a Katalóg → Kategórie):

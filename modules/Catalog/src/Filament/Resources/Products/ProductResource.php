@@ -321,7 +321,7 @@ class ProductResource extends Resource
                 MissingTranslationsColumn::make(),
                 TextColumn::make('category_names')->label($t('categories'))
                     ->state(fn (Product $record) => $record->categories->map(fn (Category $category) => $category->name)->all())
-                    ->badge()->color('gray')->limitList(2)->toggleable()->visibleFrom('md'),
+                    ->badge()->color('gray')->limitList(2)->toggleable()->visibleFrom('lg'),
                 TextColumn::make('price')->label($t('price'))
                     ->state(fn (Product $record) => $record->priceIn())
                     ->formatStateUsing(fn (?int $state) => $state === null ? '—' : Price::format($state, app(CurrencyContext::class)->current()))

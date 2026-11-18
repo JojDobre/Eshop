@@ -25,6 +25,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
+use Filament\Support\Enums\Width;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Catalog\Models\Category;
@@ -43,6 +44,9 @@ class CustomizeTheme extends Page implements HasSchemas
     protected static bool $shouldRegisterNavigation = false;
 
     protected string $view = 'filament.pages.customize-theme';
+
+    /** Editor na celú šírku: vľavo nastavenia, vpravo náhľad. */
+    protected Width|string|null $maxContentWidth = Width::Full;
 
     public string $theme = '';
 
@@ -169,7 +173,24 @@ class CustomizeTheme extends Page implements HasSchemas
         return app(ThemeManager::class)->find($this->theme) ?? abort(404);
     }
 
-    public function form(Schema $schema): Schema
+    /** Poradie skupín nastavení: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. */
+    private const GROUP_ORDER = ['layout', 'blocks', 'style', 'header', 'home', 'catalog', 'routine', 'quiz', 'look', 'story', 'instagram', 'occasions', 'subscription', 'steps', 'digital', 'picks', 'animals', 'event', 'farm', 'about', 'offer', 'reviews', 'faq', 'contact', 'blog', 'colors', 'footer', 'general'];
+
+    /** Ikony skupín v zozname sekcií (ostatné majú všeobecnú ikonu). */
+    private const GROUP_ICONS = [
+        'layout' => 'heroicon-o-squares-2x2', 'blocks' => 'heroicon-o-square-3-stack-3d', 'style' => 'heroicon-o-swatch',
+        'colors' => 'heroicon-o-swatch', 'header' => 'heroicon-o-bars-3', 'footer' => 'heroicon-o-bars-3-bottom-left',
+        'home' => 'heroicon-o-home', 'catalog' => 'heroicon-o-shopping-bag', 'blog' => 'heroicon-o-newspaper',
+        'faq' => 'heroicon-o-question-mark-circle', 'contact' => 'heroicon-o-map-pin', 'reviews' => 'heroicon-o-star',
+        'about' => 'heroicon-o-information-circle', 'instagram' => 'heroicon-o-camera', 'general' => 'heroicon-o-cog-6-tooth',
+    ];
+
+    /**
+     * Definície nastavení zoskupené a zoradené podľa skupín.
+     *
+     * @return array<string, array<string, array<string, mixed>>>
+     */
+    private function groupedDefinitions(): array
     {
         $groups = [];
 
@@ -179,40 +200,62 @@ class CustomizeTheme extends Page implements HasSchemas
                 continue;
             }
 
-            $groups[$definition['group'] ?? 'general'][] = $this->field($key, $definition);
+            $groups[$definition['group'] ?? 'general'][$key] = $definition;
         }
 
-        // Poradie skupín: najprv rozloženie a hlavička, potom obsah úvodnej stránky a štýl. Skupiny sa dajú zbaliť,
-        // aby sa v dlhom zozname nastavení nemuselo toľko posúvať.
-        $order = array_flip(['layout', 'style', 'header', 'home', 'catalog', 'routine', 'quiz', 'look', 'story', 'instagram', 'occasions', 'subscription', 'steps', 'digital', 'picks', 'animals', 'event', 'farm', 'about', 'offer', 'reviews', 'faq', 'contact', 'blog', 'colors', 'footer', 'general']);
+        $order = array_flip(self::GROUP_ORDER);
         uksort($groups, fn ($a, $b) => ($order[$a] ?? 99) <=> ($order[$b] ?? 99));
 
-        $sections = [];
+        return $groups;
+    }
 
-        foreach ($groups as $group => $fields) {
-            $label = __('admin.themes.groups.'.$group);
-            $sections[] = Section::make($label === 'admin.themes.groups.'.$group ? ucfirst($group) : $label)
-                ->schema($fields)
-                ->compact()
-                ->collapsible()
-                ->collapsed($sections !== []);
+    /**
+     * Zoznam sekcií v ľavom paneli: kľúč => popis, ikona a počet nastavení. Bloky úvodnej stránky hneď za rozložením.
+     *
+     * @return array<string, array{label: string, icon: string, count: int|null}>
+     */
+    public function groups(): array
+    {
+        $list = [];
+
+        foreach ($this->groupedDefinitions() as $group => $definitions) {
+            $list[$group] = ['label' => $this->groupLabel($group), 'icon' => self::GROUP_ICONS[$group] ?? 'heroicon-o-adjustments-horizontal', 'count' => count($definitions)];
         }
 
-        // Bloky úvodnej stránky hneď za rozložením: vlastné sekcie (produkty z kategórie, text, video, formulár…).
-        array_splice($sections, min(1, count($sections)), 0, [
-            Section::make(__('admin.themes.blocks_section'))
-                ->description(__('admin.themes.blocks_section_help'))
-                ->headerActions([
-                    Action::make('refreshBlocksPreview')->label(__('admin.themes.refresh_preview'))->icon('heroicon-m-arrow-path')
-                        ->link()->action(fn () => $this->refreshPreview()),
-                ])
-                ->schema([BlockBuilder::make(self::BLOCKS_FIELD)->live()->afterStateUpdated(fn () => $this->refreshPreview())])
-                ->compact()
-                ->collapsible()
-                ->collapsed(),
-        ]);
+        $blocks = ['blocks' => ['label' => __('admin.themes.blocks_section'), 'icon' => self::GROUP_ICONS['blocks'], 'count' => null]];
+        $position = min(1, count($list));
 
-        return $schema->statePath('data')->components($sections);
+        return array_slice($list, 0, $position, true) + $blocks + array_slice($list, $position, null, true);
+    }
+
+    private function groupLabel(string $group): string
+    {
+        $label = __('admin.themes.groups.'.$group);
+
+        return $label === 'admin.themes.groups.'.$group ? ucfirst($group) : $label;
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        $sections = [];
+
+        // Každá skupina je samostatný panel; v ľavom stĺpci je vždy viditeľný iba ten, ktorý je otvorený (Alpine `group`).
+        foreach ($this->groupedDefinitions() as $group => $definitions) {
+            $sections[$group] = Section::make()
+                ->schema(collect($definitions)->map(fn (array $definition, string $key) => $this->field($key, $definition))->values()->all())
+                ->extraAttributes(['x-show' => "group === '{$group}'", 'x-cloak' => true]);
+        }
+
+        // Bloky úvodnej stránky: vlastné sekcie (produkty z kategórie, text, video, formulár…).
+        $blocks = Section::make()
+            ->description(__('admin.themes.blocks_section_help'))
+            ->schema([BlockBuilder::make(self::BLOCKS_FIELD)->live()->afterStateUpdated(fn () => $this->refreshPreview())])
+            ->extraAttributes(['x-show' => "group === 'blocks'", 'x-cloak' => true]);
+
+        $position = min(1, count($sections));
+        $sections = [...array_slice($sections, 0, $position), $blocks, ...array_slice($sections, $position)];
+
+        return $schema->statePath('data')->components(array_values($sections));
     }
 
     /**
@@ -342,8 +385,7 @@ class CustomizeTheme extends Page implements HasSchemas
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('back')->label(__('admin.themes.back'))->color('gray')->url(Themes::getUrl()),
-            Action::make('reset')->label(__('admin.themes.reset'))->color('gray')->requiresConfirmation()
+            Action::make('reset')->label(__('admin.themes.reset'))->icon('heroicon-m-arrow-uturn-left')->color('gray')->requiresConfirmation()
                 ->modalDescription(__('admin.themes.reset_confirm'))
                 ->action(function (): void {
                     app(ThemeOptions::class)->reset($this->themeModel());
@@ -353,7 +395,7 @@ class CustomizeTheme extends Page implements HasSchemas
                     $this->form->fill([...$values, self::BLOCKS_FIELD => $this->homeBlocks()]);
                     $this->refreshPreview();
                 }),
-            Action::make('save')->label(__('admin.themes.save'))->action(fn () => $this->save()),
+            Action::make('save')->label(__('admin.themes.save'))->icon('heroicon-m-check')->keyBindings(['mod+s'])->action(fn () => $this->save()),
         ];
     }
 }

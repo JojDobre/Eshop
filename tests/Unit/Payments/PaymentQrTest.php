@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Payments;
 
+use App\Core\Banking\BankAccount;
 use Modules\Payments\Qr\EpcQr;
 use Modules\Payments\Qr\LzmaLiteralEncoder;
 use Modules\Payments\Qr\PayBySquare;
@@ -67,5 +68,27 @@ class PaymentQrTest extends TestCase
         $this->assertNull($qr->payload($this->data(currency: 'USD')));
         $this->assertNull($qr->payload($this->data(amount: 0)));
         $this->assertStringStartsWith('data:image/', (string) $qr->dataUri($this->data()));
+    }
+
+    public function test_czech_account_number_is_converted_to_iban(): void
+    {
+        $this->assertSame('CZ6508000000192000145399', BankAccount::iban('19-2000145399/0800'));
+        $this->assertSame('CZ6508000000192000145399', BankAccount::iban('cz65 0800 0000 1920 0014 5399'));
+        $this->assertStringStartsWith('SPD*1.0*ACC:CZ6508000000192000145399+TATRSKBX*', (string) (new PaymentQr)->payload($this->data('19-2000145399/0800', 'CZK')));
+    }
+
+    public function test_invalid_account_gives_no_qr_instead_of_a_broken_one(): void
+    {
+        // Preklep v jednej číslici – kontrolné číslice IBAN nesedia.
+        $this->assertSame('', BankAccount::iban('CZ6508000000192000145398'));
+        $this->assertNull((new PaymentQr)->payload($this->data('CZ6508000000192000145398', 'CZK')));
+        $this->assertNull((new PaymentQr)->payload($this->data('neplatny ucet', 'CZK')));
+    }
+
+    public function test_invalid_bic_is_left_out(): void
+    {
+        $data = new PaymentQrData('CZ6508000000192000145399', 'GIBA CZ', 1000, 'CZK', '1', 'Farma');
+
+        $this->assertStringStartsWith('SPD*1.0*ACC:CZ6508000000192000145399*AM:10.00', SpdQr::encode($data));
     }
 }

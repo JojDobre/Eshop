@@ -13,7 +13,7 @@ final class SpdQr
     {
         $parts = [
             'SPD', '1.0',
-            'ACC:'.$data->normalizedIban().($data->bic ? '+'.strtoupper($data->bic) : ''),
+            'ACC:'.$data->normalizedIban().($data->normalizedBic() ? '+'.$data->normalizedBic() : ''),
             'AM:'.$data->decimalAmount(),
             'CC:'.$data->currency,
         ];

@@ -2,8 +2,10 @@
 
 namespace App\Filament\Pages\Settings;
 
+use App\Core\Banking\BankAccount;
 use App\Settings\CompanySettings;
 use BackedEnum;
+use Closure;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -59,10 +61,28 @@ class ManageCompanySettings extends BaseSettingsPage
             Section::make($t('section_bank'))
                 ->columns(2)
                 ->schema([
-                    TextInput::make('iban')->label($t('iban'))->maxLength(42),
-                    TextInput::make('swift')->label($t('swift'))->maxLength(11),
+                    // Účet sa overí (kontrolné číslice IBAN); domáci tvar číslo/kód banky sa uloží ako IBAN.
+                    TextInput::make('iban')->label($t('iban'))->helperText($t('iban_help'))->maxLength(42)
+                        ->rule(fn () => function (string $attribute, mixed $value, Closure $fail) use ($t): void {
+                            if (filled($value) && BankAccount::iban((string) $value, $this->countryForAccount()) === '') {
+                                $fail($t('iban_invalid'));
+                            }
+                        })
+                        ->dehydrateStateUsing(fn (?string $state) => filled($state)
+                            ? (BankAccount::iban($state, $this->countryForAccount()) ?: $state) : null),
+                    TextInput::make('swift')->label($t('swift'))->helperText($t('swift_help'))->maxLength(11)
+                        ->rule('regex:/^\s*[A-Za-z]{6}[A-Za-z0-9]{2}([A-Za-z0-9]{3})?\s*$/')
+                        ->dehydrateStateUsing(fn (?string $state) => filled($state) ? strtoupper(trim($state)) : null),
                 ]),
         ]);
+    }
+
+    /** Krajina pre prevod domáceho čísla účtu na IBAN (podľa sídla, inak Česko). */
+    private function countryForAccount(): string
+    {
+        $country = strtoupper((string) ($this->data['country'] ?? ''));
+
+        return in_array($country, ['CZ', 'SK'], true) ? $country : 'CZ';
     }
 
     /** V menu pod položkou „ManageGeneralSettings“ (zobrazí sa po jej otvorení). */

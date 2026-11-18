@@ -1,5 +1,13 @@
 # Prehľad zmien
 
+## 1.16.2 – Spoľahlivá QR platba
+
+- **Oprava QR platby:** číslo účtu sa pred vytvorením QR kódu overí (kontrolné číslice IBAN). Účet zadaný
+  v českom alebo slovenskom tvare (napr. 19-2000145399/0800) sa prevedie na IBAN – bankové aplikácie už
+  nehlásia „neplatné údaje“. Neplatný SWIFT/BIC sa do kódu nevloží (pre platby v Česku a na Slovensku nie je potrebný).
+- **Nastavenia → Firemné údaje:** IBAN a SWIFT sa pri uložení skontrolujú, s nápovedou k formátu.
+  Ak je účet neplatný, namiesto chybného QR kódu sa nezobrazí žiadny.
+
 ## 1.16.1 – Stránka údržby
 
 - **Počas aktualizácie** návštevníci namiesto „503 Service Unavailable“ vidia stránku „Práve vylepšujeme obchod“

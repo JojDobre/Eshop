@@ -2,6 +2,8 @@
 
 namespace Modules\Payments\Qr;
 
+use App\Core\Banking\BankAccount;
+
 /**
  * Údaje platobného príkazu pre QR kód.
  */
@@ -21,9 +23,16 @@ final class PaymentQrData
         public readonly ?\DateTimeInterface $dueDate = null,
     ) {}
 
+    /** Platný IBAN (aj prevedený z domáceho tvaru účtu), inak prázdny reťazec. */
     public function normalizedIban(): string
     {
-        return strtoupper((string) preg_replace('/\s+/', '', $this->iban));
+        return BankAccount::iban($this->iban, $this->currency === 'EUR' ? 'SK' : 'CZ');
+    }
+
+    /** Platný SWIFT/BIC, inak null. */
+    public function normalizedBic(): ?string
+    {
+        return BankAccount::bic($this->bic);
     }
 
     public function decimalAmount(): string

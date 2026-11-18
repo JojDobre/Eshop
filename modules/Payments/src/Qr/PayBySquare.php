@@ -27,7 +27,7 @@ final class PayBySquare
             self::clean($data->message, 140),
             '1',                                  // počet účtov
             $data->normalizedIban(),
-            strtoupper((string) $data->bic),
+            (string) $data->normalizedBic(),
             '0',                                  // trvalý príkaz
             '0',                                  // inkaso
             self::clean($data->beneficiaryName, 70),

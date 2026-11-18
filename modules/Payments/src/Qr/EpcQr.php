@@ -13,7 +13,7 @@ final class EpcQr
 
         return implode("\n", [
             'BCD', '002', '1', 'SCT',
-            strtoupper((string) $data->bic),
+            (string) $data->normalizedBic(),
             mb_substr($data->beneficiaryName, 0, 70),
             $data->normalizedIban(),
             'EUR'.$data->decimalAmount(),

@@ -6,11 +6,13 @@ use App\Filament\AdminGroup;
 use App\Filament\Pages\Modules;
 use App\Filament\Pages\Settings\ManageAdminMenu;
 use App\Filament\Pages\Settings\ManageBrandingSettings;
+use App\Filament\Pages\Settings\ManageCompanySettings;
 use App\Filament\Pages\Settings\ManageGeneralSettings;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Models\User;
 use App\Settings\BrandingSettings;
+use App\Settings\CompanySettings;
 use App\Settings\GeneralSettings;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
@@ -145,5 +147,23 @@ class AdminPanelTest extends InstalledTestCase
         // Skrytá stránka je dostupná priamo, podpoložky „Obchod“ sú v menu pod ním.
         $this->get('/admin/users')->assertOk();
         $this->assertStringContainsString('href="'.url('/admin/settings/branding').'"', $menu);
+    }
+
+    public function test_company_account_is_validated_and_saved_as_iban(): void
+    {
+        $this->actingAs($this->superAdmin());
+
+        Livewire::test(ManageCompanySettings::class)
+            ->fillForm(['country' => 'CZ', 'iban' => 'CZ6508000000192000145398', 'swift' => 'GIBA'])
+            ->call('save')
+            ->assertHasFormErrors(['iban', 'swift']);
+
+        Livewire::test(ManageCompanySettings::class)
+            ->fillForm(['country' => 'CZ', 'iban' => '19-2000145399/0800', 'swift' => 'gibaczpx'])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        $this->assertSame('CZ6508000000192000145399', app(CompanySettings::class)->iban);
+        $this->assertSame('GIBACZPX', app(CompanySettings::class)->swift);
     }
 }

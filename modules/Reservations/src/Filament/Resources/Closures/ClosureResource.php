@@ -3,6 +3,7 @@
 namespace Modules\Reservations\Filament\Resources\Closures;
 
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
@@ -69,7 +70,12 @@ class ClosureResource extends Resource
                 TextColumn::make('note')->label($t('note'))->placeholder('—'),
             ])
             ->defaultSort('from_date', 'desc')
-            ->recordActions([EditAction::make(), DeleteAction::make()]);
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ]);
     }
 
     public static function getPages(): array

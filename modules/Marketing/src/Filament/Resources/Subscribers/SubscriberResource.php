@@ -5,6 +5,7 @@ namespace Modules\Marketing\Filament\Resources\Subscribers;
 use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Resource;
@@ -76,10 +77,12 @@ class SubscriberResource extends Resource
             ->filters([SelectFilter::make('status')->label($t('status'))->options($statuses)])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
-                Action::make('unsubscribe')->label($t('unsubscribe'))->icon(Heroicon::OutlinedNoSymbol)->color('gray')->requiresConfirmation()
-                    ->visible(fn (Subscriber $record) => $record->status !== Subscriber::UNSUBSCRIBED)
-                    ->action(fn (Subscriber $record) => app(Newsletter::class)->unsubscribe($record)),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    Action::make('unsubscribe')->label($t('unsubscribe'))->icon(Heroicon::OutlinedNoSymbol)->color('gray')->requiresConfirmation()
+                        ->visible(fn (Subscriber $record) => $record->status !== Subscriber::UNSUBSCRIBED)
+                        ->action(fn (Subscriber $record) => app(Newsletter::class)->unsubscribe($record)),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->toolbarActions([
                 BulkAction::make('sync')->label($t('sync'))->icon(Heroicon::OutlinedArrowPath)

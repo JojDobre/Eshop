@@ -6,6 +6,7 @@ use App\Core\Content\ShopLocales;
 use App\Filament\AdminGroup;
 use App\Filament\Concerns\FillsContentTranslations;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
@@ -151,22 +152,24 @@ class CustomFieldResource extends Resource
                     ->visible(fn () => CatalogFeatures::enabled('extra_custom_fields')),
             ])
             ->recordActions([
-                EditAction::make()
-                    ->mutateRecordDataUsing(fn (array $data, CustomField $record) => self::fillOptions(
-                        FillsContentTranslations::contentTranslationsForForm($record, $data), $record,
-                    ))
-                    // Uloženie názvov a možností do zvoleného jazyka (ostatné jazyky ostanú).
-                    ->using(function (CustomField $record, array $data): CustomField {
-                        $locale = $data['editing_locale'] ?? null;
-                        unset($data['editing_locale']);
+                ActionGroup::make([
+                    EditAction::make()
+                        ->mutateRecordDataUsing(fn (array $data, CustomField $record) => self::fillOptions(
+                            FillsContentTranslations::contentTranslationsForForm($record, $data), $record,
+                        ))
+                        // Uloženie názvov a možností do zvoleného jazyka (ostatné jazyky ostanú).
+                        ->using(function (CustomField $record, array $data): CustomField {
+                            $locale = $data['editing_locale'] ?? null;
+                            unset($data['editing_locale']);
 
-                        $record->useContentLocale($locale);
-                        $record->fill($data)->save();
-                        $record->useContentLocale(null);
+                            $record->useContentLocale($locale);
+                            $record->fill($data)->save();
+                            $record->useContentLocale(null);
 
-                        return $record;
-                    }),
-                DeleteAction::make(),
+                            return $record;
+                        }),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->emptyStateDescription($t('empty_help'))
             ->paginated(false);

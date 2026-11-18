@@ -3,6 +3,7 @@
 namespace Modules\Reservations\Filament\Resources\BookingResources;
 
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
@@ -78,7 +79,12 @@ class BookingResourceResource extends Resource
                 ToggleColumn::make('is_active')->label($t('is_active')),
             ])
             ->defaultSort('position')->reorderable('position')
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->paginated(false);
     }
 

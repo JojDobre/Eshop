@@ -4,6 +4,7 @@ namespace Modules\Catalog\Filament\Resources\Manufacturers;
 
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
@@ -90,10 +91,12 @@ class ManufacturerResource extends Resource
             ])
             ->defaultSort('name')
             ->recordActions([
-                EditAction::make()
-                    ->mutateRecordDataUsing(fn (array $data, Manufacturer $record) => [...$data, 'custom_fields' => app(CustomFieldValues::class)->get(CustomField::MANUFACTURER, $record->id)])
-                    ->using(fn (Manufacturer $record, array $data) => self::saveWithCustomFields($record, $data)),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make()
+                        ->mutateRecordDataUsing(fn (array $data, Manufacturer $record) => [...$data, 'custom_fields' => app(CustomFieldValues::class)->get(CustomField::MANUFACTURER, $record->id)])
+                        ->using(fn (Manufacturer $record, array $data) => self::saveWithCustomFields($record, $data)),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ]);
     }
 

@@ -4,6 +4,7 @@ namespace Modules\Tax\Filament\Resources\TaxRates;
 
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\KeyValue;
@@ -97,7 +98,12 @@ class TaxRateResource extends Resource
             ])
             ->defaultSort('position')
             ->reorderable('position')
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->paginated(false);
     }
 

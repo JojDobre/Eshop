@@ -8,6 +8,7 @@ use App\Filament\Forms\DisplayOptions;
 use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -121,7 +122,12 @@ class PageResource extends Resource
             ])
             ->defaultSort('position')
             ->reorderable('position')
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->paginated(false);
     }
 

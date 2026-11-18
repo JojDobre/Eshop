@@ -4,6 +4,7 @@ namespace Modules\Shipping\Filament\Resources\OwnPickupPoints;
 
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -94,7 +95,12 @@ class OwnPickupPointResource extends Resource
             ])
             ->defaultSort('name')
             ->description($t('help'))
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->paginated([25, 50, 100]);
     }
 

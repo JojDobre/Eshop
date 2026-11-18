@@ -4,6 +4,7 @@ namespace Modules\Forms\Filament\Resources\Forms;
 
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
@@ -106,7 +107,12 @@ class FormResource extends Resource
                 TextColumn::make('submissions_count')->label($t('submissions'))->counts('submissions'),
                 ToggleColumn::make('is_active')->label($t('is_active')),
             ])
-            ->recordActions([EditAction::make(), DeleteAction::make()]);
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ]);
     }
 
     public static function getPages(): array

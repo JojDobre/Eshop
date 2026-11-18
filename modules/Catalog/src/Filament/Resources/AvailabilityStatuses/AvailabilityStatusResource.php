@@ -5,6 +5,7 @@ namespace Modules\Catalog\Filament\Resources\AvailabilityStatuses;
 use App\Filament\AdminGroup;
 use App\Filament\Concerns\FillsContentTranslations;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\ColorPicker;
@@ -87,8 +88,10 @@ class AvailabilityStatusResource extends Resource
             ->defaultSort('position')
             ->reorderable('position')
             ->recordActions([
-                EditAction::make()->mutateRecordDataUsing(fn (array $data, AvailabilityStatus $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make()->mutateRecordDataUsing(fn (array $data, AvailabilityStatus $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->paginated(false);
     }

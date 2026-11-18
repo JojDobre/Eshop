@@ -12,6 +12,8 @@ use App\Filament\Forms\RichText;
 use App\Filament\Tables\MissingTranslationsColumn;
 use App\Settings\TaxSettings;
 use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -36,7 +38,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
@@ -61,6 +62,7 @@ use Modules\Catalog\Models\ProductFile;
 use Modules\Catalog\Models\ProductType;
 use Modules\Catalog\Models\ProductVariant;
 use Modules\Catalog\StockLots;
+use Modules\Catalog\StockService;
 use Modules\Tax\Models\TaxRate;
 use UnitEnum;
 
@@ -304,27 +306,35 @@ class ProductResource extends Resource
         $t = fn (string $key) => __('catalog::admin.product.'.$key);
 
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->with(['prices', 'categories']))
+            ->modifyQueryUsing(fn (Builder $query) => $query->with(['prices', 'categories'])->withCount('variants')->withSum('variants', 'stock_quantity'))
             ->columns([
-                ImageColumn::make('images')->label('')->disk('public')->limit(1)->square()->imageSize(40),
+                ImageColumn::make('images')->label('')->disk('public')->limit(1)->square()->imageSize(44),
                 TextColumn::make('name')->label($t('name'))
-                    ->description(fn (Product $record) => $record->sku)
+                    // Pod názvom: SKU alebo počet variantov.
+                    ->description(fn (Product $record) => $record->variants_count > 0
+                        ? trans_choice('catalog::admin.product.variants_count', $record->variants_count, ['count' => $record->variants_count])
+                        : $record->sku)
+                    ->weight('semibold')
                     ->searchable(query: fn (Builder $query, string $search) => $query->search($search))
                     ->sortable(query: fn (Builder $query, string $direction) => $query->orderBy('name->'.app(Product::class)->getLocale(), $direction))
                     ->wrap(),
                 MissingTranslationsColumn::make(),
+                TextColumn::make('category_names')->label($t('categories'))
+                    ->state(fn (Product $record) => $record->categories->map(fn (Category $category) => $category->name)->all())
+                    ->badge()->color('gray')->limitList(2)->toggleable()->visibleFrom('md'),
                 TextColumn::make('price')->label($t('price'))
                     ->state(fn (Product $record) => $record->priceIn())
-                    ->formatStateUsing(fn (?int $state) => $state === null ? '—' : Price::format($state, app(CurrencyContext::class)->current())),
-                TextColumn::make('stock_quantity')->label($t('stock_quantity'))
-                    ->badge()
-                    ->state(fn (Product $record) => $record->track_stock ? $record->stock_quantity : '∞')
-                    ->color(fn (Product $record) => ! $record->track_stock ? 'gray' : ($record->stock_quantity > 0 ? 'success' : 'danger'))
+                    ->formatStateUsing(fn (?int $state) => $state === null ? '—' : Price::format($state, app(CurrencyContext::class)->current()))
+                    ->weight('semibold')->alignEnd(),
+                TextColumn::make('stock_quantity')->label($t('stock'))
+                    ->state(fn (Product $record) => self::stockState($record)['label'])
+                    ->formatStateUsing(fn (string $state, Product $record) => '<span class="admin-dot admin-dot-'.e(self::stockState($record)['tone']).'">'.e($state).'</span>')
+                    ->html()
                     ->sortable(),
-                TextColumn::make('categories.id')->label($t('categories'))
-                    ->formatStateUsing(fn ($state, Product $record) => $record->categories->map->name->implode(', '))
-                    ->limit(40)->toggleable(),
-                ToggleColumn::make('is_visible')->label($t('is_visible')),
+                TextColumn::make('is_visible')->label($t('status'))
+                    ->badge()
+                    ->formatStateUsing(fn (bool $state) => $state ? $t('visible_badge') : $t('hidden_badge'))
+                    ->color(fn (bool $state) => $state ? 'success' : 'gray'),
                 TextColumn::make('updated_at')->label($t('updated_at'))->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
@@ -337,7 +347,21 @@ class ProductResource extends Resource
                 Filter::make('sold_out')->label($t('sold_out'))
                     ->query(fn (Builder $query) => $query->where('track_stock', true)->where('stock_quantity', '<=', 0)),
             ])
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                // Akcie v menu „…“: upraviť, zobraziť/skryť, otvoriť v obchode, zmazať.
+                ActionGroup::make([
+                    EditAction::make(),
+                    Action::make('toggleVisibility')
+                        ->label(fn (Product $record) => $record->is_visible ? $t('bulk_hide') : $t('bulk_show'))
+                        ->icon(fn (Product $record) => $record->is_visible ? Heroicon::OutlinedEyeSlash : Heroicon::OutlinedEye)
+                        ->action(fn (Product $record) => $record->update(['is_visible' => ! $record->is_visible])),
+                    Action::make('viewInShop')->label($t('view_in_shop'))->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                        ->url(fn (Product $record) => $record->url(), shouldOpenInNewTab: true)
+                        ->visible(fn (Product $record) => $record->is_visible),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
+            ->recordUrl(fn (Product $record) => self::getUrl('edit', ['record' => $record]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     BulkAction::make('show')->label($t('bulk_show'))->icon(Heroicon::OutlinedEye)
@@ -349,6 +373,28 @@ class ProductResource extends Resource
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    /**
+     * Stav skladu pre zoznam: text a tón farebnej bodky (neobmedzene, vypredané, dochádza, skladom).
+     *
+     * @return array{label: string, tone: string}
+     */
+    public static function stockState(Product $record): array
+    {
+        $t = fn (string $key, array $replace = []) => __('catalog::admin.product.'.$key, $replace);
+
+        if (! $record->track_stock) {
+            return ['label' => $t('stock_unlimited'), 'tone' => 'muted'];
+        }
+
+        $quantity = $record->variants_count > 0 ? (int) $record->variants_sum_stock_quantity : (int) $record->stock_quantity;
+
+        return match (true) {
+            $quantity <= 0 => ['label' => $t('sold_out'), 'tone' => 'bad'],
+            $quantity <= app(StockService::class)->lowStockThreshold($record) => ['label' => $t('stock_last', ['count' => $quantity]), 'tone' => 'warn'],
+            default => ['label' => $t('stock_pcs', ['count' => $quantity]), 'tone' => 'ok'],
+        };
     }
 
     public static function getRelations(): array

@@ -11,6 +11,7 @@ use App\Filament\Pages\Themes;
 use App\Filament\Resources\MenuItems\Pages\ManageMenuItems;
 use App\Models\MenuItem;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -127,8 +128,10 @@ class MenuItemResource extends Resource
             ->groups(['location'])
             ->filters([SelectFilter::make('location')->label($t('location'))->options(fn () => self::locations())])
             ->recordActions([
-                EditAction::make()->mutateRecordDataUsing(fn (array $data, MenuItem $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make()->mutateRecordDataUsing(fn (array $data, MenuItem $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->emptyStateDescription($t('empty_help'))
             ->paginated(false);

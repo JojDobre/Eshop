@@ -3,6 +3,7 @@
 namespace Modules\Reviews\Filament;
 
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -73,15 +74,17 @@ final class ReviewTable
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
-                Action::make('approve')->label($t('approve'))->icon(Heroicon::OutlinedCheck)->color('success')
-                    ->visible(fn (Review $record) => $record->status !== Review::APPROVED)
-                    ->action(fn (Review $record) => $record->update(['status' => Review::APPROVED])),
-                Action::make('reject')->label($t('reject'))->icon(Heroicon::OutlinedXMark)->color('danger')
-                    ->visible(fn (Review $record) => $record->status === Review::PENDING)
-                    ->action(fn (Review $record) => $record->update(['status' => Review::REJECTED])),
-                EditAction::make()->schema(self::form())
-                    ->mutateDataUsing(fn (array $data, Review $record) => [...$data, 'replied_at' => filled($data['reply'] ?? null) && $data['reply'] !== $record->reply ? now() : $record->replied_at]),
-                DeleteAction::make(),
+                ActionGroup::make([
+                    Action::make('approve')->label($t('approve'))->icon(Heroicon::OutlinedCheck)->color('success')
+                        ->visible(fn (Review $record) => $record->status !== Review::APPROVED)
+                        ->action(fn (Review $record) => $record->update(['status' => Review::APPROVED])),
+                    Action::make('reject')->label($t('reject'))->icon(Heroicon::OutlinedXMark)->color('danger')
+                        ->visible(fn (Review $record) => $record->status === Review::PENDING)
+                        ->action(fn (Review $record) => $record->update(['status' => Review::REJECTED])),
+                    EditAction::make()->schema(self::form())
+                        ->mutateDataUsing(fn (array $data, Review $record) => [...$data, 'replied_at' => filled($data['reply'] ?? null) && $data['reply'] !== $record->reply ? now() : $record->replied_at]),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->toolbarActions([
                 BulkAction::make('approve_selected')->label($t('approve'))->icon(Heroicon::OutlinedCheck)

@@ -8,6 +8,7 @@ use App\Core\Modules\ModuleManager;
 use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -89,16 +90,18 @@ class Modules extends Page implements HasTable
                     ->tooltip(fn (array $record) => $record['problem']),
             ])
             ->recordActions([
-                Action::make('enable')
-                    ->label(__('admin.modules.enable'))
-                    ->visible(fn (array $record) => ! $record['core'] && ! $record['enabled'])
-                    ->action(fn (array $record) => $this->toggle($record['key'], true)),
-                Action::make('disable')
-                    ->label(__('admin.modules.disable'))
-                    ->color('danger')
-                    ->requiresConfirmation()
-                    ->visible(fn (array $record) => ! $record['core'] && $record['enabled'])
-                    ->action(fn (array $record) => $this->toggle($record['key'], false)),
+                ActionGroup::make([
+                    Action::make('enable')
+                        ->label(__('admin.modules.enable'))
+                        ->visible(fn (array $record) => ! $record['core'] && ! $record['enabled'])
+                        ->action(fn (array $record) => $this->toggle($record['key'], true)),
+                    Action::make('disable')
+                        ->label(__('admin.modules.disable'))
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->visible(fn (array $record) => ! $record['core'] && $record['enabled'])
+                        ->action(fn (array $record) => $this->toggle($record['key'], false)),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->paginated(false);
     }

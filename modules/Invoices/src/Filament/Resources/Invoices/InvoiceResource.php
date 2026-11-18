@@ -5,6 +5,7 @@ namespace Modules\Invoices\Filament\Resources\Invoices;
 use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -78,11 +79,13 @@ class InvoiceResource extends Resource
                 Filter::make('this_month')->label($t('this_month'))->query(fn (Builder $query) => $query->where('issued_at', '>=', now()->startOfMonth())),
             ])
             ->recordActions([
-                Action::make('download')->label($t('download'))->icon(Heroicon::OutlinedArrowDownTray)
-                    ->url(fn (Invoice $record) => route('invoices.admin', $record), shouldOpenInNewTab: true),
-                Action::make('order')->label($t('order'))->icon(Heroicon::OutlinedShoppingBag)->color('gray')
-                    ->visible(fn (Invoice $record) => $record->order_id !== null)
-                    ->url(fn (Invoice $record) => OrderResource::getUrl('view', ['record' => $record->order_id])),
+                ActionGroup::make([
+                    Action::make('download')->label($t('download'))->icon(Heroicon::OutlinedArrowDownTray)
+                        ->url(fn (Invoice $record) => route('invoices.admin', $record), shouldOpenInNewTab: true),
+                    Action::make('order')->label($t('order'))->icon(Heroicon::OutlinedShoppingBag)->color('gray')
+                        ->visible(fn (Invoice $record) => $record->order_id !== null)
+                        ->url(fn (Invoice $record) => OrderResource::getUrl('view', ['record' => $record->order_id])),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ]);
     }
 

@@ -7,6 +7,7 @@ use App\Filament\Pages\Settings\ManageGeneralSettings;
 use App\Filament\Resources\Redirects\Pages\ManageRedirects;
 use App\Models\Redirect;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -83,7 +84,12 @@ class RedirectResource extends Resource
             ])
             ->filters([TernaryFilter::make('is_automatic')->label($t('automatic'))])
             ->defaultSort('created_at', 'desc')
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->toolbarActions([DeleteBulkAction::make()]);
     }
 

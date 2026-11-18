@@ -10,6 +10,7 @@ use App\Filament\Resources\SavedBlocks\Pages\EditSavedBlock;
 use App\Filament\Resources\SavedBlocks\Pages\ListSavedBlocks;
 use App\Models\SavedBlock;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ReplicateAction;
@@ -86,8 +87,14 @@ class SavedBlockResource extends Resource
                 TextColumn::make('updated_at')->label($t('updated'))->since()->sortable(),
             ])
             ->defaultSort('name')
-            ->recordActions([EditAction::make(), ReplicateAction::make()->excludeAttributes(['blocks'])
-                ->beforeReplicaSaved(fn (SavedBlock $replica, SavedBlock $record) => $replica->setTranslations('blocks', $record->getTranslations('blocks'))->forceFill(['name' => $record->name.' (2)'])), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    ReplicateAction::make()->excludeAttributes(['blocks'])
+                        ->beforeReplicaSaved(fn (SavedBlock $replica, SavedBlock $record) => $replica->setTranslations('blocks', $record->getTranslations('blocks'))->forceFill(['name' => $record->name.' (2)'])),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->emptyStateHeading($t('empty'))
             ->emptyStateDescription($t('intro'));
     }

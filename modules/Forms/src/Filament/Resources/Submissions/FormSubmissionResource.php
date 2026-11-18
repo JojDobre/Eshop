@@ -5,6 +5,7 @@ namespace Modules\Forms\Filament\Resources\Submissions;
 use App\Filament\AdminGroup;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -103,28 +104,30 @@ class FormSubmissionResource extends Resource
                 TernaryFilter::make('read_at')->label($t('read'))->nullable(),
             ])
             ->recordActions([
-                // Otvorením sa správa označí ako prečítaná.
-                ViewAction::make()
-                    ->modalHeading(fn (FormSubmission $record) => $record->form?->name ?? $t('submission_title'))
-                    ->modalDescription(fn (FormSubmission $record) => $t('received_on', ['date' => $record->created_at?->translatedFormat('j. n. Y, H:i')]))
-                    ->modalIcon(Heroicon::OutlinedEnvelopeOpen)
-                    ->modalWidth('2xl')
-                    ->modalCancelActionLabel($t('close'))
-                    ->extraModalFooterActions(fn (FormSubmission $record) => [
-                        Action::make('replyFromDetail')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)
-                            ->visible(filled($record->email))->url(self::replyUrl($record)),
-                        Action::make('markUnread')->label($t('mark_unread'))->icon(Heroicon::OutlinedEnvelope)->color('gray')
-                            ->action(fn () => $record->update(['read_at' => null]))->cancelParentActions(),
-                    ])
-                    ->mutateRecordDataUsing(function (array $data, FormSubmission $record): array {
-                        $record->read_at ?? $record->update(['read_at' => now()]);
+                ActionGroup::make([
+                    // Otvorením sa správa označí ako prečítaná.
+                    ViewAction::make()
+                        ->modalHeading(fn (FormSubmission $record) => $record->form?->name ?? $t('submission_title'))
+                        ->modalDescription(fn (FormSubmission $record) => $t('received_on', ['date' => $record->created_at?->translatedFormat('j. n. Y, H:i')]))
+                        ->modalIcon(Heroicon::OutlinedEnvelopeOpen)
+                        ->modalWidth('2xl')
+                        ->modalCancelActionLabel($t('close'))
+                        ->extraModalFooterActions(fn (FormSubmission $record) => [
+                            Action::make('replyFromDetail')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)
+                                ->visible(filled($record->email))->url(self::replyUrl($record)),
+                            Action::make('markUnread')->label($t('mark_unread'))->icon(Heroicon::OutlinedEnvelope)->color('gray')
+                                ->action(fn () => $record->update(['read_at' => null]))->cancelParentActions(),
+                        ])
+                        ->mutateRecordDataUsing(function (array $data, FormSubmission $record): array {
+                            $record->read_at ?? $record->update(['read_at' => now()]);
 
-                        return $data;
-                    }),
-                Action::make('reply')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)->color('gray')
-                    ->visible(fn (FormSubmission $record) => filled($record->email))
-                    ->url(fn (FormSubmission $record) => self::replyUrl($record)),
-                DeleteAction::make(),
+                            return $data;
+                        }),
+                    Action::make('reply')->label($t('reply'))->icon(Heroicon::OutlinedArrowUturnLeft)->color('gray')
+                        ->visible(fn (FormSubmission $record) => filled($record->email))
+                        ->url(fn (FormSubmission $record) => self::replyUrl($record)),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->recordAction('view')
             ->toolbarActions([

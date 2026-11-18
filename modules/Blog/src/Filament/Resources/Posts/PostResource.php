@@ -7,6 +7,7 @@ use App\Filament\Forms\BlockBuilder;
 use App\Filament\Tables\MissingTranslationsColumn;
 use App\Models\User;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DateTimePicker;
@@ -143,7 +144,12 @@ class PostResource extends Resource
                 SelectFilter::make('blog_category_id')->label($t('category'))->relationship('category', 'id')
                     ->getOptionLabelFromRecordUsing(fn ($record) => $record->name),
             ])
-            ->recordActions([EditAction::make(), DeleteAction::make()]);
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ]);
     }
 
     public static function getPages(): array

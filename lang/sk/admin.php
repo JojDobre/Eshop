@@ -9,6 +9,11 @@ return [
         'system' => 'Systém',
     ],
 
+    'appearance_mode' => [
+        'label' => 'Režim zobrazenia',
+        'light' => 'Denný režim',
+        'dark' => 'Nočný režim',
+    ],
     'profile' => [
         'locale' => 'Jazyk administrácie',
     ],

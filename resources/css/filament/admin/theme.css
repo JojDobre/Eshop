@@ -618,3 +618,310 @@
 .admin-customize-grid .fi-fo-table-repeater .fi-fo-table-repeater-actions {
     gap: 0.25rem;
 }
+
+/*
+ * ---------- Vzhľad „A“: pokojné povrchy, jemné linky, tabuľky so štítkami ----------
+ * Farby sú v premenných, denný a nočný režim sa líšia iba nimi.
+ */
+:root {
+    --admin-bg: #f6f7f9;
+    --admin-surface: #ffffff;
+    --admin-input: #eef0f3;
+    --admin-line: #e3e5e9;
+    --admin-line-soft: #eef0f2;
+    --admin-text: #18181b;
+    --admin-muted: #5f6470;
+    --admin-active: #eaecef;
+    --admin-chip: #f0f1f4;
+    --admin-radius: 1rem;
+}
+
+.dark {
+    --admin-bg: #0c0c0e;
+    --admin-surface: #141417;
+    --admin-input: #1b1b1f;
+    --admin-line: #26262b;
+    --admin-line-soft: #1e1e22;
+    --admin-text: #f4f4f5;
+    --admin-muted: #a1a1aa;
+    --admin-active: #1f1f24;
+    --admin-chip: #222227;
+}
+
+.fi-body,
+.dark .fi-body {
+    background-color: var(--admin-bg);
+}
+
+/* Horná lišta a bočné menu v farbe stránky, oddelené len linkou. */
+.fi-topbar,
+.dark .fi-topbar {
+    background-color: color-mix(in oklab, var(--admin-bg) 88%, transparent);
+    box-shadow: inset 0 -1px 0 var(--admin-line);
+}
+
+@media (min-width: 64rem) {
+    .fi-sidebar,
+    .dark .fi-sidebar {
+        background-color: var(--admin-bg);
+        box-shadow: inset -1px 0 0 var(--admin-line);
+    }
+}
+
+.fi-sidebar-group-label {
+    color: var(--admin-muted);
+}
+
+.fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: var(--admin-muted);
+    font-weight: 500;
+}
+
+.fi-sidebar-item-btn:hover {
+    background-color: var(--admin-active);
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background-color: var(--admin-active);
+    box-shadow: none;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: var(--admin-text);
+    font-weight: 600;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-icon {
+    color: var(--primary-600);
+}
+
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-icon {
+    color: var(--primary-400);
+}
+
+/* Nadpis stránky a podnadpis (napr. „42 produktov · 38 v obchode“). */
+.fi-header-heading {
+    font-weight: 700;
+    color: var(--admin-text);
+}
+
+.fi-header-subheading {
+    color: var(--admin-muted);
+    font-size: 0.875rem;
+}
+
+/* Karty: biely (v noci tmavý) povrch, linka namiesto tieňa. */
+.fi-section:not(.fi-section-not-contained),
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat,
+.fi-wi-widget .fi-section,
+.fi-fo-repeater-item,
+.fi-fo-builder-item,
+.fi-modal-window,
+.fi-dropdown-panel {
+    background-color: var(--admin-surface);
+    border-radius: var(--admin-radius);
+    box-shadow: 0 0 0 1px var(--admin-line);
+}
+
+.fi-modal-window,
+.fi-dropdown-panel {
+    box-shadow: 0 0 0 1px var(--admin-line), 0 16px 40px -12px rgb(0 0 0 / 0.25);
+}
+
+.fi-input-wrp {
+    background-color: var(--admin-surface);
+}
+
+/* ---------- Tabuľky ---------- */
+.fi-ta-header-cell,
+.dark .fi-ta-header-cell {
+    font-weight: 500;
+    color: var(--admin-muted);
+    background-color: transparent;
+}
+
+.fi-ta-table > thead > tr {
+    background-color: transparent;
+}
+
+.fi-ta-table > thead,
+.fi-ta-table > tbody > tr + tr,
+.fi-ta-table > tbody {
+    border-color: var(--admin-line-soft);
+}
+
+.fi-ta-row:hover,
+.dark .fi-ta-row:hover {
+    background-color: color-mix(in oklab, var(--admin-active) 55%, transparent);
+}
+
+/* Nižšie riadky na počítači (obsah buniek má vlastný okraj zhora a zdola). */
+@media (min-width: 64rem) {
+    .fi-ta-row .fi-ta-text,
+    .fi-ta-row .fi-ta-image,
+    .fi-ta-row .fi-ta-icon,
+    .fi-ta-row .fi-ta-color {
+        padding-top: 0.625rem;
+        padding-bottom: 0.625rem;
+    }
+}
+
+/* Záložky nad tabuľkou zarovnané doľava. */
+.fi-resource-list-records-page .fi-sc-tabs,
+.fi-resource-manage-records-page .fi-sc-tabs {
+    margin-inline: 0;
+}
+
+.fi-resource-list-records-page .fi-sc-tabs > .fi-tabs,
+.fi-resource-manage-records-page .fi-sc-tabs > .fi-tabs {
+    margin-inline: 0;
+    width: 100%;
+}
+
+.fi-ta-image img {
+    border-radius: 0.625rem;
+}
+
+/* Štítky ako „pilulky“. */
+.fi-badge {
+    border-radius: 999px;
+    padding-inline: 0.625rem;
+    font-weight: 500;
+}
+
+.fi-badge.fi-color-gray {
+    background-color: var(--admin-chip);
+    color: var(--admin-text);
+    box-shadow: none;
+}
+
+/* Akcie v riadku: tlačidlo „…“ bez rámika. */
+.fi-ta-actions .fi-dropdown-trigger .fi-icon-btn {
+    color: var(--admin-muted);
+    border-radius: 0.5rem;
+}
+
+.fi-ta-actions .fi-dropdown-trigger .fi-icon-btn:hover {
+    background-color: var(--admin-active);
+}
+
+/* Stav skladu a podobné stavy: farebná bodka pred textom. */
+.admin-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.admin-dot::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+.admin-dot-muted { color: var(--admin-muted); }
+.admin-dot-ok { color: #15803d; }
+.admin-dot-warn { color: #b45309; }
+.admin-dot-bad { color: #b91c1c; }
+.dark .admin-dot-ok { color: #86efac; }
+.dark .admin-dot-warn { color: #fcd34d; }
+.dark .admin-dot-bad { color: #fca5a5; }
+
+/*
+ * Záložky nad tabuľkou (Všetky / V obchode / Vypredané…) ako pilulky s počtom.
+ * Na mobile sa posúvajú do strany v jednom riadku.
+ */
+.fi-resource-list-records-page .fi-tabs,
+.fi-resource-manage-records-page .fi-tabs,
+.fi-page-sub-navigation-tabs .fi-tabs {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: flex-start;
+}
+
+.fi-resource-list-records-page .fi-tabs .fi-tabs-item,
+.fi-resource-manage-records-page .fi-tabs .fi-tabs-item {
+    border-radius: 999px;
+    height: 2.125rem;
+    padding-inline: 0.875rem;
+    box-shadow: inset 0 0 0 1px var(--admin-line);
+    background: transparent;
+    color: var(--admin-muted);
+    font-weight: 500;
+}
+
+.fi-resource-list-records-page .fi-tabs .fi-tabs-item .fi-tabs-item-label,
+.fi-resource-manage-records-page .fi-tabs .fi-tabs-item .fi-tabs-item-label {
+    color: inherit;
+}
+
+.fi-resource-list-records-page .fi-tabs .fi-tabs-item:hover,
+.fi-resource-manage-records-page .fi-tabs .fi-tabs-item:hover {
+    background: var(--admin-active);
+}
+
+.fi-resource-list-records-page .fi-tabs .fi-tabs-item.fi-active,
+.fi-resource-manage-records-page .fi-tabs .fi-tabs-item.fi-active {
+    background: var(--admin-text);
+    color: var(--admin-bg);
+    box-shadow: none;
+}
+
+.fi-resource-list-records-page .fi-tabs .fi-tabs-item .fi-badge,
+.fi-resource-manage-records-page .fi-tabs .fi-tabs-item .fi-badge {
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+    opacity: 0.75;
+    padding: 0;
+}
+
+/* ---------- Prepínač denného a nočného režimu v hornej lište ---------- */
+.admin-theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.1875rem;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--admin-line);
+    background: var(--admin-surface);
+}
+
+.admin-theme-toggle button {
+    display: grid;
+    place-items: center;
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: 999px;
+    color: var(--admin-muted);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.admin-theme-toggle button[aria-pressed='true'] {
+    background: var(--admin-active);
+    color: var(--admin-text);
+}
+
+.admin-theme-toggle button:not([aria-pressed='true']):hover {
+    color: var(--admin-text);
+}
+
+.admin-theme-toggle svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Prepínač v menu používateľa je zbytočný, keď je v lište. */
+.fi-user-menu .fi-theme-switcher {
+    display: none;
+}

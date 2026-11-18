@@ -8,6 +8,7 @@ use App\Filament\Resources\MediaFiles\Pages\ManageMediaFiles;
 use App\Models\MediaFile;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -94,19 +95,21 @@ class MediaFileResource extends Resource
                     }),
             ])
             ->recordActions([
-                Action::make('copyUrl')->label($t('copy_url'))->icon(Heroicon::OutlinedLink)->color('gray')
-                    ->alpineClickHandler(fn (MediaFile $record) => 'window.navigator.clipboard.writeText('.json_encode($record->url()).'); $tooltip('.json_encode($t('copied')).', { timeout: 1500 })'),
-                Action::make('open')->label($t('open'))->icon(Heroicon::OutlinedArrowTopRightOnSquare)->color('gray')
-                    ->url(fn (MediaFile $record) => $record->url(), shouldOpenInNewTab: true),
-                EditAction::make(),
-                // Používaný súbor (produkt, stránka, šablóna…) sa nedá zmazať – obchod by prišiel o obrázok.
-                DeleteAction::make()
-                    ->before(function (MediaFile $record, DeleteAction $action) use ($t): void {
-                        if (app(MediaLibrary::class)->isUsed($record)) {
-                            Notification::make()->danger()->title($t('in_use'))->body($t('in_use_help'))->send();
-                            $action->cancel();
-                        }
-                    }),
+                ActionGroup::make([
+                    Action::make('copyUrl')->label($t('copy_url'))->icon(Heroicon::OutlinedLink)->color('gray')
+                        ->alpineClickHandler(fn (MediaFile $record) => 'window.navigator.clipboard.writeText('.json_encode($record->url()).'); $tooltip('.json_encode($t('copied')).', { timeout: 1500 })'),
+                    Action::make('open')->label($t('open'))->icon(Heroicon::OutlinedArrowTopRightOnSquare)->color('gray')
+                        ->url(fn (MediaFile $record) => $record->url(), shouldOpenInNewTab: true),
+                    EditAction::make(),
+                    // Používaný súbor (produkt, stránka, šablóna…) sa nedá zmazať – obchod by prišiel o obrázok.
+                    DeleteAction::make()
+                        ->before(function (MediaFile $record, DeleteAction $action) use ($t): void {
+                            if (app(MediaLibrary::class)->isUsed($record)) {
+                                Notification::make()->danger()->title($t('in_use'))->body($t('in_use_help'))->send();
+                                $action->cancel();
+                            }
+                        }),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->toolbarActions([
                 BulkAction::make('deleteUnused')->label($t('delete_unused'))->icon(Heroicon::OutlinedTrash)->color('danger')

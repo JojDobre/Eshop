@@ -6,6 +6,7 @@ use App\Filament\AdminGroup;
 use App\Filament\Concerns\FillsContentTranslations;
 use App\Models\CustomerGroup;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
@@ -88,9 +89,11 @@ class CustomerGroupResource extends Resource
             ->reorderable('position')
             ->description($t('help'))
             ->recordActions([
-                EditAction::make()->mutateRecordDataUsing(fn (array $data, CustomerGroup $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
-                // Zákazníci zmazanej skupiny dostanú predvolenú skupinu, ceny pre skupinu sa zmažú.
-                DeleteAction::make(),
+                ActionGroup::make([
+                    EditAction::make()->mutateRecordDataUsing(fn (array $data, CustomerGroup $record) => FillsContentTranslations::contentTranslationsForForm($record, $data)),
+                    // Zákazníci zmazanej skupiny dostanú predvolenú skupinu, ceny pre skupinu sa zmažú.
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->paginated(false);
     }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\GoogleDriveCallbackController;
 use App\Settings\SystemSettings;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -105,39 +106,41 @@ class Backups extends Page implements HasTable
                 TextColumn::make('size')->label($t('size'))->formatStateUsing(fn (int $state) => Number::fileSize($state, 1)),
             ])
             ->recordActions([
-                Action::make('download')->label($t('download'))->icon(Heroicon::OutlinedArrowDownTray)
-                    ->action(fn (array $record): BinaryFileResponse => response()->download(app(BackupManager::class)->path($record['name']))),
-                Action::make('verify')->label($t('verify'))->icon(Heroicon::OutlinedShieldCheck)
-                    ->action(function (array $record) use ($t): void {
-                        $result = app(BackupVerifier::class)->verify($record['name']);
-                        Notification::make()->{$result['ok'] ? 'success' : 'danger'}()->title($t($result['ok'] ? 'check_passed' : 'check_failed'))->body($result['message'])->send();
-                    }),
-                Action::make('restore')->label($t('restore'))->icon(Heroicon::OutlinedArrowUturnLeft)->color('warning')
-                    ->modalDescription($t('restore_warning'))
-                    ->schema([
-                        Toggle::make('with_files')->label($t('restore_files'))->default(true),
-                        TextInput::make('confirm')->label($t('restore_confirm'))->required()->in([$t('restore_word')]),
-                    ])
-                    ->action(function (array $record, array $data) use ($t): void {
-                        @set_time_limit(0);
+                ActionGroup::make([
+                    Action::make('download')->label($t('download'))->icon(Heroicon::OutlinedArrowDownTray)
+                        ->action(fn (array $record): BinaryFileResponse => response()->download(app(BackupManager::class)->path($record['name']))),
+                    Action::make('verify')->label($t('verify'))->icon(Heroicon::OutlinedShieldCheck)
+                        ->action(function (array $record) use ($t): void {
+                            $result = app(BackupVerifier::class)->verify($record['name']);
+                            Notification::make()->{$result['ok'] ? 'success' : 'danger'}()->title($t($result['ok'] ? 'check_passed' : 'check_failed'))->body($result['message'])->send();
+                        }),
+                    Action::make('restore')->label($t('restore'))->icon(Heroicon::OutlinedArrowUturnLeft)->color('warning')
+                        ->modalDescription($t('restore_warning'))
+                        ->schema([
+                            Toggle::make('with_files')->label($t('restore_files'))->default(true),
+                            TextInput::make('confirm')->label($t('restore_confirm'))->required()->in([$t('restore_word')]),
+                        ])
+                        ->action(function (array $record, array $data) use ($t): void {
+                            @set_time_limit(0);
 
-                        try {
-                            $result = app(BackupRestorer::class)->restore($record['name'], (bool) $data['with_files']);
-                        } catch (Throwable $e) {
-                            report($e);
-                            Notification::make()->danger()->title($t('restore_failed'))->body($e->getMessage())->persistent()->send();
+                            try {
+                                $result = app(BackupRestorer::class)->restore($record['name'], (bool) $data['with_files']);
+                            } catch (Throwable $e) {
+                                report($e);
+                                Notification::make()->danger()->title($t('restore_failed'))->body($e->getMessage())->persistent()->send();
 
-                            return;
-                        }
+                                return;
+                            }
 
-                        Notification::make()->success()->title($t('restored'))->body($t('restored_body', ['safety' => $result['safety_backup'] ?? '–']))->persistent()->send();
-                        $this->redirect(self::getUrl());
-                    }),
-                Action::make('delete')->label($t('delete'))->icon(Heroicon::OutlinedTrash)->color('danger')->requiresConfirmation()
-                    ->action(function (array $record) use ($t): void {
-                        app(BackupManager::class)->delete($record['name']);
-                        Notification::make()->success()->title($t('deleted'))->send();
-                    }),
+                            Notification::make()->success()->title($t('restored'))->body($t('restored_body', ['safety' => $result['safety_backup'] ?? '–']))->persistent()->send();
+                            $this->redirect(self::getUrl());
+                        }),
+                    Action::make('delete')->label($t('delete'))->icon(Heroicon::OutlinedTrash)->color('danger')->requiresConfirmation()
+                        ->action(function (array $record) use ($t): void {
+                            app(BackupManager::class)->delete($record['name']);
+                            Notification::make()->success()->title($t('deleted'))->send();
+                        }),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ])
             ->emptyStateHeading($t('empty'))
             ->paginated(false);

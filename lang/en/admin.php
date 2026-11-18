@@ -9,6 +9,11 @@ return [
         'system' => 'System',
     ],
 
+    'appearance_mode' => [
+        'label' => 'Display mode',
+        'light' => 'Light mode',
+        'dark' => 'Dark mode',
+    ],
     'profile' => [
         'locale' => 'Administration language',
     ],

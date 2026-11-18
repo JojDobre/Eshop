@@ -8,6 +8,7 @@ use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
 use BackedEnum;
 use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Field;
@@ -127,20 +128,22 @@ class GiftVoucherResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->recordActions([
-                Action::make('history')->label($t('history'))->icon(Heroicon::OutlinedClock)->color('gray')
-                    ->modalSubmitAction(false)
-                    ->modalContent(fn (GiftVoucher $record) => view('orders::filament.voucher-history', [
-                        'voucher' => $record,
-                        'usages' => GiftVoucherUsage::query()->where('gift_voucher_id', $record->id)->with('order')->latest('id')->get(),
-                    ])),
-                Action::make('resend')->label($t('resend'))->icon(Heroicon::OutlinedEnvelope)->color('gray')
-                    ->visible(fn (GiftVoucher $record) => filled($record->recipient_email))
-                    ->requiresConfirmation()
-                    ->action(function (GiftVoucher $record) use ($t): void {
-                        app(GiftVouchers::class)->send([$record], (string) $record->recipient_email, $record->order?->billing_name, $record->order?->locale);
-                        Notification::make()->success()->title($t('sent'))->send();
-                    }),
-                EditAction::make(),
+                ActionGroup::make([
+                    Action::make('history')->label($t('history'))->icon(Heroicon::OutlinedClock)->color('gray')
+                        ->modalSubmitAction(false)
+                        ->modalContent(fn (GiftVoucher $record) => view('orders::filament.voucher-history', [
+                            'voucher' => $record,
+                            'usages' => GiftVoucherUsage::query()->where('gift_voucher_id', $record->id)->with('order')->latest('id')->get(),
+                        ])),
+                    Action::make('resend')->label($t('resend'))->icon(Heroicon::OutlinedEnvelope)->color('gray')
+                        ->visible(fn (GiftVoucher $record) => filled($record->recipient_email))
+                        ->requiresConfirmation()
+                        ->action(function (GiftVoucher $record) use ($t): void {
+                            app(GiftVouchers::class)->send([$record], (string) $record->recipient_email, $record->order?->billing_name, $record->order?->locale);
+                            Notification::make()->success()->title($t('sent'))->send();
+                        }),
+                    EditAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
             ]);
     }
 

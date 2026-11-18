@@ -7,6 +7,7 @@ use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use App\Filament\Forms\MoneyInput;
 use BackedEnum;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
@@ -166,7 +167,12 @@ class ShippingMethodResource extends Resource
             ])
             ->defaultSort('position')
             ->reorderable('position')
-            ->recordActions([EditAction::make(), DeleteAction::make()])
+            ->recordActions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])->icon(Heroicon::EllipsisHorizontal)->color('gray'),
+            ])
             ->paginated(false);
     }
 

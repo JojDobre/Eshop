@@ -7,6 +7,8 @@
   takže sa zobrazí aj počas výmeny súborov.
 - **V administrácii** sa počas aktualizácie namiesto bieleho okna s chybou zobrazí nenápadné oznámenie
   „Prebieha aktualizácia obchodu“, ktoré po dokončení samo zmizne.
+- **Oprava:** menu „…“ v zoznamoch sa otváralo uprostred obrazovky namiesto pri tlačidle.
+- **Oprava:** karty s číslami na nástenke mali spoločné biele (v noci čierne) pozadie aj v medzerách medzi sebou.
 
 ## 1.16.0 – Nová administrácia
 

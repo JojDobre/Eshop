@@ -287,8 +287,12 @@
  * Riadky ako karty: tabuľka v úzkom priestore (mobil, tablet s menu, úzke stĺpce formulára).
  * Riadi sa šírkou kontajnera tabuľky, nie celej obrazovky.
  */
-.fi-ta-content-ctn,
-.fi-ta-content {
+/*
+ * Hlavné zoznamy sa riadia šírkou obrazovky. Kontajner (container-type) majú iba tabuľky v detaile záznamu
+ * a vo formulároch – v hlavných zoznamoch by posunul menu „…“ (poloha fixed sa počíta od kontajnera).
+ */
+.fi-resource-relation-manager .fi-ta-content-ctn,
+.fi-fo-field .fi-ta-content-ctn {
     container-type: inline-size;
     container-name: admin-table;
 }
@@ -424,6 +428,159 @@
 
 /* Stredne široká tabuľka (tablet s menu): karty v dvoch stĺpcoch, aby sa nemuselo toľko posúvať. */
 @container admin-table (min-width: 34rem) and (max-width: 46rem) {
+    .fi-ta-table tbody.fi-ta-records {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fi-ta-table tr.fi-ta-row {
+        border-top: 1px solid var(--gray-100);
+    }
+
+    .fi-ta-table tr.fi-ta-row:nth-child(-n + 2) {
+        border-top: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row:nth-child(odd) {
+        border-right: 1px solid var(--gray-100);
+    }
+
+    .dark .fi-ta-table tr.fi-ta-row {
+        border-color: var(--gray-800);
+    }
+}
+
+/* To isté pre hlavné zoznamy podľa šírky obrazovky (mobil a menší tablet). */
+@media (max-width: 49rem) {
+    .fi-ta-table,
+    .fi-ta-table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .fi-ta-table thead {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.375rem;
+        padding: 0.875rem 1rem;
+        border-top: 1px solid var(--gray-100);
+    }
+
+    .dark .fi-ta-table tr.fi-ta-row {
+        border-color: var(--gray-800);
+    }
+
+    .fi-ta-table tr.fi-ta-row:first-child {
+        border-top: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-width: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td > * {
+        min-width: 0;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td > .fi-ta-col,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item {
+        padding: 0;
+        text-align: right;
+        justify-content: flex-end;
+    }
+
+    /* Popisok stĺpca vľavo, hodnota vpravo. */
+    .fi-ta-table tr.fi-ta-row > td[data-label]:not([data-label=''])::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        max-width: 45%;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--gray-500);
+    }
+
+    /* Prvý dátový stĺpec (zvyčajne názov) ako nadpis karty bez popisku. */
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell {
+        padding-right: 5.5rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell::before {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell .fi-ta-text-item,
+    .fi-ta-table tr.fi-ta-row > td.admin-primary-cell > .fi-ta-col {
+        text-align: left;
+        justify-content: flex-start;
+        font-weight: 600;
+    }
+
+    /* Prázdne bunky v karte skryť. */
+    .fi-ta-table tr.fi-ta-row > td.admin-empty-cell {
+        display: none;
+    }
+
+    /* Zaškrtávacie políčko a akcie v rohoch karty. */
+    .fi-ta-table tr.fi-ta-row > td.fi-ta-selection-cell {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        width: auto;
+    }
+
+    .fi-ta-table tr.fi-ta-row:has(> td.fi-ta-selection-cell) {
+        padding-left: 3rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell::before {
+        display: none;
+    }
+
+    .fi-ta-table tr.fi-ta-row > td.admin-actions-cell .fi-ta-actions {
+        padding: 0;
+    }
+
+    /* Obrázok produktu/súboru menší, vľavo pri nadpise. */
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-image img {
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+    }
+
+    /* Dlhé texty (popisy, predmety e-mailov) sa v karte zalomia. */
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-description,
+    .fi-ta-table tr.fi-ta-row > td .fi-ta-text-item-label {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .fi-ta-table .fi-ta-group-header-row,
+    .fi-ta-table .fi-ta-row-not-reorderable {
+        display: block;
+    }
+}
+
+@media (min-width: 36rem) and (max-width: 49rem) {
     .fi-ta-table tbody.fi-ta-records {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -689,7 +846,6 @@
 .fi-section:not(.fi-section-not-contained),
 .fi-ta-ctn,
 .fi-wi-stats-overview-stat,
-.fi-wi-widget .fi-section,
 .fi-fo-repeater-item,
 .fi-fo-builder-item,
 .fi-modal-window,

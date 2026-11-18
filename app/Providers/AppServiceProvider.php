@@ -6,6 +6,7 @@ use App\Core\Installer\Installation;
 use App\Filament\AdminDefaults;
 use App\Filament\Forms\MediaPicker;
 use App\Models\User;
+use Filament\Actions\ActionGroup;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Auth\Events\Login;
@@ -94,5 +95,9 @@ class AppServiceProvider extends ServiceProvider
                 ->defaultTimeDisplayFormat($time)
                 ->defaultNumberLocale(fn () => app()->getLocale()));
         }
+
+        // Menu „…“ sa vykreslí priamo do stránky: tabuľky majú kvôli zobrazeniu na mobile vlastný kontajner
+        // (container-type), od ktorého by sa inak počítala poloha menu a zobrazilo by sa mimo tlačidla.
+        ActionGroup::configureUsing(fn (ActionGroup $group) => $group->dropdownTeleport());
     }
 }

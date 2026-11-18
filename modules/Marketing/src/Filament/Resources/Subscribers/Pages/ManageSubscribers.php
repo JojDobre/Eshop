@@ -2,6 +2,7 @@
 
 namespace Modules\Marketing\Filament\Resources\Subscribers\Pages;
 
+use App\Filament\Concerns\HasStatusTabs;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ManageRecords;
@@ -14,6 +15,8 @@ use Throwable;
 
 class ManageSubscribers extends ManageRecords
 {
+    use HasStatusTabs;
+
     protected static string $resource = SubscriberResource::class;
 
     protected function getHeaderActions(): array
@@ -52,5 +55,10 @@ class ManageSubscribers extends ManageRecords
                     }
                 }),
         ];
+    }
+
+    protected function statusTabs(): array
+    {
+        return self::columnTabs('status', [Subscriber::SUBSCRIBED, Subscriber::PENDING, Subscriber::UNSUBSCRIBED], fn (string $status) => __('marketing::admin.subscribers.statuses.'.$status));
     }
 }

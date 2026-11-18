@@ -2,16 +2,20 @@
 
 namespace Modules\Returns\Filament\Resources\ReturnRequests\Pages;
 
+use App\Filament\Concerns\HasStatusTabs;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Modules\Returns\Filament\Resources\ReturnRequests\ReturnRequestResource;
 use Modules\Returns\Models\ReturnRequest;
 use Modules\Returns\ReturnOutcome;
+use Modules\Returns\ReturnStatus;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ListReturnRequests extends ListRecords
 {
+    use HasStatusTabs;
+
     protected static string $resource = ReturnRequestResource::class;
 
     protected function getHeaderActions(): array
@@ -36,5 +40,10 @@ class ListReturnRequests extends ListRecords
                     fclose($out);
                 }, 'reklamacie-'.now()->format('Y-m-d').'.csv', ['Content-Type' => 'text/csv; charset=UTF-8'])),
         ];
+    }
+
+    protected function statusTabs(): array
+    {
+        return self::columnTabs('status', ReturnStatus::cases());
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Modules\Reservations\Filament\Resources\Bookings\Pages;
 
+use App\Filament\Concerns\HasStatusTabs;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -16,12 +17,15 @@ use Modules\Reservations\Availability;
 use Modules\Reservations\Bookings;
 use Modules\Reservations\Filament\Pages\ReservationCalendar;
 use Modules\Reservations\Filament\Resources\Bookings\BookingResource;
+use Modules\Reservations\Models\Booking;
 use Modules\Reservations\Models\BookingResource as Resource;
 use Modules\Reservations\Models\BookingService;
 use RuntimeException;
 
 class ListBookings extends ListRecords
 {
+    use HasStatusTabs;
+
     protected static string $resource = BookingResource::class;
 
     protected function getHeaderActions(): array
@@ -85,5 +89,10 @@ class ListBookings extends ListRecords
         $times = array_keys(self::slots($serviceId, $date));
 
         return array_combine($times, $times) ?: [];
+    }
+
+    protected function statusTabs(): array
+    {
+        return self::columnTabs('status', Booking::STATUSES, fn (string $status) => __('reservations::admin.statuses.'.$status));
     }
 }

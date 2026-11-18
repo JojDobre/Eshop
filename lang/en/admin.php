@@ -9,6 +9,9 @@ return [
         'system' => 'System',
     ],
 
+    'tabs' => [
+        'all' => 'All',
+    ],
     'appearance_mode' => [
         'label' => 'Display mode',
         'light' => 'Light mode',

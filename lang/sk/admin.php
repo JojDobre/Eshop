@@ -9,6 +9,9 @@ return [
         'system' => 'Systém',
     ],
 
+    'tabs' => [
+        'all' => 'Všetky',
+    ],
     'appearance_mode' => [
         'label' => 'Režim zobrazenia',
         'light' => 'Denný režim',

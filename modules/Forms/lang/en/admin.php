@@ -28,6 +28,7 @@ return [
     'message' => 'Message',
     'email' => 'E-mail',
     'received_at' => 'Received',
+    'unread' => 'Unread',
     'read' => 'Read',
     'reply' => 'Reply',
     'mark_read' => 'Mark as read',

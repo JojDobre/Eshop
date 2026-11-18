@@ -28,6 +28,7 @@ return [
     'message' => 'Zpráva',
     'email' => 'E-mail',
     'received_at' => 'Přijato',
+    'unread' => 'Nepřečtené',
     'read' => 'Přečtené',
     'reply' => 'Odpovědět',
     'mark_read' => 'Označit jako přečtené',

@@ -44,7 +44,8 @@ class ContactFormTest extends ShopTestCase
 
         $submission = FormSubmission::query()->sole();
         $this->assertSame('jana@example.com', $submission->email);
-        $this->assertSame(['label' => 'Správa', 'value' => 'Máte čerstvé vajcia?', 'type' => 'textarea'], $submission->data[3]);
+        // MySQL ukladá kľúče JSON v inom poradí – porovnáva sa obsah, nie poradie.
+        $this->assertEquals(['label' => 'Správa', 'value' => 'Máte čerstvé vajcia?', 'type' => 'textarea'], $submission->data[3]);
         Mail::assertSent(TemplateMail::class, fn (TemplateMail $mail) => $mail->templateKey === 'forms.submission' && $mail->hasReplyTo('jana@example.com'));
     }
 

@@ -1440,3 +1440,42 @@
         transition: none;
     }
 }
+
+/* Oznámenie počas aktualizácie (odpovede 503 v režime údržby). */
+.admin-maintenance-notice {
+    position: fixed;
+    z-index: 60;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    max-width: calc(100vw - 2rem);
+    padding: 0.75rem 1.125rem;
+    border-radius: 999px;
+    background: var(--admin-text);
+    color: var(--admin-bg);
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.4);
+}
+
+.admin-maintenance-notice[hidden] {
+    display: none;
+}
+
+.admin-maintenance-notice svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex-shrink: 0;
+    animation: admin-spin 1.2s linear infinite;
+}
+
+@keyframes admin-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-maintenance-notice svg { animation: none; }
+}

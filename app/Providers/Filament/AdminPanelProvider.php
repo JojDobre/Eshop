@@ -64,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter Variable', url: fn () => Vite::asset('resources/css/admin-font.css'), provider: LocalFontProvider::class)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->renderHook(PanelsRenderHook::BODY_END, fn () => view('filament.hooks.responsive-tables'))
+            ->renderHook(PanelsRenderHook::BODY_END, fn () => view('filament.hooks.maintenance-notice'))
             // Viditeľný prepínač denného a nočného režimu vedľa menu používateľa.
             ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, fn () => view('filament.hooks.theme-toggle'))
             ->sidebarWidth('17rem')

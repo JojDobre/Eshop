@@ -1,5 +1,13 @@
 # Prehľad zmien
 
+## 1.16.1 – Stránka údržby
+
+- **Počas aktualizácie** návštevníci namiesto „503 Service Unavailable“ vidia stránku „Práve vylepšujeme obchod“
+  (denný aj nočný vzhľad, názov obchodu, stránka sa po chvíli obnoví sama). Stránka je vopred pripravená,
+  takže sa zobrazí aj počas výmeny súborov.
+- **V administrácii** sa počas aktualizácie namiesto bieleho okna s chybou zobrazí nenápadné oznámenie
+  „Prebieha aktualizácia obchodu“, ktoré po dokončení samo zmizne.
+
 ## 1.16.0 – Nová administrácia
 
 - **Nový vzhľad administrácie** (denný aj nočný režim): pokojné povrchy, jemné linky, štítky namiesto prepínačov.

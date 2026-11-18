@@ -273,8 +273,9 @@ class Updater
     {
         try {
             if ($on) {
-                // Návštevníci uvidia stránku údržby, správca pokračuje v tej istej požiadavke.
-                Artisan::call('down', ['--retry' => 60]);
+                // Návštevníci uvidia stránku údržby (vopred vykreslenú – slúži sa aj počas výmeny súborov),
+                // správca pokračuje v tej istej požiadavke.
+                Artisan::call('down', ['--retry' => 15, '--render' => 'errors::503']);
             } elseif (app()->isDownForMaintenance()) {
                 Artisan::call('up');
             }

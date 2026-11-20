@@ -1,5 +1,24 @@
 # Prehľad zmien
 
+## 1.17.0 – Nástenka, nezaplatené objednávky a automatické testy
+
+- **Nezaplatené objednávky** (Nastavenia → Nezaplatené objednávky): pri platbe prevodom sa zákazníkovi po nastavenom
+  počte dní (predvolene 3) pošle pripomienka platby s údajmi na platbu. Voliteľne sa objednávka po ďalšom termíne
+  sama zruší, tovar sa vráti na sklad a zákazník dostane e-mail o zrušení. Text pripomienky upravíte v E-mailoch.
+- **Nástenka:** graf tržieb a objednávok za 7, 30 alebo 90 dní, najpredávanejšie produkty, zoznam objednávok
+  čakajúcich na platbu (koľko dní čakajú, či odišla pripomienka) a malý graf pri tržbách za 30 dní.
+- **Detail objednávky:** prehľad hore (stav, platba, suma, zákazník) s priebehom krokov
+  Nová → Spracováva sa → Odoslaná / Pripravená → Vybavená a tlačidlo „Posunúť“ na ďalší krok jedným kliknutím.
+  Menej časté akcie sú v „Ďalšie akcie“.
+- **Digitálne produkty:** odkazy na stiahnutie sa dajú vytvoriť bez e-mailu a skopírovať (napr. do správy
+  zákazníkovi), alebo poslať e-mailom priamo zo sekcie objednávky.
+- **Prispôsobenie šablóny:** hlavné menu sa pri otvorení editora samo zbalí, náhľad má viac miesta.
+- **Oprava QR platby:** QR kód sa vytváral ako SVG, ktoré sa v PDF dokladoch nemuselo zobraziť. Teraz je to PNG
+  a testy overujú, že sa kód zo stránky objednávky aj z dokladu dá prečítať a obsahuje správne údaje.
+- **Automatické testy v prehliadači** (Playwright) bežia na GitHube pri každej zmene na čistej inštalácii:
+  administrácia, nákup s minimom a QR platbou, mobil, validácia formulára produktu, prístupnosť (axe),
+  snímky všetkých šablón a rýchlosť (Lighthouse). Návod na spustenie u seba: docs/TESTING.md.
+
 ## 1.16.2 – Spoľahlivá QR platba
 
 - **Oprava QR platby:** číslo účtu sa pred vytvorením QR kódu overí (kontrolné číslice IBAN). Účet zadaný

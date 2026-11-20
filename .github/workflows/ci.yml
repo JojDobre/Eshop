@@ -53,6 +53,79 @@ jobs:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
+
+  # Testy v prehliadači (Playwright) na čistej inštalácii: administrácia, nákup, mobil, prístupnosť,
+  # snímky šablón a rýchlosť (Lighthouse). Výsledky a snímky chýb sú v prílohe behu („e2e-report“).
+  e2e:
+    name: Testy v prehliadači
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: eshop_e2e
+        ports: ['3306:3306']
+        options: --health-cmd="mysqladmin ping -proot" --health-interval=5s --health-timeout=5s --health-retries=20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql, mbstring, intl, zip, bcmath, sodium, gd
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Závislosti a zostavenie
+        run: |
+          composer install --no-interaction --no-progress --prefer-dist
+          npm ci
+          npm run build
+          npx playwright install --with-deps chromium
+
+      - name: Server obchodu
+        run: (cd public && php -S 127.0.0.1:8000 ../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php > ../storage/logs/e2e-server.log 2>&1 &)
+
+      - name: Administrácia, nákup, mobil, prístupnosť
+        env:
+          E2E_INSTALL: '1'
+          E2E_DB_HOST: 127.0.0.1
+          E2E_DB_NAME: eshop_e2e
+          E2E_DB_USERNAME: root
+          E2E_DB_PASSWORD: root
+        run: npx playwright test --project=setup --project=desktop --project=mobil
+
+      # Snímky šablón sa porovnávajú s uloženými (tests/e2e/__snapshots__). Rozdiely písma na inom stroji
+      # by mohli spôsobiť falošný poplach, preto tento krok zatiaľ beh nezastaví – rozdiely sú v prílohe.
+      - name: Vzhľad šablón (snímky)
+        continue-on-error: true
+        run: npx playwright test --project=setup --project=vzhlad
+
+      - name: Rýchlosť (Lighthouse)
+        env:
+          LH_PERFORMANCE: '50'
+        run: node scripts/lighthouse.mjs
+
+      - name: Výsledky
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: |
+            storage/e2e/report
+            storage/e2e/results
+            storage/e2e/lighthouse
+            storage/logs
+          retention-days: 14
+
           DB_DATABASE: eshop_test
           DB_USERNAME: root
           DB_PASSWORD: root

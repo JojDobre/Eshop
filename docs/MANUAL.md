@@ -42,6 +42,12 @@ jednotlivo. Moduly (kuriéri, blog, rezervácie, hodnotenia, účtovné exporty�
 
 ## Objednávky
 
+- **Nezaplatené objednávky** (Nastavenia → Nezaplatené objednávky): po koľkých dňoch poslať pripomienku platby
+  a po koľkých nezaplatenú objednávku zrušiť (0 = vypnuté). Týka sa nových objednávok s platbou prevodom.
+  Funguje cez plánované úlohy – na hostingu nastavte cron (pozri docs/HOSTING.md), inak sa spúšťa pri návštevách.
+- **Detail objednávky:** tlačidlo „Posunúť“ presunie objednávku na ďalší krok (aj s e-mailom zákazníkovi).
+  Pri digitálnych produktoch vytvoríte odkazy na stiahnutie a skopírujete ich, alebo ich pošlete e-mailom.
+
 V **Predaj → Objednávky** meníte stav, vystavujete faktúry a dobropisy, tlačíte štítky zásielok
 a posielate zákazníkovi e-maily. Texty e-mailov upravíte v **Obsah → E-mailové šablóny**.
 Reklamácie a odstúpenia sú v **Predaj → Reklamácie** (protokol v PDF, dobropis jedným klikom).

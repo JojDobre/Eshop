@@ -3,13 +3,15 @@
 namespace Modules\Orders\Filament\Widgets;
 
 use App\Core\Support\CurrencyContext;
+use App\Settings\BrandingSettings;
 use Brick\Money\Currency;
+use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Reports\SalesReport;
 
 /**
- * Graf tržieb (stĺpce) a počtu objednávok (čiara) za 7, 30 alebo 90 dní.
+ * Graf denných tržieb za 7, 30 alebo 90 dní; počet objednávok je v bublinke pri stĺpci.
  */
 class SalesChart extends ChartWidget
 {
@@ -47,42 +49,51 @@ class SalesChart extends ChartWidget
         $days = in_array((int) $this->filter, [7, 30, 90], true) ? (int) $this->filter : 30;
         $data = app(SalesReport::class)->daily($days, $currency);
         $divisor = 10 ** Currency::of($currency)->getDefaultFractionDigits();
+        $color = rescue(fn () => app(BrandingSettings::class)->primaryColor(), BrandingSettings::DEFAULT_PRIMARY_COLOR, false);
 
+        // Jeden rad: tržby ako plné stĺpce vo farbe obchodu; počet objednávok je v bublinke pri stĺpci.
         return [
             'datasets' => [
                 [
-                    'type' => 'bar',
                     'label' => __('orders::admin.dashboard.revenue', ['currency' => $currency]),
                     'data' => array_map(fn (int $amount) => round($amount / $divisor, 2), $data['revenue']),
-                    'yAxisID' => 'y',
+                    'orders' => $data['orders'],
+                    'backgroundColor' => $color,
+                    'hoverBackgroundColor' => $color,
+                    'borderWidth' => 0,
                     'borderRadius' => 6,
-                    'maxBarThickness' => 28,
-                ],
-                [
-                    'type' => 'line',
-                    'label' => __('orders::admin.dashboard.orders'),
-                    'data' => $data['orders'],
-                    'yAxisID' => 'y1',
-                    'tension' => 0,
-                    'pointRadius' => 2,
-                    'borderWidth' => 2,
-                    'borderColor' => '#64748b',
-                    'backgroundColor' => '#64748b',
+                    'maxBarThickness' => 32,
+                    'minBarLength' => 0,
                 ],
             ],
             'labels' => array_map(fn ($date) => $date->format('j. n.'), $data['dates']),
         ];
     }
 
-    protected function getOptions(): array
+    protected function getOptions(): RawJs
     {
-        return [
-            'plugins' => ['legend' => ['display' => true, 'position' => 'bottom']],
-            'scales' => [
-                'y' => ['beginAtZero' => true, 'grid' => ['display' => true]],
-                'y1' => ['beginAtZero' => true, 'position' => 'right', 'grid' => ['display' => false], 'ticks' => ['precision' => 0]],
-                'x' => ['grid' => ['display' => false]],
-            ],
-        ];
+        // Texty v jednoduchých úvodzovkách – nastavenia grafu sa vkladajú do atribútu HTML.
+        $quote = fn (string $text) => "'".str_replace(["\\", "'", '"'], ["\\\\", "\\'", '&quot;'], $text)."'";
+        $orders = $quote(__('orders::admin.dashboard.orders'));
+        $currency = $quote(app(CurrencyContext::class)->current());
+
+        return RawJs::make(<<<JS
+            {
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        displayColors: false,
+                        callbacks: {
+                            label: (context) => context.parsed.y.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + {$currency},
+                            afterLabel: (context) => {$orders} + ': ' + (context.dataset.orders?.[context.dataIndex] ?? 0),
+                        },
+                    },
+                },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(127,127,127,0.12)' }, border: { display: false }, ticks: { maxTicksLimit: 5 } },
+                    x: { grid: { display: false }, border: { display: false }, ticks: { autoSkip: true, maxTicksLimit: 10, maxRotation: 0 } },
+                },
+            }
+        JS);
     }
 }

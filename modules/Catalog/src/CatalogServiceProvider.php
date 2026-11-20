@@ -9,6 +9,7 @@ use App\Core\Features\FeatureToggles;
 use App\Core\Menus\MenuLinkType;
 use App\Core\Menus\MenuLinkTypes;
 use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Themes\ThemeOptions;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Modules\Catalog\Comparison\Comparison;
@@ -78,11 +79,15 @@ class CatalogServiceProvider extends ModuleServiceProvider
             $view->with('navigationCategories', once(fn () => Category::query()->visible()->roots()->limit(8)->get()));
         });
 
-        // Úvodná stránka: kategórie a najnovšie produkty.
+        // Úvodná stránka: kategórie a produkty podľa nastavenia šablóny (novinky, najpredávanejšie, v akcii).
+        // Premenná sa volá latestProducts kvôli šablónam, nadpis zodpovedá zvolenému výberu.
         View::composer('theme::templates.home', function (\Illuminate\View\View $view): void {
+            $source = (string) (app(ThemeOptions::class)->get('products_source') ?: 'latest');
+
             $view->with([
                 'homeCategories' => Category::query()->visible()->roots()->limit(6)->get(),
-                'latestProducts' => Product::query()->visible()->with(['prices', 'groupPrices', 'taxRate', 'variants' => fn ($variants) => $variants->where('is_active', true)->with(['prices', 'groupPrices'])])->latest()->limit(8)->get(),
+                'latestProducts' => CatalogBlocks::homeProducts($source)->load(['taxRate']),
+                'homeProductsTitle' => __('theme::shop.home_products.'.(in_array($source, ['bestsellers', 'sale'], true) ? $source : 'latest')),
             ]);
         });
 

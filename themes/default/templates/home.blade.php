@@ -50,7 +50,7 @@
 
     @if (! empty($latestProducts) && $latestProducts->isNotEmpty())
         <section class="container-shop py-14" aria-labelledby="home-latest">
-            <h2 id="home-latest" class="text-xl font-semibold tracking-tight">{{ __('theme::shop.latest_products') }}</h2>
+            <h2 id="home-latest" class="text-xl font-semibold tracking-tight">{{ $homeProductsTitle ?? __('theme::shop.latest_products') }}</h2>
             <div class="mt-6">
                 @include('theme::partials.product-grid', ['products' => $latestProducts])
             </div>

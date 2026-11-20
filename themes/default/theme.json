@@ -406,6 +406,38 @@
                 }
             },
             "layouts": {}
+        },
+        "products_source": {
+            "type": "select",
+            "group": "home",
+            "label": {
+                "sk": "Produkty na úvodnej stránke",
+                "cs": "Produkty na úvodní stránce",
+                "en": "Products on the home page"
+            },
+            "help": {
+                "sk": "Ktoré produkty sa zobrazia v sekcii produktov na úvodnej stránke.",
+                "cs": "Které produkty se zobrazí v sekci produktů na úvodní stránce.",
+                "en": "Which products appear in the products section of the home page."
+            },
+            "default": "latest",
+            "options": {
+                "latest": {
+                    "sk": "Novinky",
+                    "cs": "Novinky",
+                    "en": "New arrivals"
+                },
+                "bestsellers": {
+                    "sk": "Najpredávanejšie",
+                    "cs": "Nejprodávanější",
+                    "en": "Best sellers"
+                },
+                "sale": {
+                    "sk": "V akcii (zľavnené)",
+                    "cs": "V akci (zlevněné)",
+                    "en": "On sale"
+                }
+            }
         }
     },
     "menus": {

@@ -389,6 +389,7 @@ return [
         'source' => 'Which products',
         'sources' => [
             'latest' => 'New arrivals',
+            'bestsellers' => 'Best sellers',
             'sale' => 'On sale',
             'category' => 'From a category',
             'selected' => 'Hand-picked',

@@ -389,6 +389,7 @@ return [
         'source' => 'Které produkty',
         'sources' => [
             'latest' => 'Novinky',
+            'bestsellers' => 'Nejprodávanější',
             'sale' => 'V akci',
             'category' => 'Z kategorie',
             'selected' => 'Vybrané ručně',

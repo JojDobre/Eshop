@@ -20,6 +20,11 @@ return [
     'search_no_results' => 'Pre „:term" sme nenašli žiadne produkty.',
 
     'shop_now' => 'Nakupovať',
+    'home_products' => [
+        'latest' => 'Novinky',
+        'bestsellers' => 'Najpredávanejšie',
+        'sale' => 'V akcii',
+    ],
     'latest_products' => 'Novinky',
     'related_products' => 'Podobné produkty',
     'products_count' => '{0} Žiadne produkty|{1} :count produkt|[2,4] :count produkty|[5,*] :count produktov',

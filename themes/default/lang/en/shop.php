@@ -20,6 +20,11 @@ return [
     'search_no_results' => 'No products found for “:term”.',
 
     'shop_now' => 'Shop now',
+    'home_products' => [
+        'latest' => 'New arrivals',
+        'bestsellers' => 'Best sellers',
+        'sale' => 'On sale',
+    ],
     'latest_products' => 'New arrivals',
     'related_products' => 'Related products',
     'products_count' => '{0} No products|{1} :count product|[2,*] :count products',

@@ -89,6 +89,7 @@ class Order extends Model
             'voucher_amount' => 'integer',
             'terms_accepted_at' => 'datetime',
             'paid_at' => 'datetime',
+            'payment_reminded_at' => 'datetime',
             'pickup_point' => 'array',
             'shipping_cost' => 'integer',
         ];

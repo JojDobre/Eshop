@@ -170,4 +170,18 @@ return [
         'months' => 'měsíců',
         'how_to' => 'Poukazy prodáváte jako produkt se zapnutou volbou „Dárkový poukaz“ (cena = hodnota poukazu). Kód se vydá po zaplacení objednávky. Ručně je vydáte v Prodej → Dárkové poukazy.',
     ],
+    'unpaid' => [
+        'nav' => 'Nezaplacené objednávky',
+        'title' => 'Nezaplacené objednávky',
+        'reminder' => 'Připomínka po',
+        'reminder_help' => 'Po kolika dnech od objednávky poslat zákazníkovi e-mail s připomínkou platby. 0 = neposílat.',
+        'cancel' => 'Zrušit po',
+        'cancel_help' => 'Po kolika dnech nezaplacenou objednávku automaticky zrušit a vrátit zboží na sklad. Zákazník dostane e-mail o zrušení. 0 = nerušit.',
+        'days' => 'dní',
+        'info' => 'Platí pro nové objednávky s platbou převodem, které ještě nejsou zaplacené. Zpracovávané a odeslané objednávky se nemění. Text e-mailu upravíte v Nastavení → E-maily → Připomínka platby.',
+        'reminded_note' => 'Odeslána připomínka platby.',
+        'cancelled_note' => 'Automaticky zrušena – platba nedorazila do :days dní.',
+        'cancel_after_reminder' => 'Zrušení musí být později než připomínka.',
+        'reminded' => 'Připomínka platby',
+    ],
 ];

@@ -170,4 +170,18 @@ return [
         'months' => 'months',
         'how_to' => 'Sell vouchers as a product with the “Gift voucher” option enabled (price = voucher value). The code is issued once the order is paid. Issue vouchers manually in Sales → Gift vouchers.',
     ],
+    'unpaid' => [
+        'nav' => 'Unpaid orders',
+        'title' => 'Unpaid orders',
+        'reminder' => 'Reminder after',
+        'reminder_help' => 'How many days after the order to send the customer a payment reminder. 0 = do not send.',
+        'cancel' => 'Cancel after',
+        'cancel_help' => 'How many days after the order to cancel an unpaid order automatically and return the goods to stock. The customer receives a cancellation e-mail. 0 = never cancel.',
+        'days' => 'days',
+        'info' => 'Applies to new bank-transfer orders that have not been paid yet. Orders in progress or shipped are not changed. Edit the e-mail text in Settings → E-mails → Payment reminder.',
+        'reminded_note' => 'Payment reminder sent.',
+        'cancelled_note' => 'Cancelled automatically – payment did not arrive within :days days.',
+        'cancel_after_reminder' => 'Cancellation must be later than the reminder.',
+        'reminded' => 'Payment reminder',
+    ],
 ];

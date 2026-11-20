@@ -32,4 +32,5 @@ return [
     'voucher_paid' => 'Uhradené darčekovou poukážkou',
     'amount_due' => 'Zostáva uhradiť',
     'voucher_valid_until' => 'platí do :date',
+    'cancel_notice' => 'Ak platba nepríde do :date, objednávku zrušíme.',
 ];

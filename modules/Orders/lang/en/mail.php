@@ -32,4 +32,5 @@ return [
     'voucher_paid' => 'Paid by gift voucher',
     'amount_due' => 'Amount due',
     'voucher_valid_until' => 'valid until :date',
+    'cancel_notice' => 'If the payment does not arrive by :date, we will cancel the order.',
 ];

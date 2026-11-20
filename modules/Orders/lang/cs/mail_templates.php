@@ -70,6 +70,11 @@ MD,
         'subject' => 'Soubory k objednávce č. {order_number}',
         'body' => "Dobrý den {customer_name},\n\nděkujeme za nákup. Zakoupené soubory si stáhnete zde:\n\n{download_links}\n\nOdkazy najdete také na stránce objednávky: {order_url}\n\nS pozdravem\\\n{shop_name}",
     ],
+    'payment_reminder' => [
+        'label' => 'Připomínka platby',
+        'subject' => 'Připomínáme platbu objednávky č. {order_number}',
+        'body' => "Dobrý den {customer_name},\n\nzatím jsme nepřijali platbu za objednávku č. {order_number} ve výši {order_total}. Pokud jste již zaplatili, děkujeme a tento e-mail prosím ignorujte – platba může na účet dorazit i o den později.\n\n{payment_details}\n\n{cancel_notice}\n\nObjednávku najdete zde: {order_url}\n\nS pozdravem\\\n{shop_name}",
+    ],
     'gift_voucher' => [
         'label' => 'Dárkový poukaz',
         'subject' => 'Váš dárkový poukaz – {shop_name}',

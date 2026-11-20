@@ -70,6 +70,11 @@ MD,
         'subject' => 'Files for order no. {order_number}',
         'body' => "Hello {customer_name},\n\nthank you for your purchase. Download your files here:\n\n{download_links}\n\nYou can also find the links on the order page: {order_url}\n\nKind regards\\\n{shop_name}",
     ],
+    'payment_reminder' => [
+        'label' => 'Payment reminder',
+        'subject' => 'Payment reminder for order no. {order_number}',
+        'body' => "Hello {customer_name},\n\nwe have not received the payment for order no. {order_number} of {order_total} yet. If you have already paid, thank you and please ignore this e-mail – the payment may take a day to arrive.\n\n{payment_details}\n\n{cancel_notice}\n\nYour order: {order_url}\n\nKind regards\\\n{shop_name}",
+    ],
     'gift_voucher' => [
         'label' => 'Gift voucher',
         'subject' => 'Your gift voucher – {shop_name}',

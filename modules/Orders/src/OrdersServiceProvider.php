@@ -19,6 +19,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Modules\Orders\Actions\HandleUnpaidOrders;
 use Modules\Orders\Actions\TrackShipments;
 use Modules\Orders\Events\OrderPaid;
 use Modules\Orders\Events\OrderPlaced;
@@ -101,6 +102,15 @@ class OrdersServiceProvider extends ModuleServiceProvider
                 ->when(fn () => app(Installation::class)->isInstalled());
         });
 
+        // Pripomienka a zrušenie nezaplatených objednávok s platbou prevodom (Nastavenia → Nezaplatené objednávky).
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
+            $schedule->call(fn () => app(HandleUnpaidOrders::class)->handle())
+                ->name('orders:unpaid')
+                ->hourly()
+                ->withoutOverlapping(30)
+                ->when(fn () => app(Installation::class)->isInstalled());
+        });
+
         $this->registerEmailTemplates();
 
         // Obchodné podmienky v prílohe potvrdenia (zmluvné podmienky na trvanlivom nosiči).
@@ -170,6 +180,9 @@ class OrdersServiceProvider extends ModuleServiceProvider
         $templates->register(new EmailTemplateDefinition('orders.notification', 'orders::mail_templates.notification',
             ['order_number', 'customer_name', 'customer_email', 'customer_phone', 'order_total', 'order_items', 'shipping_method', 'payment_method', 'customer_note', 'admin_url'], sample: $sample));
 
+        $templates->register(new EmailTemplateDefinition('orders.payment_reminder', 'orders::mail_templates.payment_reminder',
+            ['customer_name', 'order_number', 'order_total', 'payment_details', 'cancel_notice', 'order_url', 'shop_name'],
+            sample: [...$sample, 'cancel_notice' => __('orders::mail.cancel_notice', ['date' => now()->addDays(4)->isoFormat('D. M. YYYY')])]));
         $templates->register(new EmailTemplateDefinition('orders.gift_voucher', 'orders::mail_templates.gift_voucher',
             ['customer_name', 'voucher_codes', 'shop_url', 'shop_name'],
             sample: [...$sample, 'voucher_codes' => '- **GV7K-2M9Q-X4HT** – 50,00 €', 'shop_url' => url('/')]));

@@ -47,6 +47,7 @@ return [
     'additional_details' => 'Additional details from the customer',
     'variable_symbol' => 'Payment reference',
     'paid_at' => 'Paid',
+    'section_payment' => 'Payment',
     'section_history' => 'History',
     'history' => [
         'created' => 'The order was placed.',
@@ -103,6 +104,14 @@ return [
     ],
     'batches' => 'Batches: :batches',
     'downloads' => [
+        'help' => 'You can create the link and send it to the customer yourself (e.g. in a message), or send it by e-mail.',
+        'create' => 'Create links',
+        'created' => 'Download links are ready.',
+        'none' => 'No links have been created yet.',
+        'link' => 'Link',
+        'copy' => 'Copy link',
+        'copied' => 'Link copied',
+        'unusable' => 'The link has expired or reached its download limit.',
         'title' => 'Download links',
         'file' => 'File',
         'count' => 'Downloaded',
@@ -197,5 +206,12 @@ return [
         'unpaid_settings' => 'Reminders',
         'no_unpaid' => 'No order is awaiting payment.',
         'days_ago' => '{0} today|{1} :count day ago|[2,*] :count days ago',
+    ],
+    'flow' => [
+        'label' => 'Order progress',
+        'cancelled' => 'The order is cancelled. The goods were returned to stock.',
+        'next' => 'Move to: :status',
+        'next_confirm' => 'The order will be moved to “:status”.',
+        'more' => 'More actions',
     ],
 ];

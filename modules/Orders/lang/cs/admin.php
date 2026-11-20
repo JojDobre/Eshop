@@ -47,6 +47,7 @@ return [
     'additional_details' => 'Doplňující údaje od zákazníka',
     'variable_symbol' => 'Variabilní symbol',
     'paid_at' => 'Zaplacena',
+    'section_payment' => 'Platba',
     'section_history' => 'Historie',
     'history' => [
         'created' => 'Objednávka byla vytvořena.',
@@ -103,6 +104,14 @@ return [
     ],
     'batches' => 'Šarže: :batches',
     'downloads' => [
+        'help' => 'Odkaz můžete vytvořit a poslat zákazníkovi sami (např. ve zprávě), nebo ho odeslat e-mailem.',
+        'create' => 'Vytvořit odkazy',
+        'created' => 'Odkazy ke stažení jsou připravené.',
+        'none' => 'Odkazy zatím nejsou vytvořené.',
+        'link' => 'Odkaz',
+        'copy' => 'Kopírovat odkaz',
+        'copied' => 'Odkaz zkopírován',
+        'unusable' => 'Platnost odkazu vypršela nebo je vyčerpán limit stažení.',
         'title' => 'Odkazy ke stažení',
         'file' => 'Soubor',
         'count' => 'Staženo',
@@ -197,5 +206,12 @@ return [
         'unpaid_settings' => 'Připomínky',
         'no_unpaid' => 'Žádná objednávka nečeká na platbu.',
         'days_ago' => '{0} dnes|{1} před :count dnem|[2,*] před :count dny',
+    ],
+    'flow' => [
+        'label' => 'Průběh objednávky',
+        'cancelled' => 'Objednávka je zrušená. Zboží bylo vráceno na sklad.',
+        'next' => 'Posunout: :status',
+        'next_confirm' => 'Objednávka se přesune do stavu „:status“.',
+        'more' => 'Další akce',
     ],
 ];

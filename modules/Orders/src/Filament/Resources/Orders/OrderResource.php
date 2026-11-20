@@ -5,21 +5,25 @@ namespace Modules\Orders\Filament\Resources\Orders;
 use App\Core\Support\Price;
 use App\Filament\AdminGroup;
 use BackedEnum;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\ViewAction;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Modules\Orders\Actions\IssueDownloads;
 use Modules\Orders\CheckoutFields;
 use Modules\Orders\Filament\Resources\Orders\Pages\ListOrders;
 use Modules\Orders\Filament\Resources\Orders\Pages\ViewOrder;
@@ -116,6 +120,8 @@ class OrderResource extends Resource
         $money = fn (Order $record, int $amount) => Price::format($amount, $record->currency);
 
         return $schema->columns(3)->components([
+            // Prehľad: stav, platba, suma a priebeh krokov.
+            View::make('orders::filament.order-summary')->columnSpanFull(),
             Group::make()->columnSpan(2)->schema([
                 Section::make(__('orders::admin.shipments.title'))
                     ->visible(fn (Order $record) => $record->shipments()->exists())
@@ -134,17 +140,42 @@ class OrderResource extends Resource
                                     ->helperText(fn ($record) => $record->status_text),
                             ]),
                     ]),
-                Section::make(__('orders::admin.downloads.title'))
-                    ->visible(fn (Order $record) => DownloadLink::query()->where('order_id', $record->id)->exists())
+                // Odkazy na stiahnutie digitálnych produktov: vytvoriť bez e-mailu, skopírovať alebo poslať e-mailom.
+                Section::make(__('orders::admin.downloads.title'))->key('downloads')
+                    ->description(__('orders::admin.downloads.help'))
+                    ->visible(fn (Order $record) => IssueDownloads::hasDigitalItems($record) || DownloadLink::query()->where('order_id', $record->id)->exists())
+                    ->headerActions([
+                        Action::make('createDownloadLinks')->label(__('orders::admin.downloads.create'))->icon(Heroicon::OutlinedLink)->color('gray')->size('sm')
+                            ->action(function (Order $record, IssueDownloads $downloads): void {
+                                $downloads->handle($record, sendEmail: false);
+                                Notification::make()->success()->title(__('orders::admin.downloads.created'))->send();
+                            }),
+                        Action::make('emailDownloadLinks')->label(__('orders::admin.downloads.send'))->icon(Heroicon::OutlinedEnvelope)->size('sm')
+                            ->requiresConfirmation()->modalDescription(__('orders::admin.downloads.send_help'))
+                            ->action(function (Order $record, IssueDownloads $downloads): void {
+                                $downloads->handle($record);
+                                Notification::make()->success()->title(__('orders::admin.downloads.sent'))->send();
+                            }),
+                    ])
                     ->schema([
+                        TextEntry::make('no_download_links')->hiddenLabel()->state(__('orders::admin.downloads.none'))
+                            ->visible(fn (Order $record) => ! DownloadLink::query()->where('order_id', $record->id)->exists()),
                         RepeatableEntry::make('downloadLinks')->hiddenLabel()
+                            ->visible(fn (Order $record) => DownloadLink::query()->where('order_id', $record->id)->exists())
                             ->table([
                                 TableColumn::make(__('orders::admin.downloads.file')),
+                                TableColumn::make(__('orders::admin.downloads.link')),
                                 TableColumn::make(__('orders::admin.downloads.count'))->alignment('center'),
                                 TableColumn::make(__('orders::admin.downloads.expires_at')),
                             ])
                             ->schema([
                                 TextEntry::make('file_name'),
+                                TextEntry::make('token')
+                                    ->formatStateUsing(fn () => __('orders::admin.downloads.copy'))
+                                    ->icon(Heroicon::OutlinedClipboardDocument)->color('primary')
+                                    ->copyable()->copyableState(fn (DownloadLink $record) => $record->url())
+                                    ->copyMessage(__('orders::admin.downloads.copied'))
+                                    ->helperText(fn (DownloadLink $record) => $record->isUsable() ? null : __('orders::admin.downloads.unusable')),
                                 TextEntry::make('downloads')->formatStateUsing(fn ($state, $record) => $record->max_downloads ? $state.' / '.$record->max_downloads : (string) $state),
                                 TextEntry::make('expires_at')->dateTime()->placeholder('—'),
                             ]),
@@ -198,12 +229,7 @@ class OrderResource extends Resource
                 ]),
             ]),
             Group::make()->schema([
-                Section::make()->schema([
-                    TextEntry::make('status')->label($t('status'))->badge(),
-                    TextEntry::make('created_at')->label($t('created_at'))->dateTime(),
-                    TextEntry::make('shipping_method_name')->label($t('shipping')),
-                    TextEntry::make('payment_method_name')->label($t('payment')),
-                    TextEntry::make('payment_status')->label($t('payment_status'))->badge(),
+                Section::make($t('section_payment'))->schema([
                     TextEntry::make('paid_at')->label($t('paid_at'))->dateTime()->visible(fn (Order $record) => $record->paid_at !== null),
                     TextEntry::make('variable_symbol')->label($t('variable_symbol'))->state(fn (Order $record) => $record->variableSymbol())->copyable(),
                     TextEntry::make('legal_consents')->label($t('legal_consents'))

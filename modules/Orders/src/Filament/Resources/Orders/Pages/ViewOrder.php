@@ -13,12 +13,12 @@ use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
 use Modules\Orders\Actions\AddOrderNote;
 use Modules\Orders\Actions\ChangeOrderStatus;
-use Modules\Orders\Actions\IssueDownloads;
 use Modules\Orders\Actions\SetPaymentStatus;
 use Modules\Orders\CheckoutException;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Filament\ShipmentActions;
 use Modules\Orders\Models\Order;
+use Modules\Orders\OrderFlow;
 use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 
@@ -38,36 +38,23 @@ class ViewOrder extends ViewRecord
         return [
             ShipmentActions::create(fn () => $this->order()),
             ShipmentActions::labels(fn () => $this->order()),
-            Action::make('sendDownloads')
-                ->label(__('orders::admin.downloads.send'))
-                ->icon(Heroicon::OutlinedArrowDownTray)
-                ->visible(fn () => IssueDownloads::hasDigitalItems($this->order()))
-                ->requiresConfirmation()
-                ->modalDescription(__('orders::admin.downloads.send_help'))
-                ->action(function (IssueDownloads $downloads): void {
-                    $downloads->handle($this->order());
-                    Notification::make()->success()->title(__('orders::admin.downloads.sent'))->send();
-                    $this->record = $this->order()->fresh(['items.order', 'history.user']);
-                }),
-            Action::make('changeStatus')
-                ->label($t('change_status'))
-                ->icon(Heroicon::OutlinedArrowPath)
-                ->schema([
-                    Select::make('status')->label($t('new_status'))
-                        ->options(OrderStatus::class)
-                        ->default(fn () => $this->order()->status)
-                        ->required()
-                        ->native(false),
-                    Toggle::make('notify')->label($t('notify_customer'))->helperText($t('notify_customer_help'))->default(true),
-                ])
+            // Ďalší krok podľa priebehu (napr. Nová → Spracováva sa → Odoslaná → Vybavená).
+            Action::make('nextStep')
+                ->label(fn () => __('orders::admin.flow.next', ['status' => OrderFlow::next($this->order())?->getLabel()]))
+                ->icon(Heroicon::OutlinedArrowRightCircle)
+                ->visible(fn () => OrderFlow::next($this->order()) !== null)
+                ->modalHeading(fn () => __('orders::admin.flow.next', ['status' => OrderFlow::next($this->order())?->getLabel()]))
+                ->modalDescription(fn () => __('orders::admin.flow.next_confirm', ['status' => OrderFlow::next($this->order())?->getLabel()]))
+                ->schema([Toggle::make('notify')->label($t('notify_customer'))->helperText($t('notify_customer_help'))->default(true)])
                 ->action(function (array $data, ChangeOrderStatus $change) use ($t): void {
+                    $next = OrderFlow::next($this->order());
+
+                    if ($next === null) {
+                        return;
+                    }
+
                     try {
-                        $change->handle(
-                            $this->order(),
-                            OrderStatus::from($data['status'] instanceof OrderStatus ? $data['status']->value : $data['status']),
-                            $this->user(),
-                            (bool) ($data['notify'] ?? true),
-                        );
+                        $change->handle($this->order(), $next, $this->user(), (bool) ($data['notify'] ?? true));
                     } catch (CheckoutException $e) {
                         Notification::make()->danger()->title($e->getMessage())->send();
 
@@ -84,19 +71,47 @@ class ViewOrder extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => ! $this->order()->isPaid())
                 ->action(fn (SetPaymentStatus $setPaymentStatus) => $this->setPayment($setPaymentStatus, PaymentStatus::Paid)),
-            Action::make('addNote')
-                ->label($t('add_note'))
-                ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
-                ->color('gray')
-                ->schema([
-                    Textarea::make('note')->label($t('note'))->helperText($t('note_help'))->required()->maxLength(2000)->rows(4),
-                ])
-                ->action(function (array $data, AddOrderNote $addNote) use ($t): void {
-                    $addNote->handle($this->order(), $data['note'], $this->user());
-                    Notification::make()->success()->title($t('note_added'))->send();
-                    $this->refreshOrder();
-                }),
             ActionGroup::make([
+                Action::make('changeStatus')
+                    ->label($t('change_status'))
+                    ->icon(Heroicon::OutlinedArrowPath)
+                    ->schema([
+                        Select::make('status')->label($t('new_status'))
+                            ->options(OrderStatus::class)
+                            ->default(fn () => $this->order()->status)
+                            ->required()
+                            ->native(false),
+                        Toggle::make('notify')->label($t('notify_customer'))->helperText($t('notify_customer_help'))->default(true),
+                    ])
+                    ->action(function (array $data, ChangeOrderStatus $change) use ($t): void {
+                        try {
+                            $change->handle(
+                                $this->order(),
+                                OrderStatus::from($data['status'] instanceof OrderStatus ? $data['status']->value : $data['status']),
+                                $this->user(),
+                                (bool) ($data['notify'] ?? true),
+                            );
+                        } catch (CheckoutException $e) {
+                            Notification::make()->danger()->title($e->getMessage())->send();
+
+                            return;
+                        }
+
+                        Notification::make()->success()->title($t('status_changed'))->send();
+                        $this->refreshOrder();
+                    }),
+                Action::make('addNote')
+                    ->label($t('add_note'))
+                    ->icon(Heroicon::OutlinedChatBubbleLeftEllipsis)
+                    ->color('gray')
+                    ->schema([
+                        Textarea::make('note')->label($t('note'))->helperText($t('note_help'))->required()->maxLength(2000)->rows(4),
+                    ])
+                    ->action(function (array $data, AddOrderNote $addNote) use ($t): void {
+                        $addNote->handle($this->order(), $data['note'], $this->user());
+                        Notification::make()->success()->title($t('note_added'))->send();
+                        $this->refreshOrder();
+                    }),
                 Action::make('markUnpaid')
                     ->label($t('mark_unpaid'))
                     ->icon(Heroicon::OutlinedXCircle)
@@ -107,7 +122,7 @@ class ViewOrder extends ViewRecord
                     ->label($t('view_customer_page'))
                     ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
                     ->url(fn () => $this->order()->publicUrl(), shouldOpenInNewTab: true),
-            ]),
+            ])->label(__('orders::admin.flow.more'))->icon(Heroicon::EllipsisHorizontal)->button()->color('gray'),
         ];
     }
 

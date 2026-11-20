@@ -3,6 +3,7 @@
 namespace Tests\Feature\Shop;
 
 use App\Settings\CatalogSettings;
+use Filament\Actions\Testing\TestAction;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
@@ -117,11 +118,20 @@ class DigitalProductsTest extends ShopTestCase
         $order = $this->order($ebook, 2);
         $this->actingAs($this->superAdmin());
 
+        // Odkaz bez e-mailu: správca ho skopíruje a pošle zákazníkovi sám.
         Livewire::test(ViewOrder::class, ['record' => $order->id])
-            ->callAction('sendDownloads')
+            ->callAction(TestAction::make('createDownloadLinks')->schemaComponent('downloads', schema: 'infolist'))
             ->assertHasNoActionErrors();
 
         $this->assertSame(10, DownloadLink::query()->sole()->max_downloads);
+        Mail::assertNotSent(DownloadsMail::class);
+
+        Livewire::test(ViewOrder::class, ['record' => $order->id])
+            ->assertSee(__('orders::admin.downloads.copy'))
+            ->callAction(TestAction::make('emailDownloadLinks')->schemaComponent('downloads', schema: 'infolist'))
+            ->assertHasNoActionErrors();
+
+        $this->assertSame(1, DownloadLink::query()->count());
         Mail::assertSent(DownloadsMail::class);
         $this->get('/admin/orders/'.$order->id)->assertOk()->assertSee('kniha.pdf');
         $this->get('/admin/products/'.$ebook->id.'/edit')->assertOk();

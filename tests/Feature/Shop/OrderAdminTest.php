@@ -5,12 +5,14 @@ namespace Tests\Feature\Shop;
 use App\Filament\Pages\Settings\ManageMailSettings;
 use App\Settings\MailSettings;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Livewire;
 use Modules\Catalog\Filament\Resources\Products\Pages\CreateProduct;
 use Modules\Catalog\Filament\Resources\Products\Pages\EditProduct;
 use Modules\Catalog\Models\Product;
 use Modules\Orders\Filament\Resources\Orders\Pages\ViewOrder;
 use Modules\Orders\Models\Order;
+use Modules\Orders\OrderFlow;
 use Modules\Orders\OrderStatus;
 use Modules\Orders\PaymentStatus;
 
@@ -73,6 +75,25 @@ class OrderAdminTest extends ShopTestCase
         Livewire::test(ViewOrder::class, ['record' => $order->id])
             ->callAction('addNote', ['note' => 'Zákazník volal, pošleme zajtra.'])
             ->assertSee('Zákazník volal, pošleme zajtra.');
+    }
+
+    public function test_next_step_moves_order_through_the_flow(): void
+    {
+        Mail::fake();
+        $order = $this->placeOrder($this->product('Etiópia'));
+        $this->actingAs($this->superAdmin());
+
+        Livewire::test(ViewOrder::class, ['record' => $order->id])
+            ->assertSee(__('orders::admin.flow.label'))
+            ->callAction('nextStep', ['notify' => false]);
+        $this->assertSame(OrderStatus::Processing, $order->fresh()->status);
+
+        // Kuriér: po spracovaní nasleduje „Odoslaná“, potom „Vybavená“ a ďalší krok už nie je.
+        $this->assertSame(OrderStatus::Shipped, OrderFlow::next($order->fresh()));
+        Livewire::test(ViewOrder::class, ['record' => $order->id])->callAction('nextStep', ['notify' => false]);
+        Livewire::test(ViewOrder::class, ['record' => $order->id])->callAction('nextStep', ['notify' => false]);
+        $this->assertSame(OrderStatus::Completed, $order->fresh()->status);
+        $this->assertNull(OrderFlow::next($order->fresh()));
     }
 
     public function test_product_can_be_created_with_price_in_admin(): void

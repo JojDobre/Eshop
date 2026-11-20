@@ -30,6 +30,9 @@ Obe sady bežia automaticky na GitHube pri každej zmene (CI). Výsledky testov 
    `E2E_DB_NAME`, `E2E_DB_USERNAME`, `E2E_DB_PASSWORD`). Ak beží obchod v Dockeri, nastavte aj
    `E2E_APP` na priečinok, kde je `artisan` dostupný, alebo spúšťajte testy priamo v kontajneri.
 
+   Obchod spustený priamo z repozitára (nie z inštalačného balíka) potrebuje najprv skripty administrácie:
+   `php artisan filament:assets`. Bez nich sa administrácia nenačíta správne a prihlásenie v testoch zlyhá.
+
 > Testy vytvárajú produkty a objednávky („E2E vajcia…“). Púšťajte ich iba na testovacej kópii, nikdy na ostrom obchode.
 
 ## Užitočné príkazy

@@ -73,7 +73,7 @@ class SalesChart extends ChartWidget
     protected function getOptions(): RawJs
     {
         // Texty v jednoduchých úvodzovkách – nastavenia grafu sa vkladajú do atribútu HTML.
-        $quote = fn (string $text) => "'".str_replace(["\\", "'", '"'], ["\\\\", "\\'", '&quot;'], $text)."'";
+        $quote = fn (string $text) => "'".str_replace(['\\', "'", '"'], ['\\\\', "\\'", '&quot;'], $text)."'";
         $orders = $quote(__('orders::admin.dashboard.orders'));
         $currency = $quote(app(CurrencyContext::class)->current());
 

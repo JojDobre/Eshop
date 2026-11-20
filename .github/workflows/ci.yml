@@ -93,6 +93,8 @@ jobs:
           composer install --no-interaction --no-progress --prefer-dist
           npm ci
           npm run build
+          # Skripty a štýly administrácie (public/js/filament) nie sú v repozitári, v balíku ich pridá build-release.sh.
+          APP_KEY="base64:$(head -c 32 /dev/urandom | base64)" php artisan filament:assets --quiet
           npx playwright install --with-deps chromium
 
       - name: Server obchodu

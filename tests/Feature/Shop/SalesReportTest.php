@@ -30,7 +30,7 @@ class SalesReportTest extends ShopTestCase
 
         $this->assertCount(7, $daily['dates']);
         $this->assertSame(1, end($daily['orders']));
-        $this->assertSame(Order::query()->where('status', '!=', OrderStatus::Cancelled)->sum('total'), end($daily['revenue']));
+        $this->assertSame((int) Order::query()->where('status', '!=', OrderStatus::Cancelled)->sum('total'), end($daily['revenue']));
         $this->assertSame([['name' => 'Vajcia', 'product_id' => $eggs->id, 'quantity' => 10]], $report->topProducts(30));
 
         $this->actingAs($this->superAdmin())->get('/admin')->assertOk();

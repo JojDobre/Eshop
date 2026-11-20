@@ -184,4 +184,18 @@ return [
         'cancel_after_reminder' => 'Cancellation must be later than the reminder.',
         'reminded' => 'Payment reminder',
     ],
+    'dashboard' => [
+        'sales' => 'Sales and orders',
+        'last_days' => 'Last :days days',
+        'revenue' => 'Revenue (:currency)',
+        'orders' => 'Orders',
+        'top_products' => 'Best-selling products',
+        'no_sales' => 'No sales yet.',
+        'pieces' => ':count pcs',
+        'unpaid' => 'Awaiting payment',
+        'unpaid_count' => '{0} All paid|{1} :count bank-transfer order|[2,*] :count bank-transfer orders',
+        'unpaid_settings' => 'Reminders',
+        'no_unpaid' => 'No order is awaiting payment.',
+        'days_ago' => '{0} today|{1} :count day ago|[2,*] :count days ago',
+    ],
 ];

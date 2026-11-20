@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Modules\Orders\Filament\Resources\Orders\OrderResource;
 use Modules\Orders\Models\Order;
 use Modules\Orders\OrderStatus;
+use Modules\Orders\Reports\SalesReport;
 
 class OrdersOverview extends StatsOverviewWidget
 {
@@ -35,7 +36,10 @@ class OrdersOverview extends StatsOverviewWidget
                 ->url(OrderResource::getUrl('index', ['filters' => ['status' => ['values' => [OrderStatus::New->value]]]])),
             Stat::make($t('revenue_today'), Price::format($this->revenue($counted()->whereDate('created_at', today()), $currency), $currency)),
             Stat::make($t('revenue_30_days'), Price::format($this->revenue(clone $last30, $currency), $currency))
-                ->description(trans_choice('orders::admin.widget.orders_30_days', $count = (clone $last30)->count(), ['count' => $count])),
+                ->description(trans_choice('orders::admin.widget.orders_30_days', $count = (clone $last30)->count(), ['count' => $count]))
+                // Malý graf denných tržieb za 30 dní.
+                ->chart(app(SalesReport::class)->daily(30, $currency)['revenue'])
+                ->color('primary'),
         ];
     }
 

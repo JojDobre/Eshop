@@ -31,7 +31,14 @@
                  this.scale = Math.min(1, (stage.clientWidth - 32) / this.widths[this.effective()])
              },
          }"
-         x-init="$nextTick(() => fit()); new ResizeObserver(() => fit()).observe($refs.stage)"
+         x-init="
+             $nextTick(() => fit()); new ResizeObserver(() => fit()).observe($refs.stage);
+             {{-- Hlavné menu sa na počítači zbalí, aby mal náhľad viac miesta; po odchode zo stránky sa znova otvorí. --}}
+             if ($store.sidebar && ! $store.sidebar.isMobile && $store.sidebar.isOpen) {
+                 $store.sidebar.close();
+                 window.addEventListener('pagehide', () => $store.sidebar.open(), { once: true });
+             }
+         "
          x-on:theme-preview-refresh.window="$refs.frame.contentWindow.location.reload()"
          x-bind:data-pane="pane">
 

@@ -1635,3 +1635,129 @@
 @media (prefers-reduced-motion: reduce) {
     .admin-maintenance-notice svg { animation: none; }
 }
+
+/* ---------- Nástenka: rebríček produktov a zoznam objednávok ---------- */
+.admin-widget-empty {
+    font-size: 0.875rem;
+    color: var(--admin-muted);
+}
+
+.admin-rank {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.admin-rank > li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-rank-pos {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    background: var(--admin-chip);
+    color: var(--admin-muted);
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.admin-rank-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.admin-rank-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.admin-rank-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+    color: var(--admin-text);
+}
+
+a.admin-rank-name:hover {
+    text-decoration: underline;
+}
+
+.admin-rank-value {
+    flex-shrink: 0;
+    color: var(--admin-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.admin-rank-bar {
+    height: 0.375rem;
+    border-radius: 999px;
+    background: var(--admin-chip);
+    overflow: hidden;
+}
+
+.admin-rank-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--primary-500);
+}
+
+.admin-list {
+    display: flex;
+    flex-direction: column;
+    margin: -0.375rem -0.5rem;
+}
+
+.admin-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 0.625rem;
+    transition: background-color 0.15s ease;
+}
+
+.admin-list-item:hover {
+    background: var(--admin-active);
+}
+
+.admin-list-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-list-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--admin-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-list-sub {
+    font-size: 0.8125rem;
+    color: var(--admin-muted);
+}
+
+.admin-list-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--admin-text);
+}

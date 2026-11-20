@@ -184,4 +184,18 @@ return [
         'cancel_after_reminder' => 'Zrušenie musí byť neskôr ako pripomienka.',
         'reminded' => 'Pripomienka platby',
     ],
+    'dashboard' => [
+        'sales' => 'Tržby a objednávky',
+        'last_days' => 'Posledných :days dní',
+        'revenue' => 'Tržby (:currency)',
+        'orders' => 'Objednávky',
+        'top_products' => 'Najpredávanejšie produkty',
+        'no_sales' => 'Zatiaľ žiadny predaj.',
+        'pieces' => ':count ks',
+        'unpaid' => 'Čakajú na platbu',
+        'unpaid_count' => '{0} Všetko zaplatené|{1} :count objednávka s platbou prevodom|[2,4] :count objednávky s platbou prevodom|[5,*] :count objednávok s platbou prevodom',
+        'unpaid_settings' => 'Pripomienky',
+        'no_unpaid' => 'Žiadna objednávka nečaká na platbu.',
+        'days_ago' => '{0} dnes|{1} pred :count dňom|[2,*] pred :count dňami',
+    ],
 ];

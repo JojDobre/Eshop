@@ -53,6 +53,10 @@ jobs:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
+          DB_DATABASE: eshop_test
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan test
 
   # Testy v prehliadači (Playwright) na čistej inštalácii: administrácia, nákup, mobil, prístupnosť,
   # snímky šablón a rýchlosť (Lighthouse). Výsledky a snímky chýb sú v prílohe behu („e2e-report“).
@@ -125,11 +129,6 @@ jobs:
             storage/e2e/lighthouse
             storage/logs
           retention-days: 14
-
-          DB_DATABASE: eshop_test
-          DB_USERNAME: root
-          DB_PASSWORD: root
-        run: php artisan test
 
   # Prechod databázy zo všetkých vydaných verzií na aktuálnu.
   upgrades:
